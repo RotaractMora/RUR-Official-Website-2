@@ -7,7 +7,7 @@ import {
   useSpring,
   MotionValue,
 } from "framer-motion";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 
 export const HeroParallax = ({
@@ -16,7 +16,7 @@ export const HeroParallax = ({
   products: {
     title: string;
     link: string;
-    thumbnail: string;
+    thumbnail: string|StaticImageData;
   }[];
 }) => {
   const firstRow = products.slice(0, 5);
@@ -121,7 +121,7 @@ export const ProductCard = ({
   product: {
     title: string;
     link: string;
-    thumbnail: string;
+    thumbnail: string|StaticImageData;
   };
   translate: MotionValue<number>;
 }) => {

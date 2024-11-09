@@ -25,6 +25,7 @@ import RUR_IMG18 from "../../public/Images/RUR (18).jpg"
 import RUR_IMG19 from "../../public/Images/RUR (19).jpg"
 import RUR_IMG20 from "../../public/Images/RUR (20).jpg"
 import RUR_IMG21 from "../../public/Images/RUR (21).jpg"
+import { Timeline, TimelineEntry } from "@/components/ui/timeline";
 
 export const products = [
   {
@@ -167,12 +168,46 @@ const navItms = [
   },
 ];
 
+const timeline: TimelineEntry[] = [
+  {
+    title: "Heads up",
+    content: "The curriculum vitae and job interviews play significant roles in a job recruitment process. Presenting a CV that showcases one's life work accurately is the key to open doors for a face-to-face interview.",
+    eventDate: new Date("2024-11-11"),
+  },
+  {
+    title: "The Image",
+    content: "Personal branding is telling an individual's story in a means that reflects his conduct, behavior, attitudes,and unspoken words. A unique personal brand is what would make a professional stand out from the rest and risealong his career ladder.",
+    eventDate: new Date("2024-11-12"),
+  },
+  {
+    title: "Resume Center",
+    content: "The curriculum vitae or the CV is the primary opportunity for a job applicant to establish a strong initial impression on a potential employer. A quality CV will surely boost the likelihood of an employment seeker getting a face-to-face interview.",
+    eventDate: new Date("2024-11-13"),
+  },
+  {
+    title:"Career Insights",
+    content:"Most of the undergraduates manifest a lack of knowledge regarding the career paths they could pursue following their graduation. Hence, a series of webinars will be conducted based on the different career fields catered to different departments of the university by the industry and corporate companies who will be participating the careerfair.",
+    eventDate: new Date("2024-11-14"),
+  },
+  {
+    title: "Flagship Fair",
+    content: "'Flagship Fair' is the limelight of 'Are you Ready?', in which the prospective employers' role comes intoplay. The employers are given the opportunity to identify skillful and qualified undergraduates of University of Moratuwa, through mock and real interviews.",
+    eventDate: new Date("2024-11-15"),
+  },
+  {
+    title: "Global Pathway",
+    content: "'Global Pathway' program offers a variety of resources to help students prepare for their international job search. This includes information on how to create a global resume, how to research international job opportunities, and how to effectively network with professionals in different countries. Additionally, the program provides students with access to a wide range of job search tools, including job boards and career fairs, as well as career counseling services to help students identify and pursue their ideal global career.",
+    eventDate: new Date("2024-11-16"),
+  }
+];
+
 export default function Home() {
   return (
     
         <RootLayout>
           <FloatingNav navItems={navItms}/>
           <HeroParallax products={products}/>
+          <Timeline data={timeline} />
         </RootLayout>
   );
 }
