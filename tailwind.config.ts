@@ -14,7 +14,12 @@ module.exports = {
   ],
   darkMode: "class",
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage:{
+        'dark-gradient': 'linear-gradient(55deg, rgba(0,18,55,1) 0%, rgba(0,29,68,1) 30%, rgba(9,59,126,1) 45%, rgba(0,26,79,1) 60%, rgba(0,12,66,1) 100%)',
+        'light-gradient': ' linear-gradient(55deg, rgba(151,219,245,1) 0%, rgba(255,255,255,1) 30%, rgba(243,253,255,1) 45%, rgba(255,255,255,1) 60%, rgba(156,225,251,1) 100%)',
+      }
+    },
   },
   plugins: [addVariablesForColors],
 };
