@@ -18,6 +18,7 @@ module.exports = {
       backgroundImage:{
         'dark-gradient': 'linear-gradient(75deg, rgba(0,18,55,1) 0%, rgba(0,29,68,1) 30%, rgba(9,59,126,1) 45%, rgba(0,26,79,1) 60%, rgba(0,12,66,1) 100%)',
         'light-gradient': ' linear-gradient(55deg, rgba(151,219,245,1) 0%, rgba(255,255,255,1) 30%, rgba(243,253,255,1) 45%, rgba(255,255,255,1) 60%, rgba(156,225,251,1) 100%)',
+        
       },
       colors:{
         'custom-dark-color-950': '#0C0C0C',
@@ -44,8 +45,17 @@ module.exports = {
     },
     animation: {
       flip: 'flip 1s ease-in-out',
+      shimmer: "shimmer 2s linear infinite",
     },
     keyframes: {
+      shimmer: {
+        '0%': {
+          backgroundPosition: "0 0",
+        },
+        '100%': {
+          backgroundPosition: "-200% 0",
+        },
+      },
       flip: {
         '0%': { transform: 'rotateX(0deg)' },
         '100%': { transform: 'rotateX(360deg)' },

@@ -7,12 +7,18 @@ import {
 } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
 import CountDown from "./count-down";
+import { useRouter } from "next/navigation";
+import { HoverBorderGradient } from "./hover-border-gradient";
+
 
 export interface TimelineEntry {
   title: string;
   content: React.ReactNode;
   eventDate: Date;
+  btnLink: string;
 }
+
+
 
 export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -33,6 +39,8 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
 
   const heightTransform = useTransform(scrollYProgress, [0, 1], [0, height]);
   const opacityTransform = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
+
+  const router = useRouter();
 
   return (
     <div
@@ -73,9 +81,15 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
               <div>
                 {item.content}{" "}
               </div>
-              <div className="mt-3">
+              <div className="mt-3 inline-block">
                 <CountDown date={item.eventDate} />
               </div>
+
+                  <div className="inline-block mt-3 ml-3">
+                    <HoverBorderGradient  onClick={()=>router.push(item.btnLink)}>Stay Tuned</HoverBorderGradient>
+                  </div>
+
+             
             </div>
           </div>
         ))}
