@@ -234,7 +234,7 @@ export default function Home() {
           <HeroParallax products={products}/>
           <Timeline data={timeline} />
 
-          <LampLighting firstLine="Sponsers" secondLine="_____"/>
+          <LampLighting firstLine="Sponsers" secondLine="__________"/>
 
           <TracingBeam className="">
             <GlareCard className="w-5xl" CardColor="Gold"><Para level="Gold Sponser" /></GlareCard>
@@ -245,7 +245,7 @@ export default function Home() {
             <GlareCard className="w-5xl" CardColor="Bronze"><Para level="Bronze Sponser" /></GlareCard>
           </TracingBeam>
 
-          <GridBackground title="Test">
+          <GridBackground title="Reach Us">
           <ReachUsSection />
           </GridBackground>
 

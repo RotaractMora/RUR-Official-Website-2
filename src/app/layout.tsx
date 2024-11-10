@@ -2,7 +2,7 @@
 
 import localFont from "next/font/local";
 import "./globals.css";
-import React, { useContext, useEffect, useImperativeHandle, useRef, useState } from "react";
+import React, { useState } from "react";
 
 
 const geistSans = localFont({
@@ -30,7 +30,7 @@ export default function RootLayout({children}: Readonly<{ children: React.ReactN
   const [theme,setThemeMode] = useState<'dark'|'light'>(DEFAULT_THEME);
   
       const currentTheme = ():'dark'|'light' => {
-        let t = localStorage.getItem('theme') as 'dark'|'light';
+        const t = localStorage.getItem('theme') as 'dark'|'light';
         if(!t){
           localStorage.setItem('theme',DEFAULT_THEME);
           return DEFAULT_THEME;
