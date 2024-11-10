@@ -27,6 +27,12 @@ import RUR_IMG20 from "../../public/Images/RUR (20).jpg"
 import RUR_IMG21 from "../../public/Images/RUR (21).jpg"
 import { Timeline, TimelineEntry } from "@/components/ui/timeline";
 import LampLighting from "@/components/ui/lamp";
+import { GlareCard } from "@/components/ui/glare-card";
+import Image from "next/image";
+import { TracingBeam } from "@/components/ui/tracing-beam";
+import ReachUsSection from "@/components/blocks/reach-us-section";
+import Footer from "@/components/blocks/footer";
+import { GridBackground } from "@/components/ui/backgrounds";
 
 export const products = [
   {
@@ -208,6 +214,18 @@ const timeline: TimelineEntry[] = [
   }
 ];
 
+
+const Para = ({level}:{level:string}):React.ReactNode => {
+  return (
+    <div className="max-w-5xl mx-auto py-2 px-0 md:px-0 lg:px-1">
+      <Image src={RUR_IMG1} alt="RUR" className="p-0 rounded-lg dark:bg-black bg-white"/>
+      <h6 className="text-6xl text-center font-bold dark:text-custom-color-800 text-custom-dark-color-800 p-3">
+        {level}
+      </h6>
+    </div>
+  );
+}
+
 export default function Home() {
   return (
     
@@ -215,7 +233,25 @@ export default function Home() {
           <FloatingNav navItems={navItms}/>
           <HeroParallax products={products}/>
           <Timeline data={timeline} />
+
           <LampLighting firstLine="Sponsers" secondLine="_____"/>
+
+          <TracingBeam className="">
+            <GlareCard className="w-5xl" CardColor="Gold"><Para level="Gold Sponser" /></GlareCard>
+            <GlareCard className="w-5xl" CardColor="Gold"><Para level="Gold Sponser" /></GlareCard>
+            <GlareCard className="w-5xl" CardColor="Silver"><Para level="Silver Sponser" /></GlareCard>
+            <GlareCard className="w-5xl" CardColor="Silver"><Para level="Silver Sponser" /></GlareCard>
+            <GlareCard className="w-5xl" CardColor="Bronze"><Para level="Bronze Sponser" /></GlareCard>
+            <GlareCard className="w-5xl" CardColor="Bronze"><Para level="Bronze Sponser" /></GlareCard>
+          </TracingBeam>
+
+          <GridBackground title="Test">
+          <ReachUsSection />
+          </GridBackground>
+
+
+          <Footer />
+
         </RootLayout>
   );
 }
