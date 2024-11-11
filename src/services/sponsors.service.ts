@@ -7,10 +7,20 @@ export const getSponsors = async (level:SponsorLevel, lim:number = 10 ,lastDoc?:
     const sponsorsCollection = collection(db, "info-sponsors");
     let sponsorsQuery:Query<DocumentData,DocumentData>;
     if(lastDoc){
-        sponsorsQuery = query(sponsorsCollection, where("level", "==", level), limit(lim), orderBy("timestamp"), startAfter(lastDoc));
+        if(level === "All"){
+            sponsorsQuery = query(sponsorsCollection, limit(lim), orderBy("timestamp"), startAfter(lastDoc));
+        }
+        else{
+            sponsorsQuery = query(sponsorsCollection, where("level", "==", level), limit(lim), orderBy("timestamp"), startAfter(lastDoc));
+        }
     }
     else{
-        sponsorsQuery = query(sponsorsCollection, where("level", "==", level), limit(lim) , orderBy("timestamp"));
+        if(level === "All"){
+            sponsorsQuery = query(sponsorsCollection, limit(lim), orderBy("timestamp"));
+        }
+        else{
+            sponsorsQuery = query(sponsorsCollection, where("level", "==", level), limit(lim) , orderBy("timestamp"));
+        }
     }
     const sponsorsSnapshot = await getDocs(sponsorsQuery);
     const sponsorsList = sponsorsSnapshot.docs.map(doc => ({ id: doc.id as string, ...doc.data() })) as ISponsor[];
