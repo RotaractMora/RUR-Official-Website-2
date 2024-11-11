@@ -8,18 +8,11 @@ import React, { useEffect, useRef, useState } from "react";
 import CountDown from "./count-down";
 import { useRouter } from "next/navigation";
 import { HoverBorderGradient } from "./hover-border-gradient";
-
-
-export interface TimelineEntry {
-  title: string;
-  content: React.ReactNode;
-  eventDate: Date;
-  btnLink: string;
-}
+import { ITimelineEntry } from "@/interfaces/ITimeline";
 
 
 
-export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
+export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
   const ref = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);

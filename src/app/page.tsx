@@ -3,7 +3,7 @@
 import { HeroParallax } from "@/components/ui/hero-parallax";
 import RootLayout from "./layout";
 import { FloatingNav } from "@/components/ui/floating-navbar";
-import React from "react";
+import React, { useEffect } from "react";
 import RUR_IMG1 from "../../public/Images/RUR (1).jpg"
 import RUR_IMG2 from "../../public/Images/RUR (2).jpg"
 import RUR_IMG3 from "../../public/Images/RUR (3).jpg"
@@ -25,7 +25,8 @@ import RUR_IMG18 from "../../public/Images/RUR (18).jpg"
 import RUR_IMG19 from "../../public/Images/RUR (19).jpg"
 import RUR_IMG20 from "../../public/Images/RUR (20).jpg"
 import RUR_IMG21 from "../../public/Images/RUR (21).jpg"
-import { Timeline, TimelineEntry } from "@/components/ui/timeline";
+import { Timeline } from "@/components/ui/timeline";
+import { ITimelineEntry } from "@/interfaces/ITimeline";
 import LampLighting from "@/components/ui/lamp";
 import { GlareCard } from "@/components/ui/glare-card";
 import Image from "next/image";
@@ -33,6 +34,10 @@ import { TracingBeam } from "@/components/ui/tracing-beam";
 import ReachUsSection from "@/components/blocks/reach-us-section";
 import Footer from "@/components/blocks/footer";
 import { GridBackground } from "@/components/ui/backgrounds";
+import { ISponser } from "@/interfaces/ISponsors";
+import { addSponser, deleteSponser, getSponsers } from "@/services/sponsers.service";
+
+
 
 export const products = [
   {
@@ -175,7 +180,7 @@ const navItms = [
   },
 ];
 
-const timeline: TimelineEntry[] = [
+const timeline: ITimelineEntry[] = [
   {
     title: "Heads up",
     content: "The curriculum vitae and job interviews play significant roles in a job recruitment process. Presenting a CV that showcases one's life work accurately is the key to open doors for a face-to-face interview.",
@@ -215,6 +220,16 @@ const timeline: TimelineEntry[] = [
 ];
 
 
+const sponsors:ISponser[] = [
+  { level: "Gold", sponsor: "Company A" },
+  { level: "Gold", sponsor: "Company B" },
+  { level: "Silver", sponsor: "Company C" },
+  { level: "Silver", sponsor: "Company D" },
+  { level: "Bronze", sponsor: "Company E" },
+  { level: "Bronze", sponsor: "Company F" },
+  ];
+
+
 const Para = ({level}:{level:string}):React.ReactNode => {
   return (
     <div className="max-w-5xl mx-auto py-2 px-0 md:px-0 lg:px-1">
@@ -227,6 +242,19 @@ const Para = ({level}:{level:string}):React.ReactNode => {
 }
 
 export default function Home() {
+
+  useEffect(() => {
+    // console.log("Sponsors added",getSponsers("Silver"));
+    // const s = {
+    //   level: "Silver",
+    //   sponsor: "Company D"
+    // } as ISponser;
+    // addSponser(s);
+    // console.log("del",deleteSponser("x2xFMFgzeOQgqKese7fG"));
+
+  },[]);
+  
+
   return (
     
         <RootLayout>
@@ -237,13 +265,23 @@ export default function Home() {
           <LampLighting firstLine="Sponsers" secondLine="__________"/>
 
           <TracingBeam className="">
-            <GlareCard className="w-5xl" CardColor="Gold"><Para level="Gold Sponser" /></GlareCard>
+            {/* <GlareCard className="w-5xl" CardColor="Gold"><Para level="Gold Sponser" /></GlareCard>
             <GlareCard className="w-5xl" CardColor="Gold"><Para level="Gold Sponser" /></GlareCard>
             <GlareCard className="w-5xl" CardColor="Silver"><Para level="Silver Sponser" /></GlareCard>
             <GlareCard className="w-5xl" CardColor="Silver"><Para level="Silver Sponser" /></GlareCard>
             <GlareCard className="w-5xl" CardColor="Bronze"><Para level="Bronze Sponser" /></GlareCard>
-            <GlareCard className="w-5xl" CardColor="Bronze"><Para level="Bronze Sponser" /></GlareCard>
+            <GlareCard className="w-5xl" CardColor="Bronze"><Para level="Bronze Sponser" /></GlareCard> */}
+
+          {
+            sponsors.map((sponsor, index) => (
+            <GlareCard key={`${sponsor.level}-${index}`} className="w-5xl" CardColor={sponsor.level}>
+              <Para level={`${sponsor.level} Sponsor - ${sponsor.sponsor}`} />
+            </GlareCard>
+            ))
+          }
+
           </TracingBeam>
+
 
           <GridBackground title="Reach Us">
           <ReachUsSection />
