@@ -25,8 +25,8 @@ import RUR_IMG18 from "../../public/Images/RUR (18).jpg"
 import RUR_IMG19 from "../../public/Images/RUR (19).jpg"
 import RUR_IMG20 from "../../public/Images/RUR (20).jpg"
 import RUR_IMG21 from "../../public/Images/RUR (21).jpg"
-import { Timeline } from "@/components/ui/timeline";
-import { ITimelineEntry } from "@/interfaces/ITimeline";
+import { Timeline ,ITimelineEntry } from "@/components/ui/timeline";
+
 import LampLighting from "@/components/ui/lamp";
 import { GlareCard } from "@/components/ui/glare-card";
 import Image from "next/image";
@@ -34,8 +34,10 @@ import { TracingBeam } from "@/components/ui/tracing-beam";
 import ReachUsSection from "@/components/blocks/reach-us-section";
 import Footer from "@/components/blocks/footer";
 import { GridBackground } from "@/components/ui/backgrounds";
-import { ISponser } from "@/interfaces/ISponsors";
-import { addSponser, deleteSponser, getSponsers } from "@/services/sponsers.service";
+import { ISponsor } from "@/interfaces/ISponsors";
+import { addSponsor, deleteSponsor, getSponsors } from "@/services/sponsors.service";
+import { addTimeLineEvent } from "@/services/timeline.service";
+import { ITimelineData } from "@/interfaces/ITimeline";
 
 
 
@@ -220,7 +222,7 @@ const timeline: ITimelineEntry[] = [
 ];
 
 
-const sponsors:ISponser[] = [
+const sponsors:ISponsor[] = [
   { level: "Gold", sponsor: "Company A" },
   { level: "Gold", sponsor: "Company B" },
   { level: "Silver", sponsor: "Company C" },
@@ -251,6 +253,19 @@ export default function Home() {
     // } as ISponser;
     // addSponser(s);
     // console.log("del",deleteSponser("x2xFMFgzeOQgqKese7fG"));
+    
+    const timelineEvent: ITimelineData = {
+      title: "Global Pathway",
+      description: "'Global Pathway' program offers a variety of resources to help students prepare for their international job search. This includes information on how to create a global resume, how to research international job opportunities, and how to effectively network with professionals in different countries. Additionally, the program provides students with access to a wide range of job search tools, including job boards and career fairs, as well as career counseling services to help students identify and pursue their ideal global career.",
+      eventDate: new Date(),
+      btnLink: "#",
+      imgURL: "path/to/image.jpg",
+      btnText: "Learn More",
+      order: 1,
+      isBtnDisabled: false,
+    };
+    
+    console.log(addTimeLineEvent(timelineEvent));
 
   },[]);
   

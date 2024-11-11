@@ -8,9 +8,13 @@ import React, { useEffect, useRef, useState } from "react";
 import CountDown from "./count-down";
 import { useRouter } from "next/navigation";
 import { HoverBorderGradient } from "./hover-border-gradient";
-import { ITimelineEntry } from "@/interfaces/ITimeline";
 
-
+export interface ITimelineEntry {
+  title: string;
+  content: React.ReactNode;
+  eventDate: Date;
+  btnLink: string;
+}
 
 export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
   const ref = useRef<HTMLDivElement>(null);

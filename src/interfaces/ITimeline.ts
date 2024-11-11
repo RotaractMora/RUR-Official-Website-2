@@ -1,5 +1,5 @@
 export interface ITimelineData {
-    id: string;
+    id?: string;
     title: string;
     description: string;
     imgURL: string;
