@@ -1,6 +1,11 @@
-export interface ITimelineEntry {
+export interface ITimelineData {
+    id: string;
     title: string;
-    content: React.ReactNode;
+    description: string;
+    imgURL: string;
     eventDate: Date;
     btnLink: string;
+    btnText: string;
+    isBtnDisabled: boolean;
+    order: number;
   }
