@@ -31,3 +31,14 @@ export const deleteFile = async (fileRef:StorageReference):Promise<boolean>=>{
       });
     return false;
 }
+
+// export const getFileReferenceByUrl = async (fileUrl: string): Promise<StorageReference | null> => {  
+//   // Extract the file path from the download URL
+//   const url = new URL(fileUrl);
+//   const path = decodeURIComponent(url.pathname.split('/o/')[1].split('?')[0]);
+
+//   // Create a reference to the file using the extracted path
+//   const fileRef = ref(storage, path);
+
+//   return fileRef;
+// }

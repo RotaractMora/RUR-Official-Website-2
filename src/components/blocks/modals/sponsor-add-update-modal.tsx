@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { addSponsor } from '@/services/sponsors.service';
 import { SponsorLevel } from '@/interfaces/ISponsors';
+import { addFile } from '@/services/firebaseStorage.service';
+import { getDownloadURL } from 'firebase/storage';
 
 function SponsorAddUpdateModal({onAddSponsor}: {onAddSponsor: () => void}) {
   
@@ -58,28 +60,38 @@ function SponsorAddUpdateModal({onAddSponsor}: {onAddSponsor: () => void}) {
     }
 
     // Upload image to firebase storage and get URL
-    // TODO implement image upload to firebase storage
-    const fakePlaceholderImgURL = "https://images.unsplash.com/photo-1726931467680-713bb3f432f5?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-    const imgURL = fakePlaceholderImgURL;
-    // Create new sponsor object
-    const newSponsor = {
-      name: sponsorName,
-      level: sponsorLevel as SponsorLevel,
-      imgURL,
-    };
+    addFile(sponsorImageFile).then((ref) => {
+      if (ref) {
+        console.log("StorageReference :",ref);
+        getDownloadURL(ref).then((url) => {
+          console.log('Image URL: ', url);
 
-    // Add new sponsor to firestore
-    addSponsor(newSponsor)
-    .then(() => {
-      console.log('Sponsor added successfully');
-      onAddSponsor();
-      toggleModal();
-    })
-    .catch((error) => {
-      console.error('Error adding sponsor: ', error);
-      alert('Error adding sponsor');
-      toggleModal();
-    }); 
+          // Create new sponsor object
+          const newSponsor = {
+            name: sponsorName,
+            level: sponsorLevel as SponsorLevel,
+            imgURL: url,
+          };
+
+          // Add new sponsor to firestore
+          addSponsor(newSponsor)
+          .then(() => {
+            console.log('Sponsor added successfully', newSponsor);
+            onAddSponsor();
+            toggleModal();
+          })
+          .catch((error) => {
+            console.error('Error adding sponsor: ', error);
+            alert('Error adding sponsor');
+            toggleModal();
+          }); 
+        });
+      }
+    }).catch((error) => {
+      console.error('Error uploading file: ', error);
+      alert('Error uploading file');
+      return;
+    });
 
   }
 
