@@ -1,25 +1,19 @@
 import Image from "next/image";
 import { AdminDashboardLayout } from "../admin-dashboard-layout"
+import { getSponsors } from "@/services/sponsors.service";
+import { ISponsor } from  "@/interfaces/ISponsors";
+import SponsorAddUpdateModal from "@/components/ui/modals/sponsor-add-update-modal";
 
-export default function ManageSponsors() {
+export default async function ManageSponsors() {
   
-
-  let sponsors = [
-    {
-      sponsor: "Apple",
-      image: "Apple Logo",
-      level: "Gold",
-      createdTime: "Date"
-    }
-  ]
-
+  let sponsors: ISponsor[] = await getSponsors("All", 100); // implement pagination later for now 100
 
   return (
     <AdminDashboardLayout>
-    <div className="dashboard-content p-6 container mx-auto rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold mb-4">sponsors</h1>
-      <p className="text-lg">Manage sponsors here.</p>
-
+    <div className="dashboard-content p-6 w-4/5 mx-auto rounded-lg ">
+      <h2 className="text-4xl font-extrabold dark:text-white">Sponsors</h2>
+      <p className="my-4 text-lg dark:text-gray-300">Manage Sponsors here</p>
+      {/* <p className="mb-4 text-lg font-normal text-gray-500 dark:text-gray-400">Deliver great service experiences fast - without the complexity of traditional ITSM solutions. Accelerate critical development work, eliminate toil, and deploy changes with ease.</p> */}
 
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -43,28 +37,30 @@ export default function ManageSponsors() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                    {sponsors.map((sponsor) => (
+                      <tr key={sponsor.id} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            Apple
+                            {sponsor.name}
                         </th>
                         <td className="px-6 py-4">
-                            <Image src="/images/apple-logo.png" alt="Apple Logo" width={40} height={40} className="p-0 rounded-lg dark:bg-black bg-white"/>
+                            <Image src={`${sponsor.imgURL}`} alt={`${sponsor.name} Logo`} width={40} height={40} className="p-0 rounded-lg dark:bg-black bg-white"/>
                         </td>
                         <td className="px-6 py-4">
-                            
+                            {sponsor.level}
                         </td>
                         <td className="px-6 py-4">
-                            2024-11-11 12:00:00
+                          {sponsor.timestamp?.toDate().toLocaleString()} 
                         </td>
                         <td className="px-6 py-4">
-                            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                            <button className="text-red-500">Delete</button>
                         </td>
-                    </tr>
-        
+                      </tr>
+                    ))}
                 </tbody>
             </table>
-            
-        </div>
+         </div>
+         
+         <SponsorAddUpdateModal />
 
     </div>
     </AdminDashboardLayout>

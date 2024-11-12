@@ -4,7 +4,8 @@ export type SponsorLevel = "Gold" | "Silver" | "Bronze" | string;
 
 export interface ISponsor {
     id?: string;
+    name: string;
     level: SponsorLevel;
-    sponsor: string;
+    imgURL?: string;
     timestamp?: Timestamp;
   }

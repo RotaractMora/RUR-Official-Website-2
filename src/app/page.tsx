@@ -222,15 +222,6 @@ const navItms = [
 // ];
 
 
-const sponsors:ISponsor[] = [
-  { level: "Gold", sponsor: "Company A" },
-  { level: "Gold", sponsor: "Company B" },
-  { level: "Silver", sponsor: "Company C" },
-  { level: "Silver", sponsor: "Company D" },
-  { level: "Bronze", sponsor: "Company E" },
-  { level: "Bronze", sponsor: "Company F" },
-  ];
-
 
 const Para = ({level}:{level:string}):React.ReactNode => {
   return (
@@ -312,21 +303,21 @@ export default function Home() {
           {
             sponsors.filter((sponsor)=>sponsor.level === "Gold").map((sponsor, index) =>(
             <GlareCard key={`${sponsor.level}-${index}`} className="w-5xl" CardColor={sponsor.level}>
-              <Para level={`${sponsor.level} Sponsor - ${sponsor.sponsor}`} />
+              <Para level={` ${sponsor.name} - ${sponsor.level} Sponsor`} />
             </GlareCard>
             ))
           }
           {
             sponsors.filter((sponsor)=>sponsor.level === "Silver").map((sponsor, index) =>(
               <GlareCard key={`${sponsor.level}-${index}`} className="w-5xl" CardColor={sponsor.level}>
-                <Para level={`${sponsor.level} Sponsor - ${sponsor.sponsor}`} />
+                <Para level={` ${sponsor.name} - ${sponsor.level} Sponsor`} />
               </GlareCard>
             ))
           }
           {
             sponsors.filter((sponsor)=>(sponsor.level == "Bronze") ).map((sponsor, index) =>(
               <GlareCard key={`${sponsor.level}-${index}`} className="w-5xl" CardColor={sponsor.level}>
-                <Para level={`${sponsor.level} Sponsor - ${sponsor.sponsor}`} />
+                <Para level={` ${sponsor.name} - ${sponsor.level} Sponsor`} />
               </GlareCard>
             ))
           }

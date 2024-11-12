@@ -17,7 +17,7 @@ export function AdminDashboardLayout({ children }: AdminDashboardLayoutProps) {
                 <Navbar className="top-2" />
             </div>
             
-            <main className="flex-grow p-4 bg-custom-color-900 dark:bg-custom-dark-color-900 text-custom-color-200 dark:text-custom-dark-color-200">
+            <main className="flex-grow p-4">               
                 {children}
             </main>
             
