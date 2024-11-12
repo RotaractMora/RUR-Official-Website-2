@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { addSponsor } from '@/services/sponsors.service';
 import { SponsorLevel } from '@/interfaces/ISponsors';
 
-function SponsorAddUpdateModal() {
+function SponsorAddUpdateModal({onAddSponsor}: {onAddSponsor: () => void}) {
   
   const [isOpen, setIsOpen] = useState(false);
   const [sponsorName, setSponsorName] = useState('');
@@ -61,7 +61,6 @@ function SponsorAddUpdateModal() {
     // TODO implement image upload to firebase storage
     const fakePlaceholderImgURL = "https://images.unsplash.com/photo-1726931467680-713bb3f432f5?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     const imgURL = fakePlaceholderImgURL;
-
     // Create new sponsor object
     const newSponsor = {
       name: sponsorName,
@@ -70,7 +69,17 @@ function SponsorAddUpdateModal() {
     };
 
     // Add new sponsor to firestore
-    await addSponsor(newSponsor); 
+    addSponsor(newSponsor)
+    .then(() => {
+      console.log('Sponsor added successfully');
+      onAddSponsor();
+      toggleModal();
+    })
+    .catch((error) => {
+      console.error('Error adding sponsor: ', error);
+      alert('Error adding sponsor');
+      toggleModal();
+    }); 
 
   }
 
@@ -129,7 +138,6 @@ function SponsorAddUpdateModal() {
                       value={sponsorLevel}
                       onChange={(e) => setSponsorLevel(e.target.value)}
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" 
-                      defaultValue=""
                       required
                       >
                       <option value="" disabled>Select Level</option>
