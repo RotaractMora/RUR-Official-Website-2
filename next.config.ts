@@ -10,9 +10,16 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/images/**',
       },
+      // THESE ARE FOR TEMP TESTING TODO REMOVE LATER
       {
         protocol: 'https',
         hostname: 'fastly.picsum.photos',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
         port: '',
         pathname: '/**',
       }
