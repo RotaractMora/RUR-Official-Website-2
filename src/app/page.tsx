@@ -39,6 +39,7 @@ import { addSponsor, deleteSponsor, getSponsors } from "@/services/sponsors.serv
 import { addTimeLineEvent, deleteTimeLineEvent, getTimeLineEvents } from "@/services/timeline.service";
 import { ITimelineData } from "@/interfaces/ITimeline";
 import { title } from "process";
+import { addImageFile } from "@/services/firebaseStorage.service";
 
 
 export const products = [
@@ -289,6 +290,12 @@ export default function Home() {
           <FloatingNav navItems={navItms}/>
           <HeroParallax products={products}/>
           <Timeline data={events} />
+          <input type="file" onChange={(e)=>{
+            if(e.target.files){
+              console.log(addImageFile(e.target.files[0]));
+            }
+          }
+          }/>
 
           <LampLighting firstLine="Sponsers" secondLine="__________"/>
 
