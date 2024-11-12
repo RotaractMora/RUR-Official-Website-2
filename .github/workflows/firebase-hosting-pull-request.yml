@@ -17,7 +17,7 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_RUR_24 }}
-          projectId: rur-24
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_FIRETEST_C524F }}
+          projectId: firetest-c524f
         env:
           FIREBASE_CLI_EXPERIMENTS: webframeworks
