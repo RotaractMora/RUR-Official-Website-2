@@ -59,8 +59,9 @@ export default async function ManageSponsors() {
                 </tbody>
             </table>
          </div>
-         
-         <SponsorAddUpdateModal />
+         <div className="mt-3">
+            <SponsorAddUpdateModal />
+         </div>
 
     </div>
     </AdminDashboardLayout>
