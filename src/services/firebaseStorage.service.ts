@@ -22,12 +22,22 @@ export const addFile = async (file: Blob | Uint8Array | ArrayBuffer):Promise<Sto
 
 
 export const deleteFile = async (fileRef:StorageReference):Promise<boolean>=>{
-    await deleteObject(fileRef).then(() => {
+    const status = await deleteObject(fileRef).then(() => {
         console.log('File deleted');
         return true;
       }).catch((error) => {
         console.error('Error deleting file: ', error);
         return false;
       });
-    return false;
+    return status;
+}
+
+export const getFileReferenceByUrl = async (fileUrl: string): Promise<StorageReference | null> => {  
+  const url = new URL(fileUrl);
+  const path = decodeURIComponent(url.pathname.split('/o/')[1].split('?')[0]);
+
+  // Create a reference to the file using the extracted path
+  const fileRef = ref(storage, path);
+
+  return fileRef;
 }
