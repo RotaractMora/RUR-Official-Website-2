@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { deleteSponsor } from '@/services/sponsors.service';
 import { ISponsor } from '@/interfaces/ISponsors';
-// import { deleteFile , getFileReferenceByUrl } from '@/services/firebaseStorage.service';
+import { deleteFile , getFileReferenceByUrl } from '@/services/firebaseStorage.service';
 
 function SponsorDeleteModal(
     {sponsor, onClose, onDelete }: {sponsor: ISponsor, onClose: () => void, onDelete: () => void}
@@ -19,62 +19,67 @@ function SponsorDeleteModal(
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
   
-      // if (sponsorToDelete?.id) {
-      //   if img url is not null, delete the image from storage
-      //   if (sponsorToDelete.imgURL) {
-      //     getFileReferenceByUrl(sponsorToDelete.imgURL)
-      //     .then((fileRef) => {
-      //       if (fileRef) {
-      //         deleteFile(fileRef)
-      //         .then((res) => {
-      //           if (res) {
-      //             console.log("Image deleted successfully", sponsorToDelete.imgURL);
-  
-      //             delete the sponsor from the database
-      //             if (sponsorToDelete?.id) {
-      //             deleteSponsor(sponsorToDelete.id)
-      //               .then(() => {
-      //                   console.log("Sponsor deleted successfully");
-      //                   onDelete();
-      //                   toggleModal();
-      //                   })
-      //               .catch((error) => {
-      //                   console.error("Error deleting sponsor: ", error);
-      //                   alert("Error deleting sponsor");
-      //                   toggleModal();
-      //               });
-      //             }
-      //           } else {
-      //             console.error("Error deleting image");
-      //           }
-      //         });
-      //       } else {
-      //         console.error("File reference is null");
-      //       }
-      //     });      
-          
-          
-      //   } else {
-      //     console.error("Sponsor ID is undefined");
-      //   }
-  
     if (sponsorToDelete?.id) {
-      deleteSponsor(sponsorToDelete.id)
-        .then(() => {
-            console.log("Sponsor deleted successfully");
-            onDelete();
-            toggleModal();
-            })
-        .catch((error) => {
-            console.error("Error deleting sponsor: ", error);
-            alert("Error deleting sponsor");
-            toggleModal();
-        });
+      // if img url is not null, delete the image from storage and starts with firebasestorage.googleapis.com
+      if (sponsorToDelete.imgURL && sponsorToDelete.imgURL !== "" && sponsorToDelete.imgURL.startsWith("https://firebasestorage.googleapis.com")) {
+        getFileReferenceByUrl(sponsorToDelete.imgURL)
+        .then((fileRef) => {
+          if (fileRef) {
+            deleteFile(fileRef)
+            .then((res) => {
+              console.log("Res", res);
+              if (res == true) {
+                console.log("Image deleted successfully", sponsorToDelete.imgURL);
+
+                // delete the sponsor from the database
+                if (sponsorToDelete?.id) {
+                deleteSponsor(sponsorToDelete.id)
+                  .then(() => {
+                      console.log("Sponsor deleted successfully");
+                      onDelete();
+                      toggleModal();
+                      })
+                  .catch((error) => {
+                      console.error("Error deleting sponsor: ", error);
+                      alert("Error deleting sponsor");
+                      toggleModal();
+                  });
+                }
+              } else {
+                console.error("Error deleting image");
+              }
+            }).catch((error) => {
+              console.error("Error deleting image: ", error);
+            }
+            );
+          } else {
+            console.error("File reference is null");
+          }
+        });      
+        
+        
+      } else {
+        console.error("Sponsor ID is undefined");
+      }
+  
+    // if (sponsorToDelete?.id) {
+    //   deleteSponsor(sponsorToDelete.id)
+    //     .then(() => {
+    //         console.log("Sponsor deleted successfully");
+    //         onDelete();
+    //         toggleModal();
+    //         })
+    //     .catch((error) => {
+    //         console.error("Error deleting sponsor: ", error);
+    //         alert("Error deleting sponsor");
+    //         toggleModal();
+    //     });
        
-    } else {
-      console.error("Sponsor ID is undefined");
-    }
+    // } else {
+    //   console.error("Sponsor ID is undefined");
+    // }
     
+    }
   }
 
   return (

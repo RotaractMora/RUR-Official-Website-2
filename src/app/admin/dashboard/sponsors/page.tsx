@@ -67,7 +67,7 @@ export default function ManageSponsors() {
               </tr>
             </thead>
             <tbody>
-              {sponsors.map((sponsor) => (
+              {sponsors.length > 0 && sponsors.map((sponsor) => (
                 <tr
                   key={sponsor.id}
                   className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
@@ -101,6 +101,14 @@ export default function ManageSponsors() {
                   </td>
                 </tr>
               ))}
+
+              {sponsors.length === 0 && (
+                <tr>
+                  <td colSpan={5} className="text-center py-4">
+                    No sponsors found
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
