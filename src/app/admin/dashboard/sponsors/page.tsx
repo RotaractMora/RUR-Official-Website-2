@@ -36,8 +36,6 @@ export default function ManageSponsors() {
         setItemToDelete(null);
     };
 
-
-
   return (
     <AdminDashboardLayout>
       <div className="dashboard-content p-6 w-4/5 mx-auto rounded-lg ">
