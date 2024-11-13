@@ -213,112 +213,8 @@ export default function Home() {
         setSponsors(data);
       }
     );
-
-
-    // const timelineEvents: ITimelineData[] = [
-    //   {
-    //     title: "Heads up",
-    //     description: "The curriculum vitae and job interviews play significant roles in a job recruitment process. Presenting a CV that showcases one's life work accurately is the key to open doors for a face-to-face interview.",
-    //     eventDate: new Date("2024-11-11"),
-    //     btnLink: "#",
-    //     imgURL: "path/to/image1.jpg",
-    //     btnText: "Learn More",
-    //     order: 1,
-    //     isBtnDisabled: false,
-    //   },
-    //   {
-    //     title: "The Image",
-    //     description: "Personal branding is telling an individual's story in a means that reflects his conduct, behavior, attitudes,and unspoken words. A unique personal brand is what would make a professional stand out from the rest and risealong his career ladder.",
-    //     eventDate: new Date("2024-11-12"),
-    //     btnLink: "#",
-    //     imgURL: "path/to/image2.jpg",
-    //     btnText: "Learn More",
-    //     order: 2,
-    //     isBtnDisabled: false,
-    //   },
-    //   {
-    //     title: "Resume Center",
-    //     description: "The curriculum vitae or the CV is the primary opportunity for a job applicant to establish a strong initial impression on a potential employer. A quality CV will surely boost the likelihood of an employment seeker getting a face-to-face interview.",
-    //     eventDate: new Date("2024-11-13"),
-    //     btnLink: "#",
-    //     imgURL: "path/to/image3.jpg",
-    //     btnText: "Learn More",
-    //     order: 3,
-    //     isBtnDisabled: false,
-    //   },
-    //   {
-    //     title: "Career Insights",
-    //     description: "Most of the undergraduates manifest a lack of knowledge regarding the career paths they could pursue following their graduation. Hence, a series of webinars will be conducted based on the different career fields catered to different departments of the university by the industry and corporate companies who will be participating the careerfair.",
-    //     eventDate: new Date("2024-11-14"),
-    //     btnLink: "#",
-    //     imgURL: "path/to/image4.jpg",
-    //     btnText: "Learn More",
-    //     order: 4,
-    //     isBtnDisabled: false,
-    //   },
-    //   {
-    //     title: "Flagship Fair",
-    //     description: "'Flagship Fair' is the limelight of 'Are you Ready?', in which the prospective employers' role comes intoplay. The employers are given the opportunity to identify skillful and qualified undergraduates of University of Moratuwa, through mock and real interviews.",
-    //     eventDate: new Date("2024-11-15"),
-    //     btnLink: "#",
-    //     imgURL: "path/to/image5.jpg",
-    //     btnText: "Learn More",
-    //     order: 5,
-    //     isBtnDisabled: false,
-    //   },
-    //   {
-    //     title: "Global Pathway",
-    //     description: "'Global Pathway' program offers a variety of resources to help students prepare for their international job search. This includes information on how to create a global resume, how to research international job opportunities, and how to effectively network with professionals in different countries. Additionally, the program provides students with access to a wide range of job search tools, including job boards and career fairs, as well as career counseling services to help students identify and pursue their ideal global career.",
-    //     eventDate: new Date("2024-11-16"),
-    //     btnLink: "#",
-    //     imgURL: "path/to/image6.jpg",
-    //     btnText: "Learn More",
-    //     order: 6,
-    //     isBtnDisabled: false,
-    //   }
-    // ];
-    
-    // timelineEvents.forEach(event => {
-    //   addTimeLineEvent(event).then(response => {
-    //     console.log(`Event ${event.title} added successfully`, response);
-    //   }).catch(error => {
-    //     console.error(`Error adding event ${event.title}`, error);
-    //   });
-    // });
-    
-    
-    // console.log("Sponsors added",getSponsers("Silver"));
-    // const s = {
-    //   level: "Silver",
-    //   sponsor: "Company D"
-    // } as ISponser;
-    // addSponser(s);
-    // console.log("del",deleteSponser("x2xFMFgzeOQgqKese7fG"));
-    
-    // const timelineEvent: ITimelineData = {
-    //   title: "Global Pathway",
-    //   description: "'Global Pathway' program offers a variety of resources to help students prepare for their international job search. This includes information on how to create a global resume, how to research international job opportunities, and how to effectively network with professionals in different countries. Additionally, the program provides students with access to a wide range of job search tools, including job boards and career fairs, as well as career counseling services to help students identify and pursue their ideal global career.",
-    //   eventDate: new Date("2024-11-16 1:55:23") ,
-    //   btnLink: "#",
-    //   imgURL: "path/to/image.jpg",
-    //   btnText: "Learn More",
-    //   order: 1,
-    //   isBtnDisabled: false,
-    // };
-    
-    // console.log(addTimeLineEvent(timelineEvent));
-    // console.log(getTimeLineEvents());
-    // console.log(deleteTimeLineEvent("yGwprTd3MN2nVi0MdAoX"));
-
-    // deleteFile(ref(getStorage(),'images/test.png')).then((res)=>{
-    //   console.log("Deleted",res);
-    // }).catch((error)=>{
-    //   console.log("Error",error);
-    // });
-
-
   },[]);
-  console.log(timeline);
+
   const events = timeline.map((t) => ({
     title: t.title,
     content: t.description,
@@ -332,27 +228,6 @@ export default function Home() {
           <FloatingNav navItems={navItms}/>
           <HeroParallax products={products}/>
           <Timeline data={events} />
-
-          <label htmlFor="test">File</label>
-          <input id="test" name="test" type="file" onChange={(e)=>{
-            let reference;
-            if(e.target.files){
-              reference = addFile(e.target.files[0]).then((ref)=>{
-              return ref;
-              });
-              if(reference != null){
-                 reference.then((ref)=>{
-                  if(ref){
-                     getDownloadURL(ref).then((url)=>{
-                    });
-                  }
-                })
-                .catch((error)=>{
-                  console.log("Error",error);
-                });
-              }
-            }
-          }} />
 
           <LampLighting firstLine="Sponsers" secondLine="__________"/>
 

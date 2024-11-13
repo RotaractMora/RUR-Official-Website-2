@@ -194,6 +194,8 @@ const CloseIcon = () => {
   const { setOpen } = useModal();
   return (
     <button
+      type="button"
+      title="Close"
       onClick={() => setOpen(false)}
       className="absolute top-4 right-4 group"
     >
@@ -221,12 +223,12 @@ const CloseIcon = () => {
 // Add it in a separate file, I've added here for simplicity
 export const useOutsideClick = (
   ref: React.RefObject<HTMLDivElement>,
-  callback: Function
+  callback: (event: Event) => void
 ) => {
   useEffect(() => {
-    const listener = (event: any) => {
+    const listener = (event: Event) => {
       // DO NOTHING if the element being clicked is the target element or their children
-      if (!ref.current || ref.current.contains(event.target)) {
+      if (!ref.current || ref.current.contains(event.target as Node)) {
         return;
       }
       callback(event);
