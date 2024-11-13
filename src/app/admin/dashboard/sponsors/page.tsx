@@ -6,7 +6,7 @@ import SponsorAddUpdateModal from "@/components/ui/modals/sponsor-add-update-mod
 
 export default async function ManageSponsors() {
   
-  let sponsors: ISponsor[] = await getSponsors("All", 100); // implement pagination later for now 100
+  const sponsors: ISponsor[] = await getSponsors("All", 100); // implement pagination later for now 100
 
   return (
     <AdminDashboardLayout>
