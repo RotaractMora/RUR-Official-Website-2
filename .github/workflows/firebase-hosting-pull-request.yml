@@ -15,13 +15,16 @@ jobs:
       NEXT_PUBLIC_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_STORAGE_BUCKET }}
       NEXT_PUBLIC_MESSAGING_SENDER_ID: ${{ secrets.NEXT_PUBLIC_MESSAGING_SENDER_ID }}
       NEXT_PUBLIC_APP_ID: ${{ secrets.NEXT_PUBLIC_APP_ID }}
+      NEXT_PUBLIC_STATUS: $${{ secrets.NEXT_PUBLIC_STATUS }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       
-      - name: Verify environment variables
-        run: echo "NEXT_PUBLIC_API_KEY is set to: $(echo "${NEXT_PUBLIC_API_KEY}" | cut -c1-4)****"
+      - name: Verify NEXT_PUBLIC_STATUS
+        run: echo "NEXT_PUBLIC_STATUS is set to: $NEXT_PUBLIC_STATUS"
+        env:
+          NEXT_PUBLIC_STATUS: ${{ secrets.NEXT_PUBLIC_STATUS }}
 
       - name: Install dependencies and build
         run: npm ci && npm run build
