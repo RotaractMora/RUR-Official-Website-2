@@ -11,7 +11,7 @@
   "dependencies": {
     "@heroicons/react": "^2.1.5",
     "@react-three/fiber": "^8.17.10",
-    "@tabler/icons-react": "^3.21.0",
+    "@tabler/icons-react": "^3.22.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cobe": "^0.6.3",

@@ -2,8 +2,7 @@
 
 import localFont from "next/font/local";
 import "./globals.css";
-import React, { useEffect, useState } from "react";
-import { LoadedProvider } from "@/context/loadStateContext";
+import React, {  useState } from "react";
 
 
 const geistSans = localFont({
@@ -18,10 +17,6 @@ const geistMono = localFont({
 });
 
 export const ThemeContext = React.createContext<any>(null);
-
-export const handleTheme = () => {
-
-}
 
 
 export default function RootLayout({children}: Readonly<{ children: React.ReactNode }>) {
@@ -54,15 +49,15 @@ export default function RootLayout({children}: Readonly<{ children: React.ReactN
 
   return (
     <ThemeContext.Provider value={[setTheme,tougleTheme,currentTheme]}>
-      <LoadedProvider>
+
 
     <html className={theme} lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} dark:bg-dark-gradient bg-light-gradient antialiased`} >
         {children}
       </body>
-    </html>
+    </html>    
+
     
-      </LoadedProvider>
     </ThemeContext.Provider>
   );
  
