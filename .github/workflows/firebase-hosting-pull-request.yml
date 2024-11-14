@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v4
       
       - name: Verify environment variables
-        run: echo "NEXT_PUBLIC_API_KEY is set to: ${NEXT_PUBLIC_API_KEY:0:4}****"
+        run: echo "NEXT_PUBLIC_API_KEY is set to: $(echo "${NEXT_PUBLIC_API_KEY}" | cut -c1-4)****"
 
       - name: Install dependencies and build
         run: npm ci && npm run build
