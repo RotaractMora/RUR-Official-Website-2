@@ -20,11 +20,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
-      - name: Verify NEXT_PUBLIC_STATUS
-        run: echo "NEXT_PUBLIC_STATUS is set to: $NEXT_PUBLIC_STATUS"
-        env:
-          NEXT_PUBLIC_STATUS: ${{ secrets.NEXT_PUBLIC_STATUS }}
 
       - name: Install dependencies and build
         run: npm ci && npm run build
