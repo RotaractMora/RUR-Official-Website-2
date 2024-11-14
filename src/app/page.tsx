@@ -37,6 +37,7 @@ import { MultiStepLoader } from "@/components/ui/multi-step-loader";
 import { HeroHighlight, Highlight } from "@/components/ui/hero-highlight";
 import { Highlighter } from "@/components/blocks/hilight";
 import {  HomeIcon, ClockIcon , MegaphoneIcon , PhoneArrowUpRightIcon } from "@heroicons/react/24/solid";
+import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 
 
 export const products = [
@@ -288,7 +289,8 @@ export default function Home() {
     { text: "Are You Ready?"},
     { text: "2025" },
   ];
-  
+
+  const content:string = "  \"Are You Ready?\" stands as a monumental initiative led by the Rotaract Club of the University of Moratuwa in partnership with the Career Guidance Unit. Our primary focus is 4th year undergraduates from our university, aiming to guide them towards a secure entry into the professional world. The scope of this endeavor knows no bounds, with over 100 companies aligning to provide opportunities for budding professionals. This project promises to be a valuable asset for those aspiring to forge strong connections with companies and their managers, even if the finish line of their degree is still on the horizon. In the initial stages, participants will gain the essential knowledge and training to confidently engage with industry experts."  
 
   return (
     <RootLayout>
@@ -297,6 +299,13 @@ export default function Home() {
           <MultiStepLoader loop={false} loading={isLoading} loadingStates={loaderSteps} duration={600} exitCallback={()=>setIsLoading(false)} />      
           
           <HeroParallax products={products}/>
+
+            <div className="w-1/2 px-5 py-5 pb-12 mx-auto">
+            <p className="text-2xl text-center font-bold dark:text-custom-color-800 text-custom-dark-color-800 p-2 py-3">
+              About Are You Ready?
+            </p>
+            <TextGenerateEffect words={content} />
+            </div>
        
        <div id="timeline">
           {
