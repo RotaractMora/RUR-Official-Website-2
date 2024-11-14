@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   motion,
   useScroll,
@@ -43,7 +43,7 @@ export const HeroParallax = ({
     springConfig
   );
   const opacity = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [0.2, 1]),
+    useTransform(scrollYProgress, [0, 0.3], [0.3, 1]),
     springConfig
   );
   const rotateZ = useSpring(
@@ -51,9 +51,11 @@ export const HeroParallax = ({
     springConfig
   );
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [-700, 100]),
+    useTransform(scrollYProgress, [0, 0.2], [-700, 300]),
     springConfig
   );
+
+
   return (
     <div
       ref={ref}
@@ -125,6 +127,12 @@ export const ProductCard = ({
   };
   translate: MotionValue<number>;
 }) => {
+
+  const [loadState,setLoadState] = React.useState(0);
+  useEffect(() => {
+    console.log(loadState,"Loaded");
+  }, [loadState]);
+
   return (
     <motion.div
       style={{
@@ -146,6 +154,10 @@ export const ProductCard = ({
           width="600"
           className="object-cover object-left-top absolute h-full w-full inset-0"
           alt={product.title}
+          // onLoad={(e) => {
+          //   setLoadState(loadState+1);
+          //   console.log(e);
+          // }}
         />
       </Link>
       <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-80 bg-black pointer-events-none"></div>
