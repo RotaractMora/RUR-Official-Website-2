@@ -10,9 +10,11 @@ const firebaseConfig = {
   projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
   storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
   messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_APP_ID
+  appId: process.env.NEXT_PUBLIC_APP_ID,
+  status: process.env.NEXT_PUBLIC_STATUS
 };
 
 console.log(firebaseConfig.apiKey===undefined?'firebase configurations missing':'firebase configuration found 🔥🔥');
+console.log('api keys status ',firebaseConfig.status);
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
