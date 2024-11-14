@@ -13,6 +13,6 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_APP_ID
 };
 
-console.log(firebaseConfig.apiKey===undefined?'firebase configurations missing':'firebase configuration found 🔥🔥');
+console.log(firebaseConfig.apiKey && firebaseConfig.apiKey===undefined?'firebase configurations missing':'firebase configuration found 🔥🔥');
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
