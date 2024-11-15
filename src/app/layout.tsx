@@ -2,7 +2,8 @@
 
 import localFont from "next/font/local";
 import "./globals.css";
-import React, {  useState } from "react";
+import React, {  useCallback, useState } from "react";
+import { AuthProvider } from "@/context/auth-provider";
 
 
 const geistSans = localFont({
@@ -25,44 +26,46 @@ export default function RootLayout({children}: Readonly<{ children: React.ReactN
   const [theme,setThemeMode] = useState<'dark'|'light'>(DEFAULT_THEME);
   
       const currentTheme = ():'dark'|'light' => {
-        const t = localStorage.getItem('theme') as 'dark'|'light';
-        if(!t){
-          localStorage.setItem('theme',DEFAULT_THEME);
-          return DEFAULT_THEME;
+        if (typeof window !== 'undefined') {
+          const t = localStorage.getItem('theme') as 'dark'|'light';
+          if(!t){
+            localStorage.setItem('theme',DEFAULT_THEME);
+            return DEFAULT_THEME;
+          } else {
+            return t;
+          }
         }
-        else{
-          return t;
-        }
+        return DEFAULT_THEME;
       }
 
 
-    const setTheme = (newTheme:'dark'|'light') => {
-        if(currentTheme()!=newTheme){
+    const setTheme = useCallback((newTheme:'dark'|'light') => {
+        if(currentTheme()!==newTheme && currentTheme()!==null){
         localStorage.setItem('theme',newTheme);
         setThemeMode(newTheme);
+        console.log('theme set to',newTheme);
       }  
-    }
+    },[]);
 
     const tougleTheme = () => {
         setThemeMode((prev) => prev === 'dark' ? 'light' : 'dark');
       }
 
   return (
+    <AuthProvider>
+
     <ThemeContext.Provider value={[setTheme,tougleTheme,currentTheme]}>
-
-
-    <html className={theme} lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} dark:bg-dark-gradient bg-light-gradient antialiased`} >
-        {children}
-      </body>
-    </html>    
-
-    
+        <html className={theme} lang="en">
+          <body className={`${geistSans.variable} ${geistMono.variable} dark:bg-dark-gradient bg-light-gradient antialiased`} >
+            {children}
+          </body>
+        </html>    
     </ThemeContext.Provider>
+    
+    </AuthProvider>
   );
  
-
-
+    
 };
 
 
