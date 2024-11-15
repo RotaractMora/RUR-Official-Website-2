@@ -1,12 +1,14 @@
 "use client"
 
 import Image from "next/image";
-import { AdminDashboardLayout } from "../admin-dashboard-layout";
+import { AdminDashboardLayout } from "../../admin-dashboard-layout";
 import { getSponsors } from "@/services/sponsors.service";
 import { ISponsor } from "@/interfaces/ISponsors";
 import SponsorAddUpdateModal from "@/components/blocks/modals/sponsor-add-update-modal";
 import { useEffect, useState } from "react";
 import SponsorDeleteModal from "@/components/blocks/modals/sponsor-delete-modal";
+import {useAuth} from "@/context/auth-provider";
+import { useRouter } from "next/navigation";
 
 export default function ManageSponsors() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -14,12 +16,21 @@ export default function ManageSponsors() {
   const [sponsors, setSponsors] = useState([] as ISponsor[]);
   const [refresh, setRefresh] = useState(false); // State to trigger re-fetch
 
+  const { user , logOut } = useAuth();
+
+  const router = useRouter();
+
+  // useEffect(() => {
+
+  // }, [user]);
+
   useEffect(() => {
         getSponsors("All").then((data) => {
             setSponsors(data);
         }
         );
     }, [refresh]);
+
 
     const refreshData = () => {
       setRefresh(!refresh);  // run useEffect again to refresh list
