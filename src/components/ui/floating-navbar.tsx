@@ -1,6 +1,6 @@
 'use client'
 
-import React, { use, useContext, useEffect, useState } from "react";
+import React, {  useContext, useState } from "react";
 import {
   motion,
   AnimatePresence,
@@ -47,7 +47,7 @@ export const FloatingNav = ({
     }
   });
 
-  const [setTheme,tougleTheme,currentTheme] = useContext<any>(ThemeContext);
+  const [tougleTheme,currentTheme] = useContext<any>(ThemeContext);
 
   return (
     <AnimatePresence mode="wait">

@@ -4,7 +4,7 @@ import { useAuth } from "@/context/auth-provider";
 import { useEffect } from "react";
 import { AdminDashboardLayout } from "../admin-dashboard-layout";
 
-export default function logoutPage() {
+export default function LogoutPage() {
 
     const { logOut } = useAuth();
     useEffect(() => {

@@ -1,4 +1,4 @@
-import { getStorage, ref, uploadBytes,getDownloadURL, StorageReference ,deleteObject} from "firebase/storage";
+import { getStorage, ref, uploadBytes, StorageReference ,deleteObject} from "firebase/storage";
 import { getApp } from "firebase/app";
 
 const firebaseApp = getApp();

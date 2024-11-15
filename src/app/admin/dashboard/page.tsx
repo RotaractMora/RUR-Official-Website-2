@@ -2,19 +2,9 @@
 
 import React, { useEffect } from 'react';
 import { AdminDashboardLayout } from '@/app/admin/admin-dashboard-layout';
-import { useAuth } from '@/context/auth-provider';
-import { useRouter } from 'next/navigation';
 
 const AdminDashboard: React.FC = () => {
     
-    const { user } = useAuth();
-
-        // useEffect(() => {
-        // if(!user) {
-        //     // setTimeout(()=>{redirectToLogin(); console.log("redirected to login")},5000);
-        //   }
-        // }, [user]);
-
 
     
     return (

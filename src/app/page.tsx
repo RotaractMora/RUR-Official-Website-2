@@ -3,7 +3,7 @@
 import { HeroParallax } from "@/components/ui/hero-parallax";
 import RootLayout from "./layout";
 import { FloatingNav } from "@/components/ui/floating-navbar";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import RUR_IMG1 from "../../public/Images/RUR (1).jpg"
 import RUR_IMG2 from "../../public/Images/RUR (2).jpg"
 import RUR_IMG3 from "../../public/Images/RUR (3).jpg"
@@ -34,7 +34,7 @@ import {  getSponsors } from "@/services/sponsors.service";
 import {  getTimeLineEvents } from "@/services/timeline.service";
 import { ITimelineData } from "@/interfaces/ITimeline";
 import { MultiStepLoader } from "@/components/ui/multi-step-loader";
-import { HeroHighlight, Highlight } from "@/components/ui/hero-highlight";
+import { HeroHighlight } from "@/components/ui/hero-highlight";
 import { Highlighter } from "@/components/blocks/hilight";
 import {  HomeIcon, ClockIcon , MegaphoneIcon , PhoneArrowUpRightIcon } from "@heroicons/react/24/solid";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";

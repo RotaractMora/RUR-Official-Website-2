@@ -16,13 +16,6 @@ export default function ManageSponsors() {
   const [sponsors, setSponsors] = useState([] as ISponsor[]);
   const [refresh, setRefresh] = useState(false); // State to trigger re-fetch
 
-  const { user , logOut } = useAuth();
-
-  const router = useRouter();
-
-  // useEffect(() => {
-
-  // }, [user]);
 
   useEffect(() => {
         getSponsors("All").then((data) => {

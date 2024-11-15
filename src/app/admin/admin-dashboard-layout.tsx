@@ -3,12 +3,12 @@
 import React, { ReactNode, useContext, useState } from "react";
 import { cn } from "@/lib/utils";
 import Footer from "@/components/blocks/footer";
-import { HoveredLink, Menu, MenuItem, ProductItem } from "../../components/ui/navbar-menu"
+import { Menu, MenuItem } from "../../components/ui/navbar-menu"
 import Image from "next/image";
 import RootLayout, { ThemeContext } from "@/app/layout";
 import { MoonIcon, SunIcon } from "@heroicons/react/24/solid";
 import LOGO_SMALL from "../../../public/Images/logo/RUR20_small.png";
-import { useAuth, AuthProvider } from "@/context/auth-provider";
+import { useAuth } from "@/context/auth-provider";
 import { useRouter } from "next/navigation";
 
 interface AdminDashboardLayoutProps {

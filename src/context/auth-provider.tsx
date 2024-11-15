@@ -1,6 +1,6 @@
 'use client'
 
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { auth } from '@/services/firebaseConfig';
 import {  GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut, User} from 'firebase/auth';
 import { useRouter } from 'next/navigation';
@@ -9,7 +9,7 @@ const AuthContext = createContext<{ user: User | null, googleSignIn: ()=>void, l
 
 export const AuthProvider = ({children}:{children:any}) => {
 
-const protectedRoutes = ['/admin','/test' , '/config'];
+const protectedRoutes = ['/admin'];
 const router = useRouter();
 const [user, setUser] = useState<User|null>(null);
 

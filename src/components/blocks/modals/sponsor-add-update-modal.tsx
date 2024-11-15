@@ -4,6 +4,7 @@ import { addSponsor } from '@/services/sponsors.service';
 import { SponsorLevel } from '@/interfaces/ISponsors';
 import { addFile } from '@/services/firebaseStorage.service';
 import { getDownloadURL } from 'firebase/storage';
+import Image from 'next/image';
 
 function SponsorAddUpdateModal({onAddSponsor}: {onAddSponsor: () => void}) {
   
@@ -169,7 +170,7 @@ function SponsorAddUpdateModal({onAddSponsor}: {onAddSponsor: () => void}) {
                     >
                       {sponsorImageFile ? (
                         <div className="relative w-full h-full">
-                          <img
+                          <Image
                             src={URL.createObjectURL(sponsorImageFile)}
                             alt="Uploaded Image"
                             className="w-full h-full object-cover rounded-lg"

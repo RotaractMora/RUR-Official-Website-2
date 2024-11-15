@@ -1,8 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
-import { exit } from "process";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 
 const CheckIcon = ({ className }: { className?: string }) => {
   return (
@@ -50,7 +49,9 @@ const LoaderCore = ({
   exitCallback?: () => void;
 }) => {
   if (loadingStates.length === value) {
-    exitCallback && exitCallback();
+    if(exitCallback) {
+      exitCallback();
+    }
   }
   return (
     <div className="flex relative justify-start max-w-xl mx-auto flex-col mt-40">
@@ -131,7 +132,9 @@ export const MultiStepLoader = ({
   }, [currentState, loading, loop, loadingStates.length, duration]);
 
   const exitLoader = () => {
-    exitCallback && exitCallback();
+    if(exitCallback) {
+      exitCallback();
+    }
   };
 
 

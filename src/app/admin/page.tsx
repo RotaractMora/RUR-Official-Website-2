@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { AdminDashboardLayout } from "@/app/admin/admin-dashboard-layout";
 import { useRouter } from "next/navigation";
 
-export default function redirectToDashboard() {
+export default function RedirectToDashboard() {
 
     const router = useRouter();
     useEffect(() => {
