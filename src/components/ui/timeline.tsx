@@ -8,12 +8,14 @@ import React, { useEffect, useRef, useState } from "react";
 import CountDown from "./count-down";
 import { useRouter } from "next/navigation";
 import { HoverBorderGradient } from "./hover-border-gradient";
+import Image, { StaticImageData } from "next/image";
 
 export interface ITimelineEntry {
   title: string;
   content: React.ReactNode;
   eventDate: Date;
   btnLink: string;
+  image: string|StaticImageData;
 }
 
 export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
@@ -75,15 +77,22 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
                 {item.title}
               </h3>
               <div>
+                <Image
+                  src={item.image} width={400} height={200} alt={item.title+" image"} className="rounded-lg mb-5"></Image>
+              </div>
+              <div>
                 {item.content}{" "}
               </div>
+            
+            <div className="flex md:flex-row justify-around items-center mt-5 flex-col">
               <div className="mt-3 inline-block">
                 <CountDown date={item.eventDate} />
               </div>
-
-                  <div className="inline-block mt-3 ml-3">
-                    <HoverBorderGradient  onClick={()=>router.push(item.btnLink)}>Stay Tuned</HoverBorderGradient>
-                  </div>
+              <div className="inline-block md:mt-3 mt-5 ml-3">
+                <HoverBorderGradient onClick={()=>router.push(item.btnLink)}>Stay Tuned</HoverBorderGradient>
+              </div>
+            </div>
+              
 
              
             </div>

@@ -19,11 +19,8 @@ import RUR_IMG12 from "../../public/Images/RUR (12).jpg"
 import RUR_IMG13 from "../../public/Images/RUR (13).jpg"
 import RUR_IMG14 from "../../public/Images/RUR (14).jpg"
 import RUR_IMG15 from "../../public/Images/RUR (15).jpg"
-import SPONSOR1 from "../../public/Images/partners/Dimo-logo-1.svg"
-import SPONSOR2 from "../../public/Images/partners/JKH Logo.png"
-import SPONSOR3 from "../../public/Images/partners/Logo_of_MAS_Holdings.png"
-import SPONSOR4 from "../../public/Images/partners/lseg.png"
-import { Timeline ,ITimelineEntry } from "@/components/ui/timeline";
+import SPONSOR from "../../public/Images/partners/the-ai-team.png"
+import { Timeline } from "@/components/ui/timeline";
 
 import LampLighting from "@/components/ui/lamp";
 import { GlareCard } from "@/components/ui/glare-card";
@@ -33,15 +30,14 @@ import ReachUsSection from "@/components/blocks/reach-us-section";
 import Footer from "@/components/blocks/footer";
 import { GridBackground } from "@/components/ui/backgrounds";
 import { ISponsor } from "@/interfaces/ISponsors";
-import { addSponsor, deleteSponsor, getSponsors } from "@/services/sponsors.service";
-import { addTimeLineEvent, deleteTimeLineEvent, getTimeLineEvents } from "@/services/timeline.service";
+import {  getSponsors } from "@/services/sponsors.service";
+import {  getTimeLineEvents } from "@/services/timeline.service";
 import { ITimelineData } from "@/interfaces/ITimeline";
-import { title } from "process";
-import { addFile, deleteFile } from "@/services/firebaseStorage.service";
-import { getDownloadURL, getStorage, ref } from "firebase/storage";
-import { Timestamp } from "firebase/firestore";
-import { useLoadState , LoadedProvider } from "@/context/loadStateContext";
-import { loadProjectInfo } from "next/dist/build/webpack-config";
+import { MultiStepLoader } from "@/components/ui/multi-step-loader";
+import { HeroHighlight } from "@/components/ui/hero-highlight";
+import { Highlighter } from "@/components/blocks/hilight";
+import {  HomeIcon, ClockIcon , MegaphoneIcon , PhoneArrowUpRightIcon } from "@heroicons/react/24/solid";
+import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 
 
 export const products = [
@@ -139,17 +135,26 @@ export const products = [
 ];
 
 
-
-
-
 const navItms = [
   {
-    name:'Home',
-    link:'/home',
+    name: 'Home',
+    link: '/',
+    icon: <HomeIcon />,
   },
   {
-    name:'Register',
-    link:'/register',
+    name: 'Timeline',
+    link: '#timeline',
+    icon: <ClockIcon />,
+  },
+  {
+    name: 'Sponsors',
+    link: '#sponsors',
+    icon: <MegaphoneIcon />,
+  },
+  {
+    name: 'Reach Us',
+    link: '#reach_us',
+    icon: <PhoneArrowUpRightIcon />,
   },
 ];
 
@@ -221,14 +226,6 @@ const Loading =()=> {
 
 
 const Para = ({level,name,imgURL,loadCallback}:{level:string,name:string,imgURL:string|undefined,loadCallback?:(count: number) => void}):React.ReactNode => {
-  const { markAsLoaded} = useLoadState();
-  const [isLoaded, setIsLoaded] = useState(false);
-  useEffect(() => {
-    if(isLoaded){
-      markAsLoaded(1)
-    }
-  }
-  ,[isLoaded]);
 
   return (
     <div className="max-w-5xl mx-auto px-0 md:px-0 lg:px-1 flex flex-col items-center h-full justify-between">
@@ -236,8 +233,7 @@ const Para = ({level,name,imgURL,loadCallback}:{level:string,name:string,imgURL:
         {`${level} Sponsor`}
       </h6>
       <Image
-        onLoad={() => setIsLoaded(true)}
-        src={imgURL ? imgURL : SPONSOR1}
+        src={imgURL ? imgURL : SPONSOR}
         width={300}
         height={100}
         alt="Sponsor"
@@ -258,7 +254,7 @@ export default function Home() {
   const [sponsors, setSponsors] = useState([] as ISponsor[]);
   const [isTimelineLoading, setTimelineLoading] = useState(true);
   const [isSponsorsLoading, setSponsorsLoading] = useState(true);
-  const {addToTotalImagesCount,loadProgress,totalItms,loadedItms} = useLoadState();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
       
@@ -270,7 +266,8 @@ export default function Home() {
     getSponsors("All").then((data) => {
         setSponsors(data);
         setSponsorsLoading(false);
-        addToTotalImagesCount(data.filter((sponsor)=>sponsor.level === "Gold" || sponsor.level ==="Silver" || sponsor.level === "Bronze").length);
+        const validdata = data.filter((sponsor)=>sponsor.level === "Gold" || sponsor.level ==="Silver" || sponsor.level === "Bronze");
+        console.log(validdata);
       }
     );
   },[]);
@@ -280,22 +277,45 @@ export default function Home() {
     content: t.description,
     eventDate: t.eventDate.toDate(),
     btnLink: t.btnLink,
+    image:t.imgURL,
   }));
 
-  
+  const loaderSteps = [
+    { text: "This is It" },
+    { text: "Make It Count" },
+    { text: "Step Into Greatness" },
+    { text: "The Time Is Now" },
+    { text: "Don’t Look Back" },
+    { text: "Are You Ready?"},
+    { text: "2025" },
+  ];
+
+  const content:string = "  \"Are You Ready?\" stands as a monumental initiative led by the Rotaract Club of the University of Moratuwa in partnership with the Career Guidance Unit. Our primary focus is 4th year undergraduates from our university, aiming to guide them towards a secure entry into the professional world. The scope of this endeavor knows no bounds, with over 100 companies aligning to provide opportunities for budding professionals. This project promises to be a valuable asset for those aspiring to forge strong connections with companies and their managers, even if the finish line of their degree is still on the horizon. In the initial stages, participants will gain the essential knowledge and training to confidently engage with industry experts."  
 
   return (
-    
-        <RootLayout>
-          <FloatingNav navItems={navItms}/>
-          <HeroParallax products={products}/>
-          {
-            isTimelineLoading ? <Loading/> : (events.length > 0 ? <Timeline data={events} /> : <div>Timeline will be updated soon.</div>)
-          }
+    <RootLayout>
           
+          <FloatingNav navItems={navItms}/>
+          <MultiStepLoader loop={false} loading={isLoading} loadingStates={loaderSteps} duration={600} exitCallback={()=>setIsLoading(false)} />      
+          
+          <HeroParallax products={products}/>
 
+            <div className="w-1/2 px-5 py-5 pb-12 mx-auto">
+            <p className="text-2xl text-center font-bold dark:text-custom-color-800 text-custom-dark-color-800 p-2 py-3">
+              About Are You Ready?
+            </p>
+            <TextGenerateEffect words={content} />
+            </div>
+       
+       <div id="timeline">
+          {
+            isTimelineLoading ? <Loading/> : (events.length > 0 ? <Timeline data={events} /> : <HeroHighlight><Highlighter firstString="" secondString="Timeline will be available soon." /> </HeroHighlight>)
+          }
+       </div>
+
+          <div id="sponsors">
           <LampLighting firstLine="Sponsers" secondLine=""/>
-          <button type="button" onClick={()=>console.log(loadProgress,totalItms,loadedItms)}>click {loadProgress}</button>
+          </div>
 
           {
             isSponsorsLoading ? <Loading/> : ( sponsors.length > 0 ?
@@ -319,24 +339,27 @@ export default function Home() {
                     {
                       sponsors.filter((sponsor)=>(sponsor.level == "Bronze") ).map((sponsor, index) =>(
                         <GlareCard key={`${sponsor.level}-${index}`} className="w-5xl" CardColor={sponsor.level}>
-                          <Para name={sponsor.name} imgURL={sponsor.imgURL} level={sponsor.level}  />
+                          <Para name={sponsor.name} imgURL={sponsor.imgURL} level={sponsor.level} />
                         </GlareCard>
                       ))
                     }
 
                 </TracingBeam>
                 :
-                <div> Sponsors will be updated soon.</div>
+                <HeroHighlight><Highlighter firstString="" secondString="Sponsors will be available soon." /> </HeroHighlight>
             )
         }
 
 
+        <div id="reach_us">
           <GridBackground title="Reach Us">
           <ReachUsSection grid={grid} />
           </GridBackground>
+        </div>
 
 
           <Footer />
+
         </RootLayout>
   );
 }
