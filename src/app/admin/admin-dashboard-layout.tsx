@@ -10,6 +10,7 @@ import { MoonIcon, SunIcon } from "@heroicons/react/24/solid";
 import LOGO_SMALL from "../../../public/Images/logo/RUR20_small.png";
 import { useAuth } from "@/context/auth-provider";
 import { useRouter } from "next/navigation";
+import { IThemeContextType } from "@/interfaces/IThemeContext";
 
 interface AdminDashboardLayoutProps {
     children: ReactNode;
@@ -46,12 +47,13 @@ function Navbar({ className }: { className?: string }) {
     const router = useRouter();
     const [active, setActive] = useState<string | null>(null);
 
-    const [tougleTheme, currentTheme] = useContext<any>(ThemeContext);
-
-    const handleLogout = async () => {
-        await logOut();
-        router.push("/admin/");
+    const themeContext = useContext<IThemeContextType|null>(ThemeContext);
+    if (!themeContext) {
+        throw new Error("ThemeToggleButton must be used within a ThemeContext.Provider");
     }
+    const { toggleTheme, theme } = themeContext;
+
+
 
     return (
         <div className={cn("fixed top-10 inset-x-0 max-w-2xl mx-auto z-50", className)}>
@@ -64,14 +66,16 @@ function Navbar({ className }: { className?: string }) {
                     <MenuItem setActive={setActive} active={null} link="/admin/dashboard/timeline" item="Timeline" />
                     
                     <MenuItem setActive={setActive} active={null} link="/admin/dashboard/sponsors" item="Sponsors"/>
+
+                    <MenuItem setActive={setActive} active={null} link="/admin/dashboard" item="Dashboard"/>
     
-                    <MenuItem setActive={setActive} active={null} link="/admin/logout" item="Logout"/>
+                    {user && <MenuItem setActive={setActive} active={null} link="/admin/logout" item="Logout"/>}
 
                     <button
-                        onClick={()=>tougleTheme()}
+                        onClick={toggleTheme}
                         className="border text-sm font-medium relative border-neutral-200 dark:border-white/[0.2] text-black dark:text-white px-4 py-2 rounded-full"
                         >
-                        {currentTheme() === "dark" ? (
+                        {theme == "dark" ? (
                             <SunIcon className="h-5 w-5" />
                         ) : (
                             <MoonIcon className="h-5 w-5" />
