@@ -19,13 +19,8 @@ import RUR_IMG12 from "../../public/Images/RUR (12).jpg"
 import RUR_IMG13 from "../../public/Images/RUR (13).jpg"
 import RUR_IMG14 from "../../public/Images/RUR (14).jpg"
 import RUR_IMG15 from "../../public/Images/RUR (15).jpg"
-import RUR_IMG16 from "../../public/Images/RUR (16).jpg"
-import RUR_IMG17 from "../../public/Images/RUR (17).jpg"
-import RUR_IMG18 from "../../public/Images/RUR (18).jpg"
-import RUR_IMG19 from "../../public/Images/RUR (19).jpg"
-import RUR_IMG20 from "../../public/Images/RUR (20).jpg"
-import RUR_IMG21 from "../../public/Images/RUR (21).jpg"
-import { Timeline ,ITimelineEntry } from "@/components/ui/timeline";
+import SPONSOR from "../../public/Images/partners/the-ai-team.png"
+import { Timeline } from "@/components/ui/timeline";
 
 import LampLighting from "@/components/ui/lamp";
 import { GlareCard } from "@/components/ui/glare-card";
@@ -35,13 +30,14 @@ import ReachUsSection from "@/components/blocks/reach-us-section";
 import Footer from "@/components/blocks/footer";
 import { GridBackground } from "@/components/ui/backgrounds";
 import { ISponsor } from "@/interfaces/ISponsors";
-import { addSponsor, deleteSponsor, getSponsors } from "@/services/sponsors.service";
-import { addTimeLineEvent, deleteTimeLineEvent, getTimeLineEvents } from "@/services/timeline.service";
+import {  getSponsors } from "@/services/sponsors.service";
+import {  getTimeLineEvents } from "@/services/timeline.service";
 import { ITimelineData } from "@/interfaces/ITimeline";
-import { title } from "process";
-import { addFile, deleteFile } from "@/services/firebaseStorage.service";
-import { getDownloadURL, getStorage, ref } from "firebase/storage";
-import { Timestamp } from "firebase/firestore";
+import { MultiStepLoader } from "@/components/ui/multi-step-loader";
+import { HeroHighlight } from "@/components/ui/hero-highlight";
+import { Highlighter } from "@/components/blocks/hilight";
+import {  HomeIcon, ClockIcon , MegaphoneIcon , PhoneArrowUpRightIcon } from "@heroicons/react/24/solid";
+import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 
 
 export const products = [
@@ -135,82 +131,143 @@ export const products = [
     thumbnail:
       RUR_IMG15,
   },
-  {
-    title: "Are You Ready?",
-    link: "#",
-    thumbnail:
-      RUR_IMG16,
-  },
-  {
-    title: "Are You Ready?",
-    link: "#",
-    thumbnail:
-      RUR_IMG17,
-  },
-  {
-    title: "Are You Ready?",
-    link: "#",
-    thumbnail:
-      RUR_IMG18,
-  },
-  {
-    title: "Are You Ready?",
-    link: "#",
-    thumbnail:
-      RUR_IMG19,
-  },
-  {
-    title: "Are You Ready?",
-    link: "#",
-    thumbnail:
-      RUR_IMG20,
-  },
-  {
-    title: "Are You Ready?",
-    link: "#",
-    thumbnail:
-      RUR_IMG21,
-  }
   
 ];
 
+
 const navItms = [
   {
-    name:'Home',
-    link:'/home',
+    name: 'Home',
+    link: '/',
+    icon: <HomeIcon />,
   },
   {
-    name:'Register',
-    link:'/register',
+    name: 'Timeline',
+    link: '#timeline',
+    icon: <ClockIcon />,
+  },
+  {
+    name: 'Sponsors',
+    link: '#sponsors',
+    icon: <MegaphoneIcon />,
+  },
+  {
+    name: 'Reach Us',
+    link: '#reach_us',
+    icon: <PhoneArrowUpRightIcon />,
   },
 ];
 
 
+const grid = [
+  {
+    name: "John Doe",
+    email: "john.doe@example.com",
+    phone: "123-456-7890",
+    position: "Software Engineer",
+  },
+  {
+    name: "Jane Smith",
+    email: "jane.smith@example.com",
+    phone: "234-567-8901",
+    position: "Project Manager",
+  },
+  {
+    name: "Alice Johnson",
+    email: "alice.johnson@example.com",
+    phone: "345-678-9012",
+    position: "QA Engineer",
+  },
+  {
+    name: "Bob Brown",
+    email: "bob.brown@example.com",
+    phone: "456-789-0123",
+    position: "Software Engineer",
+  },
+  {
+    name: "Charlie Davis",
+    email: "charlie.davis@example.com",
+    phone: "567-890-1234",
+    position: "Project Manager",
+  },
+  {
+    name: "Diana Evans",
+    email: "diana.evans@example.com",
+    phone: "678-901-2345",
+    position: "QA Engineer",
+  },
+  {
+    name: "Frank Green",
+    email: "frank.green@example.com",
+    phone: "789-012-3456",
+    position: "Software Engineer",
+  },
+  {
+    name: "Grace Harris",
+    email: "grace.harris@example.com",
+    phone: "890-123-4567",
+    position: "Project Manager",
+  },
+  {
+    name: "Henry Lee",
+    email: "henry.lee@example.com",
+    phone: "901-234-5678",
+    position: "QA Engineer",
+  },
+];
 
-const Para = ({level}:{level:string}):React.ReactNode => {
+const Loading =()=> {
   return (
-    <div className="max-w-5xl mx-auto py-2 px-0 md:px-0 lg:px-1">
-      <Image src={RUR_IMG1} alt="RUR" className="p-0 rounded-lg dark:bg-black bg-white"/>
-      <h6 className="text-6xl text-center font-bold dark:text-custom-color-800 text-custom-dark-color-800 p-3">
-        {level}
-      </h6>
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid border-transparent"></div>
     </div>
   );
 }
+
+
+const Para = ({level,name,imgURL,loadCallback}:{level:string,name:string,imgURL:string|undefined,loadCallback?:(count: number) => void}):React.ReactNode => {
+
+  return (
+    <div className="max-w-5xl mx-auto px-0 md:px-0 lg:px-1 flex flex-col items-center h-full justify-between">
+      <h6 className="text-6xl text-center font-bold dark:text-custom-color-800 text-custom-dark-color-800 p-2 py-3">
+        {`${level} Sponsor`}
+      </h6>
+      <Image
+        src={imgURL ? imgURL : SPONSOR}
+        width={300}
+        height={100}
+        alt="Sponsor"
+        className="p-0 rounded-lg dark:bg-black bg-white h-50"
+      />
+      <h5 className="text-5xl text-center font-bold dark:text-custom-color-900 text-custom-dark-color-900 p-3">
+        {name}
+      </h5>
+    </div>
+  );
+  
+}
+
 
 export default function Home() {
 
   const [timeline,setTimeline] = useState([] as ITimelineData[]);
   const [sponsors, setSponsors] = useState([] as ISponsor[]);
+  const [isTimelineLoading, setTimelineLoading] = useState(true);
+  const [isSponsorsLoading, setSponsorsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
       
     getTimeLineEvents().then((data) => {
         setTimeline(data);
+        setTimelineLoading(false);
       });
 
     getSponsors("All").then((data) => {
         setSponsors(data);
+        setSponsorsLoading(false);
+        const validdata = data.filter((sponsor)=>sponsor.level === "Gold" || sponsor.level ==="Silver" || sponsor.level === "Bronze");
+        console.log(validdata);
       }
     );
   },[]);
@@ -220,47 +277,85 @@ export default function Home() {
     content: t.description,
     eventDate: t.eventDate.toDate(),
     btnLink: t.btnLink,
+    image:t.imgURL,
   }));
-  console.log("Events",events);
+
+  const loaderSteps = [
+    { text: "This is It" },
+    { text: "Make It Count" },
+    { text: "Step Into Greatness" },
+    { text: "The Time Is Now" },
+    { text: "Don’t Look Back" },
+    { text: "Are You Ready?"},
+    { text: "2025" },
+  ];
+
+  const content:string = "  \"Are You Ready?\" stands as a monumental initiative led by the Rotaract Club of the University of Moratuwa in partnership with the Career Guidance Unit. Our primary focus is 4th year undergraduates from our university, aiming to guide them towards a secure entry into the professional world. The scope of this endeavor knows no bounds, with over 100 companies aligning to provide opportunities for budding professionals. This project promises to be a valuable asset for those aspiring to forge strong connections with companies and their managers, even if the finish line of their degree is still on the horizon. In the initial stages, participants will gain the essential knowledge and training to confidently engage with industry experts."  
+
   return (
-    
-        <RootLayout>
-          <FloatingNav navItems={navItms}/>
-          <HeroParallax products={products}/>
-          <Timeline data={events} />
-
-          <LampLighting firstLine="Sponsers" secondLine="__________"/>
-
-          <TracingBeam className="">
+    <RootLayout>
           
-          {
-            sponsors.filter((sponsor)=>sponsor.level === "Gold").map((sponsor, index) =>(
-            <GlareCard key={`${sponsor.level}-${index}`} className="w-5xl" CardColor={sponsor.level}>
-              <Para level={` ${sponsor.name} - ${sponsor.level} Sponsor`} />
-            </GlareCard>
-            ))
-          }
-          {
-            sponsors.filter((sponsor)=>sponsor.level === "Silver").map((sponsor, index) =>(
-              <GlareCard key={`${sponsor.level}-${index}`} className="w-5xl" CardColor={sponsor.level}>
-                <Para level={` ${sponsor.name} - ${sponsor.level} Sponsor`} />
-              </GlareCard>
-            ))
-          }
-          {
-            sponsors.filter((sponsor)=>(sponsor.level == "Bronze") ).map((sponsor, index) =>(
-              <GlareCard key={`${sponsor.level}-${index}`} className="w-5xl" CardColor={sponsor.level}>
-                <Para level={` ${sponsor.name} - ${sponsor.level} Sponsor`} />
-              </GlareCard>
-            ))
-          }
+          <FloatingNav navItems={navItms}/>
+          <MultiStepLoader loop={false} loading={isLoading} loadingStates={loaderSteps} duration={600} exitCallback={()=>setIsLoading(false)} />      
+          
+          <HeroParallax products={products}/>
 
-          </TracingBeam>
+            <div className="w-1/2 px-5 py-5 pb-12 mx-auto">
+            <p className="text-2xl text-center font-bold dark:text-custom-color-800 text-custom-dark-color-800 p-2 py-3">
+              About Are You Ready?
+            </p>
+            <TextGenerateEffect words={content} />
+            </div>
+       
+       <div id="timeline">
+          {
+            isTimelineLoading ? <Loading/> : (events.length > 0 ? <Timeline data={events} /> : <HeroHighlight><Highlighter firstString="" secondString="Timeline will be available soon." /> </HeroHighlight>)
+          }
+       </div>
+
+          <div id="sponsors">
+          <LampLighting firstLine="Sponsers" secondLine=""/>
+          </div>
+
+          {
+            isSponsorsLoading ? <Loading/> : ( sponsors.length > 0 ?
+        
+                <TracingBeam className="">
+                    
+                    {
+                      sponsors.filter((sponsor)=>sponsor.level === "Gold").map((sponsor, index) =>(
+                      <GlareCard key={`${sponsor.level}-${index}`} className="w-5xl" CardColor={sponsor.level}>
+                        <Para name={sponsor.name} imgURL={sponsor.imgURL} level={sponsor.level} />
+                      </GlareCard>
+                      ))
+                    }
+                    {
+                      sponsors.filter((sponsor)=>sponsor.level === "Silver").map((sponsor, index) =>(
+                        <GlareCard key={`${sponsor.level}-${index}`} className="w-5xl" CardColor={sponsor.level}>
+                          <Para name={sponsor.name} imgURL={sponsor.imgURL} level={sponsor.level} />
+                        </GlareCard>
+                      ))
+                    }
+                    {
+                      sponsors.filter((sponsor)=>(sponsor.level == "Bronze") ).map((sponsor, index) =>(
+                        <GlareCard key={`${sponsor.level}-${index}`} className="w-5xl" CardColor={sponsor.level}>
+                          <Para name={sponsor.name} imgURL={sponsor.imgURL} level={sponsor.level} />
+                        </GlareCard>
+                      ))
+                    }
+
+                </TracingBeam>
+                :
+                <HeroHighlight><Highlighter firstString="" secondString="Sponsors will be available soon." /> </HeroHighlight>
+            )
+        }
 
 
+        <div id="reach_us">
           <GridBackground title="Reach Us">
-          <ReachUsSection/>
+          <ReachUsSection grid={grid} />
           </GridBackground>
+        </div>
 
 
           <Footer />

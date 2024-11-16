@@ -46,6 +46,10 @@ module.exports = {
         'custom-color-300': '#1F2937',
         'custom-color-200': '#111827',
         'custom-color-100': '#0C0C0C',
+        'dark-glow-dots-color': '#9B70D2',
+        'dark-dots-color': '#696969', 
+        'glow-dots-color': '#0000AB', 
+        'dots-color': '#ADD8E6', 
       }
     },
     animation: {

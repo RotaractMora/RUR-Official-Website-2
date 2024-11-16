@@ -1,4 +1,4 @@
-import { getFirestore, collection, getDocs, limit, where, query , DocumentData, QueryDocumentSnapshot, Query, startAfter, orderBy, addDoc, DocumentReference, deleteDoc, getDoc, doc } from "firebase/firestore";
+import { getFirestore, collection, getDocs, limit, where, query , DocumentData, QueryDocumentSnapshot, Query, startAfter, orderBy, addDoc, DocumentReference, deleteDoc, doc } from "firebase/firestore";
 import {app} from './firebaseConfig';
 import { ISponsor ,SponsorLevel } from "@/interfaces/ISponsors";
 

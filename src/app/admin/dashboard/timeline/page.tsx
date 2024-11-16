@@ -1,4 +1,4 @@
-import { AdminDashboardLayout } from "../admin-dashboard-layout"
+import { AdminDashboardLayout } from "../../admin-dashboard-layout"
 
 export default function ManageTimeline() {
   return (
