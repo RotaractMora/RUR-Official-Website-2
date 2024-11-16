@@ -225,11 +225,10 @@ const Loading =()=> {
 }
 
 
-const Para = ({level,name,imgURL,loadCallback}:{level:string,name:string,imgURL:string|undefined,loadCallback?:(count: number) => void}):React.ReactNode => {
-
+const Para = ({ level, name, imgURL, loadCallback }: { level: string, name: string, imgURL: string | undefined, loadCallback?: (count: number) => void }): React.ReactNode => {
   return (
-    <div className="max-w-5xl mx-auto px-0 md:px-0 lg:px-1 flex flex-col items-center h-full justify-between">
-      <h6 className="text-6xl text-center font-bold dark:text-custom-color-800 text-custom-dark-color-800 p-2 py-3">
+    <div className="w-full max-w-5xl mx-auto px-4 md:px-6 lg:px-8 flex flex-col items-center h-full justify-between">
+      <h6 className="text-3xl md:text-4xl lg:text-6xl text-center font-bold dark:text-custom-color-800 text-custom-dark-color-800 p-2 py-3">
         {`${level} Sponsor`}
       </h6>
       <Image
@@ -237,47 +236,57 @@ const Para = ({level,name,imgURL,loadCallback}:{level:string,name:string,imgURL:
         width={300}
         height={100}
         alt="Sponsor"
-        className="p-0 rounded-lg dark:bg-black bg-white h-50"
+        className="p-0 rounded-lg dark:bg-black bg-white h-auto w-full max-w-[250px] md:max-w-[300px]"
       />
-      <h5 className="text-5xl text-center font-bold dark:text-custom-color-900 text-custom-dark-color-900 p-3">
+      <h5 className="text-2xl md:text-3xl lg:text-5xl text-center font-bold dark:text-custom-color-900 text-custom-dark-color-900 p-3">
         {name}
       </h5>
     </div>
   );
-  
-}
+};
 
+const AboutSection = ({ content }: { content: string }) => {
+  return (
+    <div className="w-full px-4 md:w-3/4 lg:w-1/2 mx-auto py-2  md:py-4">
+      <div className="bg-white/5 backdrop-blur-lg rounded-xl p-4 md:p-8 mt-0">
+        <h2 className="text-xl md:text-2xl text-center font-bold dark:text-custom-color-800 text-custom-dark-color-800 mb-4">
+          About Are You Ready?
+        </h2>
+        <div className="prose prose-sm md:prose-base lg:prose-lg dark:prose-invert max-w-none">
+          <TextGenerateEffect words={content} />
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default function Home() {
-
-  const [timeline,setTimeline] = useState([] as ITimelineData[]);
+  const [timeline, setTimeline] = useState([] as ITimelineData[]);
   const [sponsors, setSponsors] = useState([] as ISponsor[]);
   const [isTimelineLoading, setTimelineLoading] = useState(true);
   const [isSponsorsLoading, setSponsorsLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-      
     getTimeLineEvents().then((data) => {
-        setTimeline(data);
-        setTimelineLoading(false);
-      });
+      setTimeline(data);
+      setTimelineLoading(false);
+    });
 
     getSponsors("All").then((data) => {
-        setSponsors(data);
-        setSponsorsLoading(false);
-        const validdata = data.filter((sponsor)=>sponsor.level === "Gold" || sponsor.level ==="Silver" || sponsor.level === "Bronze");
-        console.log(validdata);
-      }
-    );
-  },[]);
+      setSponsors(data);
+      setSponsorsLoading(false);
+      const validdata = data.filter((sponsor) => sponsor.level === "Gold" || sponsor.level === "Silver" || sponsor.level === "Bronze");
+      console.log(validdata);
+    });
+  }, []);
 
   const events = timeline.map((t) => ({
     title: t.title,
     content: t.description,
     eventDate: t.eventDate.toDate(),
     btnLink: t.btnLink,
-    image:t.imgURL,
+    image: t.imgURL,
   }));
 
   const loaderSteps = [
@@ -285,81 +294,70 @@ export default function Home() {
     { text: "Make It Count" },
     { text: "Step Into Greatness" },
     { text: "The Time Is Now" },
-    { text: "Don’t Look Back" },
-    { text: "Are You Ready?"},
+    { text: "Don't Look Back" },
+    { text: "Are You Ready?" },
     { text: "2025" },
   ];
 
-  const content:string = "  \"Are You Ready?\" stands as a monumental initiative led by the Rotaract Club of the University of Moratuwa in partnership with the Career Guidance Unit. Our primary focus is 4th year undergraduates from our university, aiming to guide them towards a secure entry into the professional world. The scope of this endeavor knows no bounds, with over 100 companies aligning to provide opportunities for budding professionals. This project promises to be a valuable asset for those aspiring to forge strong connections with companies and their managers, even if the finish line of their degree is still on the horizon. In the initial stages, participants will gain the essential knowledge and training to confidently engage with industry experts."  
+  const content: string = "\"Are You Ready?\" stands as a monumental initiative led by the Rotaract Club of the University of Moratuwa in partnership with the Career Guidance Unit. Our primary focus is 4th year undergraduates from our university, aiming to guide them towards a secure entry into the professional world. The scope of this endeavor knows no bounds, with over 100 companies aligning to provide opportunities for budding professionals. This project promises to be a valuable asset for those aspiring to forge strong connections with companies and their managers, even if the finish line of their degree is still on the horizon. In the initial stages, participants will gain the essential knowledge and training to confidently engage with industry experts.";
 
   return (
     <RootLayout>
-          
-          <FloatingNav navItems={navItms}/>
-          <MultiStepLoader loop={false} loading={isLoading} loadingStates={loaderSteps} duration={600} exitCallback={()=>setIsLoading(false)} />      
-          
-          <HeroParallax products={products}/>
+      <div className="relative">
+        <FloatingNav navItems={navItms} />
+        <MultiStepLoader loop={false} loading={isLoading} loadingStates={loaderSteps} duration={600} exitCallback={() => setIsLoading(false)} />
 
-            <div className="w-1/2 px-5 py-5 pb-12 mx-auto">
-            <p className="text-2xl text-center font-bold dark:text-custom-color-800 text-custom-dark-color-800 p-2 py-3">
-              About Are You Ready?
-            </p>
-            <TextGenerateEffect words={content} />
-            </div>
-       
-       <div id="timeline">
-          {
-            isTimelineLoading ? <Loading/> : (events.length > 0 ? <Timeline data={events} /> : <HeroHighlight><Highlighter firstString="" secondString="Timeline will be available soon." /> </HeroHighlight>)
-          }
-       </div>
+        <div className="space-y-0">
+          <HeroParallax products={products} />
+          <AboutSection content={content} />
+        </div>
 
-          <div id="sponsors">
-          <LampLighting firstLine="Sponsers" secondLine=""/>
-          </div>
+        <div id="timeline" className="scroll-mt-20">
+          {isTimelineLoading ? (
+            <Loading />
+          ) : events.length > 0 ? (
+            <Timeline data={events} />
+          ) : (
+            <HeroHighlight>
+              <Highlighter firstString="" secondString="Timeline will be available soon." />
+            </HeroHighlight>
+          )}
+        </div>
 
-          {
-            isSponsorsLoading ? <Loading/> : ( sponsors.length > 0 ?
-        
-                <TracingBeam className="">
-                    
-                    {
-                      sponsors.filter((sponsor)=>sponsor.level === "Gold").map((sponsor, index) =>(
-                      <GlareCard key={`${sponsor.level}-${index}`} className="w-5xl" CardColor={sponsor.level}>
-                        <Para name={sponsor.name} imgURL={sponsor.imgURL} level={sponsor.level} />
-                      </GlareCard>
-                      ))
-                    }
-                    {
-                      sponsors.filter((sponsor)=>sponsor.level === "Silver").map((sponsor, index) =>(
-                        <GlareCard key={`${sponsor.level}-${index}`} className="w-5xl" CardColor={sponsor.level}>
-                          <Para name={sponsor.name} imgURL={sponsor.imgURL} level={sponsor.level} />
-                        </GlareCard>
-                      ))
-                    }
-                    {
-                      sponsors.filter((sponsor)=>(sponsor.level == "Bronze") ).map((sponsor, index) =>(
-                        <GlareCard key={`${sponsor.level}-${index}`} className="w-5xl" CardColor={sponsor.level}>
-                          <Para name={sponsor.name} imgURL={sponsor.imgURL} level={sponsor.level} />
-                        </GlareCard>
-                      ))
-                    }
+        <div id="sponsors" className="scroll-mt-20">
+          <LampLighting firstLine="Sponsors" secondLine="" />
+        </div>
 
-                </TracingBeam>
-                :
-                <HeroHighlight><Highlighter firstString="" secondString="Sponsors will be available soon." /> </HeroHighlight>
-            )
-        }
+        {isSponsorsLoading ? (
+          <Loading />
+        ) : sponsors.length > 0 ? (
+          <TracingBeam className="px-4 md:px-6">
+            {sponsors
+              .filter((sponsor) => ["Gold", "Silver", "Bronze"].includes(sponsor.level))
+              .map((sponsor, index) => (
+                <GlareCard
+                  key={`${sponsor.level}-${index}`}
+                  className="w-full max-w-5xl mx-auto"
+                  CardColor={sponsor.level}
+                >
+                  <Para name={sponsor.name} imgURL={sponsor.imgURL} level={sponsor.level} />
+                </GlareCard>
+              ))}
+          </TracingBeam>
+        ) : (
+          <HeroHighlight>
+            <Highlighter firstString="" secondString="Sponsors will be available soon." />
+          </HeroHighlight>
+        )}
 
-
-        <div id="reach_us">
+        <div id="reach_us" className="scroll-mt-20">
           <GridBackground title="Reach Us">
-          <ReachUsSection grid={grid} />
+            <ReachUsSection grid={grid} />
           </GridBackground>
         </div>
 
-
-          <Footer />
-
-        </RootLayout>
+        <Footer />
+      </div>
+    </RootLayout>
   );
 }
