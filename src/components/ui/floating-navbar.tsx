@@ -1,6 +1,6 @@
 'use client'
 
-import React, {  useContext, useState } from "react";
+import React, {  use, useContext, useEffect, useState } from "react";
 import {
   motion,
   AnimatePresence,
@@ -13,6 +13,7 @@ import { MoonIcon, SunIcon } from "@heroicons/react/24/solid";
 import { ThemeContext } from "@/app/layout";
 import LOGO_SMALL from "../../../public/Images/logo/RUR20_small.png";
 import Image from "next/image";
+import { IThemeContextType } from "@/interfaces/IThemeContext";
 
 
 export const FloatingNav = ({
@@ -47,7 +48,14 @@ export const FloatingNav = ({
     }
   });
 
-  const [tougleTheme,currentTheme] = useContext<any>(ThemeContext);
+  const themeContext = useContext<IThemeContextType|null>(ThemeContext);
+
+  if (!themeContext) {
+    throw new Error("ThemeToggleButton must be used within a ThemeContext.Provider");
+  }
+
+  const { toggleTheme, theme } = themeContext;
+
 
   return (
     <AnimatePresence mode="wait">
@@ -92,16 +100,17 @@ export const FloatingNav = ({
           </Link>
         ))}
 
-        <button
-          onClick={tougleTheme}
-          className="border text-sm font-medium relative border-neutral-200 dark:border-white/[0.2] text-black dark:text-white px-4 py-2 rounded-full"
-        >
-          {currentTheme === "dark" ? (
-            <SunIcon className="h-5 w-5" />
-          ) : (
-            <MoonIcon className="h-5 w-5" />
-          )}
-        </button>
+    <button
+      onClick={toggleTheme}
+      className="border text-sm font-medium relative border-neutral-200 dark:border-white/[0.2] text-black dark:text-white px-4 py-2 rounded-full"
+    >
+      {theme === "dark" ? (
+        <SunIcon className="h-5 w-5" />
+      ) : (
+        <MoonIcon className="h-5 w-5" />
+      )}
+    </button>
+
 
         {/* <button className="border text-sm font-medium relative border-neutral-200 dark:border-white/[0.2] text-black dark:text-white px-4 py-2 rounded-full">
           <span>Login</span>
