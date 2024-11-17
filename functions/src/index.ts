@@ -1,12 +1,12 @@
 // Import Firebase Functions and Admin SDK
-const logger = require("firebase-functions/logger");
-const { initializeApp } = require("firebase-admin/app");
-const { getFirestore } = require("firebase-admin/firestore");
-const { 
-    onDocumentCreated,
-    onDocumentUpdated,
-    onDocumentDeleted,
- } = require("firebase-functions/v2/firestore");
+import logger = require("firebase-functions/logger");
+import {initializeApp} from "firebase-admin/app";
+import {getFirestore} from "firebase-admin/firestore";
+import {
+  onDocumentCreated,
+  onDocumentUpdated,
+  onDocumentDeleted,
+} from "firebase-functions/v2/firestore";
 
 initializeApp();
 const db = getFirestore();
@@ -20,7 +20,7 @@ const aggregateData = async () => {
     const aggregatedData: {
       "info-sponsors": Record<string, any>;
       "info-timeline": Record<string, any>;
-    } = { "info-sponsors": {}, "info-timeline": {} };
+    } = {"info-sponsors": {}, "info-timeline": {}};
 
     // Aggregate data from info-sponsors
     const sponsorsSnapshot = await db.collection("info-sponsors").get();
@@ -49,21 +49,30 @@ const createTriggers = (collectionPath: string) => {
     onCreate: onDocumentCreated(
       `${collectionPath}/{docId}`,
       async (event: any) => {
-        logger.info(`Document created in ${collectionPath}:`, event.params.docId);
+        logger.info(
+          `Document created in ${collectionPath}:`,
+          event.params.docId
+        );
         await aggregateData();
       }
     ),
     onUpdate: onDocumentUpdated(
       `${collectionPath}/{docId}`,
       async (event: any) => {
-        logger.info(`Document updated in ${collectionPath}:`, event.params.docId);
+        logger.info(
+          `Document updated in ${collectionPath}:`,
+          event.params.docId
+        );
         await aggregateData();
       }
     ),
     onDelete: onDocumentDeleted(
       `${collectionPath}/{docId}`,
       async (event: any) => {
-        logger.info(`Document deleted in ${collectionPath}:`, event.params.docId);
+        logger.info(
+          `Document deleted in ${collectionPath}:`,
+          event.params.docId
+        );
         await aggregateData();
       }
     ),
