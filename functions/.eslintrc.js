@@ -30,7 +30,7 @@ module.exports = {
     "import/no-unresolved": 0,
     "indent": ["error", 2],
     // Disable warning for require statements in ES Modules
-    "@typescript-eslint/no-var-requires": "off",  // Allow 'require' in ESM
-    "import/no-commonjs": "off",  // Allow 'require' in ESM, commonjs modules
+    "@typescript-eslint/no-var-requires": "off", // Allow 'require' in ESM
+    "import/no-commonjs": "off", // Allow 'require' in ESM, commonjs modules
   },
 };
