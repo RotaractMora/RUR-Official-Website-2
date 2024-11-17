@@ -32,5 +32,7 @@ module.exports = {
     // Disable warning for require statements in ES Modules
     "@typescript-eslint/no-var-requires": "off", // Allow 'require' in ESM
     "import/no-commonjs": "off", // Allow 'require' in ESM, commonjs modules
+    // Change linebreak-style from error to warning
+    "linebreak-style": ["warn", "unix"],
   },
 };
