@@ -1,12 +1,12 @@
 // Import Firebase Functions and Admin SDK
 const logger = require("firebase-functions/logger");
-import { initializeApp } from "firebase-admin/app";
-import { getFirestore } from "firebase-admin/firestore";
-import {
-  onDocumentCreated,
-  onDocumentUpdated,
-  onDocumentDeleted,
-} from "firebase-functions/v2/firestore";
+const { initializeApp } = require("firebase-admin/app");
+const { getFirestore } = require("firebase-admin/firestore");
+const { 
+    onDocumentCreated,
+    onDocumentUpdated,
+    onDocumentDeleted,
+ } = require("firebase-functions/v2/firestore");
 
 initializeApp();
 const db = getFirestore();
@@ -24,13 +24,13 @@ const aggregateData = async () => {
 
     // Aggregate data from info-sponsors
     const sponsorsSnapshot = await db.collection("info-sponsors").get();
-    sponsorsSnapshot.forEach((doc) => {
+    sponsorsSnapshot.forEach((doc: any) => {
       aggregatedData["info-sponsors"][doc.id] = doc.data();
     });
 
     // Aggregate data from info-timeline
     const timelineSnapshot = await db.collection("info-timeline").get();
-    timelineSnapshot.forEach((doc) => {
+    timelineSnapshot.forEach((doc: any) => {
       aggregatedData["info-timeline"][doc.id] = doc.data();
     });
 
@@ -48,21 +48,21 @@ const createTriggers = (collectionPath: string) => {
   return {
     onCreate: onDocumentCreated(
       `${collectionPath}/{docId}`,
-      async (event) => {
+      async (event: any) => {
         logger.info(`Document created in ${collectionPath}:`, event.params.docId);
         await aggregateData();
       }
     ),
     onUpdate: onDocumentUpdated(
       `${collectionPath}/{docId}`,
-      async (event) => {
+      async (event: any) => {
         logger.info(`Document updated in ${collectionPath}:`, event.params.docId);
         await aggregateData();
       }
     ),
     onDelete: onDocumentDeleted(
       `${collectionPath}/{docId}`,
-      async (event) => {
+      async (event: any) => {
         logger.info(`Document deleted in ${collectionPath}:`, event.params.docId);
         await aggregateData();
       }
