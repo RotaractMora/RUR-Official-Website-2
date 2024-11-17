@@ -30,8 +30,9 @@ import ReachUsSection from "@/components/blocks/reach-us-section";
 import Footer from "@/components/blocks/footer";
 import { GridBackground } from "@/components/ui/backgrounds";
 import { ISponsor } from "@/interfaces/ISponsors";
-import {  getSponsors } from "@/services/sponsors.service";
-import {  getTimeLineEvents } from "@/services/timeline.service";
+// import {  getSponsors } from "@/services/sponsors.service";
+// import {  getTimeLineEvents } from "@/services/timeline.service";
+import {getDataFromAggregatedDoc} from "@/services/aggregatedData.service";
 import { ITimelineData } from "@/interfaces/ITimeline";
 import { MultiStepLoader } from "@/components/ui/multi-step-loader";
 import { HeroHighlight } from "@/components/ui/hero-highlight";
@@ -258,18 +259,28 @@ export default function Home() {
 
   useEffect(() => {
       
-    getTimeLineEvents().then((data) => {
-        setTimeline(data);
-        setTimelineLoading(false);
-      });
+    // getTimeLineEvents().then((data) => {
+    //     setTimeline(data);
+    //     setTimelineLoading(false);
+    //   });
 
-    getSponsors("All").then((data) => {
-        setSponsors(data);
-        setSponsorsLoading(false);
-        const validdata = data.filter((sponsor)=>sponsor.level === "Gold" || sponsor.level ==="Silver" || sponsor.level === "Bronze");
-        console.log(validdata);
-      }
-    );
+    // getSponsors("All").then((data) => {
+    //     setSponsors(data);
+    //     setSponsorsLoading(false);
+    //     const validdata = data.filter((sponsor)=>sponsor.level === "Gold" || sponsor.level ==="Silver" || sponsor.level === "Bronze");
+    //     console.log(validdata);
+    //   }
+    // );
+
+
+    getDataFromAggregatedDoc().then((data) => {
+      console.log("agrefated data ", data);
+      setTimeline(data.timelineList);
+      setSponsors(data.sponsorList);
+      setTimelineLoading(false);
+      setSponsorsLoading(false);
+      setIsLoading(false);
+    });
   },[]);
 
   const events = timeline.map((t) => ({
@@ -314,7 +325,7 @@ export default function Home() {
        </div>
 
           <div id="sponsors">
-          <LampLighting firstLine="Sponsers" secondLine=""/>
+          <LampLighting firstLine="Sponsors" secondLine=""/>
           </div>
 
           {
