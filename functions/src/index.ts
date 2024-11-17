@@ -1,12 +1,12 @@
 // Import Firebase Functions and Admin SDK
-import logger = require("firebase-functions/logger");
-import {initializeApp} from "firebase-admin/app";
-import {getFirestore} from "firebase-admin/firestore";
-import {
+const logger = require("firebase-functions/logger");
+const {initializeApp} = require("firebase-admin/app");
+const {getFirestore} = require("firebase-admin/firestore");
+const {
   onDocumentCreated,
   onDocumentUpdated,
   onDocumentDeleted,
-} from "firebase-functions/v2/firestore";
+} = require("firebase-functions/v2/firestore");
 
 initializeApp();
 const db = getFirestore();
