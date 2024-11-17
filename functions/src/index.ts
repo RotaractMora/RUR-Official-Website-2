@@ -1,5 +1,5 @@
 // Import Firebase Functions and Admin SDK
-import * as logger from "firebase-functions/logger";
+const logger = require("firebase-functions/logger");
 import { initializeApp } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 import {
