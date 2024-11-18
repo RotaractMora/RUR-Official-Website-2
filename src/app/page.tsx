@@ -30,8 +30,9 @@ import ReachUsSection from "@/components/blocks/reach-us-section";
 import Footer from "@/components/blocks/footer";
 import { GridBackground } from "@/components/ui/backgrounds";
 import { ISponsor } from "@/interfaces/ISponsors";
-import {  getSponsors } from "@/services/sponsors.service";
-import {  getTimeLineEvents } from "@/services/timeline.service";
+// import {  getSponsors } from "@/services/sponsors.service";
+// import {  getTimeLineEvents } from "@/services/timeline.service";
+import {getDataFromAggregatedDoc} from "@/services/aggregatedData.service";
 import { ITimelineData } from "@/interfaces/ITimeline";
 import { MultiStepLoader } from "@/components/ui/multi-step-loader";
 import { HeroHighlight } from "@/components/ui/hero-highlight";
@@ -268,18 +269,29 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getTimeLineEvents().then((data) => {
-      setTimeline(data);
-      setTimelineLoading(false);
-    });
+      
+    // getTimeLineEvents().then((data) => {
+    //     setTimeline(data);
+    //     setTimelineLoading(false);
+    //   });
 
-    getSponsors("All").then((data) => {
-      setSponsors(data);
+    // getSponsors("All").then((data) => {
+    //     setSponsors(data);
+    //     setSponsorsLoading(false);
+    //     const validdata = data.filter((sponsor)=>sponsor.level === "Gold" || sponsor.level ==="Silver" || sponsor.level === "Bronze");
+    //     console.log(validdata);
+    //   }
+    // );
+
+    getDataFromAggregatedDoc().then((data) => {
+      console.log("agrefated data ", data);
+      setTimeline(data.timelineList);
+      setSponsors(data.sponsorList);
+      setTimelineLoading(false);
       setSponsorsLoading(false);
-      const validdata = data.filter((sponsor) => sponsor.level === "Gold" || sponsor.level === "Silver" || sponsor.level === "Bronze");
-      console.log(validdata);
+      setIsLoading(false);
     });
-  }, []);
+  },[]);
 
   const events = timeline.map((t) => ({
     title: t.title,
@@ -307,10 +319,28 @@ export default function Home() {
         <FloatingNav navItems={navItms} />
         <MultiStepLoader loop={false} loading={isLoading} loadingStates={loaderSteps} duration={600} exitCallback={() => setIsLoading(false)} />
 
+
         <div className="space-y-0">
           <ResponsiveHero products={products} />
           <AboutSection content={content} />
         </div>
+
+<!--             <div className="w-1/2 px-5 py-5 pb-12 mx-auto">
+            <p className="text-2xl text-center font-bold dark:text-custom-color-800 text-custom-dark-color-800 p-2 py-3">
+              About Are You Ready?
+            </p>
+            <TextGenerateEffect words={content} />
+            </div> -->
+       
+       <div id="timeline">
+          {
+            isTimelineLoading ? <Loading/> : (events.length > 0 ? <Timeline data={events} /> : <HeroHighlight><Highlighter firstString="" secondString="Timeline will be available soon." /> </HeroHighlight>)
+          }
+       </div>
+
+          <div id="sponsors">
+          <LampLighting firstLine="Sponsors" secondLine=""/>
+          </div>
 
         <div id="timeline" className="scroll-mt-20">
           {isTimelineLoading ? (
@@ -327,6 +357,7 @@ export default function Home() {
         <div id="sponsors" className="scroll-mt-20">
           <LampLighting firstLine="Sponsors" secondLine="" />
         </div>
+
 
         {isSponsorsLoading ? (
           <Loading />
