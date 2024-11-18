@@ -1,6 +1,6 @@
 "use client"
 
-import { HeroParallax } from "@/components/ui/hero-parallax";
+import ResponsiveHero from "@/components/ui/responsiveHero";
 import RootLayout from "./layout";
 import { FloatingNav } from "@/components/ui/floating-navbar";
 import React, { useEffect, useState } from "react";
@@ -308,7 +308,7 @@ export default function Home() {
         <MultiStepLoader loop={false} loading={isLoading} loadingStates={loaderSteps} duration={600} exitCallback={() => setIsLoading(false)} />
 
         <div className="space-y-0">
-          <HeroParallax products={products} />
+          <ResponsiveHero products={products} />
           <AboutSection content={content} />
         </div>
 
