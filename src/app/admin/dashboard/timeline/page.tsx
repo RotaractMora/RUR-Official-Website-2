@@ -9,7 +9,10 @@ import Image from "next/image";
 
 export default function ManageTimeline() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isAddUpdateModalOpen, setIsAddUpdateModalOpen] = useState(false);
+
   const [eventToDelete, setEventToDelete] = useState<ITimelineData | null>(null);
+  const [eventToUpdate, setEventToUpdate] = useState<ITimelineData | null>(null);
   const [timelineEvents, setTimelineEvents] = useState<ITimelineData[]>([]);
   const [refresh, setRefresh] = useState(false);
 
@@ -65,14 +68,16 @@ export default function ManageTimeline() {
                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                       {event.title}
                     </th>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-4"> 
+                    <div className="relative overflow-visible">
                       <Image
                         src={event.imgURL}
-                        alt={event.title}
-                        width={40}
-                        height={40}
-                        className="rounded-lg dark:bg-black bg-white"
+                        alt={event.title} 
+                        width={50}
+                        height={50}
+                        className="transition-transform duration-300 ease-in-out transform hover:scale-[5] hover:border-slate-800 p-0 dark:bg-black bg-white"
                       />
+                    </div>
                     </td>
                     <td className="px-6 py-4">
                       {event.eventDate.toDate().toLocaleString()}
@@ -87,9 +92,18 @@ export default function ManageTimeline() {
                       </div>
                     </td>
                     <td className="px-6 py-4">
+                      <button 
+                        onClick={() => {
+                          setEventToUpdate(event);
+                          setIsAddUpdateModalOpen(true);
+                        }}
+                        className="text-blue-500 hover:text-blue-700 transition-colors m-2"
+                      >
+                        Update
+                      </button>
                       <button
                         onClick={() => handleDeleteClick(event)}
-                        className="text-red-500 hover:text-red-700 transition-colors"
+                        className="text-red-500 hover:text-red-700 transition-colors m-2"
                       >
                         Delete
                       </button>
@@ -108,7 +122,21 @@ export default function ManageTimeline() {
         </div>
 
         <div className="mt-3">
-          <TimelineAddUpdateModal onAddEvent={refreshData} />
+          <button 
+            onClick={
+              () => {
+                setEventToUpdate(null);
+                setIsAddUpdateModalOpen(true);
+              }
+            } 
+            className="inline-flex items-center px-6 py-3 text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 rounded-lg text-sm font-medium shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5" 
+            type="button"
+          >
+            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            Add Timeline Event
+          </button>
         </div>
 
         {isDeleteModalOpen && eventToDelete && (
@@ -116,6 +144,14 @@ export default function ManageTimeline() {
             event={eventToDelete}
             onClose={closeDeleteModal}
             onDelete={refreshData}
+          />
+        )}
+
+        {isAddUpdateModalOpen && (
+          <TimelineAddUpdateModal
+            timelineEvent={eventToUpdate ? eventToUpdate : undefined}
+            onAddUpdateEvent={refreshData}
+            onClose={() => setIsAddUpdateModalOpen(false)}
           />
         )}
       </div>
