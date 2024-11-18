@@ -52,14 +52,14 @@ const MobileHero = () => {
         <div className="flex flex-col items-start justify-center min-h-screen max-w-2xl">
           {/* Pricing */}
           <p className="text-white text-lg mb-6">
-            STARTING AT $9.99/MONTH
+            STARTING AT 
           </p>
 
           {/* Main Title */}
           <h1 className="text-white mb-8">
-            <span className="block text-6xl font-normal mb-2">Master</span>
-            <span className="block text-6xl italic font-serif">Bread</span>
-            <span className="block text-6xl italic font-serif">making</span>
+            <span className="block text-6xl font-normal mb-2">Are</span>
+            <span className="block text-6xl italic font-serif">You</span>
+            <span className="block text-6xl italic font-serif">Ready?</span>
           </h1>
 
           {/* Description */}
