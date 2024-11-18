@@ -11,9 +11,14 @@ import {useAuth} from "@/context/auth-provider";
 import { useRouter } from "next/navigation";
 
 export default function ManageSponsors() {
+
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isAddUpdateModalOpen, setIsAddUpdateModalOpen] = useState(false);
+
   const [sponsorToDelete, setItemToDelete] = useState<ISponsor | null>(null);
+  const [sponsorToUpdate, setItemToUpdate] = useState<ISponsor | null>(null);
   const [sponsors, setSponsors] = useState([] as ISponsor[]);
+
   const [refresh, setRefresh] = useState(false); // State to trigger re-fetch
 
 
@@ -35,10 +40,21 @@ export default function ManageSponsors() {
         refreshData();
       };
 
+    const handleUpdateClick = (sponsor: ISponsor) => {
+      setItemToUpdate(sponsor);
+      setIsAddUpdateModalOpen(true);
+      refreshData();
+    }
+
     const closeDeleteModal = () => {
         setIsDeleteModalOpen(false);
         setItemToDelete(null);
     };
+
+    const closeAddUpdateModal = () => {
+      setIsAddUpdateModalOpen(false);
+      setItemToUpdate(null);
+    }
 
   return (
     <AdminDashboardLayout>
@@ -81,20 +97,29 @@ export default function ManageSponsors() {
                     {sponsor.name}
                   </th>
                   <td className="px-6 py-4">
-                    <Image
-                      src={`${sponsor.imgURL}`}
-                      alt={`${sponsor.name} Logo`}
-                      width={40}
-                      height={40}
-                      className="p-0 rounded-lg dark:bg-black bg-white"
-                    />
+                  <div className="relative overflow-visible">
+                  <Image
+                    src={`${sponsor.imgURL}`}
+                    alt={`${sponsor.name} Logo`}
+                    width={50}
+                    height={50}
+                    className="transition-transform duration-300 ease-in-out transform hover:scale-[5] hover:border-slate-800 p-0 dark:bg-black bg-white"
+                  />
+                </div>
+                
                   </td>
                   <td className="px-6 py-4">{sponsor.level}</td>
                   <td className="px-6 py-4">
                     {sponsor.timestamp?.toDate().toLocaleString()}
                   </td>
-                  <td className="px-6 py-4">
-                    <button className="text-red-500"
+                  <td className="px-3 py-4">
+                  <button className="text-blue-500 m-2"
+                        onClick={
+                            () => handleUpdateClick(sponsor)
+                        }>
+                        Update
+                    </button>
+                    <button className="text-red-500 m-2"
                         onClick={
                             () => handleDeleteClick(sponsor)
                         }>
@@ -115,15 +140,34 @@ export default function ManageSponsors() {
           </table>
         </div>
         <div className="mt-3">
-          <SponsorAddUpdateModal onAddSponsor={refreshData}/>
-        </div>
-        {isDeleteModalOpen && sponsorToDelete && (
-                <SponsorDeleteModal
-                    sponsor={sponsorToDelete}
-                    onClose={closeDeleteModal}
-                    onDelete={refreshData}
-                />
+        <button 
+          onClick={() => 
+            {
+              setItemToUpdate(null);
+              setIsAddUpdateModalOpen(true);
+            }
+          } 
+          className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" 
+          type="button">
+        Add Sponsor
+      </button>
+        {isAddUpdateModalOpen && (
+          <SponsorAddUpdateModal 
+              sponsor={sponsorToUpdate ?  sponsorToUpdate : undefined}
+              onAddUpdateSponsor={refreshData} 
+              onClose={closeAddUpdateModal}
+          />
         )}
+
+        {isDeleteModalOpen && sponsorToDelete && (
+                  <SponsorDeleteModal
+                      sponsor={sponsorToDelete}
+                      onClose={closeDeleteModal}
+                      onDelete={refreshData}
+                  />
+          )}
+        </div>
+     
       </div>
     </AdminDashboardLayout>
   );
