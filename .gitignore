@@ -42,3 +42,8 @@ next-env.d.ts
 
 # firebase files
 .firebase
+
+# firebase emulator logs
+ui-debug.log
+firebase-debug.log
+firestore-debug.log
