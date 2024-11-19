@@ -3,7 +3,7 @@ import {getFirestore} from "firebase-admin/firestore";
 import {
   onDocumentCreated, 
   onDocumentUpdated, 
-  onDocumentDeleted
+  onDocumentDeleted,
 } from "firebase-functions/v2/firestore";
 import {logger} from "firebase-functions";
 
