@@ -1,7 +1,7 @@
-import { initializeApp } from "firebase-admin/app";
-import { getFirestore } from "firebase-admin/firestore";
-import { onDocumentCreated, onDocumentUpdated, onDocumentDeleted } from "firebase-functions/v2/firestore";
-import { logger } from "firebase-functions";
+import {initializeApp} from "firebase-admin/app";
+import {getFirestore} from "firebase-admin/firestore";
+import {onDocumentCreated, onDocumentUpdated, onDocumentDeleted} from "firebase-functions/v2/firestore";
+import {logger} from "firebase-functions";
 
 initializeApp();
 const db = getFirestore();
@@ -15,7 +15,7 @@ const aggregateData = async () => {
     const aggregatedData: {
       "info-sponsors": Record<string, unknown>;
       "info-timeline": Record<string, unknown>;
-    } = { "info-sponsors": {}, "info-timeline": {} };
+    } = {"info-sponsors": {}, "info-timeline": {}};
 
     // Aggregate data from info-sponsors
     const sponsorsSnapshot = await db.collection("info-sponsors").get();
