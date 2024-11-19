@@ -1,18 +1,29 @@
 "use client"
 import React, { useState } from 'react';
-import { addSponsor } from '@/services/sponsors.service';
-import { SponsorLevel } from '@/interfaces/ISponsors';
-import { addFile } from '@/services/firebaseStorage.service';
+import { addSponsor, updateSponsor } from '@/services/sponsors.service';
+import { ISponsor, SponsorLevel } from '@/interfaces/ISponsors';
+import { addFile, deleteFile, getFileReferenceByUrl } from '@/services/firebaseStorage.service';
 import { getDownloadURL } from 'firebase/storage';
 import Image from 'next/image';
 
-function SponsorAddUpdateModal({onAddSponsor}: {onAddSponsor: () => void}) {
+function SponsorAddUpdateModal({
+  sponsor,
+  onAddUpdateSponsor,
+  onClose,
+}: {
+  sponsor?: ISponsor,
+  onAddUpdateSponsor: () => void,
+  onClose: () => void
+}) {
   
-  const [isOpen, setIsOpen] = useState(false);
-  const [sponsorName, setSponsorName] = useState('');
-  const [sponsorLevel, setSponsorLevel] = useState('');
+  // const [isOpen, setIsOpen] = useState(false);
+  const [sponsorName, setSponsorName] = useState(sponsor?.name || '');
+  const [sponsorLevel, setSponsorLevel] = useState(sponsor?.level || '');
   const [sponsorImageFile, setSponsorImageFile] = useState<File | null>(null);
-  const [sponsorImgURL, setSponsorImgURL] = useState('');
+  const [sponsorImgURL, setSponsorImgURL] = useState(sponsor?.imgURL || '');
+  const [uploadNewImage, setUploadNewImage] = useState( sponsor?.imgURL ? false : true);
+
+  console.log("Sponsor: ", sponsor);
 
   // Handle file selection or drag-and-drop
   const handleFileChange = (e: any) => {
@@ -30,16 +41,29 @@ function SponsorAddUpdateModal({onAddSponsor}: {onAddSponsor: () => void}) {
     setSponsorLevel('');
     setSponsorImageFile(null);
     setSponsorImgURL('');
+    onClose();    
 
-    setIsOpen(!isOpen);
+    // setIsOpen(!isOpen);
   };
 
+  const validateImage = (file: File) => {
+    if (!file.type.includes('image')) {
+      alert('Please select a valid image file');
+      return false;
+    }
+
+    if (file.size > 1024 * 1024 * 2) {
+      alert('Please select an image file less than 2MB');
+      return false;
+    }
+
+    return true;
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
-
     e.preventDefault();
 
-    if (!sponsorName || !sponsorLevel || !sponsorImageFile) {
+    if (!sponsorName || !sponsorLevel || (!sponsor && !sponsorImageFile)) {
       return;
     }
 
@@ -48,64 +72,67 @@ function SponsorAddUpdateModal({onAddSponsor}: {onAddSponsor: () => void}) {
       return;
     }
 
-    // validate image file type
-    if (!sponsorImageFile.type.includes('image')) {
-      alert('Please select a valid image file');
-      return;
-    }
+    let imgURL = sponsor?.imgURL || '';
 
-    // validate image file size
-    if (sponsorImageFile.size > 1024 * 1024 * 2) {
-      alert('Please select an image file less than 2MB');
-      return;
-    }
+    try {
+        // Handle image upload
+        if (uploadNewImage && sponsorImageFile) {
+            if (!validateImage(sponsorImageFile)) return;
 
-    // Upload image to firebase storage and get URL
-    addFile(sponsorImageFile).then((ref) => {
-      if (ref) {
-        console.log("StorageReference :",ref);
-        getDownloadURL(ref).then((url) => {
-          console.log('Image URL: ', url);
+            const ref = await addFile(sponsorImageFile);
+            if (ref) {
+                imgURL = await getDownloadURL(ref);
+            } else {
+                throw new Error('Failed to get storage reference');
+            }
 
-          // Create new sponsor object
-          const newSponsor = {
+            if (sponsor?.imgURL) {
+                // Delete the old image
+                const oldImgRef = await getFileReferenceByUrl(sponsor.imgURL);
+                if (oldImgRef) {
+                    await deleteFile(oldImgRef).then(() => {
+                        console.log('Old image deleted successfully');
+                    }).catch((error) => {
+                        console.error('Error deleting old image:', error);
+                        alert('Error deleting old image. Please try again.');
+                        return;
+                    });
+                }
+            }
+        } else if (uploadNewImage && !sponsorImageFile) {
+            alert('Please select an image file');
+            return;
+        }            
+
+        // Sponsor data object
+        const sponsorData = {
             name: sponsorName,
             level: sponsorLevel as SponsorLevel,
-            imgURL: url,
-          };
+            imgURL,
+        };
 
-          // Add new sponsor to firestore
-          addSponsor(newSponsor)
-          .then(() => {
-            console.log('Sponsor added successfully', newSponsor);
-            onAddSponsor();
-            toggleModal();
-          })
-          .catch((error) => {
-            console.error('Error adding sponsor: ', error);
-            alert('Error adding sponsor');
-            toggleModal();
-          }); 
-        });
-      }
-    }).catch((error) => {
-      console.error('Error uploading file: ', error);
-      alert('Error uploading file');
-      return;
-    });
+        if (sponsor?.id) {
+            // Update sponsor
+            await updateSponsor(sponsor.id, sponsorData);
+            console.log('Sponsor updated successfully:', sponsorData);
+        } else {
+            // Add new sponsor
+            await addSponsor(sponsorData);
+            console.log('Sponsor added successfully:', sponsorData);
+        }
 
-  }
+        //success
+        onAddUpdateSponsor();
+        toggleModal();
+    } catch (error) {
+        console.error('Error processing sponsor:', error);
+        alert('An error occurred. Please try again.');
+    }
+};
+
 
   return (
     <>
-      <button 
-        onClick={toggleModal} 
-        className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" 
-        type="button">
-        Add Sponsor
-      </button>
-
-      {isOpen && (
         <div 
           id="crud-modal" 
           tabIndex={-1} 
@@ -116,7 +143,7 @@ function SponsorAddUpdateModal({onAddSponsor}: {onAddSponsor: () => void}) {
             <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
               <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  Add New Sponsor
+                  {sponsor ? "Update Sponsor" : "Add Sponsor"}
                 </h3>
                 <button 
                   type="button" 
@@ -140,6 +167,7 @@ function SponsorAddUpdateModal({onAddSponsor}: {onAddSponsor: () => void}) {
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" 
                       placeholder="Type sponsor name" 
                       required 
+                      value={sponsorName}
                       onChange={(e) => setSponsorName(e.target.value)}
                     />
                   </div>
@@ -158,68 +186,106 @@ function SponsorAddUpdateModal({onAddSponsor}: {onAddSponsor: () => void}) {
                       <option value="Silver">Silver</option>
                       <option value="Bronze">Bronze</option>
                     </select>
-                  </div>
+                    </div>
 
-                  <div className="col-span-2">
-                    <label htmlFor="image-upload" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Upload Image</label>
-                    <div 
-                      className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500"
-                      onDrop={handleFileChange}
-                      onDragOver={(e) => e.preventDefault()}
-                      onClick={() => document.getElementById('image-upload')?.click()}  // Trigger file input click on div click
-                    >
-                      {sponsorImageFile ? (
-                        <div className="relative w-full h-full">
-                          <Image
-                            src={URL.createObjectURL(sponsorImageFile)}
-                            alt="Uploaded Image"
-                            className="w-full h-full object-cover rounded-lg"
-                          />
+                    <div className="col-span-2">
+                     
+                      { uploadNewImage ? (
+                      <><label htmlFor="image-upload" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Upload Image</label><div
+                          className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500"
+                          onDrop={handleFileChange}
+                          onDragOver={(e) => e.preventDefault()}
+                          onClick={() => document.getElementById('image-upload')?.click()} // Trigger file input click on div click
+                        >
+                          {sponsorImageFile ? (
+                            <div className="relative w-full h-full">
+                              <Image
+                                src={URL.createObjectURL(sponsorImageFile)}
+                                alt="Uploaded Image"
+                                className="w-full h-full object-cover rounded-lg"
+                                width={800}
+                                height={400}
+                                
+                                />
+
+                              <button
+                                type="button"
+                                onClick={() => 
+                                  {
+                                    setSponsorImageFile(null)
+                                    if (sponsor?.imgURL) {
+                                      setUploadNewImage(false)
+                                    }
+                                  }
+                                }
+                                className="absolute -top-2 -right-2 text-gray-400 bg-gray-100 hover:bg-gray-200 hover:text-gray-900 rounded-full text-sm w-6 h-6 flex justify-center items-center dark:hover:bg-gray-600 dark:bg-gray-700 dark:hover:text-white border border-gray-300 dark:border-gray-600"
+                              >
+                                <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                </svg>
+                                <span className="sr-only">Remove image</span>
+                                
+                              </button>
+                            </div>
+                          ) : (
+                            <><div className="flex flex-col items-center justify-center pt-5 pb-6">
+                            <svg className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                            </svg>
+                            <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> or drag and drop</p>
+                            <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                          </div><input
+                              id="image-upload"
+                              type="file"
+                              className="hidden"
+                              accept="image/*"
+                              onChange={handleFileChange} /></>
+                          )}
+                          
+                      
+                       </div>
+                        {sponsor?.imgURL && (
+                              <button 
+                                type="button"
+                                className="text-red-500 dark:text-red-400 hover:underline"
+                                onClick={() => setUploadNewImage(false)}
+                              >
+                                Cancel Upload New Image
+                              </button>
+                            )}
+                        </>
+                      ) 
+                      : (
+                        <div className="flex items-center justify-between">
+                          <Image className='' width={200} height={200} src={sponsor?.imgURL || ''} alt={sponsor?.name || ''} />
+                          
                           <button
                             type="button"
-                            onClick={() => setSponsorImageFile(null)}
-                            className="absolute -top-2 -right-2 text-gray-400 bg-gray-100 hover:bg-gray-200 hover:text-gray-900 rounded-full text-sm w-6 h-6 flex justify-center items-center dark:hover:bg-gray-600 dark:bg-gray-700 dark:hover:text-white border border-gray-300 dark:border-gray-600"
+                            className="text-blue-500 dark:text-blue-400 hover:underline"
+                            onClick={() => setUploadNewImage(true)}
                           >
-                            <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                            </svg>
-                            <span className="sr-only">Remove image</span>
+                            Upload New Image
                           </button>
-                        </div>
-                      ) : (
-                        <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                          <svg className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-                          </svg>
-                          <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> or drag and drop</p>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                          
                         </div>
                       )}
-                      <input
-                        id="image-upload"
-                        type="file"
-                        className="hidden"
-                        accept="image/*"
-                        onChange={handleFileChange}
-                      />
+
                     </div>
-                  </div>
-                  </div>
+                    </div>
 
-                <button
-                  type="submit"
-                  className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-full"
-                >
-                  Save
-                </button>
-              </form>
+                  <button
+                    type="submit"
+                    className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-full"
+                  >
+                    {sponsor ? "Update Sponsor" : "Add Sponsor"}
+                  </button>
+                </form>
+              </div>
+          
             </div>
-        
           </div>
-        </div>
-      )}
-    </>
-  );
-}
+      </>
+    );
+  }
 
-export default SponsorAddUpdateModal;
+  export default SponsorAddUpdateModal;
