@@ -7,8 +7,8 @@ const MobileHero = () => {
       {/* Background Images Container */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Large circle image 1 */}
-        <div className="absolute w-[120%] h-[120%] -top-[10%] -left-[10%]">
-          <div className="absolute w-[300px] h-[300px] top-0 left-0">
+        <div className="absolute w-[100%] h-[150%] -top-[10%] -left-[5%]">
+          <div className="absolute w-[300px] h-[300px] top-10% left-0">
             <div className="w-full h-full rounded-full overflow-hidden">
               <img 
                 src="/Images/RUR (1).jpg"
@@ -26,19 +26,19 @@ const MobileHero = () => {
               <img 
                 src="/Images/RUR (2).jpg"
                 alt="Bread making" 
-                className="w-full h-full object-cover opacity-80"
+                className="w-full h-full object-cover opacity-100"
               />
             </div>
           </div>
         </div>
 
         {/* Small circle image */}
-        <div className="absolute w-[300px] h-[300px] bottom-[5%] left-[10%]">
+        <div className="absolute w-[300px] h-[300px] bottom-[10%] left-[5%]">
           <div className="w-full h-full rounded-full overflow-hidden">
             <img 
               src="/Images/RUR (3).jpg"
               alt="Bread making" 
-              className="w-full h-full object-cover opacity-70"
+              className="w-full h-full object-cover opacity-90"
             />
           </div>
         </div>
