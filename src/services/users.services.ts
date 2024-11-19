@@ -1,6 +1,6 @@
 // Import Firebase Admin SDK
-const { getFirestore } = require("firebase-admin/firestore");
-const logger = require("firebase-functions/logger");
+import { getFirestore } from "firebase-admin/firestore";
+import { logger } from "firebase-functions";
 
 const db = getFirestore();
 
@@ -14,6 +14,3 @@ export const createUserDocument = async (userId: string, userData: any) => {
     logger.error("Error creating/updating user document:", error);
   }
 };
-
-module.exports = { createUserDocument }; // Export for use in your front-end
-

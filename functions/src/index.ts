@@ -1,11 +1,11 @@
 // Import Firebase Functions and Admin SDK
-const logger = require("firebase-functions/logger");
-const { initializeApp } = require("firebase-admin/app");
-const { getFirestore } = require("firebase-admin/firestore");
-const { onDocumentCreated, onDocumentUpdated, onDocumentDeleted } = require("firebase-functions/v2/firestore");
+import { initializeApp } from "firebase-admin/app";
+import { getFirestore } from "firebase-admin/firestore";
+import { onDocumentCreated, onDocumentUpdated, onDocumentDeleted } from "firebase-functions/v2/firestore";
+import { logger } from "firebase-functions"; // Import logger using `import`
 
 initializeApp();
-const db = getFirestore(); 
+const db = getFirestore();
 
 // Path for the aggregated document
 const AGGREGATED_DOC_PATH = "metadata/aggregatedInfo";
@@ -58,7 +58,7 @@ const createTriggers = (collectionPath: string) => {
 };
 
 // Export triggers for /info-sponsors
-exports.aggregateInfoSponsors = createTriggers("info-sponsors");
+export const aggregateInfoSponsors = createTriggers("info-sponsors");
 
 // Export triggers for /info-timeline
-exports.aggregateInfoTimeline = createTriggers("info-timeline");
+export const aggregateInfoTimeline = createTriggers("info-timeline");
