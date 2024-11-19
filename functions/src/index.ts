@@ -5,20 +5,7 @@ const { getFirestore } = require("firebase-admin/firestore");
 const { onDocumentCreated, onDocumentUpdated, onDocumentDeleted } = require("firebase-functions/v2/firestore");
 
 initializeApp();
-const db = getFirestore();
-
-// Function to create or update a user document in Firestore
-const createUserDocument = async (userId: string, userData: any) => {
-  try {
-    const userRef = db.collection("users").doc(userId);
-    await userRef.set(userData, { merge: true });
-    logger.info(`User document created/updated for user ID: ${userId}`);
-  } catch (error) {
-    logger.error("Error creating/updating user document:", error);
-  }
-};
-
-module.exports = { createUserDocument }; // Export for use in your front-end
+const db = getFirestore(); 
 
 // Path for the aggregated document
 const AGGREGATED_DOC_PATH = "metadata/aggregatedInfo";
