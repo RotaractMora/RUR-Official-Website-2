@@ -14,98 +14,131 @@ export default function ManageTimeline() {
   const [timelineEvents, setTimelineEvents] = useState<ITimelineData[]>([]);
   const [refresh, setRefresh] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Separate function to ensure alert is always shown
-  const showAlert = (title: string, message: string, icon: 'error' | 'success' | 'warning' | 'info') => {
-    return new Promise((resolve) => {
-      Swal.fire({
-        title,
-        text: message,
-        icon,
-        confirmButtonText: 'OK',
-        confirmButtonColor: '#3085d6',
-        allowOutsideClick: false,
-        allowEscapeKey: false,
-        customClass: {
-          container: 'dark:bg-gray-800',
-          popup: 'dark:bg-gray-700 dark:text-white',
-          title: 'dark:text-white',
-        }
-      }).then(resolve);
+  // Enhanced alert function with custom styling for dark mode
+  const showAlert = async (title: string, message: string, icon: 'error' | 'success' | 'warning' | 'info') => {
+    return Swal.fire({
+      title,
+      text: message,
+      icon,
+      confirmButtonText: 'OK',
+      confirmButtonColor: '#3085d6',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      customClass: {
+        container: 'dark:bg-gray-800',
+        popup: 'dark:bg-gray-700 dark:text-white',
+        title: 'dark:text-white',
+        htmlContainer: 'dark:text-gray-300',
+        confirmButton: 'dark:bg-blue-600 dark:hover:bg-blue-700',
+      },
+      backdrop: 'rgba(0,0,0,0.4)',
+      showClass: {
+        popup: 'animate__animated animate__fadeIn'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOut'
+      }
     });
   };
 
-  // Network status check function
-  const checkNetworkStatus = () => {
-    return new Promise((resolve, reject) => {
-      if (!navigator.onLine) {
-        reject(new Error('No internet connection'));
-        return;
-      }
+  // Enhanced network status check
+  const checkNetworkStatus = async () => {
+    if (!navigator.onLine) {
+      throw new Error('NO_INTERNET');
+    }
 
-      // Additional network check using fetch
-      fetch('https://www.google.com/favicon.ico', {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+      await fetch('https://www.google.com/favicon.ico', {
         mode: 'no-cors',
+        signal: controller.signal,
         cache: 'no-store'
-      })
-        .then(() => resolve(true))
-        .catch(() => reject(new Error('Network error')));
-    });
+      });
+
+      clearTimeout(timeoutId);
+    } catch (error) {
+      throw new Error('NETWORK_ERROR');
+    }
+  };
+
+  // Enhanced error handler
+  const handleError = async (error: any) => {
+    let errorMessage = "An unexpected error occurred";
+    let errorTitle = "Error";
+
+    switch (true) {
+      case error.message === 'NO_INTERNET':
+        errorMessage = "No internet connection. Please check your network settings and try again.";
+        errorTitle = "Connection Error";
+        break;
+      case error.message === 'NETWORK_ERROR':
+        errorMessage = "Unable to connect to the server. Please check your connection and try again.";
+        errorTitle = "Network Error";
+        break;
+      case error.message === 'Request timed out':
+        errorMessage = "The request took too long to complete. Please try again.";
+        errorTitle = "Timeout Error";
+        break;
+      case error.code === 'PERMISSION_DENIED':
+        errorMessage = "You don't have permission to access this data.";
+        errorTitle = "Access Denied";
+        break;
+      case error.code === 'FAILED_PRECONDITION':
+        errorMessage = "The operation failed due to a server configuration issue.";
+        errorTitle = "Server Error";
+        break;
+      case error.code === 'UNAVAILABLE':
+        errorMessage = "The service is temporarily unavailable. Please try again later.";
+        errorTitle = "Service Unavailable";
+        break;
+      case error instanceof TypeError:
+        errorMessage = "There was a problem with the data format.";
+        errorTitle = "Data Error";
+        break;
+      default:
+        if (error.message) {
+          errorMessage = error.message;
+        }
+    }
+
+    setError(errorMessage);
+    await showAlert(errorTitle, errorMessage, 'error');
   };
 
   useEffect(() => {
     let isMounted = true;
+    const controller = new AbortController();
 
     const fetchTimelineEvents = async () => {
       if (!isMounted) return;
+      
       setIsLoading(true);
+      setError(null);
 
       try {
-        // First check network status
         await checkNetworkStatus();
-
-        const timeoutDuration = 15000; // Increased to 15 seconds
-        const controller = new AbortController();
-        const signal = controller.signal;
 
         const timeoutPromise = new Promise((_, reject) => {
           setTimeout(() => {
-            controller.abort();
             reject(new Error('Request timed out'));
-          }, timeoutDuration);
+          }, 15000);
         });
 
         const fetchPromise = getTimeLineEvents(100);
-
         const data = await Promise.race([fetchPromise, timeoutPromise]);
 
         if (!isMounted) return;
+        
         setTimelineEvents(data as ITimelineData[]);
+        setError(null);
 
       } catch (error: any) {
         if (!isMounted) return;
-
-        let errorMessage = "Failed to fetch timeline events";
-        let errorTitle = "Error";
-        
-        // Enhanced error handling
-        if (!navigator.onLine || error.message === 'No internet connection') {
-          errorMessage = "No internet connection. Please check your network and try again.";
-          errorTitle = "Connection Error";
-        } else if (error.name === 'AbortError' || error.message === 'Request timed out') {
-          errorMessage = "Request timed out. Please try again.";
-          errorTitle = "Timeout Error";
-        } else if (error instanceof TypeError && error.message === "Failed to fetch") {
-          errorMessage = "Network error. Please check your connection and try again.";
-          errorTitle = "Network Error";
-        } else if (error instanceof Error) {
-          errorMessage = error.message;
-        }
-
-        // Ensure alert is shown even in case of network issues
-        await showAlert(errorTitle, errorMessage, 'error');
-        console.error("Error fetching timeline events:", error);
-
+        await handleError(error);
       } finally {
         if (isMounted) {
           setIsLoading(false);
@@ -113,30 +146,28 @@ export default function ManageTimeline() {
       }
     };
 
-    // Network status event handlers
     const handleOnline = async () => {
       if (isMounted) {
-        await showAlert('Connected', 'Internet connection restored', 'success');
+        await showAlert('Connected', 'Internet connection restored. Refreshing data...', 'success');
         fetchTimelineEvents();
       }
     };
 
     const handleOffline = async () => {
       if (isMounted) {
-        await showAlert('Disconnected', 'No internet connection', 'warning');
+        await showAlert('Disconnected', 'No internet connection. Some features may be unavailable.', 'warning');
+        setError('No internet connection');
       }
     };
 
-    // Initial fetch
     fetchTimelineEvents();
 
-    // Add event listeners
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
 
-    // Cleanup
     return () => {
       isMounted = false;
+      controller.abort();
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
     };
@@ -162,13 +193,23 @@ export default function ManageTimeline() {
         <h2 className="text-4xl font-extrabold dark:text-white">Timeline Events</h2>
         <p className="my-4 text-lg dark:text-gray-300">Manage timeline events here</p>
 
+        {error && (
+          <div className="mb-4 p-4 bg-red-100 dark:bg-red-900 border-l-4 border-red-500 text-red-700 dark:text-red-200">
+            <p className="font-bold">Error</p>
+            <p>{error}</p>
+          </div>
+        )}
+
         {isLoading ? (
           <div className="text-center py-12 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-            <h3 className="text-2xl font-semibold text-gray-700 dark:text-gray-200 mb-2">
-              Loading...
-            </h3>
+            <div className="animate-pulse">
+              <h3 className="text-2xl font-semibold text-gray-700 dark:text-gray-200 mb-2">
+                Loading Timeline Events...
+              </h3>
+              <p className="text-gray-500 dark:text-gray-400">Please wait</p>
+            </div>
           </div>
-        ) : timelineEvents.length === 0 ? (
+        ) : timelineEvents.length === 0 && !error ? (
           <div className="text-center py-12 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
             <h3 className="text-2xl font-semibold text-gray-700 dark:text-gray-200 mb-2">
               No Timeline Events
