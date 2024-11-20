@@ -20,6 +20,7 @@ import RUR_IMG13 from "../../public/Images/RUR (13).jpg"
 import RUR_IMG14 from "../../public/Images/RUR (14).jpg"
 import RUR_IMG15 from "../../public/Images/RUR (15).jpg"
 import SPONSOR from "../../public/Images/partners/the-ai-team.png"
+import LoadingAnimation from "../../public/animations/RUR.json"
 import { Timeline } from "@/components/ui/timeline";
 
 import LampLighting from "@/components/ui/lamp";
@@ -30,15 +31,14 @@ import ReachUsSection from "@/components/blocks/reach-us-section";
 import Footer from "@/components/blocks/footer";
 import { GridBackground } from "@/components/ui/backgrounds";
 import { ISponsor } from "@/interfaces/ISponsors";
-// import {  getSponsors } from "@/services/sponsors.service";
-// import {  getTimeLineEvents } from "@/services/timeline.service";
 import {getDataFromAggregatedDoc} from "@/services/aggregatedData.service";
 import { ITimelineData } from "@/interfaces/ITimeline";
-import { MultiStepLoader } from "@/components/ui/multi-step-loader";
 import { HeroHighlight } from "@/components/ui/hero-highlight";
 import { Highlighter } from "@/components/blocks/hilight";
 import {  HomeIcon, ClockIcon , MegaphoneIcon , PhoneArrowUpRightIcon } from "@heroicons/react/24/solid";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
+import Lottie from "react-lottie-player";
+
 
 
 export const products = [
@@ -248,7 +248,7 @@ const Para = ({ level, name, imgURL, loadCallback }: { level: string, name: stri
 
 const AboutSection = ({ content }: { content: string }) => {
   return (
-    <div className="w-full px-4 md:w-3/4 lg:w-1/2 mx-auto py-2  md:py-4">
+    <div className="w-full px-4 md:w-3/4 lg:w-1/2 mx-auto py-24  md:py-12">
       <div className="bg-white/5 backdrop-blur-lg rounded-xl p-4 md:p-8 mt-0">
         <h2 className="text-xl md:text-2xl text-center font-bold dark:text-custom-color-800 text-custom-dark-color-800 mb-4">
           About Are You Ready?
@@ -267,6 +267,10 @@ export default function Home() {
   const [isTimelineLoading, setTimelineLoading] = useState(true);
   const [isSponsorsLoading, setSponsorsLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+
+  const [isLoadingAnimComplete , setIsLoadingAnimComplete] = useState(false);
+  
+  const loadingTimeout = ()=>{setTimeout(() => setIsLoadingAnimComplete(true), 1000);}
 
   useEffect(() => {
       
@@ -301,15 +305,6 @@ export default function Home() {
     image: t.imgURL,
   }));
 
-  const loaderSteps = [ 
-    { text: "This is It" },
-    { text: "Make It Count" },
-    { text: "Step Into Greatness" },
-    { text: "The Time Is Now" },
-    { text: "Don't Look Back" },
-    { text: "Are You Ready?" },
-    { text: "2025" },
-  ];
 
   const content: string = "\"Are You Ready?\" stands as a monumental initiative led by the Rotaract Club of the University of Moratuwa in partnership with the Career Guidance Unit. Our primary focus is 4th year undergraduates from our university, aiming to guide them towards a secure entry into the professional world. The scope of this endeavor knows no bounds, with over 100 companies aligning to provide opportunities for budding professionals. This project promises to be a valuable asset for those aspiring to forge strong connections with companies and their managers, even if the finish line of their degree is still on the horizon. In the initial stages, participants will gain the essential knowledge and training to confidently engage with industry experts.";
 
@@ -317,7 +312,18 @@ export default function Home() {
     <RootLayout>
       <div className="relative">
         <FloatingNav navItems={navItms} />
-        <MultiStepLoader loop={false} loading={isLoading} loadingStates={loaderSteps} duration={600} exitCallback={() => setIsLoading(false)} />
+        { ( isLoading || !isLoadingAnimComplete ) && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-[#545576]">
+            <Lottie
+              loop={false}
+              animationData={LoadingAnimation}
+              onComplete={loadingTimeout }
+              play
+              style={{ width: 500, height: 500 }}
+              
+            />
+            </div>
+        )}
 
 
         <div className="space-y-0">
@@ -325,12 +331,6 @@ export default function Home() {
           <AboutSection content={content} />
         </div>
 
-           {/* <div className="w-1/2 px-5 py-5 pb-12 mx-auto">
-            <p className="text-2xl text-center font-bold dark:text-custom-color-800 text-custom-dark-color-800 p-2 py-3">
-              About Are You Ready?
-            </p>
-            <TextGenerateEffect words={content} />
-            </div>  */}
        
 
         <div id="timeline" className="scroll-mt-20">
