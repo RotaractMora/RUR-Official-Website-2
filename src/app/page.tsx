@@ -339,11 +339,11 @@ export default function Home() {
 
 
 
+
   const content: string = "\"Are You Ready?\" stands as a monumental initiative led by the Rotaract Club of the University of Moratuwa in partnership with the Career Guidance Unit. Our primary focus is 4th year undergraduates from our university, aiming to guide them towards a secure entry into the professional world. The scope of this endeavor knows no bounds, with over 100 companies aligning to provide opportunities for budding professionals. This project promises to be a valuable asset for those aspiring to forge strong connections with companies and their managers, even if the finish line of their degree is still on the horizon. In the initial stages, participants will gain the essential knowledge and training to confidently engage with industry experts.";
 
   return (
     <RootLayout>
-    <div className="relative">
       <FloatingNav navItems={navItms} />
          { ( isLoading || !isLoadingAnimComplete ) && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-[#545576]">
@@ -409,7 +409,6 @@ export default function Home() {
       </div>
 
       <Footer />
-    </div>
   </RootLayout>
 );
 }
