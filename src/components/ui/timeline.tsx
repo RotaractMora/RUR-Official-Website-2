@@ -50,10 +50,7 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
         SESSIONS
         </h2>
         <p className="text-custom-dark-color-neutral-700 dark:text-custom-color-700 text-sm md:text-base max-w-sm">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
-          scelerisque, nunc sit amet aliquet tincidunt, nunc ligula vestibulum
-          lacus, id scelerisque purus nunc in nisl. Aenean ac libero a libero
-          ultrices tincidunt. Sed nec nulla non metus lacinia fermentum. 
+        Career Fair will be supported by subprojects
         </p>
       </div>
 
