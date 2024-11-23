@@ -1,4 +1,4 @@
-import { getFirestore, collection, getDocs, limit, where, query , DocumentData, QueryDocumentSnapshot, Query, startAfter, orderBy, addDoc, DocumentReference, deleteDoc, doc } from "firebase/firestore";
+import { getFirestore, collection, getDocs, limit, where, query , DocumentData, QueryDocumentSnapshot, Query, startAfter, orderBy, addDoc, DocumentReference, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import {app} from './firebaseConfig';
 import { ISponsor ,SponsorLevel } from "@/interfaces/ISponsors";
 
@@ -33,6 +33,20 @@ export const addSponsor = async (sponsor:ISponsor):Promise<DocumentReference<Doc
     const timestamp = new Date();
     const res = await addDoc(sponsorsCollection,{...sponsor,timestamp});
     return res;    
+}
+
+export const updateSponsor = async (sponsorId:string, updatedSponsor:ISponsor):Promise<void> => {
+    try {
+        const db = getFirestore(app);
+        const sponsorRef = doc(db, "info-sponsors", sponsorId);
+        // Update the document with the new data
+        await updateDoc(sponsorRef, { ...updatedSponsor });
+        console.log(`Sponsor with ID ${sponsorId} has been updated successfully.`);
+    } catch (error) {
+        console.error(`Failed to update sponsor with ID ${sponsorId}:`, error);
+        throw error;
+    }
+
 }
 
 export const deleteSponsor = async (docId:string):Promise<void> => {

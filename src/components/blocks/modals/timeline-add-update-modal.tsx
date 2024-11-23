@@ -1,21 +1,31 @@
 "use client"
 import React, { useState } from 'react';
-import { addTimeLineEvent } from '@/services/timeline.service';
+import { addTimeLineEvent, updateTimeLineEvent } from '@/services/timeline.service';
 import Image from 'next/image';
 import { Timestamp } from 'firebase/firestore';
 import { getDownloadURL } from 'firebase/storage';
-import { addFile } from '@/services/firebaseStorage.service';
+import { addFile, deleteFile, getFileReferenceByUrl } from '@/services/firebaseStorage.service';
+import { ITimelineData } from '@/interfaces/ITimeline';
 
-function TimelineAddUpdateModal({onAddEvent}: {onAddEvent: () => void}) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [eventDate, setEventDate] = useState('');
-  const [btnText, setBtnText] = useState('');
-  const [btnLink, setBtnLink] = useState('');
-  const [order, setOrder] = useState(0);
-  const [isBtnDisabled, setIsBtnDisabled] = useState(false);
+function TimelineAddUpdateModal({
+  timelineEvent,
+  onAddUpdateEvent,
+  onClose,
+}: {
+  timelineEvent?: ITimelineData,
+  onAddUpdateEvent: () => void,
+  onClose: () => void,
+}) {
+  const [title, setTitle] = useState(timelineEvent?.title || '');
+  const [description, setDescription] = useState(timelineEvent?.description || '');
+  const [eventDate, setEventDate] = useState(timelineEvent?.eventDate?.toDate().toISOString().slice(0, 16) || '');
+  const [btnText, setBtnText] = useState(timelineEvent?.btnText || '');
+  const [btnLink, setBtnLink] = useState(timelineEvent?.btnLink || '');
+  const [order, setOrder] = useState(timelineEvent?.order || 0);
+  const [isBtnDisabled, setIsBtnDisabled] = useState(timelineEvent?.isBtnDisabled || false);
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [timelineEvenImgURL, setTimelineEventImgURL] = useState(timelineEvent?.imgURL || '');
+  const [uploadNewImage, setUploadNewImage] = useState(timelineEvent ? false : true);
 
   // Handle file selection or drag-and-drop
   const handleFileChange = (e: any) => {
@@ -35,79 +45,131 @@ function TimelineAddUpdateModal({onAddEvent}: {onAddEvent: () => void}) {
     setOrder(0);
     setIsBtnDisabled(false);
     setImageFile(null);
-    setIsOpen(!isOpen);
+    onClose();
   };
+
+  const validateImage = (file: File) => {
+    if (!file.type.includes('image')) {
+      alert('Please select a valid image file');
+      return false;
+    }
+
+    if (file.size > 1024 * 1024 * 2) {
+      alert('Please select an image file less than 2MB');
+      return false;
+    }
+
+    return true;
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!title || !description || !eventDate || !imageFile) {
+    if (!title || !description || !eventDate || (!timelineEvent && !imageFile)) {
       alert('Please fill in all required fields');
       return;
     }
+    
+    let imgURL = timelineEvent?.imgURL || '';
 
-    // validate image file type
-    if (!imageFile.type.includes('image')) {
-      alert('Please select a valid image file');
-      return;
+    try {
+        // Handle image upload
+        if (uploadNewImage && imageFile) {
+            if (!validateImage(imageFile)) return;
+
+            const ref = await addFile(imageFile);
+            if (ref) {
+                imgURL = await getDownloadURL(ref);
+            } else {
+                throw new Error('Failed to get storage reference');
+            }
+
+            if (timelineEvent?.imgURL) {
+                // Delete the old image
+                const oldImgRef = await getFileReferenceByUrl(timelineEvent.imgURL);
+                if (oldImgRef) {
+                    await deleteFile(oldImgRef).then(() => {
+                        console.log('Old image deleted successfully');
+                    }).catch((error) => {
+                        console.error('Error deleting old image:', error);
+                        alert('Error deleting old image. Please try again.');
+                        return;
+                    });
+                }
+            }
+        } else if (uploadNewImage && !imageFile) {
+            alert('Please select an image file');
+            return;
+        }            
+
+        const timeLineEventData = {
+          title,
+          description,
+          eventDate: Timestamp.fromDate(new Date(eventDate)),
+          btnText,
+          btnLink,
+          isBtnDisabled,
+          order,
+          imgURL: imgURL,
+        };
+
+        if (timelineEvent?.id) {
+            // Update Timeline event
+            await updateTimeLineEvent(timelineEvent.id, timeLineEventData);
+            console.log('Timeline event updated successfully:', timeLineEventData);
+        } else {
+            // Add new Timeline event
+            await addTimeLineEvent(timeLineEventData);
+            console.log('Timeline event added successfully:', timeLineEventData);
+        }
+
+        //success
+        onAddUpdateEvent();
+        toggleModal();
+    } catch (error) {
+        console.error('Error processing sponsor:', error);
+        alert('An error occurred. Please try again.');
     }
 
-    // validate image file size
-    if (imageFile.size > 1024 * 1024 * 2) {
-      alert('Please select an image file less than 2MB');
-      return;
-    }
+    // // Upload image to firebase storage and get URL
+    // addFile(imageFile).then((ref) => {
+    //   if (ref) {
+    //     getDownloadURL(ref).then((url) => {
+    //       // Create new timeline event object
+    //       const newEvent = {
+    //         title,
+    //         description,
+    //         eventDate: Timestamp.fromDate(new Date(eventDate)),
+    //         btnText,
+    //         btnLink,
+    //         isBtnDisabled,
+    //         order,
+    //         imgURL: url,
+    //       };
 
-    // Upload image to firebase storage and get URL
-    addFile(imageFile).then((ref) => {
-      if (ref) {
-        getDownloadURL(ref).then((url) => {
-          // Create new timeline event object
-          const newEvent = {
-            title,
-            description,
-            eventDate: Timestamp.fromDate(new Date(eventDate)),
-            btnText,
-            btnLink,
-            isBtnDisabled,
-            order,
-            imgURL: url,
-          };
-
-          // Add new event to firestore
-          addTimeLineEvent(newEvent)
-            .then(() => {
-              console.log('Event added successfully', newEvent);
-              onAddEvent();
-              toggleModal();
-            })
-            .catch((error) => {
-              console.error('Error adding event: ', error);
-              alert('Error adding event');
-              toggleModal();
-            });
-        });
-      }
-    }).catch((error) => {
-      console.error('Error uploading file: ', error);
-      alert('Error uploading file');
-    });
+    //       // Add new event to firestore
+    //       addTimeLineEvent(newEvent)
+    //         .then(() => {
+    //           console.log('Event added successfully', newEvent);
+    //           onAddUpdateEvent();
+    //           toggleModal();
+    //         })
+    //         .catch((error) => {
+    //           console.error('Error adding event: ', error);
+    //           alert('Error adding event');
+    //           toggleModal();
+    //         });
+    //     });
+    //   }
+    // }).catch((error) => {
+    //   console.error('Error uploading file: ', error);
+    //   alert('Error uploading file');
+    // });
   };
 
   return (
     <>
-      <button 
-        onClick={toggleModal} 
-        className="inline-flex items-center px-6 py-3 text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 rounded-lg text-sm font-medium shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5" 
-        type="button"
-      >
-        <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-        </svg>
-        Add Timeline Event
-      </button>
-
-      {isOpen && (
+    
         <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-black bg-opacity-50 backdrop-blur-sm">
           <div className="relative w-full max-w-2xl mx-4 my-8">
             <div className="relative bg-white rounded-xl shadow-2xl dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
@@ -123,6 +185,7 @@ function TimelineAddUpdateModal({onAddEvent}: {onAddEvent: () => void}) {
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                   </svg>
+                  <span className="sr-only">Close modal</span>
                 </button>
               </div>
 
@@ -229,55 +292,85 @@ function TimelineAddUpdateModal({onAddEvent}: {onAddEvent: () => void}) {
 
                   {/* Image Upload */}
                   <div>
+
+                    { uploadNewImage ? (
+                    <>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Upload Image
-                    </label>
-                    <div 
+                    </label><div
                       className="relative border-2 border-dashed border-gray-300 rounded-lg p-6 transition-all duration-200 hover:border-blue-500 cursor-pointer"
                       onDrop={handleFileChange}
                       onDragOver={(e) => e.preventDefault()}
                     >
-                      {imageFile ? (
-                        <div className="relative w-full h-48">
-                          <Image
-                            src={URL.createObjectURL(imageFile)}
-                            alt="Preview"
-                            className="w-full h-full object-cover rounded-lg"
-                            width={300}
-                            height={200}
-                          />
+                        {imageFile ? (
+                          <div className="relative w-full h-48">
+                            <Image
+                              src={URL.createObjectURL(imageFile)}
+                              alt="Preview"
+                              className="w-full h-full object-cover rounded-lg"
+                              width={300}
+                              height={200} />
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setImageFile(null)
+                                if (timelineEvent?.imgURL) {
+                                  setUploadNewImage(false);
+                                }
+                              }}
+                              className="absolute -top-2 -right-2 bg-white rounded-full p-1 shadow-lg hover:bg-gray-100 transition-colors duration-200"
+                            >
+                              <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                              </svg>
+                              <span className="sr-only">Remove image</span>
+                            </button>
+                          </div>
+                        ) : (
+                          <div className="text-center">
+                            <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 48 48">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" />
+                            </svg>
+                            <div className="mt-4 flex text-sm text-gray-600">
+                              <label className="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
+                                <span>Upload a file</span>
+                                <input
+                                  id="image-upload"
+                                  type="file"
+                                  className="sr-only"
+                                  accept="image/*"
+                                  onChange={handleFileChange} />
+                              </label>
+                              <p className="pl-1">or drag and drop</p>
+                            </div>
+                            <p className="text-xs text-gray-500">PNG, JPG or GIF up to 2MB</p>
+                          </div>
+                        )}
+                      </div>
+                      {timelineEvent?.imgURL && (
+                              <button 
+                                type="button"
+                                className="text-red-500 dark:text-red-400 hover:underline"
+                                onClick={() => setUploadNewImage(false)}
+                              >
+                                Cancel Upload New Image
+                              </button>
+                        )}
+                      </>
+                    ) : (
+                      <div className="flex items-center justify-between">
+                          <Image className='' width={200} height={200} src={timelineEvent?.imgURL || ''} alt={timelineEvent?.title || ''} />
+                          
                           <button
                             type="button"
-                            onClick={() => setImageFile(null)}
-                            className="absolute -top-2 -right-2 bg-white rounded-full p-1 shadow-lg hover:bg-gray-100 transition-colors duration-200"
+                            className="text-blue-500 dark:text-blue-400 hover:underline"
+                            onClick={() => setUploadNewImage(true)}
                           >
-                            <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
+                            Upload New Image
                           </button>
+                          
                         </div>
-                      ) : (
-                        <div className="text-center">
-                          <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 48 48">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" />
-                          </svg>
-                          <div className="mt-4 flex text-sm text-gray-600">
-                            <label className="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
-                              <span>Upload a file</span>
-                              <input
-                                id="image-upload"
-                                type="file"
-                                className="sr-only"
-                                accept="image/*"
-                                onChange={handleFileChange}
-                              />
-                            </label>
-                            <p className="pl-1">or drag and drop</p>
-                          </div>
-                          <p className="text-xs text-gray-500">PNG, JPG or GIF up to 2MB</p>
-                        </div>
-                      )}
-                    </div>
+                    )}
                   </div>
 
                   {/* Submit Button */}
@@ -286,7 +379,7 @@ function TimelineAddUpdateModal({onAddEvent}: {onAddEvent: () => void}) {
                       type="submit"
                       className="w-full px-6 py-3 text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 rounded-lg text-sm font-medium shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5"
                     >
-                      Save Event
+                     {timelineEvent ? 'Update' : 'Add'} Timeline Event
                     </button>
                   </div>
                 </form>
@@ -294,7 +387,6 @@ function TimelineAddUpdateModal({onAddEvent}: {onAddEvent: () => void}) {
             </div>
           </div>
         </div>
-      )}
 
       <style jsx>{`
         .custom-scrollbar::-webkit-scrollbar {
