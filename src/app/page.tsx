@@ -38,6 +38,8 @@ import { Highlighter } from "@/components/blocks/hilight";
 import {  HomeIcon, ClockIcon , MegaphoneIcon , PhoneArrowUpRightIcon } from "@heroicons/react/24/solid";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import Lottie from "react-lottie-player";
+import { IContact } from "@/interfaces/IContacts";
+import { getReachUs } from "@/services/reachus.service";
 
 
 
@@ -160,63 +162,6 @@ const navItms = [
 ];
 
 
-const grid = [
-  {
-    name: "John Doe",
-    email: "john.doe@example.com",
-    phone: "123-456-7890",
-    position: "Software Engineer",
-  },
-  {
-    name: "Jane Smith",
-    email: "jane.smith@example.com",
-    phone: "234-567-8901",
-    position: "Project Manager",
-  },
-  {
-    name: "Alice Johnson",
-    email: "alice.johnson@example.com",
-    phone: "345-678-9012",
-    position: "QA Engineer",
-  },
-  {
-    name: "Bob Brown",
-    email: "bob.brown@example.com",
-    phone: "456-789-0123",
-    position: "Software Engineer",
-  },
-  {
-    name: "Charlie Davis",
-    email: "charlie.davis@example.com",
-    phone: "567-890-1234",
-    position: "Project Manager",
-  },
-  {
-    name: "Diana Evans",
-    email: "diana.evans@example.com",
-    phone: "678-901-2345",
-    position: "QA Engineer",
-  },
-  {
-    name: "Frank Green",
-    email: "frank.green@example.com",
-    phone: "789-012-3456",
-    position: "Software Engineer",
-  },
-  {
-    name: "Grace Harris",
-    email: "grace.harris@example.com",
-    phone: "890-123-4567",
-    position: "Project Manager",
-  },
-  {
-    name: "Henry Lee",
-    email: "henry.lee@example.com",
-    phone: "901-234-5678",
-    position: "QA Engineer",
-  },
-];
-
 const Loading =()=> {
   return (
     <div className="flex items-center justify-center min-h-screen">
@@ -269,26 +214,28 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isLoadingAnimComplete , setIsLoadingAnimComplete] = useState(false);
-  
+  const [grid, setGrid] = useState([] as IContact[]);
+  const [isGridLoading, setGridLoading] = useState(true);
+
   const loadingTimeout = ()=>{setTimeout(() => setIsLoadingAnimComplete(true), 1000);}
-      
-    // getTimeLineEvents().then((data) => {
-    //     setTimeline(data);
-    //     setTimelineLoading(false);
-    //   });
-
-    // getSponsors("All").then((data) => {
-    //     setSponsors(data);
-    //     setSponsorsLoading(false);
-    //     const validdata = data.filter((sponsor)=>sponsor.level === "Gold" || sponsor.level ==="Silver" || sponsor.level === "Bronze");
-    //     console.log(validdata);
-    //   }
-    // );
-
+  
   
 
   useEffect(() => {
     const fetchData = async () => {
+
+      getReachUs().then((data) => {
+        setGrid(data);
+      }).catch((err) => {
+        console.error("Error fetching data:", err);
+        setError("Failed to load data. Please try again later.");
+      }
+      ).finally(() => {
+        setGridLoading(false);
+      });
+
+
+
       try {
         const data = await getDataFromAggregatedDoc();
         
@@ -403,9 +350,9 @@ export default function Home() {
       )}
 
       <div id="reach_us" className="scroll-mt-20">
-        <GridBackground title="Reach Us">
+        {!isGridLoading && <GridBackground title="Reach Us">
           <ReachUsSection grid={grid} />
-        </GridBackground>
+        </GridBackground>}
       </div>
 
       <Footer />
