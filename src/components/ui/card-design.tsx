@@ -1,3 +1,4 @@
+'use client';
 import { cn } from "@/lib/utils";
 import React from "react";
 import { motion } from "framer-motion";
@@ -8,6 +9,13 @@ interface CardDesignProps {
   containerClassName?: string;
   animate?: boolean;
   CardColor?: string;
+}
+
+interface ParaProps {
+  name: string;
+  imgURL: string;
+  level: string;
+  description?: string;
 }
 
 export const CardDesign: React.FC<CardDesignProps> = ({
@@ -28,7 +36,6 @@ export const CardDesign: React.FC<CardDesignProps> = ({
 
   return (
     <div className={cn("relative p-[4px] group", containerClassName)}>
-      {/* First gradient layer with blur */}
       <motion.div
         variants={animate ? variants : undefined}
         initial={animate ? "initial" : undefined}
@@ -51,7 +58,6 @@ export const CardDesign: React.FC<CardDesignProps> = ({
         )}
       />
       
-      {/* Second gradient layer without blur */}
       <motion.div
         variants={animate ? variants : undefined}
         initial={animate ? "initial" : undefined}
@@ -74,7 +80,6 @@ export const CardDesign: React.FC<CardDesignProps> = ({
         )}
       />
 
-      {/* Content container */}
       <div className={cn("relative z-10 bg-zinc-900/80 rounded-3xl", className)}>
         {children}
       </div>
@@ -82,34 +87,19 @@ export const CardDesign: React.FC<CardDesignProps> = ({
   );
 };
 
-// Para component to display sponsor information
-interface ParaProps {
-  name: string;
-  imgURL: string;
-  level: string;
-  description?: string;
-}
-
-export const Para: React.FC<ParaProps> = ({ name, imgURL, level,  description }) => {
+export const Para: React.FC<ParaProps> = ({ name, imgURL, level, description }) => {
   return (
-    <div className="p-6 mt-30">
-      <div className="flex items-center  gap-4">
+    <div className="flex flex-col items-center justify-center p-8 text-center">
+      <h2 className="text-3xl font-bold text-white mb-6">{level} Sponsor</h2>
+      <div className="w-full max-w-[300px] h-[120px] bg-white rounded-lg p-4 mb-4">
         <img 
           src={imgURL} 
           alt={`${name} logo`} 
-          className="w-48 h-48 bg-white text-white object-contain"
-       
+          className="w-full h-10 object-contain"
         />
-        <div className="space-y-2">
-          <h3 className="text-2xl font-semibold text-white">{name}</h3>
-          {description && (
-            <p className="text-gray-400 text-sm leading-relaxed">{description}</p>
-          )}
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-300">{level} Sponsor</span>
-          
-          </div>
-        </div>
+      </div>
+      <div className="text-2xl text-white font-medium">
+        {description || name}
       </div>
     </div>
   );
