@@ -173,9 +173,10 @@ const Loading =()=> {
 
 
 const Para = ({ level, name, imgURL, loadCallback }: { level: string, name: string, imgURL: string | undefined, loadCallback?: (count: number) => void }): React.ReactNode => {
+  const color = level ==="Gold"?"custom-color-gold dark:custom-dark-color-gold":(level ==="Silver"?"custom-color-silver dark:custom-dark-color-silver":"custom-color-bronze dark:custom-dark-color-bronze")
   return (
-    <div className="w-full max-w-5xl mx-auto px-4 md:px-6 lg:px-8 flex flex-col items-center h-full justify-between">
-      <h6 className="text-3xl md:text-4xl lg:text-6xl text-center font-bold dark:text-custom-color-800 text-custom-dark-color-800 p-2 py-3">
+    <div className="w-full h-full max-w-xl mx-auto px-4 md:px-6 lg:px-8 flex flex-col items-center h-full justify-between">
+      <h6 className={"text-3xl md:text-4xl lg:text-6xl text-center font-bold p-2 py-3"+ " text-"+color}>
         {`${level} Sponsor`}
       </h6>
       <Image
@@ -183,7 +184,7 @@ const Para = ({ level, name, imgURL, loadCallback }: { level: string, name: stri
         width={300}
         height={100}
         alt="Sponsor"
-        className="p-0 rounded-lg dark:bg-black bg-white h-auto w-full max-w-[250px] md:max-w-[300px]"
+        className="p-2 my-2 rounded-lg dark:bg-black bg-white h-auto min-w-[250px] max-w-[250px] md:max-w-[300px]"
       />
       <h5 className="text-2xl md:text-3xl lg:text-5xl text-center font-bold dark:text-custom-color-900 text-custom-dark-color-900 p-3">
         {name}
@@ -335,18 +336,21 @@ export default function Home() {
       ) : isSponsorsLoading ? (
         <Loading />
       ) : sponsors.length > 0 ? (
-        <TracingBeam className="px-4 md:px-6">
+        <TracingBeam className="px-4 md:px-6 py-24">
         {sponsors
           .filter((sponsor) => ["Gold", "Silver", "Bronze"].includes(sponsor.level))
-          .map((sponsor, index) => (
+          .map((sponsor, index) => {
+            
+            return (
             <CardDesign
               key={`${sponsor.level}-${index}`}
-              className="w-full max-w-5xl  mx-auto"
+              className={"w-[250px] md:w-[400px] sm:w-[300px] max-w-xl  mx-auto"}
               CardColor={sponsor.level}
             >
               <Para name={sponsor.name} imgURL={sponsor.imgURL} level={sponsor.level} />
             </CardDesign>
-          ))}
+          )}
+          )}
       </TracingBeam>
       ) : (
         <EmptyStateMessage message="Sponsors will be available soon." />
@@ -354,8 +358,7 @@ export default function Home() {
 
 <section 
         id="registrationStatus" 
-        className="scroll-mt-20 relative py-16 w-full"
-      >
+        className="scroll-mt-20 relative py-16 w-full">
         <div className="container mx-auto px-4">
           <div className="relative z-10">
             <RegistrationStatus />
