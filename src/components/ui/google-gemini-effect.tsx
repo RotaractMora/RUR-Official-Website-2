@@ -100,8 +100,13 @@ const StatusCard: React.FC<StatusCardProps> = ({ title, signUp, signIn, registra
             >
             {title.split(" ")[0]} Registration Open
             </motion.span>
-            <AnimatedButton href={registrationUrl || '#'}>
-            Visit Registration Portal
+            <AnimatedButton 
+              href={title.split(" ")[0].toLowerCase() === "company" 
+                ? "http://google.com/" 
+                : "http://youtube.com/"
+              }
+            >
+              Visit Registration Portal
             </AnimatedButton>
           </div>
         ) : (
