@@ -11,9 +11,13 @@ import { cn } from "@/lib/utils";
 export const TracingBeam = ({
   children,
   className,
+  cardSpacing = 'gap-8', // Default gap of 2rem between cards
+  minHeight = 'min-h-screen', // Default minimum height
 }: {
   children: React.ReactNode;
   className?: string;
+  cardSpacing?: string;
+  minHeight?: string;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -48,7 +52,7 @@ export const TracingBeam = ({
   return (
     <motion.div
       ref={ref}
-      className={cn("relative w-full max-w-4xl mx-auto h-full", className)}
+      className={cn("relative w-full max-w-4xl mx-auto h-full",minHeight, className)}
     >
       <div className="absolute -left-4 md:-left-20 top-3">
         <motion.div
@@ -121,7 +125,10 @@ export const TracingBeam = ({
           </defs>
         </svg>
       </div>
-      <div ref={contentRef} className="flex flex-row flex-wrap justify-around w-100">{children}</div>
+      <div ref={contentRef} className={cn(
+          "flex flex-row flex-wrap justify-around w-full",
+          cardSpacing
+        )}>{children}</div>
     </motion.div>
   );
 };

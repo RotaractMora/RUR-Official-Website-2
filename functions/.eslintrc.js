@@ -34,5 +34,6 @@ module.exports = {
     "import/no-commonjs": "off", // Allow 'require' in ESM, commonjs modules
     // Change linebreak-style from error to warning
     "linebreak-style": ["warn", "unix"],
+    "max-len": ["error", {"code": 120}],
   },
 };

@@ -16,6 +16,8 @@ export interface ITimelineEntry {
   eventDate: Date;
   btnLink: string;
   image: string|StaticImageData;
+  btnText: string;
+  isBtnDisabled: boolean;
 }
 
 export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
@@ -50,10 +52,7 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
         SESSIONS
         </h2>
         <p className="text-custom-dark-color-neutral-700 dark:text-custom-color-700 text-sm md:text-base max-w-sm">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
-          scelerisque, nunc sit amet aliquet tincidunt, nunc ligula vestibulum
-          lacus, id scelerisque purus nunc in nisl. Aenean ac libero a libero
-          ultrices tincidunt. Sed nec nulla non metus lacinia fermentum. 
+        Career Fair will be supported by subprojects
         </p>
       </div>
 
@@ -89,7 +88,7 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
                 <CountDown date={item.eventDate} />
               </div>
               <div className="inline-block md:mt-3 mt-5 ml-3">
-                <HoverBorderGradient onClick={()=>router.push(item.btnLink)}>Stay Tuned</HoverBorderGradient>
+                <HoverBorderGradient onClick={()=>router.push(item.btnLink)} isDisabled={item.isBtnDisabled} >{item.btnText}</HoverBorderGradient>
               </div>
             </div>
               

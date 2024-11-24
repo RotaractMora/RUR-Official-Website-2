@@ -1,86 +1,26 @@
-// Import Firebase Functions and Admin SDK
-const logger = require("firebase-functions/logger");
-const {initializeApp} = require("firebase-admin/app");
-const {getFirestore} = require("firebase-admin/firestore");
-const {
-  onDocumentCreated,
-  onDocumentUpdated,
-  onDocumentDeleted,
-} = require("firebase-functions/v2/firestore");
+import {createInfoTriggers} from "./infoAggregator";
+import {
+  incrementalAggregateCompanies,
+  manualAggregateCompanies,
+} from "./companyDataAggregator";
 
-initializeApp();
-const db = getFirestore();
+// Exporting triggers for /info-sponsors and /info-timeline collections
+const sponsorsTriggers = createInfoTriggers("info-sponsors");
+const timelineTriggers = createInfoTriggers("info-timeline");
 
-// Path for the aggregated document
-const AGGREGATED_DOC_PATH = "metadata/aggregatedInfo";
+export const infoSponsorsOnCreate = sponsorsTriggers.onCreate;
+export const infoSponsorsOnUpdate = sponsorsTriggers.onUpdate;
+export const infoSponsorsOnDelete = sponsorsTriggers.onDelete;
 
-// Aggregates data from /info-sponsors and /info-timeline into a single document
-const aggregateData = async () => {
-  try {
-    const aggregatedData: {
-      "info-sponsors": Record<string, any>;
-      "info-timeline": Record<string, any>;
-    } = {"info-sponsors": {}, "info-timeline": {}};
+export const infoTimelineOnCreate = timelineTriggers.onCreate;
+export const infoTimelineOnUpdate = timelineTriggers.onUpdate;
+export const infoTimelineOnDelete = timelineTriggers.onDelete;
 
-    // Aggregate data from info-sponsors
-    const sponsorsSnapshot = await db.collection("info-sponsors").get();
-    sponsorsSnapshot.forEach((doc: any) => {
-      aggregatedData["info-sponsors"][doc.id] = doc.data();
-    });
 
-    // Aggregate data from info-timeline
-    const timelineSnapshot = await db.collection("info-timeline").get();
-    timelineSnapshot.forEach((doc: any) => {
-      aggregatedData["info-timeline"][doc.id] = doc.data();
-    });
+// Exporting Firestore triggers for incremental company aggregation
+export const companyOnCreate = incrementalAggregateCompanies.onCreate;
+export const companyOnUpdate = incrementalAggregateCompanies.onUpdate;
+export const companyOnDelete = incrementalAggregateCompanies.onDelete;
 
-    // Save the aggregated data to the Firestore document
-    await db.doc(AGGREGATED_DOC_PATH).set(aggregatedData);
-
-    logger.info("Successfully aggregated data into:", AGGREGATED_DOC_PATH);
-  } catch (error) {
-    logger.error("Error aggregating data:", error);
-  }
-};
-
-// Helper to create triggers for a given collection
-const createTriggers = (collectionPath: string) => {
-  return {
-    onCreate: onDocumentCreated(
-      `${collectionPath}/{docId}`,
-      async (event: any) => {
-        logger.info(
-          `Document created in ${collectionPath}:`,
-          event.params.docId
-        );
-        await aggregateData();
-      }
-    ),
-    onUpdate: onDocumentUpdated(
-      `${collectionPath}/{docId}`,
-      async (event: any) => {
-        logger.info(
-          `Document updated in ${collectionPath}:`,
-          event.params.docId
-        );
-        await aggregateData();
-      }
-    ),
-    onDelete: onDocumentDeleted(
-      `${collectionPath}/{docId}`,
-      async (event: any) => {
-        logger.info(
-          `Document deleted in ${collectionPath}:`,
-          event.params.docId
-        );
-        await aggregateData();
-      }
-    ),
-  };
-};
-
-// Export triggers for /info-sponsors
-exports.aggregateInfoSponsors = createTriggers("info-sponsors");
-
-// Export triggers for /info-timeline
-exports.aggregateInfoTimeline = createTriggers("info-timeline");
+// Exporting HTTP function for manual aggregation
+export const aggregateCompaniesManually = manualAggregateCompanies;
