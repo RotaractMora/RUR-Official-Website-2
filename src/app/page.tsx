@@ -42,6 +42,7 @@ import Lottie from "react-lottie-player";
 import { IContact } from "@/interfaces/IContacts";
 import { getReachUs } from "@/services/reachus.service";
 import RegistrationStatus from "@/components/ui/google-gemini-effect";
+import CodeEvelPara from "@/components/ui/code-evel-para";
 
 export const products = [
   {
@@ -261,7 +262,7 @@ export default function Home() {
 
   const events = timeline.map((t) => ({
     title: t.title,
-    content: t.description,
+    content: <CodeEvelPara htmlContent={t.description} />,
     eventDate: t.eventDate.toDate(),
     btnLink: t.btnLink,
     image: t.imgURL,
