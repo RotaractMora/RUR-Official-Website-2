@@ -266,6 +266,8 @@ export default function Home() {
     eventDate: t.eventDate.toDate(),
     btnLink: t.btnLink,
     image: t.imgURL,
+    btnText: t.btnText,
+    isBtnDisabled: t.isBtnDisabled,
   }));
 
   const ErrorMessage = ({ message }: { message: string }) => (
