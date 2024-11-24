@@ -7,6 +7,8 @@ import {
 } from "firebase-functions/v2/firestore";
 import {https, logger} from "firebase-functions";
 
+const REGION = "asia-southeast1";
+
 const AGGREGATED_COMPANIES_DOC_PATH = "metadata/agregatedCompanies";
 const COMPANIES_COLLECTION_PATH = "campaigns/rur-25/companies";
 
@@ -29,7 +31,9 @@ const filterSelectedFields = (data: Record<string, any>): Record<string, any> =>
   );
 
 
-export const manualAggregateCompanies = https.onRequest(async (req, res) => {
+export const manualAggregateCompanies = https.onRequest({
+  region: REGION,
+}, async (req, res) => {
   try {
     const aggregatedCompanies: Record<string, any> = {};
     const companiesSnapshot = await db.collection(COMPANIES_COLLECTION_PATH).get();
@@ -54,7 +58,10 @@ export const manualAggregateCompanies = https.onRequest(async (req, res) => {
 
 
 export const incrementalAggregateCompanies = {
-  onCreate: onDocumentCreated(COMPANIES_COLLECTION_PATH + "/{docId}", async (event) => {
+  onCreate: onDocumentCreated({
+    document: COMPANIES_COLLECTION_PATH + "/{docId}",
+    region: REGION,
+  }, async (event) => {
     try {
       const newData = event.data?.data();
       if (!newData?.dataConfirmed) return;
@@ -73,7 +80,10 @@ export const incrementalAggregateCompanies = {
     }
   }),
 
-  onUpdate: onDocumentUpdated(COMPANIES_COLLECTION_PATH + "/{docId}", async (event) => {
+  onUpdate: onDocumentUpdated({
+    document: COMPANIES_COLLECTION_PATH + "/{docId}",
+    region: REGION,
+  }, async (event) => {
     try {
       const updatedData = event.data?.after.data();
       if (!updatedData?.dataConfirmed) return;
@@ -92,7 +102,10 @@ export const incrementalAggregateCompanies = {
     }
   }),
 
-  onDelete: onDocumentDeleted(COMPANIES_COLLECTION_PATH + "/{docId}", async (event) => {
+  onDelete: onDocumentDeleted({
+    document: COMPANIES_COLLECTION_PATH + "/{docId}",
+    region: REGION,
+  }, async (event) => {
     try {
       const docId = event.params.docId;
 
