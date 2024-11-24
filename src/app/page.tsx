@@ -39,8 +39,7 @@ import { HeroHighlight } from "@/components/ui/hero-highlight";
 import { Highlighter } from "@/components/blocks/hilight";
 import {  HomeIcon, ClockIcon , MegaphoneIcon , PhoneArrowUpRightIcon } from "@heroicons/react/24/solid";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
-
-
+import {CardDesign} from "@/components/ui/card-design";
 export const products = [
   {
     title: "Are You Ready?",
@@ -392,18 +391,18 @@ export default function Home() {
         <Loading />
       ) : sponsors.length > 0 ? (
         <TracingBeam className="px-4 md:px-6">
-          {sponsors
-            .filter((sponsor) => ["Gold", "Silver", "Bronze"].includes(sponsor.level))
-            .map((sponsor, index) => (
-              <GlareCard
-                key={`${sponsor.level}-${index}`}
-                className="w-full max-w-5xl mx-auto"
-                CardColor={sponsor.level}
-              >
-                <Para name={sponsor.name} imgURL={sponsor.imgURL} level={sponsor.level} />
-              </GlareCard>
-            ))}
-        </TracingBeam>
+        {sponsors
+          .filter((sponsor) => ["Gold", "Silver", "Bronze"].includes(sponsor.level))
+          .map((sponsor, index) => (
+            <CardDesign
+              key={`${sponsor.level}-${index}`}
+              className="w-full max-w-5xl  mx-auto"
+              CardColor={sponsor.level}
+            >
+              <Para name={sponsor.name} imgURL={sponsor.imgURL} level={sponsor.level} />
+            </CardDesign>
+          ))}
+      </TracingBeam>
       ) : (
         <EmptyStateMessage message="Sponsors will be available soon." />
       )}
