@@ -16,6 +16,8 @@ export interface ITimelineEntry {
   eventDate: Date;
   btnLink: string;
   image: string|StaticImageData;
+  btnText: string;
+  isBtnDisabled: boolean;
 }
 
 export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
@@ -86,7 +88,7 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
                 <CountDown date={item.eventDate} />
               </div>
               <div className="inline-block md:mt-3 mt-5 ml-3">
-                <HoverBorderGradient onClick={()=>router.push(item.btnLink)}>Stay Tuned</HoverBorderGradient>
+                <HoverBorderGradient onClick={()=>router.push(item.btnLink)} isDisabled={item.isBtnDisabled} >{item.btnText}</HoverBorderGradient>
               </div>
             </div>
               

@@ -80,7 +80,7 @@ export const CardDesign: React.FC<CardDesignProps> = ({
         )}
       />
 
-      <div className={cn("relative z-10 bg-zinc-900/80 rounded-3xl", className)}>
+      <div className={cn("relative h-full w-full z-10 bg-zinc-900/80 rounded-3xl", className)}>
         {children}
       </div>
     </div>
