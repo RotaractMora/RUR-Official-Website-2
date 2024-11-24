@@ -20,6 +20,7 @@ import RUR_IMG13 from "../../public/Images/RUR (13).jpg"
 import RUR_IMG14 from "../../public/Images/RUR (14).jpg"
 import RUR_IMG15 from "../../public/Images/RUR (15).jpg"
 import SPONSOR from "../../public/Images/partners/the-ai-team.png"
+import LoadingAnimation from "../../public/animations/RUR.json"
 import { Timeline } from "@/components/ui/timeline";
 
 import LampLighting from "@/components/ui/lamp";
@@ -30,16 +31,17 @@ import ReachUsSection from "@/components/blocks/reach-us-section";
 import Footer from "@/components/blocks/footer";
 import { GridBackground } from "@/components/ui/backgrounds";
 import { ISponsor } from "@/interfaces/ISponsors";
-// import {  getSponsors } from "@/services/sponsors.service";
-// import {  getTimeLineEvents } from "@/services/timeline.service";
 import {getDataFromAggregatedDoc} from "@/services/aggregatedData.service";
 import { ITimelineData } from "@/interfaces/ITimeline";
-import { MultiStepLoader } from "@/components/ui/multi-step-loader";
 import { HeroHighlight } from "@/components/ui/hero-highlight";
 import { Highlighter } from "@/components/blocks/hilight";
 import {  HomeIcon, ClockIcon , MegaphoneIcon , PhoneArrowUpRightIcon } from "@heroicons/react/24/solid";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import {CardDesign} from "@/components/ui/card-design";
+import Lottie from "react-lottie-player";
+import { IContact } from "@/interfaces/IContacts";
+import { getReachUs } from "@/services/reachus.service";
+
 export const products = [
   {
     title: "Are You Ready?",
@@ -159,63 +161,6 @@ const navItms = [
 ];
 
 
-const grid = [
-  {
-    name: "John Doe",
-    email: "john.doe@example.com",
-    phone: "123-456-7890",
-    position: "Software Engineer",
-  },
-  {
-    name: "Jane Smith",
-    email: "jane.smith@example.com",
-    phone: "234-567-8901",
-    position: "Project Manager",
-  },
-  {
-    name: "Alice Johnson",
-    email: "alice.johnson@example.com",
-    phone: "345-678-9012",
-    position: "QA Engineer",
-  },
-  {
-    name: "Bob Brown",
-    email: "bob.brown@example.com",
-    phone: "456-789-0123",
-    position: "Software Engineer",
-  },
-  {
-    name: "Charlie Davis",
-    email: "charlie.davis@example.com",
-    phone: "567-890-1234",
-    position: "Project Manager",
-  },
-  {
-    name: "Diana Evans",
-    email: "diana.evans@example.com",
-    phone: "678-901-2345",
-    position: "QA Engineer",
-  },
-  {
-    name: "Frank Green",
-    email: "frank.green@example.com",
-    phone: "789-012-3456",
-    position: "Software Engineer",
-  },
-  {
-    name: "Grace Harris",
-    email: "grace.harris@example.com",
-    phone: "890-123-4567",
-    position: "Project Manager",
-  },
-  {
-    name: "Henry Lee",
-    email: "henry.lee@example.com",
-    phone: "901-234-5678",
-    position: "QA Engineer",
-  },
-];
-
 const Loading =()=> {
   return (
     <div className="flex items-center justify-center min-h-screen">
@@ -247,7 +192,7 @@ const Para = ({ level, name, imgURL, loadCallback }: { level: string, name: stri
 
 const AboutSection = ({ content }: { content: string }) => {
   return (
-    <div className="w-full px-4 md:w-3/4 lg:w-1/2 mx-auto py-2  md:py-4">
+    <div className="w-full px-4 md:w-3/4 lg:w-1/2 mx-auto py-24  md:py-12">
       <div className="bg-white/5 backdrop-blur-lg rounded-xl p-4 md:p-8 mt-0">
         <h2 className="text-xl md:text-2xl text-center font-bold dark:text-custom-color-800 text-custom-dark-color-800 mb-4">
           About Are You Ready?
@@ -266,31 +211,52 @@ export default function Home() {
   const [isTimelineLoading, setTimelineLoading] = useState(true);
   const [isSponsorsLoading, setSponsorsLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoadingAnimComplete , setIsLoadingAnimComplete] = useState(false);
+  const [grid, setGrid] = useState([] as IContact[]);
+  const [isGridLoading, setGridLoading] = useState(true);
+
+  const loadingTimeout = ()=>{setTimeout(() => setIsLoadingAnimComplete(true), 1000);}
+  
+  
 
   useEffect(() => {
-      
-    // getTimeLineEvents().then((data) => {
-    //     setTimeline(data);
-    //     setTimelineLoading(false);
-    //   });
+    const fetchData = async () => {
 
-    // getSponsors("All").then((data) => {
-    //     setSponsors(data);
-    //     setSponsorsLoading(false);
-    //     const validdata = data.filter((sponsor)=>sponsor.level === "Gold" || sponsor.level ==="Silver" || sponsor.level === "Bronze");
-    //     console.log(validdata);
-    //   }
-    // );
+      getReachUs().then((data) => {
+        setGrid(data);
+      }).catch((err) => {
+        console.error("Error fetching data:", err);
+        setError("Failed to load data. Please try again later.");
+      }
+      ).finally(() => {
+        setGridLoading(false);
+      });
 
-    getDataFromAggregatedDoc().then((data) => {
-      console.log("agrefated data ", data);
-      setTimeline(data.timelineList);
-      setSponsors(data.sponsorList);
-      setTimelineLoading(false);
-      setSponsorsLoading(false);
-      setIsLoading(false);
-    });
-  },[]);
+
+
+      try {
+        const data = await getDataFromAggregatedDoc();
+        
+        if (!data) {
+          throw new Error("Failed to fetch data");
+        }
+
+        setTimeline(data.timelineList || []);
+        setSponsors(data.sponsorList || []);
+        setError(null);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+        setError("Failed to load data. Please try again later.");
+      } finally {
+        setTimelineLoading(false);
+        setSponsorsLoading(false);
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const events = timeline.map((t) => ({
     title: t.title,
@@ -300,86 +266,61 @@ export default function Home() {
     image: t.imgURL,
   }));
 
-  const loaderSteps = [ 
-    { text: "This is It" },
-    { text: "Make It Count" },
-    { text: "Step Into Greatness" },
-    { text: "The Time Is Now" },
-    { text: "Don't Look Back" },
-    { text: "Are You Ready?" },
-    { text: "2025" },
-  ];
+  const ErrorMessage = ({ message }: { message: string }) => (
+    <div className="flex items-center justify-center p-8">
+      <HeroHighlight>
+        <Highlighter firstString="Error: " secondString={message} />
+      </HeroHighlight>
+    </div>
+  );
+
+  const EmptyStateMessage = ({ message }: { message: string }) => (
+    <div className="flex items-center justify-center p-8">
+      <HeroHighlight>
+        <Highlighter firstString="" secondString={message} />
+      </HeroHighlight>
+    </div>
+  );
+
+
+
+
 
   const content: string = "\"Are You Ready?\" stands as a monumental initiative led by the Rotaract Club of the University of Moratuwa in partnership with the Career Guidance Unit. Our primary focus is 4th year undergraduates from our university, aiming to guide them towards a secure entry into the professional world. The scope of this endeavor knows no bounds, with over 100 companies aligning to provide opportunities for budding professionals. This project promises to be a valuable asset for those aspiring to forge strong connections with companies and their managers, even if the finish line of their degree is still on the horizon. In the initial stages, participants will gain the essential knowledge and training to confidently engage with industry experts.";
 
   return (
     <RootLayout>
-      <div className="relative">
-        <FloatingNav navItems={navItms} />
-        <MultiStepLoader loop={false} loading={isLoading} loadingStates={loaderSteps} duration={600} exitCallback={() => setIsLoading(false)} />
-
-
-        <div className="space-y-0">
-          <ResponsiveHero products={products} />
-          <AboutSection content={content} />
-        </div>
-
-           {/* <div className="w-1/2 px-5 py-5 pb-12 mx-auto">
-            <p className="text-2xl text-center font-bold dark:text-custom-color-800 text-custom-dark-color-800 p-2 py-3">
-              About Are You Ready?
-            </p>
-            <TextGenerateEffect words={content} />
-            </div>  */}
-       
-
-        <div id="timeline" className="scroll-mt-20">
-          {isTimelineLoading ? (
-            <Loading />
-          ) : events.length > 0 ? (
-            <Timeline data={events} />
-          ) : (
-            <HeroHighlight>
-              <Highlighter firstString="" secondString="Timeline will be available soon." />
-            </HeroHighlight>
-          )}
-        </div>
-
-        <div id="sponsors" className="scroll-mt-20">
-          <LampLighting firstLine="Sponsors" secondLine="" />
-        </div>
-
-
-        {isSponsorsLoading ? (
-          <Loading />
-        ) : sponsors.length > 0 ? (
-          <TracingBeam className="px-4 md:px-6">
-            {sponsors
-              .filter((sponsor) => ["Gold", "Silver", "Bronze"].includes(sponsor.level))
-              .map((sponsor, index) => (
-                <GlareCard
-                  key={`${sponsor.level}-${index}`}
-                  className="w-full max-w-5xl mx-auto"
-                  CardColor={sponsor.level}
-                >
-                  <Para name={sponsor.name} imgURL={sponsor.imgURL} level={sponsor.level} />
-                </GlareCard>
-              ))}
-          </TracingBeam>
-        ) : (
-          <HeroHighlight>
-            <Highlighter firstString="" secondString="Sponsors will be available soon." />
-          </HeroHighlight>
+      <FloatingNav navItems={navItms} />
+         { ( isLoading || !isLoadingAnimComplete ) && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-[#545576]">
+            <Lottie
+              loop={false}
+              animationData={LoadingAnimation}
+              onComplete={loadingTimeout }
+              play
+              style={{ width: 500, height: 500 }}
+              
+            />
+            </div>
         )}
 
-        <div id="reach_us" className="scroll-mt-20">
-          <GridBackground title="Reach Us">
-            <ReachUsSection grid={grid} />
-          </GridBackground>
-        </div>
 
-        <Footer />
+      <div className="space-y-0">
+        <ResponsiveHero products={products} />
+        <AboutSection content={content} />
       </div>
-<<<<<<< HEAD
+
+      <div id="timeline" className="scroll-mt-20">
+        {error ? (
+          <ErrorMessage message={error} />
+        ) : isTimelineLoading ? (
+          <Loading />
+        ) : events.length > 0 ? (
+          <Timeline data={events} />
+        ) : (
+          <EmptyStateMessage message="Timeline will be updated soon." />
+        )}
+      </div>
 
       <div id="sponsors" className="scroll-mt-20">
         <LampLighting firstLine="Sponsors" secondLine="" />
@@ -407,10 +348,10 @@ export default function Home() {
         <EmptyStateMessage message="Sponsors will be available soon." />
       )}
 
-      <div id="reach_us" className="scroll-mt-20">
-        <GridBackground title="Reach Us">
+     <div id="reach_us" className="scroll-mt-20">
+        {!isGridLoading && <GridBackground title="Reach Us">
           <ReachUsSection grid={grid} />
-        </GridBackground>
+        </GridBackground>}
       </div>
 
       <Footer />
@@ -418,8 +359,4 @@ export default function Home() {
   </RootLayout>
 );
 }
-=======
-    </RootLayout>
-  );
-}
->>>>>>> 67e651cb7296981d90fe826f3150791e6f29734d
+

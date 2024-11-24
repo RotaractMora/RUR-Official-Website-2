@@ -1,7 +1,7 @@
-import { getFirestore, collection, getDocs, limit, query, DocumentData, QueryDocumentSnapshot, Query, startAfter, orderBy, doc, getDoc } from "firebase/firestore";
+import { getFirestore, DocumentData , doc, getDoc } from "firebase/firestore";
 import {app} from './firebaseConfig';
 import { ITimelineData } from "@/interfaces/ITimeline";
-import { ISponsor, SponsorLevel } from "@/interfaces/ISponsors";
+import { ISponsor } from "@/interfaces/ISponsors";
 
 
 const AGGREGATED_DOC_PATH = "metadata/aggregatedInfo";
