@@ -61,7 +61,7 @@ const StatusCard: React.FC<StatusCardProps> = ({ title, signUp, signIn, registra
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.2 }}
       className={cn(
-        "bg-white/10 backdrop-blur-md rounded-lg p-6 m-4 border border-white/20",
+        "bg-white/10 backdrop-blur-md rounded-lg mt-12 p-6 m-4 border border-white/20",
         className
       )}
     >
@@ -123,6 +123,7 @@ const StatusCard: React.FC<StatusCardProps> = ({ title, signUp, signIn, registra
   );
 
 const WaveBackground = () => {
+   
     const containerRef = useRef(null);
     
     // Use the container ref for scroll tracking
@@ -259,65 +260,68 @@ const WaveBackground = () => {
 };
 
 const RegistrationStatus = () => {
-    const [status, setStatus] = useState<RegistrationStatusType | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-    const containerRef = useRef(null);
-  
-    useEffect(() => {
-      const fetchStatus = async () => {
-        try {
-          const result = await getRegistrationStatus();
-          if (!result) {
-            throw new Error('Failed to fetch registration status');
-          }
-          setStatus(result);
-        } catch (err) {
-          setError(err instanceof Error ? err.message : 'An error occurred');
-        } finally {
-          setLoading(false);
+  const [status, setStatus] = useState<RegistrationStatusType | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const fetchStatus = async () => {
+      try {
+        const result = await getRegistrationStatus();
+        if (!result) {
+          throw new Error('Failed to fetch registration status');
         }
-      };
-  
-      fetchStatus();
-    }, []);
-  
-    if (loading) {
-      return (
-        <div className="flex justify-center items-center min-h-[200px]">
-          <motion.div 
-            animate={{ rotate: 360 }}
-            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-            className="rounded-full h-8 w-8 border-b-2 border-white" 
-          />
-        </div>
-      );
-    }
-  
-    if (error || !status) {
-      return (
-        <div className="text-red-500 text-center p-4">
-          {error || 'Error loading registration status'}
-        </div>
-      );
-    }
-  
+        setStatus(result);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'An error occurred');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStatus();
+  }, []);
+
+  if (loading) {
     return (
-      <div 
-        ref={containerRef}
-        className="relative min-h-screen bg-gradient-to-b from-gray-900 to-blue-950 overflow-auto"
-      >
+      <div className="flex justify-center items-center min-h-[200px]">
+        <motion.div 
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+          className="rounded-full h-8 w-8 border-b-2 border-white" 
+        />
+      </div>
+    );
+  }
+
+  if (error || !status) {
+    return (
+      <div className="text-red-500 text-center p-4">
+        {error || 'Error loading registration status'}
+      </div>
+    );
+  }
+
+  return (
+    <div 
+      ref={containerRef}
+      className="relative min-h-screen bg-gradient-to-b from-gray-900 to-blue-950 overflow-hidden flex flex-col"
+      style={{ minHeight: '110vh' }}
+    >
+      {/* Header Section */}
+      <div className="relative z-10">
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto p-4 relative z-10"
+          className="max-w-4xl mt-32 mx-auto p-4"
         >
           <motion.h2 
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-4xl md:text-7xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-b from-neutral-100 to-neutral-300"
+            className="text-4xl md:text-7xl font-bold text-center mb-2  text-white "
           >
             Registration Status
           </motion.h2>
@@ -325,10 +329,19 @@ const RegistrationStatus = () => {
             initial={{ y: -10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="text-xs md:text-xl font-normal text-center text-neutral-400 mt-4 max-w-lg mx-auto mb-12"
+            className="text-xs md:text-xl font-normal text-center text-neutral-400 mt-8 max-w-lg mx-auto"
           >
             Check the current registration status for companies and students
           </motion.p>
+        </motion.div>
+      </div>
+
+      {/* Background Waves */}
+      <WaveBackground />
+
+      {/* Status Cards Section - Now at bottom */}
+      <div className="relative z-10 mt-24 pb-8">
+        <div className="max-w-4xl mx-auto p-4">
           <div className="grid md:grid-cols-2 gap-4">
             <StatusCard
               title="Company Registration"
@@ -339,13 +352,12 @@ const RegistrationStatus = () => {
               title="Student Registration"
               signUp={status.student.signUp}
               signIn={status.student.signIn}
-              
             />
           </div>
-        </motion.div>
-        <WaveBackground />
+        </div>
       </div>
-    );
-  };
-  
-  export default RegistrationStatus;
+    </div>
+  );
+};
+
+export default RegistrationStatus;
