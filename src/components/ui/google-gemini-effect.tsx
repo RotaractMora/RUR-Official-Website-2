@@ -14,50 +14,108 @@ interface StatusCardProps {
   title: string;
   signUp: boolean;
   signIn: boolean;
+  registrationUrl?: string;
   className?: string;
 }
+const AnimatedButton = ({ href, children }: { href: string; children: React.ReactNode }) => {
+    const [isHovered, setIsHovered] = useState(false);
 
-const StatusCard: React.FC<StatusCardProps> = ({ title, signUp, signIn, className }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.6, delay: 0.2 }}
-    className={cn(
-      "bg-white/10 backdrop-blur-md rounded-lg p-6 m-4 border border-white/20",
-      className
-    )}
-  >
-    <h3 className="text-xl font-bold mb-4 text-white">{title}</h3>
-    <div className="space-y-2">
-      <div className="flex items-center">
-        <motion.div 
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ delay: 0.4 }}
-          className={`w-3 h-3 rounded-full mr-2 ${
-            signUp ? 'bg-green-500' : 'bg-red-500'
-          }`}
-        />
-        <span className="text-white/90">
-          Sign Up is {signUp ? 'Open' : 'Closed'}
-        </span>
+return (
+    <motion.a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={cn(
+        "relative inline-flex items-center justify-center px-6 py-3",
+        "rounded-full font-semibold text-white",
+        "bg-gradient-to-r from-blue-500 to-purple-600",
+        "cursor-pointer overflow-hidden",
+        "transition-all duration-300",
+        "hover:shadow-lg hover:shadow-blue-500/25"
+      )}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      <motion.span
+        className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-500"
+        initial={{ x: "100%" }}
+        animate={{ x: isHovered ? "0%" : "100%" }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+      />
+      <motion.span
+        className="relative z-10"
+        animate={{ scale: isHovered ? 1.1 : 1 }}
+        transition={{ duration: 0.2 }}
+      >
+        {children}
+      </motion.span>
+    </motion.a>
+  );
+};
+
+const StatusCard: React.FC<StatusCardProps> = ({ title, signUp, signIn, registrationUrl, className }) => (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.2 }}
+      className={cn(
+        "bg-white/10 backdrop-blur-md rounded-lg p-6 m-4 border border-white/20",
+        className
+      )}
+    >
+      <h3 className="text-xl font-bold mb-4 underline text-white">{title}</h3>
+      <div className="space-y-2">
+        {/* <div className="flex items-center">
+          <motion.div 
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.4 }}
+            className={`w-3 h-3 rounded-full mr-2 ${
+              signUp ? 'bg-green-500' : 'bg-red-500'
+            }`}
+          />
+          <span className="text-white/90">
+            Sign Up is {signUp ? 'Open' : 'Closed'}
+          </span>
+        </div>
+        <div className="flex items-center">
+          <motion.div 
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.6 }}
+            className={`w-3 h-3 rounded-full mr-2 ${
+              signIn ? 'bg-green-500' : 'bg-red-500'
+            }`}
+          />
+          <span className="text-white/90">
+            Sign In is {signIn ? 'Open' : 'Closed'}
+          </span>
+        </div> */}
+        {signUp && signIn ? (
+          <div className="mt-4">
+            <motion.span
+            className="text-green-500 text-xl content-center block mb-3"
+            >
+            {title.split(" ")[0]} Registration Open
+            </motion.span>
+            <AnimatedButton href={registrationUrl || '#'}>
+            Visit Registration Portal
+            </AnimatedButton>
+          </div>
+        ) : (
+          <div className="mt-4">
+            <motion.span
+            className="text-red-500 text-xl block mb-3"
+            >
+            {title.split(" ")[0]} Registration Opening Soon
+            </motion.span>
+          </div>
+        )}
       </div>
-      <div className="flex items-center">
-        <motion.div 
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ delay: 0.6 }}
-          className={`w-3 h-3 rounded-full mr-2 ${
-            signIn ? 'bg-green-500' : 'bg-red-500'
-          }`}
-        />
-        <span className="text-white/90">
-          Sign In is {signIn ? 'Open' : 'Closed'}
-        </span>
-      </div>
-    </div>
-  </motion.div>
-);
+    </motion.div>
+  );
 
 const WaveBackground = () => {
     const containerRef = useRef(null);
@@ -276,6 +334,7 @@ const RegistrationStatus = () => {
               title="Student Registration"
               signUp={status.student.signUp}
               signIn={status.student.signIn}
+              
             />
           </div>
         </motion.div>
