@@ -42,7 +42,7 @@ import Lottie from "react-lottie-player";
 import { IContact } from "@/interfaces/IContacts";
 import { getReachUs } from "@/services/reachus.service";
 import RegistrationStatus from "@/components/ui/google-gemini-effect";
-
+import BackToTopButton from "@/components/ui/back-to-top";
 export const products = [
   {
     title: "Are You Ready?",
@@ -291,6 +291,7 @@ export default function Home() {
 
   return (
     <RootLayout>
+       <BackToTopButton />
       <FloatingNav navItems={navItms} />
          { ( isLoading || !isLoadingAnimComplete ) && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-[#545576]">
