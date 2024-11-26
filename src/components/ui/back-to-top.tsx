@@ -36,7 +36,7 @@ const BackToTopButton: React.FC = () => {
       {isVisible && (
         <button 
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 z-50 bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition-all duration-300 ease-in-out"
+          className="fixed bottom-6 right-6 z-50 bg-gray-700 text-white p-3 rounded-full shadow-lg hover:bg-gray-900 transition-all duration-300 ease-in-out"
           aria-label="Scroll to top"
         >
           <ArrowUpIcon className="h-6 w-6" />
