@@ -35,17 +35,17 @@ export const TracingBeam = ({
   }, []);
 
   const y1 = useSpring(
-    useTransform(scrollYProgress, [0, 0.8], [50, svgHeight]),
+    useTransform(scrollYProgress, [0, 0.1], [50, svgHeight]),
     {
       stiffness: 500,
-      damping: 90,
+      damping: 100,
     }
   );
   const y2 = useSpring(
     useTransform(scrollYProgress, [0, 1], [50, svgHeight - 200]),
     {
       stiffness: 500,
-      damping: 90,
+      damping: 100,
     }
   );
 
@@ -126,7 +126,7 @@ export const TracingBeam = ({
         </svg>
       </div>
       <div ref={contentRef} className={cn(
-          "flex flex-row flex-wrap justify-around w-full",
+          "flex flex-row flex-wrap justify-around w-full ml-6",
           cardSpacing
         )}>{children}</div>
     </motion.div>
