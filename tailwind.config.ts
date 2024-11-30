@@ -19,6 +19,10 @@ module.exports = {
   ],
   darkMode: "class",
   theme: {
+    screens: {
+        'sm1': '570px',
+        'sm2': '700px',
+    },
     extend: {
       backgroundImage:{
         'dark-gradient': 'linear-gradient(75deg, rgba(0,8,21,1) 0%, rgba(0,19,30,1) 30%, rgba(3,49,62,1) 45%, rgba(0,16,41,1) 60%, rgba(0,5,40,1) 100%)',
