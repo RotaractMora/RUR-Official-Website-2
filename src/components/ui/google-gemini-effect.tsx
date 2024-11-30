@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import { getRegistrationStatus } from '../../services/notice.service';
 import { RegistrationStatus as RegistrationStatusType } from '../../interfaces/IRegistration';
 import { cn } from "@/lib/utils";
@@ -18,10 +18,13 @@ interface StatusCardProps {
 }
 
 const StatusCard: React.FC<StatusCardProps> = ({ title, signUp, signIn, className }) => (
+  <AnimatePresence>
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.6, delay: 0.2 }}
+    transition={{ duration: 0.6, delay: 0.2  }}
+    viewport={{ once: false }}
+    exit={{ opacity: 0, y: 20 }}
     className={cn(
       "bg-white/10 backdrop-blur-md rounded-lg p-6 m-4 border border-white/20",
       className
@@ -34,6 +37,8 @@ const StatusCard: React.FC<StatusCardProps> = ({ title, signUp, signIn, classNam
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.4 }}
+          viewport={{ once: false }}
+          exit={{ scale: 0 }}
           className={`w-3 h-3 rounded-full mr-2 ${
             signUp ? 'bg-green-500' : 'bg-red-500'
           }`}
@@ -47,6 +52,8 @@ const StatusCard: React.FC<StatusCardProps> = ({ title, signUp, signIn, classNam
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.6 }}
+          viewport={{ once: false }}
+          exit={{ scale: 0 }}
           className={`w-3 h-3 rounded-full mr-2 ${
             signIn ? 'bg-green-500' : 'bg-red-500'
           }`}
@@ -57,6 +64,7 @@ const StatusCard: React.FC<StatusCardProps> = ({ title, signUp, signIn, classNam
       </div>
     </div>
   </motion.div>
+  </AnimatePresence>
 );
 
 const WaveBackground = () => {
@@ -77,6 +85,7 @@ const WaveBackground = () => {
   ];
 
   return (
+    <AnimatePresence>
     <div ref={containerRef} className="absolute inset-0 overflow-hidden">
     <svg
       width="1440"
@@ -192,6 +201,7 @@ const WaveBackground = () => {
       </defs>
     </svg>
     </div>
+    </AnimatePresence>
   );
 };
 
@@ -221,13 +231,14 @@ const RegistrationStatus = () => {
   
     if (loading) {
       return (
+        <AnimatePresence>
         <div className="flex justify-center items-center min-h-[200px]">
           <motion.div 
             animate={{ rotate: 360 }}
             transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-            className="rounded-full h-8 w-8 border-b-2 border-white" 
-          />
+            className="rounded-full h-8 w-8 border-b-2 border-white" />
         </div>
+        </AnimatePresence>
       );
     }
   
@@ -244,41 +255,43 @@ const RegistrationStatus = () => {
         ref={containerRef}
         className="relative min-h-screen bg-gradient-to-b from-gray-900 to-blue-950 overflow-auto"
       >
+        <AnimatePresence>
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto p-4 relative z-10"
-        >
+          viewport={{ once: false }}
+          className="max-w-4xl mx-auto p-4 relative z-10" >
+
           <motion.h2 
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-4xl md:text-7xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-b from-neutral-100 to-neutral-300"
-          >
+            viewport={{ once: false }}
+            className="text-4xl md:text-7xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-b from-neutral-100 to-neutral-300">
             Registration Status
           </motion.h2>
           <motion.p 
             initial={{ y: -10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="text-xs md:text-xl font-normal text-center text-neutral-400 mt-4 max-w-lg mx-auto mb-12"
-          >
+            viewport={{ once: false }}
+            className="text-xs md:text-xl font-normal text-center text-neutral-400 mt-4 max-w-lg mx-auto mb-12">
             Check the current registration status for companies and students
           </motion.p>
           <div className="grid md:grid-cols-2 gap-4">
             <StatusCard
               title="Company Registration"
               signUp={status.company.signUp}
-              signIn={status.company.signIn}
-            />
+              signIn={status.company.signIn} />
             <StatusCard
               title="Student Registration"
               signUp={status.student.signUp}
-              signIn={status.student.signIn}
-            />
+              signIn={status.student.signIn} />
           </div>
         </motion.div>
+        </AnimatePresence>
+
         <WaveBackground />
       </div>
     );

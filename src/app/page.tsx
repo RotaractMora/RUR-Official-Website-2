@@ -184,7 +184,7 @@ const Para = ({ level, name, imgURL, loadCallback }: { level: string, name: stri
         width={300}
         height={100}
         alt="Sponsor"
-        className="p-2 my-2 rounded-lg dark:bg-black bg-white h-auto min-w-[250px] max-w-[250px] md:max-w-[300px]"
+        className="p-2 my-2 rounded-lg dark:bg-custom-dark-color-600 bg-custom-color-600 h-auto min-w-[250px] max-w-[250px] md:max-w-[300px]"
       />
       <h5 className="text-2xl md:text-3xl lg:text-5xl text-center font-bold dark:text-custom-color-900 text-custom-dark-color-900 p-3">
         {name}
@@ -359,8 +359,8 @@ export default function Home() {
 <section 
         id="registrationStatus" 
         className="scroll-mt-20 relative py-16 w-full">
-        <div className="container mx-auto px-4">
-          <div className="relative z-10">
+        <div className="w-full mx-auto">
+          <div className="relative w-full z-10">
             <RegistrationStatus />
           </div>
         </div>
