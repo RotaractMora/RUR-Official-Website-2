@@ -66,6 +66,8 @@ function Navbar({ className }: { className?: string }) {
                     <MenuItem setActive={setActive} active={null} link="/admin/dashboard/timeline" item="Timeline" />
                     
                     <MenuItem setActive={setActive} active={null} link="/admin/dashboard/sponsors" item="Sponsors"/>
+                    
+                    <MenuItem setActive={setActive} active={null} link="/admin/dashboard/reachus" item="Reach Us"/>
 
                     <MenuItem setActive={setActive} active={null} link="/admin/dashboard" item="Dashboard"/>
     
