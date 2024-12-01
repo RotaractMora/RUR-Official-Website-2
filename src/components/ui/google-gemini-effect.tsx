@@ -321,7 +321,7 @@ const RegistrationStatus = () => {
   return (
     <div 
       ref={containerRef}
-      className="relative max-h-[950px] min-h-[50vw] bg-gradient-to-b from-gray-900 to-blue-950 overflow-auto"
+      className="relative max-h-[950px] min-h-[50vw] bg-gradient-to-b from-gray-900 to-blue-950 overflow-auto "
     >
       {/* Header Section */}
       <div className="relative z-10">
