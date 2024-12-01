@@ -16,6 +16,8 @@ export interface ITimelineEntry {
   eventDate: Date;
   btnLink: string;
   image: string|StaticImageData;
+  btnText: string;
+  isBtnDisabled: boolean;
 }
 
 export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
@@ -32,7 +34,7 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start 10%", "end 50%"],
+    offset: ["start 10%", "end 70%"],
   });
 
   const heightTransform = useTransform(scrollYProgress, [0, 1], [0, height]);
@@ -86,7 +88,7 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
                 <CountDown date={item.eventDate} />
               </div>
               <div className="inline-block md:mt-3 mt-5 ml-3">
-                <HoverBorderGradient onClick={()=>router.push(item.btnLink)}>Stay Tuned</HoverBorderGradient>
+                <HoverBorderGradient onClick={()=>router.push(item.btnLink)} isDisabled={item.isBtnDisabled} >{item.btnText}</HoverBorderGradient>
               </div>
             </div>
               
@@ -105,6 +107,7 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
             style={{
               height: heightTransform,
               opacity: opacityTransform,
+              
             }}
             className="absolute inset-x-0 top-0  w-[2px] bg-gradient-to-t from-purple-500 via-blue-500 to-transparent from-[0%] via-[10%] rounded-full"
           />

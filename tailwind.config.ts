@@ -19,10 +19,16 @@ module.exports = {
   ],
   darkMode: "class",
   theme: {
+    screens: {
+        'sm1': '570px',
+        'sm2': '700px',
+        'md': '768px',
+        'lg': '1024px',
+    },
     extend: {
       backgroundImage:{
         'dark-gradient': 'linear-gradient(75deg, rgba(0,8,21,1) 0%, rgba(0,19,30,1) 30%, rgba(3,49,62,1) 45%, rgba(0,16,41,1) 60%, rgba(0,5,40,1) 100%)',
-        'light-gradient': ' linear-gradient(55deg, rgba(151,219,245,1) 0%, rgba(255,255,255,1) 30%, rgba(243,253,255,1) 45%, rgba(255,255,255,1) 60%, rgba(156,225,251,1) 100%)',
+        'light-gradient': 'linear-gradient(55deg, rgba(247,254,255,1) 0%, rgba(230,238,238,1) 20%, rgba(255,255,255,1) 45%, rgba(230,238,238,1) 70%, rgba(247,254,255,1) 100%);',
         
       },
       colors:{
@@ -50,6 +56,12 @@ module.exports = {
         'dark-dots-color': '#696969', 
         'glow-dots-color': '#0000AB', 
         'dots-color': '#ADD8E6', 
+        'custom-color-gold': '#AF9500',
+        'custom-color-silver':'#D7D7D7',
+        'custom-color-bronze':'#BE7936',
+        'custom-dark-color-gold': '#FFD700',
+        'custom-dark-color-silver': '#C0C0C0',
+        'custom-dark-color-bronze': '#CD7F32',
       }
     },
     animation: {
