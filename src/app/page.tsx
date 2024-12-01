@@ -219,8 +219,8 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isLoadingAnimComplete , setIsLoadingAnimComplete] = useState(false);
-  const [grid, setGrid] = useState([] as IContact[]);
-  const [isGridLoading, setGridLoading] = useState(true);
+  const [reachUsContacts, setReachUsContacts] = useState([] as IContact[]);
+  const [isReachUsGridLoading, setIsReachUsGridLoading] = useState(true);
 
   const loadingTimeout = ()=>{
   console.log("Loading animation timeout");
@@ -233,15 +233,15 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
 
-      getReachUs().then((data) => {
-        setGrid(data);
-      }).catch((err) => {
-        console.error("Error fetching data:", err);
-        setError("Failed to load data. Please try again later.");
-      }
-      ).finally(() => {
-        setGridLoading(false);
-      });
+      // getReachUs().then((data) => {
+      //   setGrid(data);
+      // }).catch((err) => {
+      //   console.error("Error fetching data:", err);
+      //   setError("Failed to load data. Please try again later.");
+      // }
+      // ).finally(() => {
+      //   setGridLoading(false);
+      // });
 
 
 
@@ -254,6 +254,8 @@ export default function Home() {
 
         setTimeline(data.timelineList || []);
         setSponsors(data.sponsorList || []);
+        setReachUsContacts(data.reachUsContactList || []);
+
         setError(null);
       } catch (err) {
         console.error("Error fetching data:", err);
@@ -262,6 +264,8 @@ export default function Home() {
         setTimelineLoading(false);
         setSponsorsLoading(false);
         setIsLoading(false);
+        setIsReachUsGridLoading(false);
+
         console.log("Data fetched end");
       }
     };
@@ -379,8 +383,8 @@ export default function Home() {
 
 
      <div id="reach_us" className="scroll-mt-20">
-        {!isGridLoading && <GridBackground title="Reach Us">
-          <ReachUsSection grid={grid} />
+        {!isReachUsGridLoading && <GridBackground title="Reach Us">
+          <ReachUsSection grid={reachUsContacts} />
         </GridBackground>}
       </div>
 
