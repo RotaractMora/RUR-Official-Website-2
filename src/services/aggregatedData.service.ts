@@ -2,6 +2,7 @@ import { getFirestore, DocumentData , doc, getDoc } from "firebase/firestore";
 import {app} from './firebaseConfig';
 import { ITimelineData } from "@/interfaces/ITimeline";
 import { ISponsor } from "@/interfaces/ISponsors";
+import { IContact } from "@/interfaces/IContacts";
 
 
 const AGGREGATED_DOC_PATH = "metadata/aggregatedInfo";
@@ -13,18 +14,19 @@ const getAggregatedDoc = async ():Promise<DocumentData> => {
     return docSnap
 }
 
-export const getDataFromAggregatedDoc = async ():Promise<{timelineList:ITimelineData[],sponsorList:ISponsor[]}> => {
+export const getDataFromAggregatedDoc = async ():Promise<{timelineList:ITimelineData[],sponsorList:ISponsor[], reachUsContactList: IContact[]}> => {
     const aggregatedDoc = await getAggregatedDoc();
     console.log("Aggregated Doc",aggregatedDoc);
     console.log("Aggregated Doc Data",aggregatedDoc.data());
     const data = aggregatedDoc.data();
 
     if(!data){
-        return {timelineList:[],sponsorList:[]};
+        return {timelineList:[],sponsorList:[], reachUsContactList: []};
     }
 
     let timelineList: ITimelineData[] = [];
     let sponsorList: ISponsor[] = [];
+    let reachUsContactList: IContact[] = [];
 
     try {
         if (data["info-timeline"]) {
@@ -46,5 +48,14 @@ export const getDataFromAggregatedDoc = async ():Promise<{timelineList:ITimeline
         console.error("Error processing sponsor data:", error);
     }
 
-    return {timelineList,sponsorList};
+    try {
+        if (data["info-reach"]) {
+            reachUsContactList = Object.keys(data["info-reach"]).map(key => ({ id: key, ...data["info-reach"][key] })) as IContact[];
+        }
+       
+    } catch (error) {
+        console.error("Error processing reach us data:", error);
+    }
+
+    return {timelineList,sponsorList, reachUsContactList};
 }
