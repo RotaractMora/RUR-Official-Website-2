@@ -105,7 +105,7 @@ function ReachUsContactAddUpdateModal({
               <form className="p-4 md:p-5" onSubmit={handleSubmit}>
                 <div className="grid gap-4 mb-4 grid-cols-2">
                   <div className="col-span-2">
-                    <label htmlFor="contactName" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">contact Name</label>
+                    <label htmlFor="contactName" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Name</label>
                     <input 
                       type="text" 
                       name="contactName" 
@@ -119,41 +119,44 @@ function ReachUsContactAddUpdateModal({
                   </div>
 
                   <div>
-                  <label htmlFor="contactEmail" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">contact Name</label>
+                  <label htmlFor="contactEmail" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Email</label>
                     <input 
-                      type="text" 
+                      type="email" 
                       name="contactEmail" 
                       id="contactEmail" 
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" 
-                      placeholder="Type contact name" 
+                      placeholder="eg: john@example.com" 
                       required 
+                      pattern='^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$'
                       value={contactEmail}
                       onChange={(e) => setcontactEmail(e.target.value)}
                     />
                   </div>
 
-                  <div>
-                  <label htmlFor="contactTelContact" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">contact Name</label>
+                    <div>
+                    <label htmlFor="contactTelContact" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Telephone</label>
                     <input 
-                      type="text" 
+                      type="tel" 
                       name="contactTelContact" 
                       id="contactTelContact" 
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" 
-                      placeholder="Type contact name" 
+                      placeholder="eg: 0123456789" 
                       required 
                       value={contactTelContact}
+                      minLength={10}
+                      maxLength={10}
                       onChange={(e) => setcontactTelContact(e.target.value)}
                     />
-                  </div>
+                    </div>
 
                   <div>
-                  <label htmlFor="contactPost" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">contact Name</label>
+                  <label htmlFor="contactPost" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Post</label>
                     <input 
                       type="text" 
                       name="contactPost" 
                       id="contactPost" 
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" 
-                      placeholder="Type contact name" 
+                      placeholder="Type contact post" 
                       required 
                       value={contactPost}
                       onChange={(e) => setcontactPost(e.target.value)}

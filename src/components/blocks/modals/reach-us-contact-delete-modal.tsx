@@ -86,13 +86,16 @@ function ReachUsContactDeleteModal(
               {contactToDelete && (
                 <div className="mt-4 bg-gray-100 dark:bg-gray-700 rounded-lg p-4">
                   <p className="text-gray-800 dark:text-gray-200 text-base font-semibold">
-                    {contactToDelete.name} - {contactToDelete.post} Contact
+                    {contactToDelete.name} - {contactToDelete.post}
                     <span>
+                      <br />
                       {contactToDelete.email} - {contactToDelete.contact}
                     </span>
                   </p>
                   
+                  
                 </div>
+
               )}
   
               <div className="flex justify-end gap-4 mt-6">
