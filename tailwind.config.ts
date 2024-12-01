@@ -22,6 +22,8 @@ module.exports = {
     screens: {
         'sm1': '570px',
         'sm2': '700px',
+        'md': '768px',
+        'lg': '1024px',
     },
     extend: {
       backgroundImage:{

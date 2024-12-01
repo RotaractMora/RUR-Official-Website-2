@@ -46,22 +46,22 @@ export const FloatingNav = ({
               <Image
           src={SMALL_LOGO}
           alt="logo"
-          className="dark:border-custom-dark-color-800 border-custom-color-800 h-8 w-8 md:h-12 md:w-12"
+          className="dark:border-custom-dark-color-800 border-custom-color-800 h-4 w-5 md:h-12 md:w-12"
           height={37}
           width={50}
               />
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-4">
+            <div className="hidden md:flex flex-row items-center space-x-4">
               {navItems.map((navItem, idx) => (
-            <Link
+              <Link
                 key={`link-${idx}`}
                 href={navItem.link}
                 className="relative dark:text-neutral-50 items-center flex space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500"
-            >
-              <span className="text-sm">{navItem.name}</span>
-            </Link>
+              >
+                <span className="text-sm">{navItem.name}</span>
+              </Link>
               ))}
             </div>
           </div>
