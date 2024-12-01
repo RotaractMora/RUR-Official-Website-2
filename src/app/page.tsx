@@ -46,6 +46,8 @@ import { getReachUs } from "@/services/reachus.service";
 import RegistrationStatus from "@/components/ui/google-gemini-effect";
 import CodeEvelPara from "@/components/ui/code-evel-para";
 import { HeroVideo } from "@/components/ui/hero-video";
+import ExpandableCardDemo from "@/components/blocks/expandable-card-standard";
+import Head from "next/head";
 
 export const products = [
   {
@@ -303,6 +305,11 @@ export default function Home() {
 
   return (
     <RootLayout>
+      <Head>
+        <meta name="robots" content="index, follow" />
+        <meta name="googlebot" content="index, follow" />
+        <meta name="distribution" content="global" />
+      </Head>
       <FloatingNav navItems={navItms} />
          { ( !isLoadingAnimComplete ) && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-[#545576]">
@@ -365,6 +372,9 @@ export default function Home() {
       ) : (
         <EmptyStateMessage message="Sponsors will be available soon." />
       )}
+
+
+      <ExpandableCardDemo />
 
 <section 
         id="registrationStatus" 
