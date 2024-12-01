@@ -277,7 +277,6 @@ const AboutSection = ({ content }: { content: string }) => {
 export default function Home() {
   const [timeline, setTimeline] = useState([] as ITimelineData[]);
   const [sponsors, setSponsors] = useState([] as ISponsor[]);
-  const [companies, setCompanies] = useState([] as ICompany[]);
   const [isTimelineLoading, setTimelineLoading] = useState(true);
   const [isSponsorsLoading, setSponsorsLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -328,25 +327,6 @@ export default function Home() {
         setIsLoading(false);
         console.log("Data fetched end");
       }
-
-
-      try{
-        const data = await getDataFromAggregatedCompanyDoc();
-
-        if (!data) {
-          throw new Error("Failed to fetch data");
-        }
-
-        setCompanies(data.companies || []);
-      }
-      catch(err){
-        console.error("Error fetching data:", err);
-        setError("Failed to load data. Please try again later.");
-      }
-      finally {
-        console.log("Company Data fetch end");
-      }
-
 
     };
 
@@ -456,7 +436,7 @@ export default function Home() {
       )}
 
 
-      <ExpandableCard cards={companies} />
+      <ExpandableCard />
       {/* <ExpandableCardGrid cards={cards} /> */}
 
 <section 

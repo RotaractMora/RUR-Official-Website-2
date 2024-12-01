@@ -1,12 +1,16 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect, useId, useRef, useState } from "react";
+import React, { act, useEffect, useId, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useOutsideClick } from "@/hooks/use-outside-click";
 import { IExpandableCard } from "@/interfaces/IExpandableCard";
 import { ICompany } from "@/interfaces/ICompanies";
+import { getDataFromAggregatedCompanyDoc } from "@/services/aggregatedCompanyData.service";
 
-export default function ExpandableCard({cards}: {cards: ICompany[]}) {
+export default function ExpandableCard() {
+  const [cards, setCompanies] = useState([] as ICompany[]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [active, setActive] = useState<(typeof cards)[number] | boolean | null>(
     null
   );
@@ -18,6 +22,8 @@ export default function ExpandableCard({cards}: {cards: ICompany[]}) {
       if (event.key === "Escape") {
         setActive(false);
       }
+
+      
     }
 
     if (active && typeof active === "object") {
@@ -30,8 +36,42 @@ export default function ExpandableCard({cards}: {cards: ICompany[]}) {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [active]);
 
+  useEffect(() => {
+    async function fetchData() {
+      try{
+        const data =await getDataFromAggregatedCompanyDoc();
+
+        if (!data) {
+          throw new Error("Failed to fetch data");
+        }
+
+        setCompanies(data.companies || []);
+      }
+      catch(err){
+        console.error("Error fetching company data:", err);
+        setError("Failed to load data. Please try again later.");
+      }
+      finally {
+        console.log("Company Data fetch end");
+        setIsLoading(false);
+      }
+    }
+
+    fetchData();
+  },[]);
+
   useOutsideClick(ref, () => setActive(null));
 
+  if (error) {
+    return <div>{error}</div>;
+  }
+  else if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  else if (cards.length==0 ) {
+    return <div>No registerd companies.</div>;
+  }
+  else{
   return (
     <>
       <AnimatePresence>
@@ -96,13 +136,13 @@ export default function ExpandableCard({cards}: {cards: ICompany[]}) {
                       layoutId={`description-${active.description}-${id}`}
                       className="text-neutral-600 dark:text-neutral-400"
                     >
-                      {active.description}
+                      {` ${active.name} has mentioned ${ active.qualitiesToLook.length } qualities & ${active.preferredFields.length} preferred Fields.`}
                     </motion.p>
                   </div>
 
                   <motion.a
                     layoutId={`button-${active.companyId}-${id}`}
-                    href={"#"}
+                    href={"https://google.com/search?q=company " + active.name}
                     target="_blank"
                     className="px-4 py-3 text-sm rounded-full font-bold bg-green-500 text-white"
                   >
@@ -117,7 +157,7 @@ export default function ExpandableCard({cards}: {cards: ICompany[]}) {
                     exit={{ opacity: 0 }}
                     className="text-neutral-600 text-xs md:text-sm lg:text-base h-40 md:h-fit pb-10 flex flex-col items-start gap-4 overflow-auto dark:text-neutral-400 [mask:linear-gradient(to_bottom,white,white,transparent)] [scrollbar-width:none] [-ms-overflow-style:none] [-webkit-overflow-scrolling:touch]"
                   >
-                    {active.description}
+                    {active.description + "desc 2"}
                   </motion.div>
                 </div>
               </div>
@@ -139,7 +179,7 @@ export default function ExpandableCard({cards}: {cards: ICompany[]}) {
                   width={100}
                   height={100}
                   src={card.logoUrl}
-                  alt={card.companyId}
+                  alt={card.name+" logo"}
                   className="h-40 w-40 md:h-14 md:w-14 rounded-lg object-contain"
                 />
                 </motion.div>
@@ -148,7 +188,7 @@ export default function ExpandableCard({cards}: {cards: ICompany[]}) {
                   layoutId={`title-${card.companyId}-${id}`}
                   className="font-medium text-neutral-800 dark:text-neutral-200 text-center md:text-left"
                 >
-                  {card.companyId}
+                  {card.name}
                 </motion.h3>
                 <motion.p
                   layoutId={`description-${card.description}-${id}`}
@@ -162,13 +202,14 @@ export default function ExpandableCard({cards}: {cards: ICompany[]}) {
               layoutId={`button-${card.companyId}-${id}`}
               className="px-4 py-2 text-sm rounded-full font-bold bg-gray-100 hover:bg-green-500 hover:text-white text-black mt-4 md:mt-0"
             >
-              View 2
+              View
             </motion.button>
           </motion.div>
         ))}
       </ul>
     </>
   );
+  }
 }
 
 export const CloseIcon = () => {
