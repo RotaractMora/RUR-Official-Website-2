@@ -73,7 +73,7 @@ export default function ExpandableCard() {
   }
   else{
   return (
-    <>
+    <div className="p-12 max-h-screen dark:bg-custom-dark-color-600 bg-custom-color-600">
       <AnimatePresence>
         {active && typeof active === "object" && (
           <motion.div
@@ -207,7 +207,7 @@ export default function ExpandableCard() {
           </motion.div>
         ))}
       </ul>
-    </>
+    </div>
   );
   }
 }
