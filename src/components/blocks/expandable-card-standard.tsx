@@ -74,6 +74,19 @@ export default function ExpandableCard() {
   else{
   return (
     <>
+    <AnimatePresence>
+    <motion.h2
+    className="text-5xl py-12 text-center dark:text-white text-black"
+    initial={{ opacity: 0 , y: -20 }}
+    animate={{ opacity: 1 , y: 0  }}
+    exit={{ opacity: 0 , y: -20 , transition: { duration: 0.2 } }}
+    viewport={{once:false}}
+    
+    >
+      Registered Companies
+    </motion.h2>
+    </AnimatePresence>
+    <div className="p-12 max-h-screen dark:bg-custom-dark-color-600/20 bg-custom-color-600/20">
       <AnimatePresence>
         {active && typeof active === "object" && (
           <motion.div
@@ -119,7 +132,7 @@ export default function ExpandableCard() {
                   height={200}
                   src={active.logoUrl}
                   alt={active.companyId}
-                  className="w-full h-80 lg:h-80 sm:rounded-tr-lg sm:rounded-tl-lg object-contain"
+                  className="w-full h-80 lg:h-80 sm:rounded-tr-lg sm:rounded-tl-lg object-contain dark:bg-custom-dark-color-600/20 bg-custom-color-600/20"
                 />
               </motion.div>
 
@@ -157,7 +170,21 @@ export default function ExpandableCard() {
                     exit={{ opacity: 0 }}
                     className="text-neutral-600 text-xs md:text-sm lg:text-base h-40 md:h-fit pb-10 flex flex-col items-start gap-4 overflow-auto dark:text-neutral-400 [mask:linear-gradient(to_bottom,white,white,transparent)] [scrollbar-width:none] [-ms-overflow-style:none] [-webkit-overflow-scrolling:touch]"
                   >
-                    {active.description + "desc 2"}
+                    {active.description}
+                    {
+                      active.qualitiesToLook.map((quality,index)=>(
+                        <div key={index+"qualities"}>
+                          <h4 className="font-bold">{quality}</h4>
+                        </div>
+                      ))
+                    }
+                    {
+                      active.preferredFields.map((field,index)=>(
+                        <div key={index+"fields"}>
+                          <h4 className="font-bold">{field}</h4>
+                        </div>
+                      ))
+                    }
                   </motion.div>
                 </div>
               </div>
@@ -207,6 +234,7 @@ export default function ExpandableCard() {
           </motion.div>
         ))}
       </ul>
+    </div>
     </>
   );
   }
