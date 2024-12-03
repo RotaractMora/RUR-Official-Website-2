@@ -21,19 +21,19 @@ const aggregateData = async () => {
     } = {"info-sponsors": {}, "info-timeline": {}, "info-reach": {}};
 
     // Aggregate data from info-sponsors
-    const sponsorsSnapshot = await db.collection("info-sponsors").get();
+    const sponsorsSnapshot = await db.collection("info-sponsors").where("isVisibleToPublic", "==", true).get();
     sponsorsSnapshot.forEach((doc) => {
       aggregatedData["info-sponsors"][doc.id] = doc.data();
     });
 
     // Aggregate data from info-timeline
-    const timelineSnapshot = await db.collection("info-timeline").get();
+    const timelineSnapshot = await db.collection("info-timeline").where("isVisibleToPublic", "==", true).get();
     timelineSnapshot.forEach((doc) => {
       aggregatedData["info-timeline"][doc.id] = doc.data();
     });
 
     // Aggregate data from info-reach
-    const reachSnapshot = await db.collection("info-reach").get();
+    const reachSnapshot = await db.collection("info-reach").where("isVisibleToPublic", "==", true).get();
     reachSnapshot.forEach((doc) => {
       aggregatedData["info-reach"][doc.id] = doc.data();
     });

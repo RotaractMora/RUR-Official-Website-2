@@ -17,6 +17,7 @@ function ReachUsContactAddUpdateModal({
   const [contactEmail, setcontactEmail] = useState(contact?.email || '');
   const [contactTelContact, setcontactTelContact] = useState(contact?.contact || '');
   const [contactPost, setcontactPost] = useState(contact?.post || ''); 
+  const [isVisibleToPublic, setisVisibleToPublic] = useState(contact?.isVisibleToPublic || false);
 
   // Toggle modal visibility
   const toggleModal = () => {
@@ -24,6 +25,7 @@ function ReachUsContactAddUpdateModal({
     setcontactEmail('');
     setcontactTelContact('');
     setcontactPost('');
+    setisVisibleToPublic(false);
     onClose();    
 
   };
@@ -57,6 +59,7 @@ function ReachUsContactAddUpdateModal({
           contact: contactTelContact,
           post : contactPost,
           photo: 'https://via.placeholder.com/150',
+          isVisibleToPublic: isVisibleToPublic,
       };
 
       if (contact?.id) {
@@ -162,6 +165,20 @@ function ReachUsContactAddUpdateModal({
                       value={contactPost}
                       onChange={(e) => setcontactPost(e.target.value)}
                     />
+                  </div>
+                  <div>
+                    <label htmlFor="isVisibleToPublic" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Visibility</label>
+                    <div className="flex items-center space-x-2 mt-4">
+                      <input 
+                        type="checkbox" 
+                        name="isVisibleToPublic" 
+                        id="isVisibleToPublic" 
+                        className="text-primary-600 focus:ring-primary-600 h-4 w-4 rounded" 
+                        checked={isVisibleToPublic}
+                        onChange={(e) => setisVisibleToPublic(e.target.checked)}
+                      />
+                      <label htmlFor="isVisibleToPublic" className="text-sm text-gray-900 dark:text-white">Visible to public</label>
+                    </div>
                   </div>
                   </div>
 

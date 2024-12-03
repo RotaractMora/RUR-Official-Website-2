@@ -77,6 +77,9 @@ export default function ManageReachUsContacts() {
                   Post
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  Visiblity
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Action
                 </th>
               </tr>
@@ -98,6 +101,15 @@ export default function ManageReachUsContacts() {
                   </td>
                   <td className="px-6 py-4">{contact.contact}</td>
                   <td className="px-6 py-4">{contact.post}</td>
+                
+                  <td className="px-6 py-4">
+                      {contact.isVisibleToPublic ? (
+                        <span className="bg-green-500 text-white p-1 px-2 font-medium rounded-lg ">Public</span>
+                      ) : (
+                        <span className="bg-red-500 text-white p-1 px-2 font-medium rounded-lg ">Hidden</span>
+                      )}
+                    </td>
+
                   <td className="px-3 py-4">
                   <button className="text-blue-500 m-2"
                         onClick={
