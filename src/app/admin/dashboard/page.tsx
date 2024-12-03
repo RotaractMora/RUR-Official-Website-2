@@ -1,95 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { AdminDashboardLayout } from '@/app/admin/admin-dashboard-layout';
-import { addReachUs } from '@/services/reachus.service';
 
-const AddReachDataForm: React.FC = () => {
-  const [newReachData, setNewReachData] = useState<{
-    contact: string;
-    email: string;
-    name: string;
-    post: string;
-    photo: File | null;
-  }>({
-    contact: '',
-    email: '',
-    name: '',
-    post: '',
-    photo: null,
-  });
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewReachData({ ...newReachData, [e.target.name]: e.target.value });
-  };
-
-  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewReachData({ ...newReachData, photo: e.target.files?.[0] || null });
-  };
-
-  const handleAddData = async () => {
-    try {
-      await addReachUs({
-        ...newReachData,
-        photo: newReachData.photo ? newReachData.photo.name : '',
-      });
-      setNewReachData({
-        contact: '',
-        email: '',
-        name: '',
-        post: '',
-        photo: null,
-      });
-    } catch (error) {
-      console.error('Error adding data:', error);
-    }
-  };
-
-  return (
-    <div className="bg-custom-color-800 dark:bg-custom-dark-color-800 p-6 rounded-lg">
-      <h2 className="text-xl font-bold mb-2">Add New Reach Data</h2>
-      <input
-        name="contact"
-        value={newReachData.contact}
-        onChange={handleInputChange}
-        className="bg-custom-color-700 dark:bg-custom-dark-color-700 text-white p-2 rounded-lg mb-2 w-full"
-        placeholder="Contact"
-      />
-      <input
-        name="email"
-        value={newReachData.email}
-        onChange={handleInputChange}
-        className="bg-custom-color-700 dark:bg-custom-dark-color-700 text-white p-2 rounded-lg mb-2 w-full"
-        placeholder="Email"
-      />
-      <input
-        name="name"
-        value={newReachData.name}
-        onChange={handleInputChange}
-        className="bg-custom-color-700 dark:bg-custom-dark-color-700 text-white p-2 rounded-lg mb-2 w-full"
-        placeholder="Name"
-      />
-      <input
-        name="post"
-        value={newReachData.post}
-        onChange={handleInputChange}
-        className="bg-custom-color-700 dark:bg-custom-dark-color-700 text-white p-2 rounded-lg mb-2 w-full"
-        placeholder="Post"
-      />
-      <input
-        type="file"
-        onChange={handlePhotoChange}
-        className="bg-custom-color-700 dark:bg-custom-dark-color-700 text-white p-2 rounded-lg mb-2 w-full"
-      />
-      <button
-        onClick={handleAddData}
-        className="bg-custom-color-700 dark:bg-custom-dark-color-700 text-white p-2 rounded-lg w-full hover:bg-custom-color-600 dark:hover:bg-custom-dark-color-600"
-      >
-        Add Data
-      </button>
-    </div>
-  );
-};
 const AdminDashboard: React.FC = () => {
     
 
@@ -119,7 +32,6 @@ const AdminDashboard: React.FC = () => {
                                         <p className="text-gray-700 dark:text-white">Description of operation 3.</p>
                                     </div>
 
-                                    <AddReachDataForm />
                             </div>
                         </div>
                     </div>

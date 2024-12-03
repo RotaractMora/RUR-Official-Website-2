@@ -55,7 +55,8 @@ function ReachUsContactAddUpdateModal({
           name: contactName,
           email: contactEmail,
           contact: contactTelContact,
-          post : contactPost
+          post : contactPost,
+          photo: 'https://via.placeholder.com/150',
       };
 
       if (contact?.id) {
