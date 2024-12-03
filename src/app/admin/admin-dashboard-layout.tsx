@@ -11,6 +11,7 @@ import LOGO_SMALL from "../../../public/Images/logo/RUR20_small.png";
 import { useAuth } from "@/context/auth-provider";
 import { useRouter } from "next/navigation";
 import { IThemeContextType } from "@/interfaces/IThemeContext";
+import Head from "next/head";
 
 interface AdminDashboardLayoutProps {
     children: ReactNode;
@@ -22,32 +23,37 @@ export function AdminDashboardLayout({ children }: AdminDashboardLayoutProps) {
 
     return (
 
-            <RootLayout>
+        <RootLayout>
+            <Head>
+                <meta name="robots" content="noindex, nofollow" />
+                <meta name="googlebot" content="noindex, nofollow" />
+                <meta name="distribution" content="global" />
+            </Head>
 
-                    <div className="min-h-screen flex flex-col">
-                        <div className="relative w-full flex items-center justify-center mb-24">
-                            <Navbar className="top-2" />
-                        </div>
-                        
-                        <main className="flex-grow p-4">               
-                            {children}
-                        </main>
-                        
-                        <Footer />
-                    </div>
+            <div className="min-h-screen flex flex-col">
+                <div className="relative w-full flex items-center justify-center mb-24">
+                    <Navbar className="top-2" />
+                </div>
 
-            </RootLayout>
+                <main className="flex-grow p-4">
+                    {children}
+                </main>
+
+                <Footer />
+            </div>
+
+        </RootLayout>
 
     );
 }
 
 function Navbar({ className }: { className?: string }) {
 
-    const { user , logOut } = useAuth();
+    const { user, logOut } = useAuth();
     const router = useRouter();
     const [active, setActive] = useState<string | null>(null);
 
-    const themeContext = useContext<IThemeContextType|null>(ThemeContext);
+    const themeContext = useContext<IThemeContextType | null>(ThemeContext);
     if (!themeContext) {
         throw new Error("ThemeToggleButton must be used within a ThemeContext.Provider");
     }
@@ -59,29 +65,29 @@ function Navbar({ className }: { className?: string }) {
         <div className={cn("fixed top-10 inset-x-0 max-w-2xl mx-auto z-50", className)}>
             <Menu setActive={setActive}>
 
-                    <Image src={LOGO_SMALL} alt="RUR" width={50} height={37} className="p-0 rounded-lg dark:bg-black bg-white"/>
-                    
-                    <MenuItem setActive={setActive} active={null} link="/" item="Home" />
+                <Image src={LOGO_SMALL} alt="RUR" width={50} height={37} className="p-0 rounded-lg dark:bg-black bg-white" />
 
-                    <MenuItem setActive={setActive} active={null} link="/admin/dashboard/timeline" item="Timeline" />
-                    
-                    <MenuItem setActive={setActive} active={null} link="/admin/dashboard/sponsors" item="Sponsors"/>
+                <MenuItem setActive={setActive} active={null} link="/" item="Home" />
 
-                    <MenuItem setActive={setActive} active={null} link="/admin/dashboard" item="Dashboard"/>
-    
-                    {user && <MenuItem setActive={setActive} active={null} link="/admin/logout" item="Logout"/>}
+                <MenuItem setActive={setActive} active={null} link="/admin/dashboard/timeline" item="Timeline" />
 
-                    <button
-                        onClick={toggleTheme}
-                        className="border text-sm font-medium relative border-neutral-200 dark:border-white/[0.2] text-black dark:text-white px-4 py-2 rounded-full"
-                        >
-                        {theme == "dark" ? (
-                            <SunIcon className="h-5 w-5" />
-                        ) : (
-                            <MoonIcon className="h-5 w-5" />
-                        )}
-                    </button>
-            
+                <MenuItem setActive={setActive} active={null} link="/admin/dashboard/sponsors" item="Sponsors" />
+
+                <MenuItem setActive={setActive} active={null} link="/admin/dashboard" item="Dashboard" />
+
+                {user && <MenuItem setActive={setActive} active={null} link="/admin/logout" item="Logout" />}
+
+                <button
+                    onClick={toggleTheme}
+                    className="border text-sm font-medium relative border-neutral-200 dark:border-white/[0.2] text-black dark:text-white px-4 py-2 rounded-full"
+                >
+                    {theme == "dark" ? (
+                        <SunIcon className="h-5 w-5" />
+                    ) : (
+                        <MoonIcon className="h-5 w-5" />
+                    )}
+                </button>
+
 
                 {/* <MenuItem setActive={setActive} active={active} item="Logout">
                     <div className="flex flex-col space-y-4 text-sm">
@@ -91,6 +97,6 @@ function Navbar({ className }: { className?: string }) {
 
             </Menu>
         </div>
-                    
+
     );
 }

@@ -17,7 +17,8 @@ const aggregateData = async () => {
     const aggregatedData: {
       "info-sponsors": Record<string, unknown>;
       "info-timeline": Record<string, unknown>;
-    } = {"info-sponsors": {}, "info-timeline": {}};
+      "info-reach": Record<string, unknown>;
+    } = {"info-sponsors": {}, "info-timeline": {}, "info-reach": {}};
 
     // Aggregate data from info-sponsors
     const sponsorsSnapshot = await db.collection("info-sponsors").get();
@@ -29,6 +30,12 @@ const aggregateData = async () => {
     const timelineSnapshot = await db.collection("info-timeline").get();
     timelineSnapshot.forEach((doc) => {
       aggregatedData["info-timeline"][doc.id] = doc.data();
+    });
+
+    // Aggregate data from info-reach
+    const reachSnapshot = await db.collection("info-reach").get();
+    reachSnapshot.forEach((doc) => {
+      aggregatedData["info-reach"][doc.id] = doc.data();
     });
 
     // Save the aggregated data to the Firestore document

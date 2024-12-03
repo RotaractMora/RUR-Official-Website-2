@@ -59,6 +59,20 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <AuthProvider>
       <ThemeContext.Provider value={{ setTheme, toggleTheme, theme }}>
         <html lang="en">
+          <head>
+              <meta charSet="UTF-8" />
+              <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+              <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+              <title>Are You Ready? 2025</title>
+              <meta name="author" content="Rotaract Club of University of Moratuwa" />
+              <meta name="description" content="Official website of 'Are You Ready? 2025', organized by the Rotaract Club of University of Moratuwa" />
+              <meta name="keywords" content="RUR25,Are You Ready,Rota,Mora,UoM,RUR,RUR?" />
+              <meta property="og:title" content="Are You Ready? 2025" />
+              <meta property="og:description" content="'Are You Ready? 2025', organized by Rotaract Club of the University of Moratuwa in collaboration with the university's Career Guidance Unit is a much-awaited event in the university calendar which marks the official careers week of the university." />
+              <meta property="og:image" content="https://rur.rotaract.social/Images/logo/RUR.png" />
+              <meta property="og:url" content="https://rur.rotaract.social/" />
+              <meta name="referrer" content="no-referrer" />
+          </head>
           <body
             className={`${geistSans.variable} ${geistMono.variable} dark:bg-dark-gradient bg-light-gradient antialiased`}
           >

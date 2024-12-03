@@ -47,6 +47,12 @@ import RegistrationStatus from "@/components/ui/google-gemini-effect";
 import BackToTopButton from "@/components/ui/back-to-top";
 import CodeEvelPara from "@/components/ui/code-evel-para";
 import { HeroVideo } from "@/components/ui/hero-video";
+import ExpandableCard from "@/components/blocks/expandable-card-standard";
+import Head from "next/head";
+import ExpandableCardGrid from "@/components/blocks/expandable-card-grid";
+import { ICompany } from "@/interfaces/ICompanies";
+import { getDataFromAggregatedCompanyDoc } from "@/services/aggregatedCompanyData.service";
+
 export const products = [
   {
     title: "Are You Ready?",
@@ -165,6 +171,64 @@ const navItms = [
   },
 ];
 
+const cards = [
+  {
+    description: "Tech Innovators Inc.",
+    title: "Leading the Future",
+    src: "https://via.placeholder.com/150",
+    ctaText: "Visit",
+    ctaLink: "https://techinnovators.com",
+    content: () => {
+      return (
+        <p>
+          Tech Innovators Inc. is at the forefront of technological advancements, pioneering solutions that shape the future. With a commitment to innovation and excellence, they deliver cutting-edge products and services that drive progress and transform industries.
+        </p>
+      );
+    },
+  },
+  {
+    description: "Green Energy Solutions",
+    title: "Sustainable Power",
+    src: "https://via.placeholder.com/150",
+    ctaText: "Visit",
+    ctaLink: "https://greenenergy.com",
+    content: () => {
+      return (
+        <p>
+          Green Energy Solutions is dedicated to providing sustainable and renewable energy options. Their mission is to reduce carbon footprints and promote environmental responsibility through innovative energy solutions that are both efficient and eco-friendly.
+        </p>
+      );
+    },
+  },
+  {
+    description: "HealthFirst Medical",
+    title: "Your Health, Our Priority",
+    src: "https://via.placeholder.com/150",
+    ctaText: "Visit",
+    ctaLink: "https://healthfirst.com",
+    content: () => {
+      return (
+        <p>
+          HealthFirst Medical is committed to delivering top-notch healthcare services. With a focus on patient care and advanced medical technologies, they ensure that every individual receives the best possible treatment and support for their health needs.
+        </p>
+      );
+    },
+  },
+  {
+    description: "EduTech Learning",
+    title: "Empowering Education",
+    src: "https://via.placeholder.com/150",
+    ctaText: "Visit",
+    ctaLink: "https://edutech.com",
+    content: () => {
+      return (
+        <p>
+          EduTech Learning is revolutionizing education through technology. They provide innovative learning platforms and tools that enhance the educational experience, making learning more accessible, engaging, and effective for students of all ages.
+        </p>
+      );
+    },
+  },
+];
 
 const Loading =()=> {
   return (
@@ -219,8 +283,8 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isLoadingAnimComplete , setIsLoadingAnimComplete] = useState(false);
-  const [grid, setGrid] = useState([] as IContact[]);
-  const [isGridLoading, setGridLoading] = useState(true);
+  const [reachUsContacts, setReachUsContacts] = useState([] as IContact[]);
+  const [isReachUsGridLoading, setIsReachUsGridLoading] = useState(true);
 
   const loadingTimeout = ()=>{
   console.log("Loading animation timeout");
@@ -233,15 +297,15 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
 
-      getReachUs().then((data) => {
-        setGrid(data);
-      }).catch((err) => {
-        console.error("Error fetching data:", err);
-        setError("Failed to load data. Please try again later.");
-      }
-      ).finally(() => {
-        setGridLoading(false);
-      });
+      // getReachUs().then((data) => {
+      //   setGrid(data);
+      // }).catch((err) => {
+      //   console.error("Error fetching data:", err);
+      //   setError("Failed to load data. Please try again later.");
+      // }
+      // ).finally(() => {
+      //   setGridLoading(false);
+      // });
 
 
 
@@ -254,6 +318,8 @@ export default function Home() {
 
         setTimeline(data.timelineList || []);
         setSponsors(data.sponsorList || []);
+        setReachUsContacts(data.reachUsContactList || []);
+
         setError(null);
       } catch (err) {
         console.error("Error fetching data:", err);
@@ -262,8 +328,11 @@ export default function Home() {
         setTimelineLoading(false);
         setSponsorsLoading(false);
         setIsLoading(false);
+        setIsReachUsGridLoading(false);
+
         console.log("Data fetched end");
       }
+
     };
 
     fetchData();
@@ -303,7 +372,15 @@ export default function Home() {
 
   return (
     <RootLayout>
-       <BackToTopButton />
+      
+      <Head>
+        <meta name="robots" content="index, follow" />
+        <meta name="googlebot" content="index, follow" />
+        <meta name="distribution" content="global" />
+      </Head>
+      
+      <BackToTopButton />
+      
       <FloatingNav navItems={navItms} />
          { ( !isLoadingAnimComplete ) && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-[#545576]">
@@ -367,6 +444,10 @@ export default function Home() {
         <EmptyStateMessage message="Sponsors will be available soon." />
       )}
 
+
+      <ExpandableCard />
+      {/* <ExpandableCardGrid cards={cards} /> */}
+
 <section 
         id="registrationStatus" 
         className="scroll-mt-20 relative py-16 w-full">
@@ -380,8 +461,8 @@ export default function Home() {
 
 
      <div id="reach_us" className="scroll-mt-20">
-        {!isGridLoading && <GridBackground title="Reach Us">
-          <ReachUsSection grid={grid} />
+        {!isReachUsGridLoading && <GridBackground title="Reach Us">
+          <ReachUsSection grid={reachUsContacts} />
         </GridBackground>}
       </div>
 

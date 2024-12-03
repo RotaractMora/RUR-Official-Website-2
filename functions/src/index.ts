@@ -7,6 +7,7 @@ import {
 // Exporting triggers for /info-sponsors and /info-timeline collections
 const sponsorsTriggers = createInfoTriggers("info-sponsors");
 const timelineTriggers = createInfoTriggers("info-timeline");
+const reachUsTriggers = createInfoTriggers("info-reach");
 
 export const infoSponsorsOnCreate = sponsorsTriggers.onCreate;
 export const infoSponsorsOnUpdate = sponsorsTriggers.onUpdate;
@@ -16,6 +17,9 @@ export const infoTimelineOnCreate = timelineTriggers.onCreate;
 export const infoTimelineOnUpdate = timelineTriggers.onUpdate;
 export const infoTimelineOnDelete = timelineTriggers.onDelete;
 
+export const infoReachUsOnCreate = reachUsTriggers.onCreate;
+export const infoReachUsOnUpdate = reachUsTriggers.onUpdate;
+export const infoReachUsOnDelete = reachUsTriggers.onDelete;
 
 // Exporting Firestore triggers for incremental company aggregation
 export const companyOnCreate = incrementalAggregateCompanies.onCreate;

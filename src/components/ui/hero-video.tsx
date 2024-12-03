@@ -41,7 +41,9 @@ export const HeroVideo: React.FC<HeroVideoProps> = ({
       disablePictureInPicture
       className="absolute top-0 left-0 w-full h-full"
       onLoadedData={() => {
-      onLoadedVideo && onLoadedVideo();
+        if(onLoadedVideo){
+          onLoadedVideo();
+        }
       }}
       />
       
