@@ -54,6 +54,42 @@ return (
     </motion.a>
   );
 };
+const AnimatedButton2 = ({ children }: { children: React.ReactNode }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <motion.button 
+      className={cn(
+        "relative inline-flex items-center justify-center px-6 py-3",
+        "rounded-full font-semibold text-white",
+        "bg-gradient-to-r from-red-900 to-red-600",
+        "cursor-pointer overflow-hidden",
+        "transition-all duration-300",
+        "hover:shadow-lg hover:shadow-orange-500/25"
+      )}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      <motion.span
+        className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-900"
+        initial={{ x: "100%" }}
+        animate={{ x: isHovered ? "0%" : "100%" }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+      />
+      <motion.span
+        className="relative z-10"
+        animate={{ scale: isHovered ? 1.1 : 1 }}
+        transition={{ duration: 0.2 }}
+      >
+        {children}
+      </motion.span>
+    </motion.button>
+  );
+};
+
+
 
 const StatusCard: React.FC<StatusCardProps> = ({ title, signUp, signIn, registrationUrl, className }) => (
     <motion.div
@@ -91,6 +127,9 @@ const StatusCard: React.FC<StatusCardProps> = ({ title, signUp, signIn, registra
             >
             {title.split(" ")[0]} Registration Opening Soon
             </motion.span>
+            <AnimatedButton2>
+            Registration Opening Soon
+            </AnimatedButton2>
           </div>
         )}
       </div>
@@ -282,7 +321,7 @@ const RegistrationStatus = () => {
   return (
     <div 
       ref={containerRef}
-      className="relative max-h-[950px] min-h-[50vw] bg-gradient-to-b from-gray-900 to-blue-950 overflow-auto"
+      className="relative max-h-[950px] min-h-[50vw] bg-gradient-to-b from-gray-900 to-blue-950 overflow-auto "
     >
       {/* Header Section */}
       <div className="relative z-10">

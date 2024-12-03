@@ -11,6 +11,7 @@ export const getReachUs = async ():Promise<IContact[]> => {
     return reachUsList;
 }
 
+
 export const addReachUsContact = async (contact: IContact): Promise<DocumentReference<DocumentData, DocumentData>> => {
     const db = getFirestore(app);
     const reachUsCollection = collection(db, "info-reach");
@@ -38,4 +39,3 @@ export const deleteReachUsContact = async (docId:string):Promise<void> => {
     const docRef = doc(reachUsCollection, docId);
     return await deleteDoc(docRef);
 }
-

@@ -44,6 +44,7 @@ import Lottie from "react-lottie-player";
 import { IContact } from "@/interfaces/IContacts";
 import { getReachUs } from "@/services/reachus.service";
 import RegistrationStatus from "@/components/ui/google-gemini-effect";
+import BackToTopButton from "@/components/ui/back-to-top";
 import CodeEvelPara from "@/components/ui/code-evel-para";
 import { HeroVideo } from "@/components/ui/hero-video";
 import ExpandableCard from "@/components/blocks/expandable-card-standard";
@@ -371,11 +372,15 @@ export default function Home() {
 
   return (
     <RootLayout>
+      
       <Head>
         <meta name="robots" content="index, follow" />
         <meta name="googlebot" content="index, follow" />
         <meta name="distribution" content="global" />
       </Head>
+      
+      <BackToTopButton />
+      
       <FloatingNav navItems={navItms} />
          { ( !isLoadingAnimComplete ) && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-[#545576]">

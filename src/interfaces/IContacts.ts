@@ -4,4 +4,5 @@ export interface IContact {
     email: string;
     contact: string;
     post: string;
+    photo: string;
 }
