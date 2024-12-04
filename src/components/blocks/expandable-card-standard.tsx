@@ -84,13 +84,13 @@ export default function ExpandableCard() {
   useOutsideClick(ref, () => setActive(null));
 
   if (error) {
-    return <div>{error}</div>;
+    return <ErrorMessage message={"Fail to load company details"} />;
   }
   else if (isLoading) {
     return <div>Loading...</div>;
   }
   else if (cards.length==0 ) {
-    return <div>No registerd companies.</div>;
+    return <EmptyStateMessage message="No Companies Registered yet." />;
   }
   else{
   return (
@@ -107,7 +107,7 @@ export default function ExpandableCard() {
       Registered Companies
     </motion.h2>
     </AnimatePresence>
-    <div className="p-12 max-h-screen dark:bg-custom-dark-color-600/20 bg-custom-color-600/20">
+    <div className="p-12 max-h-screen dark:bg-custom-dark-color-600/20 bg-custom-color-600/20 overflow-y-auto [&::-webkit-scrollbar]:[width:3px] [&::-webkit-scrollbar-thumb]:bg-custom-color-600/20">
       <AnimatePresence>
         {active && typeof active === "object" && (
           <motion.div
@@ -162,7 +162,7 @@ export default function ExpandableCard() {
                   <div className="">
                     <motion.h3
                       layoutId={`title-${active.companyId}-${id}`}
-                      className="font-bold text-neutral-700 dark:text-neutral-200"
+                      className="font-bold text-neutral-700 dark:text-neutral-200 overflow-y-auto"
                     >
                       {active.name}
                     </motion.h3>
@@ -179,14 +179,12 @@ export default function ExpandableCard() {
                     href={"https://google.com/search?q=company " + active.name}
                     target="_blank"
                   >
-                    <HoverBorderGradient 
-                    onClick={()=>{}} 
-                    >
+                    <HoverBorderGradient>
                       View
                     </HoverBorderGradient>
                   </motion.a>
                 </div>
-                <div className="pt-4 relative px-4">
+                <div className="pt-4 relative px-4 h-60 overflow-y-auto [&::-webkit-scrollbar]:[width:3px] [&::-webkit-scrollbar-thumb]:bg-custom-color-600/20">
                   <motion.div
                     layout
                     initial={{ opacity: 0 }}
@@ -197,10 +195,10 @@ export default function ExpandableCard() {
                     <p>
                        {active.description}
                     </p>
-                        <div>
+                        <div className="flex justify-center content-center w-[100%] wrap">
 
 
-                          <div className="w-[50%]">
+                          <div className="w-[50%] row">
                           <h5> Qulities: </h5>
                           {
                             active.qualitiesToLook.map((quality,index)=>(
@@ -212,7 +210,7 @@ export default function ExpandableCard() {
                         </div>
 
 
-                        <div className="w-[50%]">
+                        <div className="w-[50%] row">
                           <h5> Preferred Fields: </h5>
                           {
                             active.preferredFields.map((field,index)=>(

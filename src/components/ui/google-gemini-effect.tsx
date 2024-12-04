@@ -4,21 +4,27 @@ import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion'
 import { getRegistrationStatus } from '../../services/notice.service';
 import { RegistrationStatus as RegistrationStatusType } from '../../interfaces/IRegistration';
 import { cn } from "@/lib/utils";
+import { HoverBorderGradient } from './hover-border-gradient';
+import { useRouter } from 'next/navigation';
 
 const transition = {
   duration: 0.8,
   ease: "easeInOut",
 };
 
+
 interface StatusCardProps {
   title: string;
   signUp: boolean;
   signIn: boolean;
+  website: string;
   registrationUrl?: string;
+  signUpUrl?:string;
   className?: string;
 }
 const AnimatedButton = ({ href, children }: { href: string; children: React.ReactNode }) => {
     const [isHovered, setIsHovered] = useState(false);
+
 
 return (
     <motion.a
@@ -91,7 +97,10 @@ const AnimatedButton2 = ({ children }: { children: React.ReactNode }) => {
 
 
 
-const StatusCard: React.FC<StatusCardProps> = ({ title, signUp, signIn, registrationUrl, className }) => (
+const StatusCard: React.FC<StatusCardProps> = ({title,signIn,signUp,registrationUrl,signUpUrl,className}) => {
+  const router = useRouter();
+
+  return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -104,37 +113,52 @@ const StatusCard: React.FC<StatusCardProps> = ({ title, signUp, signIn, registra
       <h3 className="text-xl font-bold mb-4 underline text-white">{title}</h3>
       <div className="space-y-2">
 
-        {signUp && signIn ? (
+        {signUp ? (
           <div className="mt-4">
             <motion.span
-            className="text-green-500 text-xl content-center block mb-3"
+              className="text-green-500 text-xl content-center block mb-3"
             >
-            {title.split(" ")[0]} Registration Open
+              Registration Open
             </motion.span>
-            <AnimatedButton 
-              href={title.split(" ")[0].toLowerCase() === "company" 
-                ? "http://google.com/" 
-                : "http://youtube.com/"
-              }
-            >
-              Visit Registration Portal
-            </AnimatedButton>
+            <HoverBorderGradient onClick={() => router.push(registrationUrl ? registrationUrl : '')} isDisabled={false} className="opacity-50 cursor-not-allowed text-gray-500 hover:bg-transparent" containerClassName="border-gray-300 bg-gray-100 dark:bg-gray-700" >Register Now</HoverBorderGradient>
           </div>
         ) : (
           <div className="mt-4">
             <motion.span
-            className="text-red-500 text-xl block mb-3"
+              className="text-red-500 text-xl block mb-3"
             >
-            {title.split(" ")[0]} Registration Opening Soon
+              Registration is close
             </motion.span>
-            <AnimatedButton2>
-            Registration Opening Soon
-            </AnimatedButton2>
+            <HoverBorderGradient isDisabled={true} onClick={() => router.push(registrationUrl ? registrationUrl : '')}>Register</HoverBorderGradient>
           </div>
         )}
+
+        {signIn ? (
+          <div className="mt-4">
+            <motion.span
+              className="text-green-500 text-xl content-center block mb-3"
+            >
+              You can now signIn
+            </motion.span>
+            <HoverBorderGradient onClick={() => router.push(registrationUrl ? registrationUrl : '')} isDisabled={false}>SingIn Now</HoverBorderGradient>
+          </div>
+        ) : (
+          <div className="mt-4">
+            <motion.span
+              className="text-red-500 text-xl block mb-3"
+            >
+              SignIn is close
+            </motion.span>
+            <HoverBorderGradient isDisabled={true} onClick={() => router.push(registrationUrl ? registrationUrl : '')}>SignIn</HoverBorderGradient>
+          </div>
+        )}
+
+
       </div>
     </motion.div>
   );
+}
+
 
 const WaveBackground = () => {
    
@@ -358,11 +382,15 @@ const RegistrationStatus = () => {
             <StatusCard
               title="Company Registration"
               signUp={status.company.signUp}
-              signIn={status.company.signIn} />
+              signIn={status.company.signIn} 
+              website={''}
+              />
             <StatusCard
               title="Student Registration"
               signUp={status.student.signUp}
-              signIn={status.student.signIn} />
+              signIn={status.student.signIn} 
+              website={''}
+              />
           </div>
         </div>
       </div>
