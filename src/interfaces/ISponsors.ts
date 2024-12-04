@@ -8,4 +8,5 @@ export interface ISponsor {
     level: SponsorLevel;
     imgURL?: string;
     timestamp?: Timestamp;
+    isVisibleToPublic: boolean;
   }

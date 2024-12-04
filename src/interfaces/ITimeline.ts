@@ -10,4 +10,5 @@ export interface ITimelineData {
     btnText: string;
     isBtnDisabled: boolean;
     order: number;
+    isVisibleToPublic: boolean;
   }

@@ -20,6 +20,7 @@ function SponsorAddUpdateModal({
   const [sponsorName, setSponsorName] = useState(sponsor?.name || '');
   const [sponsorLevel, setSponsorLevel] = useState(sponsor?.level || '');
   const [sponsorImageFile, setSponsorImageFile] = useState<File | null>(null);
+  const [sponsorIsVisibleToPublic, setSponsorIsVisibleToPublic] = useState(sponsor?.isVisibleToPublic || false);
   const [sponsorImgURL, setSponsorImgURL] = useState(sponsor?.imgURL || '');
   const [uploadNewImage, setUploadNewImage] = useState( sponsor?.imgURL ? false : true);
 
@@ -41,6 +42,7 @@ function SponsorAddUpdateModal({
     setSponsorLevel('');
     setSponsorImageFile(null);
     setSponsorImgURL('');
+    setSponsorIsVisibleToPublic(false);
     onClose();    
 
     // setIsOpen(!isOpen);
@@ -109,6 +111,7 @@ function SponsorAddUpdateModal({
             name: sponsorName,
             level: sponsorLevel as SponsorLevel,
             imgURL,
+            isVisibleToPublic: sponsorIsVisibleToPublic,
         };
 
         if (sponsor?.id) {
@@ -186,6 +189,24 @@ function SponsorAddUpdateModal({
                       <option value="Silver">Silver</option>
                       <option value="Bronze">Bronze</option>
                     </select>
+                    </div>
+
+                    <div className="col-span-2">
+                      <span className="block mt-2 text-sm font-medium text-gray-900 dark:text-white">Public Visibility</span>
+                        <input 
+                        type="checkbox" 
+                        name="isVisibleToPublic" 
+                        id="isVisibleToPublic" 
+                        checked={sponsorIsVisibleToPublic}
+                        onChange={(e) => setSponsorIsVisibleToPublic(e.target.checked)}
+                        className="mr-1 text-primary-500 focus:ring-primary-600 focus:border-primary-600 rounded-lg dark:bg-gray-600 dark:border-gray-500 dark:text-white"
+                        />
+                        <label 
+                        htmlFor="isVisibleToPublic" 
+                        className="text-sm text-gray-500 dark:text-gray-400 cursor-pointer"
+                        >
+                        Is visible to public
+                        </label>
                     </div>
 
                     <div className="col-span-2">

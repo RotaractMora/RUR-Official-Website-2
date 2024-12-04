@@ -26,6 +26,7 @@ function TimelineAddUpdateModal({
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [timelineEvenImgURL, setTimelineEventImgURL] = useState(timelineEvent?.imgURL || '');
   const [uploadNewImage, setUploadNewImage] = useState(timelineEvent ? false : true);
+  const [isVisibleToPublic, setIsVisibleToPublic] = useState(timelineEvent?.isVisibleToPublic || false);
 
   // Handle file selection or drag-and-drop
   const handleFileChange = (e: any) => {
@@ -45,6 +46,7 @@ function TimelineAddUpdateModal({
     setOrder(0);
     setIsBtnDisabled(false);
     setImageFile(null);
+    setIsVisibleToPublic(false);
     onClose();
   };
 
@@ -111,6 +113,7 @@ function TimelineAddUpdateModal({
           isBtnDisabled,
           order,
           imgURL: imgURL,
+          isVisibleToPublic
         };
 
         if (timelineEvent?.id) {
@@ -289,6 +292,24 @@ function TimelineAddUpdateModal({
                       </label>
                     </div>
                   </div>
+
+                  <div className="col-span-2">
+                      <span className="block mt-2 text-sm font-medium text-gray-900 dark:text-white">Public Visibility</span>
+                        <input 
+                        type="checkbox" 
+                        name="isVisibleToPublic" 
+                        id="isVisibleToPublic" 
+                        checked={isVisibleToPublic}
+                        onChange={(e) => setIsVisibleToPublic(e.target.checked)}
+                        className="mr-1 text-primary-500 focus:ring-primary-600 focus:border-primary-600 rounded-lg dark:bg-gray-600 dark:border-gray-500 dark:text-white"
+                        />
+                        <label 
+                        htmlFor="isVisibleToPublic" 
+                        className="text-sm text-gray-500 dark:text-gray-400 cursor-pointer"
+                        >
+                        Visible to public
+                        </label>
+                    </div>
 
                   {/* Image Upload */}
                   <div>

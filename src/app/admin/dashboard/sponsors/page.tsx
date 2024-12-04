@@ -77,6 +77,9 @@ export default function ManageSponsors() {
                   Sponsor Level
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  Visibility
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Created Time
                 </th>
                 <th scope="col" className="px-6 py-3">
@@ -109,6 +112,10 @@ export default function ManageSponsors() {
                 
                   </td>
                   <td className="px-6 py-4">{sponsor.level}</td>
+                  <td className="px-6 py-4">
+                    {sponsor.isVisibleToPublic && <span className="bg-green-500 text-white p-1 px-2 font-medium rounded-lg ">Public</span>}
+                    {!sponsor.isVisibleToPublic && <span className="bg-red-500 text-white p-1 px-2 font-medium rounded-lg ">Hidden</span>}
+                    </td>
                   <td className="px-6 py-4">
                     {sponsor.timestamp?.toDate().toLocaleString()}
                   </td>
