@@ -206,10 +206,10 @@ const AboutSection = ({ content }: { content: string }) => {
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-24 md:py-12">
       <div className="bg-white/5 backdrop-blur-lg rounded-xl p-4 md:p-12 mt-0">
-        <h2 className="text-xl md:text-2xl text-center font-bold dark:text-custom-color-800 text-custom-dark-color-800 mb-4">
+        <h2 className="text-3xl md:text-4xl text-center font-bold dark:text-custom-color-800 bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent mb-4">
           About Are You Ready?
         </h2>
-        <div className="prose prose-sm md:prose-base lg:prose-lg dark:prose-invert max-w-none">
+        <div className="prose prose-sm md:prose-base lg:prose-lg dark:prose-invert max-w-none leading-10 text-justify">
           <TextGenerateEffect words={content} />
         </div>
       </div>

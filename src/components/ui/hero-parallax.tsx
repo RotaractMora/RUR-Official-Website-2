@@ -41,7 +41,7 @@ export const HeroParallax = ({
   return (
     <div
       ref={ref}
-      className="h-auto py-40 overflow-hidden antialiased relative flex flex-col"
+      className="h-auto pb-30 pt-10 overflow-hidden antialiased relative flex flex-col"
     >
       <Header />
       <div>
@@ -79,11 +79,12 @@ export const HeroParallax = ({
 
 export const Header = () => {
   return (
-    <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full left-0 top-0">
-      <h1 className="text-2xl md:text-7xl font-bold dark:text-white">
+    <div className="max-w-7xl relative mx-auto pb-10  px-4 w-full left-0 top-0">
+      <h1 className="text-2xl md:text-7xl text-center font-bold dark:text-white bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent">
         Are You Ready? <br /> 2025
       </h1>
-      <p className="max-w-2xl text-base md:text-xl mt-8 dark:text-neutral-200">
+     
+      <p className="max-w-2xl text-base md:text-xl pb-4 text-center mx-auto mt-8 text-neutral-800 dark:text-neutral-200">
         The Virtual Odyssey in Corporate Arena
       </p>
     </div>

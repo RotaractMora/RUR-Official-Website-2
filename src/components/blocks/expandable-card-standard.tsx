@@ -97,7 +97,7 @@ export default function ExpandableCard() {
     <>
     <AnimatePresence>
     <motion.h2
-    className="text-5xl py-12 text-center dark:text-white text-black"
+    className="text-5xl py-12 text-center dark:text-white bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent"
     initial={{ opacity: 0 , y: -20 }}
     animate={{ opacity: 1 , y: 0  }}
     exit={{ opacity: 0 , y: -20 , transition: { duration: 0.2 } }}
