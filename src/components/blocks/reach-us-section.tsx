@@ -11,7 +11,7 @@ export default function ReachUsSection({grid}:{grid:IContact[]}) {
            <Grid size={20} />
            <div className="flex items-center justify-between">
              <div>
-             <img src={`/images/${person.photo}`} alt={person.name} className="w-20 h-20 rounded-full" />
+             <img src={`${person.photo}`} alt={person.name} className="w-20 h-20 rounded-full" />
                <h2 className="text-2xl font-bold dark:text-custom-color-600 text-custom-dark-color-900">{person.name}</h2>
                <p className="text-sm text-gray-600">{person.post}</p>
              </div>

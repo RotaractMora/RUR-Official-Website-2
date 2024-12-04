@@ -167,7 +167,7 @@ export default function ExpandableCard() {
                       {active.name}
                     </motion.h3>
                     <motion.p
-                      layoutId={`description-${active.description}-${id}`}
+                      layoutId={`description-${active.companyId}-${id}`}
                       className="text-neutral-600 dark:text-neutral-400"
                     >
                       {` ${active.name} has mentioned ${ active.qualitiesToLook.length } qualities & ${active.preferredFields.length} preferred Fields.`}
@@ -256,7 +256,7 @@ export default function ExpandableCard() {
                   {card.name}
                 </motion.h3>
                 <motion.p
-                  layoutId={`description-${card.description}-${id}`}
+                  layoutId={`description-${card.companyId}-${id}`}
                   className="text-neutral-600 dark:text-neutral-400 text-center md:text-left"
                 >
                   {` ${card.name} has mentioned ${ card.qualitiesToLook.length } qualities & ${card.preferredFields.length} preferred Fields.`}
