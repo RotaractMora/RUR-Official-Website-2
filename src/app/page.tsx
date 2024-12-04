@@ -171,64 +171,6 @@ const navItms = [
   },
 ];
 
-const cards = [
-  {
-    description: "Tech Innovators Inc.",
-    title: "Leading the Future",
-    src: "https://via.placeholder.com/150",
-    ctaText: "Visit",
-    ctaLink: "https://techinnovators.com",
-    content: () => {
-      return (
-        <p>
-          Tech Innovators Inc. is at the forefront of technological advancements, pioneering solutions that shape the future. With a commitment to innovation and excellence, they deliver cutting-edge products and services that drive progress and transform industries.
-        </p>
-      );
-    },
-  },
-  {
-    description: "Green Energy Solutions",
-    title: "Sustainable Power",
-    src: "https://via.placeholder.com/150",
-    ctaText: "Visit",
-    ctaLink: "https://greenenergy.com",
-    content: () => {
-      return (
-        <p>
-          Green Energy Solutions is dedicated to providing sustainable and renewable energy options. Their mission is to reduce carbon footprints and promote environmental responsibility through innovative energy solutions that are both efficient and eco-friendly.
-        </p>
-      );
-    },
-  },
-  {
-    description: "HealthFirst Medical",
-    title: "Your Health, Our Priority",
-    src: "https://via.placeholder.com/150",
-    ctaText: "Visit",
-    ctaLink: "https://healthfirst.com",
-    content: () => {
-      return (
-        <p>
-          HealthFirst Medical is committed to delivering top-notch healthcare services. With a focus on patient care and advanced medical technologies, they ensure that every individual receives the best possible treatment and support for their health needs.
-        </p>
-      );
-    },
-  },
-  {
-    description: "EduTech Learning",
-    title: "Empowering Education",
-    src: "https://via.placeholder.com/150",
-    ctaText: "Visit",
-    ctaLink: "https://edutech.com",
-    content: () => {
-      return (
-        <p>
-          EduTech Learning is revolutionizing education through technology. They provide innovative learning platforms and tools that enhance the educational experience, making learning more accessible, engaging, and effective for students of all ages.
-        </p>
-      );
-    },
-  },
-];
 
 const Loading =()=> {
   return (

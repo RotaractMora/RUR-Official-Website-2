@@ -6,6 +6,25 @@ import { useOutsideClick } from "@/hooks/use-outside-click";
 import { IExpandableCard } from "@/interfaces/IExpandableCard";
 import { ICompany } from "@/interfaces/ICompanies";
 import { getDataFromAggregatedCompanyDoc } from "@/services/aggregatedCompanyData.service";
+import { HeroHighlight } from "../ui/hero-highlight";
+import { Highlighter } from "./hilight";
+import { HoverBorderGradient } from "../ui/hover-border-gradient";
+
+const ErrorMessage = ({ message }: { message: string }) => (
+  <div className="flex items-center justify-center">
+    <HeroHighlight>
+      <Highlighter firstString="Error: " secondString={message} />
+    </HeroHighlight>
+  </div>
+);
+
+const EmptyStateMessage = ({ message }: { message: string }) => (
+  <div className="flex items-center justify-center">
+    <HeroHighlight>
+      <Highlighter firstString="" secondString={message} />
+    </HeroHighlight>
+  </div>
+);
 
 export default function ExpandableCard() {
   const [cards, setCompanies] = useState([] as ICompany[]);
@@ -16,6 +35,8 @@ export default function ExpandableCard() {
   );
   const ref = useRef<HTMLDivElement>(null);
   const id = useId();
+
+  
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -137,7 +158,7 @@ export default function ExpandableCard() {
               </motion.div>
 
               <div>
-                <div className="flex justify-between items-start p-4">
+                <div className="flex justify-between items-start p-4  bg-custom-color-600/10">
                   <div className="">
                     <motion.h3
                       layoutId={`title-${active.companyId}-${id}`}
@@ -157,9 +178,12 @@ export default function ExpandableCard() {
                     layoutId={`button-${active.companyId}-${id}`}
                     href={"https://google.com/search?q=company " + active.name}
                     target="_blank"
-                    className="px-4 py-3 text-sm rounded-full font-bold bg-green-500 text-white"
                   >
-                    View
+                    <HoverBorderGradient 
+                    onClick={()=>{}} 
+                    >
+                      View
+                    </HoverBorderGradient>
                   </motion.a>
                 </div>
                 <div className="pt-4 relative px-4">
@@ -170,21 +194,37 @@ export default function ExpandableCard() {
                     exit={{ opacity: 0 }}
                     className="text-neutral-600 text-xs md:text-sm lg:text-base h-40 md:h-fit pb-10 flex flex-col items-start gap-4 overflow-auto dark:text-neutral-400 [mask:linear-gradient(to_bottom,white,white,transparent)] [scrollbar-width:none] [-ms-overflow-style:none] [-webkit-overflow-scrolling:touch]"
                   >
-                    {active.description}
-                    {
-                      active.qualitiesToLook.map((quality,index)=>(
-                        <div key={index+"qualities"}>
-                          <h4 className="font-bold">{quality}</h4>
+                    <p>
+                       {active.description}
+                    </p>
+                        <div>
+
+
+                          <div className="w-[50%]">
+                          <h5> Qulities: </h5>
+                          {
+                            active.qualitiesToLook.map((quality,index)=>(
+                                <div className="pl-5" key={index+"_qualities"}>
+                                  <h4 className="font-bold">{quality}</h4>
+                                </div>
+                            ))
+                          }
                         </div>
-                      ))
-                    }
-                    {
-                      active.preferredFields.map((field,index)=>(
-                        <div key={index+"fields"}>
-                          <h4 className="font-bold">{field}</h4>
+
+
+                        <div className="w-[50%]">
+                          <h5> Preferred Fields: </h5>
+                          {
+                            active.preferredFields.map((field,index)=>(
+                              <div className="pl-5" key={index+"fields"}>
+                                <h4 className="font-bold">{field}</h4>
+                              </div>
+                            ))
+                          }
                         </div>
-                      ))
-                    }
+
+
+                    </div>
                   </motion.div>
                 </div>
               </div>
@@ -207,7 +247,7 @@ export default function ExpandableCard() {
                   height={100}
                   src={card.logoUrl}
                   alt={card.name+" logo"}
-                  className="h-40 w-40 md:h-14 md:w-14 rounded-lg object-contain"
+                  className="h-40 w-40 md:h-14 md:w-14 rounded-lg object-contain mx-auto"
                 />
                 </motion.div>
               <div className="">
@@ -227,9 +267,11 @@ export default function ExpandableCard() {
             </div>
             <motion.button
               layoutId={`button-${card.companyId}-${id}`}
-              className="px-4 py-2 text-sm rounded-full font-bold bg-gray-100 hover:bg-green-500 hover:text-white text-black mt-4 md:mt-0"
+              className="pt-4"
             >
-              View
+              <HoverBorderGradient >
+                View
+              </HoverBorderGradient>
             </motion.button>
           </motion.div>
         ))}

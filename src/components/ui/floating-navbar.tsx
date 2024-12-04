@@ -67,7 +67,7 @@ export const FloatingNav = ({
           </div>
 
           <div className="flex items-center space-x-4">
-            <button
+            {/* <button
           onClick={toggleTheme}
           className="border text-sm font-medium relative ml-4 border-neutral-200 dark:border-white/[0.2] text-black dark:text-white p-2 md:px-4 md:py-2 rounded-full"
             >
@@ -76,7 +76,7 @@ export const FloatingNav = ({
               ) : (
             <MoonIcon className="h-4 w-4 md:h-5 md:w-5" />
               )}
-            </button>
+            </button> */}
 
             {/* Mobile Menu Button */}
             <button

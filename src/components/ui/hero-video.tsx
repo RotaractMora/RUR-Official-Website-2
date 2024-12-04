@@ -6,18 +6,12 @@ interface HeroVideoProps {
   videoSrc: string;
   play: boolean;
   onLoadedVideo?: () => void;
-  title?: string;
-  subtitle?: string;
-  overlayOpacity?: number;
 }
 
 export const HeroVideo: React.FC<HeroVideoProps> = ({
   videoSrc, 
   play,
   onLoadedVideo,
-  title = "Are You Ready?", 
-  subtitle = "The Virtual Odyssey in Corporate Arena",
-  overlayOpacity = 0.5
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -50,7 +44,8 @@ export const HeroVideo: React.FC<HeroVideoProps> = ({
       <div 
       className="absolute inset-0 flex items-center justify-center"
       style={{ 
-      backgroundColor: `rgba(0, 0, 0, ${overlayOpacity})` 
+      zIndex: -1,
+      background:"#FFFFFF",
       }}
       >
       </div>
