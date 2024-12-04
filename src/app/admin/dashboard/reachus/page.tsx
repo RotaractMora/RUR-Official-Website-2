@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import ReachUsContactDeleteModal from "@/components/blocks/modals/reach-us-contact-delete-modal";
 import {useAuth} from "@/context/auth-provider";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function ManageReachUsContacts() {
 
@@ -67,6 +68,9 @@ export default function ManageReachUsContacts() {
                 <th scope="col" className="px-6 py-3">
                   Contact name
                 </th>
+                <th scope="col" className="px-2 py-3">
+                  Photo
+                </th>
                 <th scope="col" className="px-6 py-3">
                   Email
                 </th>
@@ -96,10 +100,20 @@ export default function ManageReachUsContacts() {
                   >
                     {contact.name}
                   </th>
+                  <div className="px-2 relative overflow-visible">
+                    <Image
+                      src={`${contact.photo}`}
+                      alt={`${contact.name} Photo`}
+                      width={50}
+                      height={50}
+                      className="transition-transform duration-300 ease-in-out transform hover:scale-[5] hover:border-slate-800 p-0 dark:bg-black bg-white"
+                    />
+                  </div>
+
                   <td className="px-6 py-4">
                     {contact.email}
                   </td>
-                  <td className="px-6 py-4">{contact.contact}</td>
+                  <td className="px-6 py-4">{contact.contact}</td> 
                   <td className="px-6 py-4">{contact.post}</td>
                 
                   <td className="px-6 py-4">

@@ -2,6 +2,9 @@
 import React, { useState } from 'react';
 import { addReachUsContact, updateReachUsContact } from '@/services/reachus.service';
 import {  IContact } from '@/interfaces/IContacts';
+import { addFile, deleteFile, getFileReferenceByUrl } from '@/services/firebaseStorage.service';
+import { getDownloadURL } from 'firebase/storage';
+import Image from 'next/image';
 
 function ReachUsContactAddUpdateModal({
   contact,
@@ -14,14 +17,29 @@ function ReachUsContactAddUpdateModal({
 }) {
 
   const [contactName, setcontactName] = useState(contact?.name || '');
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [contactEmail, setcontactEmail] = useState(contact?.email || '');
   const [contactTelContact, setcontactTelContact] = useState(contact?.contact || '');
   const [contactPost, setcontactPost] = useState(contact?.post || ''); 
   const [isVisibleToPublic, setisVisibleToPublic] = useState(contact?.isVisibleToPublic || false);
+  const [contactPhotoURL, setContactPhotoURl] = useState(contact?.photo || '');
+  const [uploadNewImage, setUploadNewImage] = useState( contact?.photo ? false : true);
+
+  // Handle file selection or drag-and-drop
+  const handleFileChange = (e: any) => {
+    e.preventDefault();
+
+    const file = e.target.files ? e.target.files[0] : e.dataTransfer.files[0];
+    if (file) {
+      setImageFile(file);
+    }
+  };
 
   // Toggle modal visibility
   const toggleModal = () => {
     setcontactName('');
+    setImageFile(null);
+    setContactPhotoURl('');
     setcontactEmail('');
     setcontactTelContact('');
     setcontactPost('');
@@ -30,6 +48,19 @@ function ReachUsContactAddUpdateModal({
 
   };
 
+  const validateImage = (file: File) => {
+    if (!file.type.includes('image')) {
+      alert('Please select a valid image file');
+      return false;
+    }
+
+    if (file.size > 1024 * 1024 * 2) {
+      alert('Please select an image file less than 2MB');
+      return false;
+    }
+
+    return true;
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,13 +83,47 @@ function ReachUsContactAddUpdateModal({
       return;
     }
 
+
+    let imgURL = contact?.photo || '';
+
+
     try {
+      // Handle image upload
+      if (uploadNewImage && imageFile) {
+          if (!validateImage(imageFile)) return;
+
+          const ref = await addFile(imageFile);
+          if (ref) {
+              imgURL = await getDownloadURL(ref);
+          } else {
+              throw new Error('Failed to get storage reference');
+          }
+
+          if (contact?.photo) {
+              // Delete the old image
+              const oldImgRef = await getFileReferenceByUrl(contact.photo);
+              if (oldImgRef) {
+                  await deleteFile(oldImgRef).then(() => {
+                      console.log('Old image deleted successfully');
+                  }).catch((error) => {
+                      console.error('Error deleting old image:', error);
+                      alert('Error deleting old image. Please try again.');
+                      return;
+                  });
+              }
+            }
+
+        } else if (uploadNewImage && !imageFile) {
+          alert('Please select an image file');
+          return;
+      }   
+
       const contactData = {
           name: contactName,
           email: contactEmail,
           contact: contactTelContact,
           post : contactPost,
-          photo: 'https://via.placeholder.com/150',
+          photo: imgURL,
           isVisibleToPublic: isVisibleToPublic,
       };
 
@@ -180,7 +245,90 @@ function ReachUsContactAddUpdateModal({
                       <label htmlFor="isVisibleToPublic" className="text-sm text-gray-900 dark:text-white">Visible to public</label>
                     </div>
                   </div>
-                  </div>
+                  <div className="col-span-2">
+                     
+                     { uploadNewImage ? (
+                     <><label htmlFor="image-upload" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Upload Image</label><div
+                         className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500"
+                         onDrop={handleFileChange}
+                         onDragOver={(e) => e.preventDefault()}
+                         onClick={() => document.getElementById('image-upload')?.click()} // Trigger file input click on div click
+                       >
+                         {imageFile ? (
+                           <div className="relative w-full h-full">
+                             <Image
+                               src={URL.createObjectURL(imageFile)}
+                               alt="Uploaded Image"
+                               className="w-full h-full object-cover rounded-lg"
+                               width={800}
+                               height={400}
+                               
+                               />
+
+                             <button
+                               type="button"
+                               onClick={() => 
+                                 {
+                                   setImageFile(null)
+                                   if (contact?.photo) {
+                                     setUploadNewImage(false)
+                                   }
+                                 }
+                               }
+                               className="absolute -top-2 -right-2 text-gray-400 bg-gray-100 hover:bg-gray-200 hover:text-gray-900 rounded-full text-sm w-6 h-6 flex justify-center items-center dark:hover:bg-gray-600 dark:bg-gray-700 dark:hover:text-white border border-gray-300 dark:border-gray-600"
+                             >
+                               <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                               </svg>
+                               <span className="sr-only">Remove image</span>
+                               
+                             </button>
+                           </div>
+                         ) : (
+                           <><div className="flex flex-col items-center justify-center pt-5 pb-6">
+                           <svg className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                           </svg>
+                           <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> or drag and drop</p>
+                           <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                         </div><input
+                             id="image-upload"
+                             type="file"
+                             className="hidden"
+                             accept="image/*"
+                             onChange={handleFileChange} /></>
+                         )}
+                         
+                     
+                      </div>
+                       {contact?.photo && (
+                             <button 
+                               type="button"
+                               className="text-red-500 dark:text-red-400 hover:underline"
+                               onClick={() => setUploadNewImage(false)}
+                             >
+                               Cancel Upload New Image
+                             </button>
+                           )}
+                       </>
+                     ) 
+                     : (
+                       <div className="flex items-center justify-between">
+                         <Image className='' width={200} height={200} src={contact?.photo || ''} alt={contact?.name || ''} />
+                         
+                         <button
+                           type="button"
+                           className="text-blue-500 dark:text-blue-400 hover:underline"
+                           onClick={() => setUploadNewImage(true)}
+                         >
+                           Upload New Image
+                         </button>
+                         
+                       </div>
+                     )}
+
+                   </div>
+                 </div>
 
 
                   <button
