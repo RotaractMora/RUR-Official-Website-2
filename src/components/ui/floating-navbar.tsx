@@ -39,7 +39,7 @@ export const FloatingNav = ({
   return (
     <div>
       <div className={cn("m-5 fixed w-auto z-50 w-full flex justify-center", className)}>
-        <div className={"flex justify-center w-auto backdrop-blur bg-white/30 dark:bg-black/30 rounded-3xl border border-white p-2 px-6"}>
+        <div className={"flex justify-center w-auto backdrop-blur bg-white/70 dark:bg-black/30 rounded-3xl border border-white p-2 px-6"}>
 
           <div className="flex items-center space-x-4">
             <Link href="/" className="relative">
@@ -58,7 +58,7 @@ export const FloatingNav = ({
               <Link
                 key={`link-${idx}`}
                 href={navItem.link}
-                className="relative dark:text-neutral-50 items-center flex space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500"
+                className="relative dark:text-neutral-50 items-center flex space-x-1 text-neutral-800 dark:hover:text-neutral-300 hover:text-neutral-500"
               >
                 <span className="text-sm">{navItem.name}</span>
               </Link>
