@@ -9,6 +9,7 @@ import CountDown from "./count-down";
 import { useRouter } from "next/navigation";
 import { HoverBorderGradient } from "./hover-border-gradient";
 import Image, { StaticImageData } from "next/image";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 export interface ITimelineEntry {
   title: string;
@@ -88,7 +89,11 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
                 <CountDown date={item.eventDate} />
               </div>
               <div className="inline-block md:mt-3 mt-5 ml-3">
-                <HoverBorderGradient onClick={()=>router.push(item.btnLink)} isDisabled={item.isBtnDisabled} >{item.btnText}</HoverBorderGradient>
+                <HoverBorderGradient onClick={()=>{
+                  sendGTMEvent({ event: 'buttonClicked', section: 'timeline' , BtnLabel: item.title , link: item.btnLink });
+                  router.push(item.btnLink)
+                }
+              } isDisabled={item.isBtnDisabled} >{item.btnText}</HoverBorderGradient>
               </div>
             </div>
               

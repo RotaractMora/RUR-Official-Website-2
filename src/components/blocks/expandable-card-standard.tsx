@@ -9,6 +9,7 @@ import { getDataFromAggregatedCompanyDoc } from "@/services/aggregatedCompanyDat
 import { HeroHighlight } from "../ui/hero-highlight";
 import { Highlighter } from "./hilight";
 import { HoverBorderGradient } from "../ui/hover-border-gradient";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 const ErrorMessage = ({ message }: { message: string }) => (
   <div className="flex items-center justify-center">
@@ -107,7 +108,7 @@ export default function ExpandableCard() {
       Registered Companies
     </motion.h2>
     </AnimatePresence>
-    <div className="p-12 max-h-screen dark:bg-custom-dark-color-600/20 bg-custom-color-600/20 overflow-y-auto [&::-webkit-scrollbar]:[width:3px] [&::-webkit-scrollbar-thumb]:bg-custom-color-600/20">
+    <div id="company-data-list" className="p-12 max-h-screen dark:bg-custom-dark-color-600/20 bg-custom-color-600/20 overflow-y-auto [&::-webkit-scrollbar]:[width:3px] [&::-webkit-scrollbar-thumb]:bg-custom-color-600/20">
       <AnimatePresence>
         {active && typeof active === "object" && (
           <motion.div
@@ -174,15 +175,18 @@ export default function ExpandableCard() {
                     </motion.p>
                   </div>
 
-                  <motion.a
+                  <motion.button
                     layoutId={`button-${active.companyId}-${id}`}
-                    href={"https://google.com/search?q=company " + active.name}
-                    target="_blank"
+                    onClick={()=>{
+                    sendGTMEvent({ event: 'buttonClicked', section: 'companyData' , activity:'visit website' , company:active.name , link:active.website });
+                    window.open(active.website, "_blank");
+                  }
+                  }
                   >
                     <HoverBorderGradient>
                       View
                     </HoverBorderGradient>
-                  </motion.a>
+                  </motion.button>
                 </div>
                 <div className="pt-4 relative px-4 h-60 overflow-y-auto [&::-webkit-scrollbar]:[width:3px] [&::-webkit-scrollbar-thumb]:bg-custom-color-600/20">
                   <motion.div
@@ -235,7 +239,10 @@ export default function ExpandableCard() {
           <motion.div
             layoutId={`card-${card.companyId}-${id}`}
             key={`card-${card.name}-${id}`}
-            onClick={() => setActive(card)}
+            onClick={() => {
+              setActive(card)
+              sendGTMEvent({ event: 'buttonClicked', section: 'companyData' , activity:'view data' , company:card.name  });
+            }}
             className="p-4 flex flex-col md:flex-row justify-between items-center hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-xl cursor-pointer"
           >
             <div className="flex gap-4 flex-col md:flex-row ">

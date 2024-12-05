@@ -1,5 +1,5 @@
-// AdminDashboardLayout.tsx
 "use client";
+
 import React, { ReactNode, useContext, useState } from "react";
 import { cn } from "@/lib/utils";
 import Footer from "@/components/blocks/footer";
@@ -16,6 +16,8 @@ import Head from "next/head";
 interface AdminDashboardLayoutProps {
     children: ReactNode;
 }
+
+export const dynamic = "force-dynamic"; 
 
 export function AdminDashboardLayout({ children }: AdminDashboardLayoutProps) {
 

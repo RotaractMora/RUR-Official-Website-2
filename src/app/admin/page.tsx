@@ -1,13 +1,21 @@
 'use client';
 
 import { useEffect } from "react";
-import { AdminDashboardLayout } from "@/app/admin/admin-dashboard-layout";
+// import { AdminDashboardLayout } from "@/app/admin/admin-dashboard-layout";
 import { useRouter } from "next/navigation";
+import dynamic from 'next/dynamic';
+
+const AdminDashboardLayout = dynamic(
+  () => import('@/app/admin/admin-dashboard-layout').then((mod) => mod.AdminDashboardLayout), 
+  { ssr: false }
+);
 
 export default function RedirectToDashboard() {
 
-    const router = useRouter();
-    useEffect(() => {
+  console.log("Redirecting page");
+
+  const router = useRouter();
+  useEffect(() => {
         router.push('/admin/dashboard');
     }, []);
 

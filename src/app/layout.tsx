@@ -1,10 +1,12 @@
 'use client';
 
+
 import localFont from "next/font/local";
 import "./globals.css";
 import React, { useCallback, useEffect, useState } from "react";
 import { AuthProvider } from "@/context/auth-provider";
 import {ITheme, IThemeContextType} from "@/interfaces/IThemeContext";
+import { GoogleTagManager } from '@next/third-parties/google'
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -21,7 +23,7 @@ const geistMono = localFont({
 export const ThemeContext = React.createContext<IThemeContextType|null>(null);
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const DEFAULT_THEME = "dark";
+  const DEFAULT_THEME = "light";
   const [theme, setThemeMode] = useState<ITheme>(DEFAULT_THEME);
 
   useEffect(() => {
@@ -72,10 +74,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               <meta property="og:image" content="https://rur.rotaract.social/Images/logo/RUR.png" />
               <meta property="og:url" content="https://rur.rotaract.social/" />
               <meta name="referrer" content="no-referrer" />
+
           </head>
           <body
             className={`${geistSans.variable} ${geistMono.variable} dark:bg-dark-gradient bg-light-gradient antialiased`}
           >
+          <GoogleTagManager gtmId="GTM-MWJNXDZR" />
             {children}
           </body>
         </html>

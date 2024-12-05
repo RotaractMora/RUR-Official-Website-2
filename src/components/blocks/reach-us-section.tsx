@@ -1,3 +1,4 @@
+"use client";
 import { IContact } from "@/interfaces/IContacts";
 import React from "react";
 import { useId } from "react";

@@ -1,3 +1,5 @@
+"use client";
+
 import DOMPurify from 'dompurify';
 
 const CodeEvelPara = ({ htmlContent }:{htmlContent:string}) => {
