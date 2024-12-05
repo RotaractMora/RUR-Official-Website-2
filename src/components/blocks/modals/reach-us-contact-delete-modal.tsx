@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { deleteReachUsContact } from '@/services/reachus.service';
 import { IContact } from '@/interfaces/IContacts';
+import { deleteFile, getFileReferenceByUrl } from '@/services/firebaseStorage.service';
 
 function ReachUsContactDeleteModal(
     {contact, onClose, onDelete }: {contact: IContact, onClose: () => void, onDelete: () => void}
@@ -19,23 +20,48 @@ function ReachUsContactDeleteModal(
     e.preventDefault();
   
     if (contactToDelete?.id) {
-
-      if (contactToDelete?.id) {
-        deleteReachUsContact(contactToDelete.id)
-          .then(() => {
-              console.log("contact deleted successfully");
-              onDelete();
-              toggleModal();
-              })
-          .catch((error) => {
-              console.error("Error deleting contact: ", error);
-              alert("Error deleting contact");
-              toggleModal();
+        // if img url is not null, delete the image from storage and starts with firebasestorage.googleapis.com
+        if (contactToDelete.photo && contactToDelete.photo !== "" && contactToDelete.photo.startsWith("https://firebasestorage.googleapis.com")) {
+          getFileReferenceByUrl(contactToDelete.photo)
+          .then((fileRef) => {
+            if (fileRef) {
+              deleteFile(fileRef)
+              .then((res) => {
+                console.log("Res", res);
+                if (res == true) {
+                  console.log("Image deleted successfully", contactToDelete.photo);
+  
+                  // delete the contact from the database
+                  if (contactToDelete?.id) {
+                    deleteReachUsContact(contactToDelete.id)
+                      .then(() => {
+                          console.log("contact deleted successfully");
+                          onDelete();
+                          toggleModal();
+                          })
+                      .catch((error) => {
+                          console.error("Error deleting contact: ", error);
+                          alert("Error deleting contact");
+                          toggleModal();
+                      });
+                    }
+                    
+                  } else {
+                    console.error("Error deleting image");
+                  }
+                }).catch((error) => {
+                  console.error("Error deleting image: ", error);
+                });
+            } else {
+              console.error("File reference is null");
+            }
           });
+
+          
+        } else {
+          console.error("Contact ID is undefined");
         }
-        
-      } else {
-        console.error("contact ID is undefined");
+              
       }
   } 
 
