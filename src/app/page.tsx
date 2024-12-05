@@ -52,6 +52,7 @@ import Head from "next/head";
 import ExpandableCardGrid from "@/components/blocks/expandable-card-grid";
 import { ICompany } from "@/interfaces/ICompanies";
 import { getDataFromAggregatedCompanyDoc } from "@/services/aggregatedCompanyData.service";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 export const products = [
   {
@@ -237,6 +238,10 @@ export default function Home() {
   
   
   useEffect(() => {
+
+    sendGTMEvent({ event: 'page view', page: 'home' , path: window.location.pathname });
+
+
     const fetchData = async () => {
 
       // getReachUs().then((data) => {
@@ -261,11 +266,11 @@ export default function Home() {
         setTimeline(data.timelineList || []);
         setSponsors(data.sponsorList || []);
         setReachUsContacts(data.reachUsContactList || []);
-
         setError(null);
       } catch (err) {
         console.error("Error fetching data:", err);
         setError("Failed to load data. Please try again later.");
+        sendGTMEvent({ event:'JS_Error' , name:'AggregatedDocLoadError', error: err });
       } finally {
         setTimelineLoading(false);
         setSponsorsLoading(false);

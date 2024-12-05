@@ -5,6 +5,7 @@ import "./globals.css";
 import React, { useCallback, useEffect, useState } from "react";
 import { AuthProvider } from "@/context/auth-provider";
 import {ITheme, IThemeContextType} from "@/interfaces/IThemeContext";
+import { GoogleTagManager } from '@next/third-parties/google'
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -72,10 +73,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               <meta property="og:image" content="https://rur.rotaract.social/Images/logo/RUR.png" />
               <meta property="og:url" content="https://rur.rotaract.social/" />
               <meta name="referrer" content="no-referrer" />
+
           </head>
           <body
             className={`${geistSans.variable} ${geistMono.variable} dark:bg-dark-gradient bg-light-gradient antialiased`}
           >
+          <GoogleTagManager gtmId="GTM-MWJNXDZR" />
             {children}
           </body>
         </html>

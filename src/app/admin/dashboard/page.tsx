@@ -1,10 +1,15 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AdminDashboardLayout } from '@/app/admin/admin-dashboard-layout';
+import { sendGTMEvent } from '@next/third-parties/google';
 
 const AdminDashboard: React.FC = () => {
     
+    useEffect(() => {
+        sendGTMEvent({ event: 'page view', page: 'admin' , path: window.location.pathname });
+    }
+    , []);
 
     
     return (

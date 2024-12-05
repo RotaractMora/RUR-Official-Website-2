@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import SponsorDeleteModal from "@/components/blocks/modals/sponsor-delete-modal";
 import {useAuth} from "@/context/auth-provider";
 import { useRouter } from "next/navigation";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 export default function ManageSponsors() {
 
@@ -21,6 +22,10 @@ export default function ManageSponsors() {
 
   const [refresh, setRefresh] = useState(false); // State to trigger re-fetch
 
+  useEffect(() => {
+    sendGTMEvent({ event: 'page view', page: 'admin' , path: window.location.pathname });
+    }
+    , []);
 
   useEffect(() => {
         getSponsors("All").then((data) => {

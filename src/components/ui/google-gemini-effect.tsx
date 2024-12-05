@@ -6,6 +6,7 @@ import { RegistrationStatus as RegistrationStatusType } from '../../interfaces/I
 import { cn } from "@/lib/utils";
 import { HoverBorderGradient } from './hover-border-gradient';
 import { useRouter } from 'next/navigation';
+import { sendGTMEvent } from '@next/third-parties/google';
 
 const transition = {
   duration: 0.8,
@@ -17,8 +18,7 @@ interface StatusCardProps {
   title: string;
   signUp: boolean;
   signIn: boolean;
-  website: string;
-  registrationUrl?: string;
+  signInUrl?: string;
   signUpUrl?:string;
   className?: string;
 }
@@ -97,7 +97,7 @@ const AnimatedButton2 = ({ children }: { children: React.ReactNode }) => {
 
 
 
-const StatusCard: React.FC<StatusCardProps> = ({title,signIn,signUp,registrationUrl,signUpUrl,className}) => {
+const StatusCard: React.FC<StatusCardProps> = ({title,signIn,signUp,signInUrl,signUpUrl,className}) => {
   const router = useRouter();
 
   return (
@@ -120,7 +120,11 @@ const StatusCard: React.FC<StatusCardProps> = ({title,signIn,signUp,registration
             >
               Registration Open
             </motion.span>
-            <HoverBorderGradient onClick={() => router.push(registrationUrl ? registrationUrl : '')} isDisabled={false} className="opacity-50 cursor-not-allowed text-gray-500 hover:bg-transparent" containerClassName="border-gray-300 bg-gray-100 dark:bg-gray-700" >Register Now</HoverBorderGradient>
+            <HoverBorderGradient onClick={() =>{
+                  sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , name: title+' signUp'  , link:signUpUrl ? signUpUrl : '' })
+                  router.push(signUpUrl ? signUpUrl : '')
+            }
+          } isDisabled={false} className="opacity-50 cursor-not-allowed text-gray-500 hover:bg-transparent" containerClassName="border-gray-300 bg-gray-100 dark:bg-gray-700" >Register Now</HoverBorderGradient>
           </div>
         ) : (
           <div className="mt-4">
@@ -129,7 +133,11 @@ const StatusCard: React.FC<StatusCardProps> = ({title,signIn,signUp,registration
             >
               Registration is close
             </motion.span>
-            <HoverBorderGradient isDisabled={true} onClick={() => router.push(registrationUrl ? registrationUrl : '')}>Register</HoverBorderGradient>
+            <HoverBorderGradient isDisabled={true} onClick={() => {
+              sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , name: title+' signUp' , link:signUpUrl ? signUpUrl : '' });
+              router.push(signUpUrl ? signUpUrl : '');
+            }
+          }>Register</HoverBorderGradient>
           </div>
         )}
 
@@ -140,7 +148,11 @@ const StatusCard: React.FC<StatusCardProps> = ({title,signIn,signUp,registration
             >
               You can now signIn
             </motion.span>
-            <HoverBorderGradient onClick={() => router.push(registrationUrl ? registrationUrl : '')} isDisabled={false}>SingIn Now</HoverBorderGradient>
+            <HoverBorderGradient onClick={() => {
+              sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , name: title+' signIn' , link:signInUrl ? signInUrl : '' });
+              router.push(signInUrl ? signInUrl : '')
+            }
+              } isDisabled={false}>SingIn Now</HoverBorderGradient>
           </div>
         ) : (
           <div className="mt-4">
@@ -149,7 +161,11 @@ const StatusCard: React.FC<StatusCardProps> = ({title,signIn,signUp,registration
             >
               SignIn is close
             </motion.span>
-            <HoverBorderGradient isDisabled={true} onClick={() => router.push(registrationUrl ? registrationUrl : '')}>SignIn</HoverBorderGradient>
+            <HoverBorderGradient isDisabled={true} onClick={() => {
+              sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , name: title+' signIn' , link:signInUrl ? signInUrl : '' });
+              router.push(signInUrl ? signInUrl : '')
+            }
+              }>SignIn</HoverBorderGradient>
           </div>
         )}
 
@@ -312,9 +328,12 @@ const RegistrationStatus = () => {
           throw new Error('Failed to fetch registration status');
         }
         setStatus(result);
+        console.log(result);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');
-      } finally {
+        setLoading(false);
+        sendGTMEvent({ event:'JS_Error' , name:'CompanyDataLoadError', error: err instanceof Error ? err.message : 'An error occurred'});
+      } finally{
         setLoading(false);
       }
     };
@@ -383,13 +402,15 @@ const RegistrationStatus = () => {
               title="Company Registration"
               signUp={status.company.signUp}
               signIn={status.company.signIn} 
-              website={''}
+              signInUrl='https://rur.uom.lk/company/signIn'
+              signUpUrl='https://rur.uom.lk/signUp'
               />
             <StatusCard
               title="Student Registration"
               signUp={status.student.signUp}
               signIn={status.student.signIn} 
-              website={''}
+              signInUrl='https://rur.uom.lk/student/signIn'
+              signUpUrl='https://rur.uom.lk/signUp'
               />
           </div>
         </div>

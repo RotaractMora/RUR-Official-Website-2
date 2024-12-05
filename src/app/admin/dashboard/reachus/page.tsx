@@ -9,6 +9,7 @@ import ReachUsContactDeleteModal from "@/components/blocks/modals/reach-us-conta
 import {useAuth} from "@/context/auth-provider";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 export default function ManageReachUsContacts() {
 
@@ -21,6 +22,10 @@ export default function ManageReachUsContacts() {
 
   const [refresh, setRefresh] = useState(false); // State to trigger re-fetch
 
+  useEffect(() => {
+    sendGTMEvent({ event: 'page view', page: 'admin' , path: window.location.pathname });
+  }
+  , []);
 
   useEffect(() => {
           getReachUs().then((data) => {

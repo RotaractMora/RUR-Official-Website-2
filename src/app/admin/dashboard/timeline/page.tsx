@@ -7,6 +7,7 @@ import TimelineAddUpdateModal from "@/components/blocks/modals/timeline-add-upda
 import TimelineDeleteModal from "@/components/blocks/modals/timeline-delete-modal";
 import Image from "next/image";
 import Swal from 'sweetalert2';
+import { sendGTMEvent } from "@next/third-parties/google";
 
 export default function ManageTimeline() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -111,6 +112,11 @@ export default function ManageTimeline() {
     setError(errorMessage);
     await showAlert(errorTitle, errorMessage, 'error');
   };
+
+  useEffect(() => {
+    sendGTMEvent({ event: 'page view', page: 'admin' , path: window.location.pathname });
+}
+, []);
 
   useEffect(() => {
     let isMounted = true;
