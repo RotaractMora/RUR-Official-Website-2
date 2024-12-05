@@ -1,5 +1,6 @@
 'use client';
 
+
 import localFont from "next/font/local";
 import "./globals.css";
 import React, { useCallback, useEffect, useState } from "react";
@@ -22,7 +23,7 @@ const geistMono = localFont({
 export const ThemeContext = React.createContext<IThemeContextType|null>(null);
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const DEFAULT_THEME = "dark";
+  const DEFAULT_THEME = "light";
   const [theme, setThemeMode] = useState<ITheme>(DEFAULT_THEME);
 
   useEffect(() => {

@@ -25,8 +25,6 @@ import SPONSOR from "../../public/Images/partners/the-ai-team.png"
 import LoadingAnimation from "../../public/animations/RUR_Loading.json"
 
 import { Timeline } from "@/components/ui/timeline";
-import LampLighting from "@/components/ui/lamp";
-import { GlareCard } from "@/components/ui/glare-card";
 import Image from "next/image";
 import { TracingBeam } from "@/components/ui/tracing-beam";
 import ReachUsSection from "@/components/blocks/reach-us-section";
@@ -42,16 +40,12 @@ import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import {CardDesign} from "@/components/ui/card-design";
 import Lottie from "react-lottie-player";
 import { IContact } from "@/interfaces/IContacts";
-import { getReachUs } from "@/services/reachus.service";
 import RegistrationStatus from "@/components/ui/google-gemini-effect";
 import BackToTopButton from "@/components/ui/back-to-top";
 import CodeEvelPara from "@/components/ui/code-evel-para";
 import { HeroVideo } from "@/components/ui/hero-video";
 import ExpandableCard from "@/components/blocks/expandable-card-standard";
 import Head from "next/head";
-import ExpandableCardGrid from "@/components/blocks/expandable-card-grid";
-import { ICompany } from "@/interfaces/ICompanies";
-import { getDataFromAggregatedCompanyDoc } from "@/services/aggregatedCompanyData.service";
 import { sendGTMEvent } from "@next/third-parties/google";
 
 export const products = [
@@ -172,6 +166,8 @@ const navItms = [
   },
 ];
 
+console.log("Home Page"); 
+
 
 const Loading =()=> {
   return (
@@ -270,7 +266,7 @@ export default function Home() {
       } catch (err) {
         console.error("Error fetching data:", err);
         setError("Failed to load data. Please try again later.");
-        sendGTMEvent({ event:'JS_Error' , name:'AggregatedDocLoadError', error: err });
+        sendGTMEvent({ event:'JS_Error' , error_name:'AggregatedDocLoadError', error: err });
       } finally {
         setTimelineLoading(false);
         setSponsorsLoading(false);
@@ -285,6 +281,8 @@ export default function Home() {
     fetchData();
   }, []);
 
+
+  function getEvents(){
   const events = timeline.map((t) => ({
     title: t.title,
     content: <CodeEvelPara htmlContent={t.description} />,
@@ -294,6 +292,10 @@ export default function Home() {
     btnText: t.btnText,
     isBtnDisabled: t.isBtnDisabled,
   }));
+
+  return events;
+}
+
 
   const ErrorMessage = ({ message }: { message: string }) => (
     <div className="flex items-center justify-center">
@@ -355,8 +357,8 @@ export default function Home() {
           <ErrorMessage message={error} />
         ) : isTimelineLoading ? (
           <Loading />
-        ) : events.length > 0 ? (
-          <Timeline data={events} />
+        ) : getEvents().length > 0 ? (
+          <Timeline data={getEvents()} />
         ) : (
           <EmptyStateMessage message="Timeline will be updated soon." />
         )}
@@ -395,7 +397,7 @@ export default function Home() {
       <ExpandableCard />
       {/* <ExpandableCardGrid cards={cards} /> */}
 
-<section 
+      <section 
         id="registrationStatus" 
         className="scroll-mt-20 relative py-16 w-full">
         <div className="w-full mx-auto">

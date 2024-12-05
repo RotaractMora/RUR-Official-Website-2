@@ -1,4 +1,4 @@
-
+"use client";
 import { FloatingDock  } from "../ui/floating-dock";
 import { FaLinkedin , FaInstagram, FaFacebook, FaYoutube, FaAt } from "react-icons/fa";
 import { SiRotaryinternational } from "react-icons/si";

@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
  
 export function GridBackground({title,children}:{title:string,children?:React.ReactNode}): JSX.Element {
