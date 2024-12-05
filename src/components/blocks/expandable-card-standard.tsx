@@ -239,7 +239,10 @@ export default function ExpandableCard() {
           <motion.div
             layoutId={`card-${card.companyId}-${id}`}
             key={`card-${card.name}-${id}`}
-            onClick={() => setActive(card)}
+            onClick={() => {
+              setActive(card)
+              sendGTMEvent({ event: 'buttonClicked', section: 'companyData' , activity:'view data' , company:card.name  });
+            }}
             className="p-4 flex flex-col md:flex-row justify-between items-center hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-xl cursor-pointer"
           >
             <div className="flex gap-4 flex-col md:flex-row ">
@@ -270,9 +273,6 @@ export default function ExpandableCard() {
             <motion.button
               layoutId={`button-${card.companyId}-${id}`}
               className="pt-4"
-              onClick={()=>{
-                sendGTMEvent({ event: 'buttonClicked', section: 'companyData' , activity:'view data' , company:card.name  });
-              }}
             >
               <HoverBorderGradient >
                 View

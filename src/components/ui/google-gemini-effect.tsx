@@ -121,7 +121,7 @@ const StatusCard: React.FC<StatusCardProps> = ({title,signIn,signUp,signInUrl,si
               Registration Open
             </motion.span>
             <HoverBorderGradient onClick={() =>{
-                  sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , name: title+' signUp'  , link:signUpUrl ? signUpUrl : '' })
+                  sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , activity: title+' signUp'  , link:signUpUrl ? signUpUrl : '' })
                   router.push(signUpUrl ? signUpUrl : '')
             }
           } isDisabled={false} className="opacity-50 cursor-not-allowed text-gray-500 hover:bg-transparent" containerClassName="border-gray-300 bg-gray-100 dark:bg-gray-700" >Register Now</HoverBorderGradient>
@@ -134,7 +134,7 @@ const StatusCard: React.FC<StatusCardProps> = ({title,signIn,signUp,signInUrl,si
               Registration is close
             </motion.span>
             <HoverBorderGradient isDisabled={true} onClick={() => {
-              sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , name: title+' signUp' , link:signUpUrl ? signUpUrl : '' });
+              sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , activity: title+' signUp' , link:signUpUrl ? signUpUrl : '' });
               router.push(signUpUrl ? signUpUrl : '');
             }
           }>Register</HoverBorderGradient>
@@ -149,7 +149,7 @@ const StatusCard: React.FC<StatusCardProps> = ({title,signIn,signUp,signInUrl,si
               You can now signIn
             </motion.span>
             <HoverBorderGradient onClick={() => {
-              sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , name: title+' signIn' , link:signInUrl ? signInUrl : '' });
+              sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , activity: title+' signIn' , link:signInUrl ? signInUrl : '' });
               router.push(signInUrl ? signInUrl : '')
             }
               } isDisabled={false}>SingIn Now</HoverBorderGradient>
@@ -162,7 +162,7 @@ const StatusCard: React.FC<StatusCardProps> = ({title,signIn,signUp,signInUrl,si
               SignIn is close
             </motion.span>
             <HoverBorderGradient isDisabled={true} onClick={() => {
-              sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , name: title+' signIn' , link:signInUrl ? signInUrl : '' });
+              sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , activity: title+' signIn' , link:signInUrl ? signInUrl : '' });
               router.push(signInUrl ? signInUrl : '')
             }
               }>SignIn</HoverBorderGradient>
@@ -332,7 +332,7 @@ const RegistrationStatus = () => {
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');
         setLoading(false);
-        sendGTMEvent({ event:'JS_Error' , name:'CompanyDataLoadError', error: err instanceof Error ? err.message : 'An error occurred'});
+        sendGTMEvent({ event:'JS_Error' , error_name:'CompanyDataLoadError', error: err instanceof Error ? err.message : 'An error occurred'});
       } finally{
         setLoading(false);
       }
