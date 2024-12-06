@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Note: Use position fixed according to your needs
  * Desktop navbar is better positioned at the bottom
@@ -75,15 +77,11 @@ function IconContainer({
     return val - bounds.x - bounds.width / 2;
   });
 
-  const widthTransform = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
-  const heightTransform = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
-
-  const widthTransformIcon = useTransform(distance, [-150, 0, 150], [20, 40, 20]);
-  const heightTransformIcon = useTransform(
-    distance,
-    [-150, 0, 150],
-    [20, 40, 20]
-  );
+  const widthTransform = useTransform(distance, [-150, 0, 150], [50, 70, 50]);
+  const heightTransform = useTransform(distance, [-150, 0, 150], [50, 70, 50]);
+  
+  const widthTransformIcon = useTransform(distance, [-150, 0, 150], [30, 35, 30]);
+  const heightTransformIcon = useTransform(distance, [-150, 0, 150], [30, 35, 30]);  
 
   const width = useSpring(widthTransform, {
     mass: 0.1,

@@ -1,4 +1,4 @@
-
+"use client";
 import { FloatingDock  } from "../ui/floating-dock";
 import { FaLinkedin , FaInstagram, FaFacebook, FaYoutube, FaAt } from "react-icons/fa";
 import { SiRotaryinternational } from "react-icons/si";
@@ -67,7 +67,7 @@ const Footer = () => {
                     <FloatingDock items={floatDockItms} />
                 </div>
                 <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-                <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 <a href="https://rotaractmora.org" className="hover:underline">Rotaract Mora</a>. All Rights Reserved.</span>
+                <span className="block text-sm w-full text-gray-500 text-center dark:text-gray-400">© 2024 <a href="https://rotaractmora.org" className="hover:underline">Rotaract Mora</a>. All Rights Reserved.</span>
             </div>
         </footer>
   );

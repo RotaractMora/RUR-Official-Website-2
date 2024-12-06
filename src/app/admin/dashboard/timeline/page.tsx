@@ -7,6 +7,7 @@ import TimelineAddUpdateModal from "@/components/blocks/modals/timeline-add-upda
 import TimelineDeleteModal from "@/components/blocks/modals/timeline-delete-modal";
 import Image from "next/image";
 import Swal from 'sweetalert2';
+import { sendGTMEvent } from "@next/third-parties/google";
 
 export default function ManageTimeline() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -111,6 +112,11 @@ export default function ManageTimeline() {
     setError(errorMessage);
     await showAlert(errorTitle, errorMessage, 'error');
   };
+
+  useEffect(() => {
+    sendGTMEvent({ event: 'page view', page: 'admin' , path: window.location.pathname });
+}
+, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -231,6 +237,7 @@ export default function ManageTimeline() {
                   <th scope="col" className="px-6 py-3">Event Date</th>
                   <th scope="col" className="px-6 py-3">Order</th>
                   <th scope="col" className="px-6 py-3">Button</th>
+                  <th scope="col" className="px-6 py-3">Visiblity</th>
                   <th scope="col" className="px-6 py-3">Action</th>
                 </tr>
               </thead>
@@ -267,6 +274,13 @@ export default function ManageTimeline() {
                           {event.isBtnDisabled ? '(Disabled)' : '(Enabled)'}
                         </span>
                       </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      {event.isVisibleToPublic ? (
+                        <span className="bg-green-500 text-white p-1 px-2 font-medium rounded-lg ">Public</span>
+                      ) : (
+                        <span className="bg-red-500 text-white p-1 px-2 font-medium rounded-lg ">Hidden</span>
+                      )}
                     </td>
                     <td className="px-6 py-4">
                       <button 

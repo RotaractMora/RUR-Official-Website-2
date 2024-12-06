@@ -3,6 +3,8 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
+export const dynamic = "force-dynamic"; 
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_API_KEY,
@@ -20,6 +22,7 @@ console.log(
         : "Firebase configuration found 🔥🔥"
 );
 console.log("API keys status: ", firebaseConfig.status);
+
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);

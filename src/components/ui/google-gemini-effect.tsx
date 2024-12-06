@@ -1,24 +1,30 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import { getRegistrationStatus } from '../../services/notice.service';
 import { RegistrationStatus as RegistrationStatusType } from '../../interfaces/IRegistration';
 import { cn } from "@/lib/utils";
+import { HoverBorderGradient } from './hover-border-gradient';
+import { useRouter } from 'next/navigation';
+import { sendGTMEvent } from '@next/third-parties/google';
 
 const transition = {
   duration: 0.8,
   ease: "easeInOut",
 };
 
+
 interface StatusCardProps {
   title: string;
   signUp: boolean;
   signIn: boolean;
-  registrationUrl?: string;
+  signInUrl?: string;
+  signUpUrl?:string;
   className?: string;
 }
 const AnimatedButton = ({ href, children }: { href: string; children: React.ReactNode }) => {
     const [isHovered, setIsHovered] = useState(false);
+
 
 return (
     <motion.a
@@ -54,8 +60,47 @@ return (
     </motion.a>
   );
 };
+const AnimatedButton2 = ({ children }: { children: React.ReactNode }) => {
+  const [isHovered, setIsHovered] = useState(false);
 
-const StatusCard: React.FC<StatusCardProps> = ({ title, signUp, signIn, registrationUrl, className }) => (
+  return (
+    <motion.button 
+      className={cn(
+        "relative inline-flex items-center justify-center px-6 py-3",
+        "rounded-full font-semibold text-white",
+        "bg-gradient-to-r from-red-900 to-red-600",
+        "cursor-pointer overflow-hidden",
+        "transition-all duration-300",
+        "hover:shadow-lg hover:shadow-orange-500/25"
+      )}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      <motion.span
+        className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-900"
+        initial={{ x: "100%" }}
+        animate={{ x: isHovered ? "0%" : "100%" }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+      />
+      <motion.span
+        className="relative z-10"
+        animate={{ scale: isHovered ? 1.1 : 1 }}
+        transition={{ duration: 0.2 }}
+      >
+        {children}
+      </motion.span>
+    </motion.button>
+  );
+};
+
+
+
+const StatusCard: React.FC<StatusCardProps> = ({title,signIn,signUp,signInUrl,signUpUrl,className}) => {
+  const router = useRouter();
+
+  return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -67,60 +112,69 @@ const StatusCard: React.FC<StatusCardProps> = ({ title, signUp, signIn, registra
     >
       <h3 className="text-xl font-bold mb-4 underline text-white">{title}</h3>
       <div className="space-y-2">
-        {/* <div className="flex items-center">
-          <motion.div 
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.4 }}
-            className={`w-3 h-3 rounded-full mr-2 ${
-              signUp ? 'bg-green-500' : 'bg-red-500'
-            }`}
-          />
-          <span className="text-white/90">
-            Sign Up is {signUp ? 'Open' : 'Closed'}
-          </span>
-        </div>
-        <div className="flex items-center">
-          <motion.div 
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.6 }}
-            className={`w-3 h-3 rounded-full mr-2 ${
-              signIn ? 'bg-green-500' : 'bg-red-500'
-            }`}
-          />
-          <span className="text-white/90">
-            Sign In is {signIn ? 'Open' : 'Closed'}
-          </span>
-        </div> */}
-        {signUp && signIn ? (
+
+        {signUp ? (
           <div className="mt-4">
             <motion.span
-            className="text-green-500 text-xl content-center block mb-3"
+              className="text-green-500 text-xl content-center block mb-3"
             >
-            {title.split(" ")[0]} Registration Open
+              Registration Open
             </motion.span>
-            <AnimatedButton 
-              href={title.split(" ")[0].toLowerCase() === "company" 
-                ? "http://google.com/" 
-                : "http://youtube.com/"
-              }
-            >
-              Visit Registration Portal
-            </AnimatedButton>
+            <HoverBorderGradient onClick={() =>{
+                  sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , activity: title+' signUp'  , link:signUpUrl ? signUpUrl : '' })
+                  router.push(signUpUrl ? signUpUrl : '')
+            }
+          } isDisabled={false} className="opacity-50 cursor-not-allowed text-gray-500 hover:bg-transparent" containerClassName="border-gray-300 bg-gray-100 dark:bg-gray-700" >Register Now</HoverBorderGradient>
           </div>
         ) : (
           <div className="mt-4">
             <motion.span
-            className="text-red-500 text-xl block mb-3"
+              className="text-red-500 text-xl block mb-3"
             >
-            {title.split(" ")[0]} Registration Opening Soon
+              Registration is close
             </motion.span>
+            <HoverBorderGradient isDisabled={true} onClick={() => {
+              sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , activity: title+' signUp' , link:signUpUrl ? signUpUrl : '' });
+              router.push(signUpUrl ? signUpUrl : '');
+            }
+          }>Register</HoverBorderGradient>
           </div>
         )}
+
+        {signIn ? (
+          <div className="mt-4">
+            <motion.span
+              className="text-green-500 text-xl content-center block mb-3"
+            >
+              You can now signIn
+            </motion.span>
+            <HoverBorderGradient onClick={() => {
+              sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , activity: title+' signIn' , link:signInUrl ? signInUrl : '' });
+              router.push(signInUrl ? signInUrl : '')
+            }
+              } isDisabled={false}>SingIn Now</HoverBorderGradient>
+          </div>
+        ) : (
+          <div className="mt-4">
+            <motion.span
+              className="text-red-500 text-xl block mb-3"
+            >
+              SignIn is close
+            </motion.span>
+            <HoverBorderGradient isDisabled={true} onClick={() => {
+              sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , activity: title+' signIn' , link:signInUrl ? signInUrl : '' });
+              router.push(signInUrl ? signInUrl : '')
+            }
+              }>SignIn</HoverBorderGradient>
+          </div>
+        )}
+
+
       </div>
     </motion.div>
   );
+}
+
 
 const WaveBackground = () => {
    
@@ -129,7 +183,7 @@ const WaveBackground = () => {
     // Use the container ref for scroll tracking
     const { scrollYProgress } = useScroll({
       target: containerRef,
-      offset: ["start start", "end end"]
+      offset: ["start 50%", "end 30%"]
     });
   // Create transformed values for each wave
   const pathLengths = [
@@ -141,13 +195,13 @@ const WaveBackground = () => {
   ];
 
   return (
+    <AnimatePresence>
     <div ref={containerRef} className="absolute inset-0 overflow-hidden">
     <svg
-      width="1440"
-      height="890"
       viewBox="0 0 1440 890"
       xmlns="http://www.w3.org/2000/svg"
-      className="absolute -top-60 md:-top-40 w-full"
+      className="absolute w-full"
+      style={{ width:'100%', height:'auto', top:'300px', transform: "translateY(-50%)"  }}
     >
       <motion.path
         d="M0 663C145.5 663 191 666.265 269 647C326.5 630 339.5 621 397.5 566C439 531.5 455 529.5 490 523C509.664 519.348 521 503.736 538 504.236C553.591 504.236 562.429 514.739 584.66 522.749C592.042 525.408 600.2 526.237 607.356 523.019C624.755 515.195 641.446 496.324 657 496.735C673.408 496.735 693.545 519.572 712.903 526.769C718.727 528.934 725.184 528.395 730.902 525.965C751.726 517.115 764.085 497.106 782 496.735C794.831 496.47 804.103 508.859 822.469 518.515C835.13 525.171 850.214 526.815 862.827 520.069C875.952 513.049 889.748 502.706 903.5 503.736C922.677 505.171 935.293 510.562 945.817 515.673C954.234 519.76 963.095 522.792 972.199 524.954C996.012 530.611 1007.42 534.118 1034 549C1077.5 573.359 1082.5 594.5 1140 629C1206 670 1328.5 662.5 1440 662.5"
@@ -256,6 +310,7 @@ const WaveBackground = () => {
       </defs>
     </svg>
     </div>
+    </AnimatePresence>
   );
 };
 
@@ -273,9 +328,12 @@ const RegistrationStatus = () => {
           throw new Error('Failed to fetch registration status');
         }
         setStatus(result);
+        console.log(result);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');
-      } finally {
+        setLoading(false);
+        sendGTMEvent({ event:'JS_Error' , error_name:'CompanyDataLoadError', error: err instanceof Error ? err.message : 'An error occurred'});
+      } finally{
         setLoading(false);
       }
     };
@@ -306,8 +364,7 @@ const RegistrationStatus = () => {
   return (
     <div 
       ref={containerRef}
-      className="relative min-h-screen bg-gradient-to-b from-gray-900 to-blue-950 overflow-hidden flex flex-col"
-      style={{ minHeight: '110vh' }}
+      className="relative max-h-[950px] min-h-[50vw] bg-gradient-to-b from-gray-900 to-blue-950 overflow-auto "
     >
       {/* Header Section */}
       <div className="relative z-10">
@@ -321,16 +378,14 @@ const RegistrationStatus = () => {
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-4xl md:text-7xl font-bold text-center mb-2  text-white "
-          >
+            className="text-4xl md:text-7xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-b from-neutral-100 to-neutral-300">
             Registration Status
           </motion.h2>
           <motion.p 
             initial={{ y: -10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="text-xs md:text-xl font-normal text-center text-neutral-400 mt-8 max-w-lg mx-auto"
-          >
+            className="text-xs md:text-xl font-normal text-center text-neutral-400 mt-4 max-w-lg mx-auto mb-12">
             Check the current registration status for companies and students
           </motion.p>
         </motion.div>
@@ -346,13 +401,17 @@ const RegistrationStatus = () => {
             <StatusCard
               title="Company Registration"
               signUp={status.company.signUp}
-              signIn={status.company.signIn}
-            />
+              signIn={status.company.signIn} 
+              signInUrl='https://rur.uom.lk/company/signIn'
+              signUpUrl='https://rur.uom.lk/signUp'
+              />
             <StatusCard
               title="Student Registration"
               signUp={status.student.signUp}
-              signIn={status.student.signIn}
-            />
+              signIn={status.student.signIn} 
+              signInUrl='https://rur.uom.lk/student/signIn'
+              signUpUrl='https://rur.uom.lk/signUp'
+              />
           </div>
         </div>
       </div>

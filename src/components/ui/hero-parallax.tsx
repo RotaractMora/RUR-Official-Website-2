@@ -9,7 +9,6 @@ import {
 } from "framer-motion";
 import Image, { StaticImageData } from "next/image";
 
-
 export const HeroParallax = ({
   products,
 }: {
@@ -28,7 +27,7 @@ export const HeroParallax = ({
     offset: ["start start", "end start"],
   });
 
-  const springConfig = { stiffness: 110, damping: 15, bounce: 100 };
+  const springConfig = { stiffness: 110, damping: 15 };
 
   const translateX = useSpring(
     useTransform(scrollYProgress, [0, 1], [0, 1000]),
@@ -38,39 +37,14 @@ export const HeroParallax = ({
     useTransform(scrollYProgress, [0, 1], [0, -1000]),
     springConfig
   );
-  const rotateX = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [15, 0]),
-    springConfig
-  );
-  const opacity = useSpring(
-    useTransform(scrollYProgress, [0, 0.3], [0.3, 1]),
-    springConfig
-  );
-  const rotateZ = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [20, 0]),
-    springConfig
-  );
-  const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [-700, 300]),
-    springConfig
-  );
-
 
   return (
     <div
       ref={ref}
-      className="h-[300vh] py-40 overflow-hidden  antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-auto pb-30 pt-10 overflow-hidden antialiased relative flex flex-col"
     >
       <Header />
-      <motion.div
-        style={{
-          rotateX,
-          rotateZ,
-          translateY,
-          opacity,
-        }}
-        className=""
-      >
+      <div>
         <motion.div className="flex flex-row-reverse space-x-reverse space-x-20 mb-20">
           {firstRow.map((product,index) => (
             <ProductCard
@@ -80,7 +54,7 @@ export const HeroParallax = ({
             />
           ))}
         </motion.div>
-        <motion.div className="flex flex-row  mb-20 space-x-20 ">
+        <motion.div className="flex flex-row mb-20 space-x-20">
           {secondRow.map((product,index) => (
             <ProductCard
               product={product}
@@ -98,19 +72,20 @@ export const HeroParallax = ({
             />
           ))}
         </motion.div>
-      </motion.div>
+      </div>
     </div>
   );
 };
 
 export const Header = () => {
   return (
-    <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full  left-0 top-0">
-      <h1 className="text-2xl md:text-7xl font-bold dark:text-white">
+    <div className="max-w-7xl relative mx-auto pb-10  px-4 w-full left-0 top-0">
+      <h1 className="text-2xl md:text-7xl text-center font-bold dark:text-white bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent">
         Are You Ready? <br /> 2025
       </h1>
-      <p className="max-w-2xl text-base md:text-xl mt-8 dark:text-neutral-200">
-      The Virtual Odyssey in Corporate Arena
+     
+      <p className="max-w-2xl text-base md:text-xl pb-4 text-center mx-auto mt-8 text-neutral-800 dark:text-neutral-200">
+        The Virtual Odyssey in Corporate Arena
       </p>
     </div>
   );
@@ -126,7 +101,6 @@ export const ProductCard = ({
   };
   translate: MotionValue<number>;
 }) => {
-
   return (
     <motion.div
       style={{
@@ -138,22 +112,18 @@ export const ProductCard = ({
       key={product.title+" "+Date.now()}
       className="group/product h-96 w-[30rem] relative flex-shrink-0"
     >
-
-        <Image
-          src={product.thumbnail}
-          height="600"
-          width="600"
-          className="object-cover object-left-top absolute h-full w-full inset-0 rounded-xl"
-          alt={product.title}
-          // onLoad={(e) => {
-          //   // addResourceCount(1);
-          // }}
-          loading="eager"
-        />
-      <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-80 bg-black pointer-events-none"></div>
+      <Image
+        src={product.thumbnail}
+        height="600"
+        width="600"
+        className="object-cover object-left-top absolute h-full w-full inset-0 rounded-xl"
+        alt={product.title}
+        loading="eager"
+      />
+      {/* <div className="absolute inset-0 h-full w-full opacity-0 group-hover/product:opacity-80 bg-black pointer-events-none"></div>
       <h2 className="absolute bottom-4 left-4 opacity-0 group-hover/product:opacity-100 text-white">
-        {product.title}
-      </h2>
+        // {product.title}
+      </h2> */}
     </motion.div>
   );
 };

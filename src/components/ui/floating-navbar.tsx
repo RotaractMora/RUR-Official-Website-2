@@ -39,35 +39,35 @@ export const FloatingNav = ({
   return (
     <div>
       <div className={cn("m-5 fixed w-auto z-50 w-full flex justify-center", className)}>
-        <div className={"flex justify-center w-auto backdrop-blur bg-white/30 dark:bg-black/30 rounded-3xl border border-white p-2 px-6"}>
+        <div className={"flex justify-center w-auto backdrop-blur bg-white/70 dark:bg-black/30 rounded-3xl border border-white p-2 px-6"}>
 
           <div className="flex items-center space-x-4">
             <Link href="/" className="relative">
               <Image
           src={SMALL_LOGO}
           alt="logo"
-          className="dark:border-custom-dark-color-800 border-custom-color-800 h-8 w-8 md:h-12 md:w-12"
+          className="dark:border-custom-dark-color-800 border-custom-color-800 h-4 w-5 md:h-12 md:w-12"
           height={37}
           width={50}
               />
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-4">
+            <div className="hidden md:flex flex-row items-center space-x-4">
               {navItems.map((navItem, idx) => (
-            <Link
+              <Link
                 key={`link-${idx}`}
                 href={navItem.link}
-                className="relative dark:text-neutral-50 items-center flex space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500"
-            >
-              <span className="text-sm">{navItem.name}</span>
-            </Link>
+                className="relative dark:text-neutral-50 items-center flex space-x-1 text-neutral-800 dark:hover:text-neutral-300 hover:text-neutral-500"
+              >
+                <span className="text-sm">{navItem.name}</span>
+              </Link>
               ))}
             </div>
           </div>
 
           <div className="flex items-center space-x-4">
-            <button
+            {/* <button
           onClick={toggleTheme}
           className="border text-sm font-medium relative ml-4 border-neutral-200 dark:border-white/[0.2] text-black dark:text-white p-2 md:px-4 md:py-2 rounded-full"
             >
@@ -76,7 +76,7 @@ export const FloatingNav = ({
               ) : (
             <MoonIcon className="h-4 w-4 md:h-5 md:w-5" />
               )}
-            </button>
+            </button> */}
 
             {/* Mobile Menu Button */}
             <button

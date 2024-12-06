@@ -19,12 +19,12 @@ import RUR_IMG12 from "../../public/Images/RUR (12).jpg"
 import RUR_IMG13 from "../../public/Images/RUR (13).jpg"
 import RUR_IMG14 from "../../public/Images/RUR (14).jpg"
 import RUR_IMG15 from "../../public/Images/RUR (15).jpg"
-import SPONSOR from "../../public/Images/partners/the-ai-team.png"
-import LoadingAnimation from "../../public/animations/RUR.json"
-import { Timeline } from "@/components/ui/timeline";
 
-import LampLighting from "@/components/ui/lamp";
-import { GlareCard } from "@/components/ui/glare-card";
+import SPONSOR from "../../public/Images/partners/the-ai-team.png"
+// import LoadingAnimation from "../../public/animations/RUR.json"
+import LoadingAnimation from "../../public/animations/RUR_Loading.json"
+
+import { Timeline } from "@/components/ui/timeline";
 import Image from "next/image";
 import { TracingBeam } from "@/components/ui/tracing-beam";
 import ReachUsSection from "@/components/blocks/reach-us-section";
@@ -40,9 +40,13 @@ import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import {CardDesign} from "@/components/ui/card-design";
 import Lottie from "react-lottie-player";
 import { IContact } from "@/interfaces/IContacts";
-import { getReachUs } from "@/services/reachus.service";
 import RegistrationStatus from "@/components/ui/google-gemini-effect";
+import BackToTopButton from "@/components/ui/back-to-top";
 import CodeEvelPara from "@/components/ui/code-evel-para";
+import { HeroVideo } from "@/components/ui/hero-video";
+import ExpandableCard from "@/components/blocks/expandable-card-standard";
+import Head from "next/head";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 export const products = [
   {
@@ -162,6 +166,8 @@ const navItms = [
   },
 ];
 
+console.log("Home Page"); 
+
 
 const Loading =()=> {
   return (
@@ -184,7 +190,7 @@ const Para = ({ level, name, imgURL, loadCallback }: { level: string, name: stri
         width={300}
         height={100}
         alt="Sponsor"
-        className="p-2 my-2 rounded-lg dark:bg-black bg-white h-auto min-w-[250px] max-w-[250px] md:max-w-[300px]"
+        className="p-2 my-2 rounded-lg dark:bg-custom-dark-color-600 bg-custom-color-600 h-auto min-w-[250px] max-w-[250px] md:max-w-[300px]"
       />
       <h5 className="text-2xl md:text-3xl lg:text-5xl text-center font-bold dark:text-custom-color-900 text-custom-dark-color-900 p-3">
         {name}
@@ -195,12 +201,12 @@ const Para = ({ level, name, imgURL, loadCallback }: { level: string, name: stri
 
 const AboutSection = ({ content }: { content: string }) => {
   return (
-    <div className="w-full px-4 md:w-3/4 lg:w-1/2 mx-auto py-24  md:py-12">
-      <div className="bg-white/5 backdrop-blur-lg rounded-xl p-4 md:p-8 mt-0">
-        <h2 className="text-xl md:text-2xl text-center font-bold dark:text-custom-color-800 text-custom-dark-color-800 mb-4">
+    <div className="w-full max-w-7xl mx-auto px-4 py-24 md:py-12">
+      <div className="bg-white/5 backdrop-blur-lg rounded-xl p-4 md:p-12 mt-0">
+        <h2 className="text-3xl md:text-4xl text-center font-bold dark:text-custom-color-800 bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent mb-4">
           About Are You Ready?
         </h2>
-        <div className="prose prose-sm md:prose-base lg:prose-lg dark:prose-invert max-w-none">
+        <div className="prose prose-sm md:prose-base lg:prose-lg dark:prose-invert max-w-none leading-10 text-justify">
           <TextGenerateEffect words={content} />
         </div>
       </div>
@@ -216,25 +222,33 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isLoadingAnimComplete , setIsLoadingAnimComplete] = useState(false);
-  const [grid, setGrid] = useState([] as IContact[]);
-  const [isGridLoading, setGridLoading] = useState(true);
+  const [reachUsContacts, setReachUsContacts] = useState([] as IContact[]);
+  const [isReachUsGridLoading, setIsReachUsGridLoading] = useState(true);
 
-  const loadingTimeout = ()=>{setTimeout(() => setIsLoadingAnimComplete(true), 1000);}
+  const loadingTimeout = ()=>{
+  console.log("Loading animation timeout");
+  setTimeout(() => {
+    setIsLoadingAnimComplete(true);
+  }, 2000);
+}
   
   
-
   useEffect(() => {
+
+    sendGTMEvent({ event: 'page view', page: 'home' , path: window.location.pathname });
+
+
     const fetchData = async () => {
 
-      getReachUs().then((data) => {
-        setGrid(data);
-      }).catch((err) => {
-        console.error("Error fetching data:", err);
-        setError("Failed to load data. Please try again later.");
-      }
-      ).finally(() => {
-        setGridLoading(false);
-      });
+      // getReachUs().then((data) => {
+      //   setGrid(data);
+      // }).catch((err) => {
+      //   console.error("Error fetching data:", err);
+      //   setError("Failed to load data. Please try again later.");
+      // }
+      // ).finally(() => {
+      //   setGridLoading(false);
+      // });
 
 
 
@@ -247,20 +261,28 @@ export default function Home() {
 
         setTimeline(data.timelineList || []);
         setSponsors(data.sponsorList || []);
+        setReachUsContacts(data.reachUsContactList || []);
         setError(null);
       } catch (err) {
         console.error("Error fetching data:", err);
         setError("Failed to load data. Please try again later.");
+        sendGTMEvent({ event:'JS_Error' , error_name:'AggregatedDocLoadError', error: err });
       } finally {
         setTimelineLoading(false);
         setSponsorsLoading(false);
         setIsLoading(false);
+        setIsReachUsGridLoading(false);
+
+        console.log("Data fetched end");
       }
+
     };
 
     fetchData();
   }, []);
 
+
+  function getEvents(){
   const events = timeline.map((t) => ({
     title: t.title,
     content: <CodeEvelPara htmlContent={t.description} />,
@@ -271,8 +293,12 @@ export default function Home() {
     isBtnDisabled: t.isBtnDisabled,
   }));
 
+  return events;
+}
+
+
   const ErrorMessage = ({ message }: { message: string }) => (
-    <div className="flex items-center justify-center p-8">
+    <div className="flex items-center justify-center">
       <HeroHighlight>
         <Highlighter firstString="Error: " secondString={message} />
       </HeroHighlight>
@@ -280,7 +306,7 @@ export default function Home() {
   );
 
   const EmptyStateMessage = ({ message }: { message: string }) => (
-    <div className="flex items-center justify-center p-8">
+    <div className="flex items-center justify-center">
       <HeroHighlight>
         <Highlighter firstString="" secondString={message} />
       </HeroHighlight>
@@ -295,22 +321,33 @@ export default function Home() {
 
   return (
     <RootLayout>
+      
+      <Head>
+        <meta name="robots" content="index, follow" />
+        <meta name="googlebot" content="index, follow" />
+        <meta name="distribution" content="global" />
+      </Head>
+      
+      <BackToTopButton />
+      
       <FloatingNav navItems={navItms} />
-         { ( isLoading || !isLoadingAnimComplete ) && (
+         { ( !isLoadingAnimComplete ) && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-[#545576]">
             <Lottie
-              loop={false}
+              loop={true}
               animationData={LoadingAnimation}
-              onComplete={loadingTimeout }
               play
-              style={{ width: 500, height: 500 }}
-              
+              style={{ width: 300, height: 300 }}
+              onLoopComplete={loadingTimeout}
             />
             </div>
         )}
 
 
       <div className="space-y-0">
+        <HeroVideo videoSrc="videos/RUR_Logo.mp4" play={isLoadingAnimComplete} onLoadedVideo={()=> {
+          setIsLoadingAnimComplete(true);
+        }} />
         <ResponsiveHero products={products} />
         <AboutSection content={content} />
       </div>
@@ -320,15 +357,15 @@ export default function Home() {
           <ErrorMessage message={error} />
         ) : isTimelineLoading ? (
           <Loading />
-        ) : events.length > 0 ? (
-          <Timeline data={events} />
+        ) : getEvents().length > 0 ? (
+          <Timeline data={getEvents()} />
         ) : (
           <EmptyStateMessage message="Timeline will be updated soon." />
         )}
       </div>
 
       <div id="sponsors" className="scroll-mt-20">
-        <LampLighting firstLine="Sponsors" secondLine="" />
+          {/* <LampLighting firstLine="Sponsors" secondLine="" /> */}
       </div>
 
       {error ? (
@@ -356,11 +393,15 @@ export default function Home() {
         <EmptyStateMessage message="Sponsors will be available soon." />
       )}
 
-<section 
+
+      <ExpandableCard />
+      {/* <ExpandableCardGrid cards={cards} /> */}
+
+      <section 
         id="registrationStatus" 
         className="scroll-mt-20 relative py-16 w-full">
-        <div className="container mx-auto px-4">
-          <div className="relative z-10">
+        <div className="w-full mx-auto">
+          <div className="relative w-full z-10">
             <RegistrationStatus />
           </div>
         </div>
@@ -369,8 +410,8 @@ export default function Home() {
 
 
      <div id="reach_us" className="scroll-mt-20">
-        {!isGridLoading && <GridBackground title="Reach Us">
-          <ReachUsSection grid={grid} />
+        {!isReachUsGridLoading && <GridBackground title="Reach Us">
+          <ReachUsSection grid={reachUsContacts} />
         </GridBackground>}
       </div>
 
