@@ -34,7 +34,20 @@ export const CardDesign: React.FC<CardDesignProps> = ({
     },
   };
 
-  return (
+    const gradientClass = CardColor === "Gold"
+    ? "bg-[radial-gradient(circle_farthest-side_at_50%_50%,rgba(175,149,0,1),rgba(175,149,0,0.5),rgba(175,149,0,1),rgba(175,149,0,0.5))]"
+    : CardColor === "Silver"
+    ? "bg-[radial-gradient(circle_farthest-side_at_50%_50%,rgb(165,169,180,1),rgb(165,169,180,0.7),rgb(165,169,180,0.4),rgb(165,169,180,0.5))]"
+    : "bg-[radial-gradient(circle_farthest-side_at_50%_50%,rgba(190,121,54,1),rgba(190,121,54,0.7),rgba(190,121,54,0.4),rgba(190,121,54,0.5))]";
+    
+  //   const gradientClass = CardColor === "Gold"
+  // ? "bg-[radial-gradient(circle_farthest-side_at_0_100%,rgba(175,149,0,1),transparent),radial-gradient(circle_farthest-side_at_100%_0,rgba(175,149,0,0.7),transparent),radial-gradient(circle_farthest-side_at_100%_100%,rgba(175,149,0,0.4),transparent),radial-gradient(circle_farthest-side_at_0_0,rgba(175,149,0,0.2),rgba(175,149,0,0.2))]"
+  // : CardColor === "Silver"
+  // ? "bg-[radial-gradient(circle_farthest-side_at_0_100%,rgba(215,215,215,1),transparent),radial-gradient(circle_farthest-side_at_100%_0,rgba(215,215,215,0.7),transparent),radial-gradient(circle_farthest-side_at_100%_100%,rgba(215,215,215,0.4),transparent),radial-gradient(circle_farthest-side_at_0_0,rgba(215,215,215,0.2),rgba(215,215,215,0.2))]"
+  // : "bg-[radial-gradient(circle_farthest-side_at_0_100%,rgba(190,121,54,1),transparent),radial-gradient(circle_farthest-side_at_100%_0,rgba(190,121,54,0.7),transparent),radial-gradient(circle_farthest-side_at_100%_100%,rgba(190,121,54,0.4),transparent),radial-gradient(circle_farthest-side_at_0_0,rgba(190,121,54,0.2),rgba(190,121,54,0.2))]";
+
+    return (
+    
     <div className={cn("relative p-[4px] group", containerClassName)}>
       <motion.div
         variants={animate ? variants : undefined}
@@ -52,9 +65,10 @@ export const CardDesign: React.FC<CardDesignProps> = ({
         style={{
           backgroundSize: animate ? "400% 400%" : undefined,
         }}
+
         className={cn(
           "absolute inset-0 rounded-3xl z-[1] opacity-60 group-hover:opacity-100 blur-xl transition duration-500 will-change-transform",
-          "bg-[radial-gradient(circle_farthest-side_at_0_100%,#00ccb1,transparent),radial-gradient(circle_farthest-side_at_100%_0,#7b61ff,transparent),radial-gradient(circle_farthest-side_at_100%_100%,#ffc414,transparent),radial-gradient(circle_farthest-side_at_0_0,#1ca0fb,#141316)]"
+          gradientClass
         )}
       />
       
@@ -76,11 +90,11 @@ export const CardDesign: React.FC<CardDesignProps> = ({
         }}
         className={cn(
           "absolute inset-0 rounded-3xl z-[1] will-change-transform",
-          "bg-[radial-gradient(circle_farthest-side_at_0_100%,#00ccb1,transparent),radial-gradient(circle_farthest-side_at_100%_0,#7b61ff,transparent),radial-gradient(circle_farthest-side_at_100%_100%,#ffc414,transparent),radial-gradient(circle_farthest-side_at_0_0,#1ca0fb,#141316)]"
-        )}
+          gradientClass
+        )}    
       />
 
-      <div className={cn("relative h-full w-full z-10 bg-zinc-900/80 rounded-3xl", className)}>
+      <div className={cn("relative h-full w-full z-10 bg-white rounded-3xl", className)}>
         {children}
       </div>
     </div>
@@ -90,7 +104,7 @@ export const CardDesign: React.FC<CardDesignProps> = ({
 export const Para: React.FC<ParaProps> = ({ name, imgURL, level, description }) => {
   return (
     <div className="flex flex-col items-center justify-center p-8 text-center">
-      <h2 className="text-3xl font-bold text-white mb-6">{level} Sponsor</h2>
+      <h2 className="text-xl font-bold text-white mb-6">{level} Sponsor</h2>
       <div className="w-full max-w-[300px] h-[120px] bg-white rounded-lg p-4 mb-4">
         <img 
           src={imgURL} 
