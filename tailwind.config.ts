@@ -18,6 +18,11 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   darkMode: "class",
+  safelist: [
+    'text-custom-color-gold',
+    'text-custom-color-silver',
+    'text-custom-color-bronze',
+  ],
   theme: {
     screens: {
         'sm1': '570px',
@@ -57,7 +62,8 @@ module.exports = {
         'glow-dots-color': '#0000AB', 
         'dots-color': '#ADD8E6', 
         'custom-color-gold': '#AF9500',
-        'custom-color-silver':'#D7D7D7',
+        // 'custom-color-silver':'#D7D7D7',
+        'custom-color-silver': '#90949e',
         'custom-color-bronze':'#BE7936',
         'custom-dark-color-gold': '#FFD700',
         'custom-dark-color-silver': '#C0C0C0',
