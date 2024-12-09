@@ -22,6 +22,7 @@ const SELECTED_FIELDS = [
   "preferredFields",
   "qualitiesToLook",
   "dataConfirmed",
+  "website",
 ];
 
 
