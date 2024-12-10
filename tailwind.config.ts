@@ -36,6 +36,9 @@ module.exports = {
         'light-gradient': 'linear-gradient(55deg, rgba(247,254,255,1) 0%, rgba(230,238,238,1) 20%, rgba(255,255,255,1) 45%, rgba(230,238,238,1) 70%, rgba(247,254,255,1) 100%);',
         
       },
+      boxShadow: {
+        input: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+      },
       colors:{
         'custom-dark-color-950': '#0C0C0C',
         'custom-dark-color-900': '#1A1A1A',
