@@ -1,10 +1,8 @@
 'use client';
 
 import React, { useContext, useState } from "react";
-
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { MoonIcon, SunIcon } from "@heroicons/react/24/solid";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { ThemeContext } from "@/app/layout";
 import Image from "next/image";
@@ -12,17 +10,16 @@ import { IThemeContextType } from "@/interfaces/IThemeContext";
 import SMALL_LOGO from "../../../public/Images/logo/RUR20_small.png"
 import { AnimatePresence, motion } from "framer-motion";
 
-
 export const FloatingNav = ({
-                              navItems,
-                              className,
-                            }: {
-      navItems: {
-        name: string;
-        link: string;
-        icon?: JSX.Element;
-      }[];
-      className?: string;
+  navItems,
+  className,
+}: {
+  navItems: {
+    name: string;
+    link: string;
+    icon?: JSX.Element;
+  }[];
+  className?: string;
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -30,110 +27,106 @@ export const FloatingNav = ({
 
   if (!themeContext) {
     throw new Error(
-        "ThemeToggleButton must be used within a ThemeContext.Provider"
+      "ThemeToggleButton must be used within a ThemeContext.Provider"
     );
   }
 
-  const { toggleTheme, theme } = themeContext;
+  const { theme } = themeContext;
 
   return (
     <div>
-      <div className={cn("m-5 fixed w-auto z-50 w-full flex justify-center", className)}>
-        <div className={"flex justify-center w-auto backdrop-blur bg-white/70 dark:bg-black/30 rounded-3xl border border-white p-2 px-6"}>
+      {/* Top Navigation Bar */}
+      <div className={cn(
+        "fixed top-0 left-0 right-0 z-50",
+        "px-4 py-3 flex justify-between items-center",
+        "backdrop-blur bg-white/70 dark:bg-black/30",
+        "border-b border-gray-200 dark:border-gray-800",
+        className
+      )}>
+        <div className="flex items-center space-x-4">
+          <Link href="/" className="flex items-center">
+            <Image
+              src={SMALL_LOGO}
+              alt="logo"
+              className="h-8 w-8 md:h-10 md:w-10 object-contain"
+              height={40}
+              width={40}
+            />
+          </Link>
 
-          <div className="flex items-center space-x-4">
-            <Link href="/" className="relative">
-              <Image
-          src={SMALL_LOGO}
-          alt="logo"
-          className="dark:border-custom-dark-color-800 border-custom-color-800 h-4 w-5 md:h-12 md:w-12"
-          height={37}
-          width={50}
-              />
-            </Link>
-
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex flex-row items-center space-x-4">
-              {navItems.map((navItem, idx) => (
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex space-x-4">
+            {navItems.map((navItem, idx) => (
               <Link
                 key={`link-${idx}`}
                 href={navItem.link}
-                className="relative dark:text-neutral-50 items-center flex space-x-1 text-neutral-800 dark:hover:text-neutral-300 hover:text-neutral-500"
+                className="text-sm text-neutral-700 dark:text-neutral-300 
+                           hover:text-neutral-900 dark:hover:text-neutral-100 
+                           transition-colors duration-200"
               >
-                <span className="text-sm">{navItem.name}</span>
+                {navItem.name}
               </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* Mobile Menu Toggle */}
+        <button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="md:hidden rounded-full p-2 
+                     hover:bg-neutral-100 dark:hover:bg-neutral-800 
+                     transition-colors duration-200"
+        >
+          {isMenuOpen ? (
+            <XMarkIcon className="h-6 w-6 text-neutral-700 dark:text-neutral-300" />
+          ) : (
+            <Bars3Icon className="h-6 w-6 text-neutral-700 dark:text-neutral-300" />
+          )}
+        </button>
+      </div>
+
+      {/* Mobile Navigation Overlay */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -50 }}
+            transition={{ duration: 0.3 }}
+            className="fixed top-0 left-0 w-full h-full z-40 
+                       backdrop-blur bg-white/80 dark:bg-black/80 
+                       flex flex-col items-center justify-center"
+          >
+            <div className="w-full max-w-md px-6 space-y-6">
+              {navItems.map((navItem, idx) => (
+                <motion.div
+                  key={`mobile-link-${idx}`}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ 
+                    duration: 0.3, 
+                    delay: idx * 0.1 
+                  }}
+                >
+                  <Link
+                    href={navItem.link}
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block py-4 text-center 
+                               dark:text-neutral-50 
+                               text-neutral-600 
+                               dark:hover:text-neutral-300 
+                               hover:text-neutral-500"
+                  >
+                    <span className="text-lg">{navItem.name}</span>
+                  </Link>
+                </motion.div>
               ))}
             </div>
-          </div>
-
-          <div className="flex items-center space-x-4">
-            {/* <button
-          onClick={toggleTheme}
-          className="border text-sm font-medium relative ml-4 border-neutral-200 dark:border-white/[0.2] text-black dark:text-white p-2 md:px-4 md:py-2 rounded-full"
-            >
-              {theme === "dark" ? (
-            <SunIcon className="h-4 w-4 md:h-5 md:w-5" />
-              ) : (
-            <MoonIcon className="h-4 w-4 md:h-5 md:w-5" />
-              )}
-            </button> */}
-
-            {/* Mobile Menu Button */}
-            <button
-          onClick={() =>{ setIsMenuOpen(!isMenuOpen)}}
-          className="md:hidden border text-sm font-medium relative border-neutral-200 dark:border-white/[0.2] text-black dark:text-white p-2 rounded-full"
-            >
-              {isMenuOpen ? (
-            <XMarkIcon className="h-4 w-4" />
-              ) : (
-            <Bars3Icon className="h-4 w-4" />
-              )}
-            </button>
-          </div>
-
-          {/* Mobile Navigation Menu */}
-          
-          </div>
-      </div>
-
-              <AnimatePresence>
-              {isMenuOpen && (
-            <div className={"w-full z-50 fixed backdrop-blur bg-white/80 dark:bg-black/80 "} style={{ zIndex: '45'  }}>
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "100vh" }}
-                  exit={{ opacity: 0, height: 0 , padding:0 , margin:0 }}
-                  transition={{ duration: 0.5 }}
-                  className="flex flex-col space-y-4 mt-24 p-6"
-                >
-                  {navItems.map((navItem, idx) => (
-                    <motion.div
-                    initial={{ opacity: 0, left:"10%" }}
-                    animate={{ opacity: 1, left:"70%" }}
-                    exit={{ opacity: 0, left:"10%" }}
-                    transition={{ duration: 0.3 , delay:0.1*(idx+1) }}
-                    className="relative"
-                    key={`mobile-link-${idx}`}
-                  >
-                    <Link
-                      href={navItem.link}
-                      key={`mobile-link-${idx}`}
-                      onClick={() => setIsMenuOpen(false)}
-                      className="relative dark:text-neutral-50 flex items-center space-x-2 space-y-4 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500"
-                      style={{transform:"translateX(-50%)"}}
-                    >
-                      {navItem.icon && <span>{navItem.icon}</span>}
-                      <span className="text-sm">{navItem.name}</span>
-                    </Link>
-                    </motion.div>
-
-                  ))}
-                </motion.div>
-            </div>
-              )}
-            </AnimatePresence>
-
-      </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 };
 
