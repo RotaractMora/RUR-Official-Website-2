@@ -18,6 +18,11 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   darkMode: "class",
+  safelist: [
+    'text-custom-color-gold',
+    'text-custom-color-silver',
+    'text-custom-color-bronze',
+  ],
   theme: {
     screens: {
         'sm1': '570px',
@@ -30,6 +35,9 @@ module.exports = {
         'dark-gradient': 'linear-gradient(75deg, rgba(0,8,21,1) 0%, rgba(0,19,30,1) 30%, rgba(3,49,62,1) 45%, rgba(0,16,41,1) 60%, rgba(0,5,40,1) 100%)',
         'light-gradient': 'linear-gradient(55deg, rgba(247,254,255,1) 0%, rgba(230,238,238,1) 20%, rgba(255,255,255,1) 45%, rgba(230,238,238,1) 70%, rgba(247,254,255,1) 100%);',
         
+      },
+      boxShadow: {
+        input: "0px 4px 6px rgba(0, 0, 0, 0.1)",
       },
       colors:{
         'custom-dark-color-950': '#0C0C0C',
@@ -57,7 +65,8 @@ module.exports = {
         'glow-dots-color': '#0000AB', 
         'dots-color': '#ADD8E6', 
         'custom-color-gold': '#AF9500',
-        'custom-color-silver':'#D7D7D7',
+        // 'custom-color-silver':'#D7D7D7',
+        'custom-color-silver': '#90949e',
         'custom-color-bronze':'#BE7936',
         'custom-dark-color-gold': '#FFD700',
         'custom-dark-color-silver': '#C0C0C0',

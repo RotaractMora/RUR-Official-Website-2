@@ -325,15 +325,18 @@ const RegistrationStatus = () => {
       try {
         const result = await getRegistrationStatus();
         if (!result) {
-          throw new Error('Failed to fetch registration status');
+          throw new Error("Failed to fetch registration status");
         }
         setStatus(result);
         console.log(result);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'An error occurred');
-        setLoading(false);
-        sendGTMEvent({ event:'JS_Error' , error_name:'CompanyDataLoadError', error: err instanceof Error ? err.message : 'An error occurred'});
-      } finally{
+        setError(err instanceof Error ? err.message : "An error occurred");
+        sendGTMEvent({
+          event: "JS_Error",
+          error_name: "CompanyDataLoadError",
+          error: err instanceof Error ? err.message : "An error occurred",
+        });
+      } finally {
         setLoading(false);
       }
     };
@@ -344,10 +347,10 @@ const RegistrationStatus = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-[200px]">
-        <motion.div 
+        <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-          className="rounded-full h-8 w-8 border-b-2 border-white" 
+          className="rounded-full h-8 w-8 border-b-2 border-white"
         />
       </div>
     );
@@ -356,36 +359,38 @@ const RegistrationStatus = () => {
   if (error || !status) {
     return (
       <div className="text-red-500 text-center p-4">
-        {error || 'Error loading registration status'}
+        {error || "Error loading registration status"}
       </div>
     );
   }
 
   return (
-    <div 
+    <div
       ref={containerRef}
-      className="relative max-h-[950px] min-h-[50vw] bg-gradient-to-b from-gray-900 to-blue-950 overflow-auto "
+      className="relative min-h-screen bg-gradient-to-b from-gray-900 to-blue-950"
     >
       {/* Header Section */}
       <div className="relative z-10">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
           className="max-w-4xl mt-32 mx-auto p-4"
         >
-          <motion.h2 
+          <motion.h2
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-4xl md:text-7xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-b from-neutral-100 to-neutral-300">
+            className="text-4xl md:text-7xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-b from-neutral-100 to-neutral-300"
+          >
             Registration Status
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ y: -10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="text-xs md:text-xl font-normal text-center text-neutral-400 mt-4 max-w-lg mx-auto mb-12">
+            className="text-xs md:text-xl font-normal text-center text-neutral-400 mt-4 max-w-lg mx-auto mb-12"
+          >
             Check the current registration status for companies and students
           </motion.p>
         </motion.div>
@@ -394,24 +399,24 @@ const RegistrationStatus = () => {
       {/* Background Waves */}
       <WaveBackground />
 
-      {/* Status Cards Section - Now at bottom */}
+      {/* Status Cards Section */}
       <div className="relative z-10 mt-24 pb-8">
         <div className="max-w-4xl mx-auto p-4">
           <div className="grid md:grid-cols-2 gap-4">
             <StatusCard
               title="Company Registration"
               signUp={status.company.signUp}
-              signIn={status.company.signIn} 
-              signInUrl='https://rur.uom.lk/company/signIn'
-              signUpUrl='https://rur.uom.lk/signUp'
-              />
+              signIn={status.company.signIn}
+              signInUrl="https://rur.uom.lk/company/signIn"
+              signUpUrl="https://rur.uom.lk/signUp"
+            />
             <StatusCard
               title="Student Registration"
               signUp={status.student.signUp}
-              signIn={status.student.signIn} 
-              signInUrl='https://rur.uom.lk/student/signIn'
-              signUpUrl='https://rur.uom.lk/signUp'
-              />
+              signIn={status.student.signIn}
+              signInUrl="https://rur.uom.lk/student/signIn"
+              signUpUrl="https://rur.uom.lk/signUp"
+            />
           </div>
         </div>
       </div>
