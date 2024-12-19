@@ -378,6 +378,19 @@ export default function Home() {
         )}
       </div>
 
+      <div className="scroll-mt-20 py-8 px-6 text-center bg-gray-100 dark:bg-gray-800">
+        <h2 className="text-2xl md:text-3xl font-bold text-center dark:text-custom-color-800 bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent mb-4">
+          Thank You for Your Support!
+        </h2>
+        <p className="mt-4 text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+          We deeply appreciate your unwavering support in making this event a
+          success. Your contributions inspire us to innovate, collaborate, and
+          grow. Together, we’re achieving remarkable milestones. Stay tuned for
+          exciting updates as we continue this incredible journey. Thank you for
+          being a vital part of our mission!
+        </p>
+      </div>
+
       <div id="sponsors" className="scroll-mt-20">
         {/* <LampLighting firstLine="Sponsors" secondLine="" /> */}
       </div>
