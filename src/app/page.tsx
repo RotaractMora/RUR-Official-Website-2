@@ -431,9 +431,7 @@ export default function Home() {
         <EmptyStateMessage message="Sponsors will be available soon." />
       )}
 
-      <ExpandableCard />
-      {/* <ExpandableCardGrid cards={cards} /> */}
-
+      
       <section
         id="registrationStatus"
         className="scroll-mt-20 relative py-16 w-full"
@@ -444,6 +442,10 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <ExpandableCard />
+      {/* <ExpandableCardGrid cards={cards} /> */}
+
 
       <div id="reach_us" className="scroll-mt-20">
         {!isReachUsGridLoading && (

@@ -67,16 +67,16 @@ const MobileHero = () => {
 
           {/* Description */}
           <div className='sm1:mx-1 mx-auto'>
-            <p className="dark:text-gray-300 text-custom-color-300 text-lg mb-12 max-w-md sm1:text-left text-center">
+            {/* <p className="dark:text-gray-300 text-custom-color-300 text-lg mb-12 max-w-md sm1:text-left text-center">
               The Virtual Odyssey in Corporate Arena
-            </p>
+            </p> */}
           </div>
 
           {/* Buttons */}
           <div className="flex space-x-4 sm1:mx-1 mx-auto">
-            <button className="px-8 py-3 bg-black dark:bg-white dark:text-black text-white rounded-full dark:hover:bg-gray-100 hover:bg-custom-dark-color-800 transition-colors">
+            {/* <button className="px-8 py-3 bg-black dark:bg-white dark:text-black text-white rounded-full dark:hover:bg-gray-100 hover:bg-custom-dark-color-800 transition-colors">
               Registration portal
-            </button>
+            </button> */}
             {/* <button className="px-8 py-3 border-2 dark:border-white border-black dark:text-white text-black rounded-full dark:hover:bg-white/10 hover:bg-black/10 transition-colors flex items-center">
               <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M8 5v14l11-7z"/>
