@@ -9,25 +9,25 @@ const MobileHero = () => {
       {/* Background Images Container */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Large circle image 1 */}
-          <div className="absolute sm2:w-[370px] sm2:h-[370px] sm1:w-[350px] sm1:h-[350px] w-[300px] h-[300px] top-0 left-0">
-            <div className="w-full h-full rounded-full overflow-hidden">
-              <img 
-                src="/Images/RUR (1).jpg"
-                alt="from Rur previous event" 
-                className="w-full h-full object-cover opacity-100"
-              />
-            </div>
+        <div className="absolute sm2:w-[370px] sm2:h-[370px] sm1:w-[350px] sm1:h-[350px] w-[300px] h-[300px] top-0 left-0">
+          <div className="w-full h-full rounded-full overflow-hidden">
+            <img 
+              src="/Images/RUR (1).jpg"
+              alt="from Rur previous event" 
+              className="w-full h-full object-cover opacity-100"
+            />
+          </div>
         </div>
 
         {/* Large circle image 2 */}
-          <div className="absolute sm2:w-[385px] sm2:h-[385px] sm1:w-[350px] sm1:h-[350px] w-[300px] h-[300px] top-[50%] right-0">
-            <div className="w-full h-full rounded-full overflow-hidden transform translate-y-[-50%]">
-              <img 
+        <div className="absolute sm2:w-[385px] sm2:h-[385px] sm1:w-[350px] sm1:h-[350px] w-[300px] h-[300px] top-[50%] right-0">
+          <div className="w-full h-full rounded-full overflow-hidden transform translate-y-[-50%]">
+            <img 
               src="/Images/RUR (2).jpg"
               alt="from Rur previous event" 
               className="w-full h-full object-cover opacity-100"
-              />
-            </div>
+            />
+          </div>
         </div>
 
         {/* Small circle image */}
@@ -39,7 +39,8 @@ const MobileHero = () => {
               className="w-full h-full object-cover opacity-95"
             />
           </div>
-      </div>
+        </div>
+
         {/* Gradient overlay */}
         <div className="absolute inset-0
           bg-gradient-to-r
@@ -66,28 +67,29 @@ const MobileHero = () => {
 
           {/* Description */}
           <div className='sm1:mx-1 mx-auto'>
-          <p className="dark:text-gray-300 text-custom-color-300 text-lg mb-12 max-w-md sm1:text-left text-center">
-          The Virtual Odyssey in Corporate Arena
-          </p>
+            {/* <p className="dark:text-gray-300 text-custom-color-300 text-lg mb-12 max-w-md sm1:text-left text-center">
+              The Virtual Odyssey in Corporate Arena
+            </p> */}
           </div>
 
           {/* Buttons */}
           <div className="flex space-x-4 sm1:mx-1 mx-auto">
-            <button className="px-8 py-3 bg-black dark:bg-white dark:text-black text-white rounded-full dark:hover:bg-gray-100 hover:bg-custom-dark-color-800 transition-colors">
+            {/* <button className="px-8 py-3 bg-black dark:bg-white dark:text-black text-white rounded-full dark:hover:bg-gray-100 hover:bg-custom-dark-color-800 transition-colors">
               Registration portal
-            </button>
-              {/* <button className="px-8 py-3 border-2 dark:border-white border-black dark:text-white text-black rounded-full dark:hover:bg-white/10 hover:bg-black/10 transition-colors flex items-center">
-                <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M8 5v14l11-7z"/>
-                </svg>
-                Watch trailer
-              </button> */}
+            </button> */}
+            {/* <button className="px-8 py-3 border-2 dark:border-white border-black dark:text-white text-black rounded-full dark:hover:bg-white/10 hover:bg-black/10 transition-colors flex items-center">
+              <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              Watch trailer
+            </button> */}
           </div>
         </div>
       </div>
     </div>
   );
 };
+
 
 interface ResponsiveHeroProps {
   products: any; // Replace 'any' with the appropriate type if known
