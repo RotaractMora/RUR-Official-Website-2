@@ -9,6 +9,9 @@ import Image from "next/image";
 import { IThemeContextType } from "@/interfaces/IThemeContext";
 import SMALL_LOGO from "../../../public/Images/logo/RUR20_small.png";
 import { AnimatePresence, motion } from "framer-motion";
+import { HoverBorderGradient } from "./hover-border-gradient";
+import { sendGTMEvent } from "@next/third-parties/google";
+import { useRouter } from "next/navigation";
 
 export const FloatingNav = ({
   navItems,
@@ -22,8 +25,9 @@ export const FloatingNav = ({
   className?: string;
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const router = useRouter();
   const themeContext = useContext<IThemeContextType | null>(ThemeContext);
+  const portalLink = "https://rur.rotaractmora.org";
 
   if (!themeContext) {
     throw new Error(
@@ -61,25 +65,29 @@ export const FloatingNav = ({
               <Link
                 key={`link-${idx}`}
                 href={navItem.link}
-                className="text-sm font-medium text-gray-700 hover:text-blue-500 transition-all duration-200"
+                className="text-sm font-medium text-gray-700 hover:text-blue-500 transition-all duration-200 content-center"
               >
                 {navItem.name}
               </Link>
             ))}
+
+            <HoverBorderGradient onClick={() =>{
+                            sendGTMEvent({ event: 'buttonClicked', section: 'Navbar' , activity: 'portal visit'  , link: portalLink ? portalLink : '' })
+                            router.push(portalLink ? portalLink : '')
+                      }
+            } isDisabled={false} className="text-sm" >RUR Portal</HoverBorderGradient>
           </div>
         </div>
 
         {/* Mobile View */}
         <div className="flex items-center space-x-2 md:hidden">
           {/* Mobile Registration Button */}
-          <button
-            className="px-4 py-2 bg-black text-white rounded-lg 
-               dark:bg-white dark:text-black 
-               hover:bg-gray-800 dark:hover:bg-gray-200 
-               transition-colors text-sm font-medium"
-          >
-            Registration portal
-          </button>
+
+           <HoverBorderGradient onClick={() =>{
+                            sendGTMEvent({ event: 'buttonClicked', section: 'Navbar' , activity: 'portal visit'  , link: portalLink ? portalLink : '' })
+                            router.push(portalLink ? portalLink : '')
+                      }
+            } isDisabled={false} >RUR Portal</HoverBorderGradient>
 
           {/* Mobile Menu Toggle */}
           <button

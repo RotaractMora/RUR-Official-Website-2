@@ -5,5 +5,6 @@ export interface IContact {
     contact: string;
     post: string;
     photo: string;
+    line: number;
     isVisibleToPublic: boolean;
 }

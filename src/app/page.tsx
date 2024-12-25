@@ -166,11 +166,13 @@ const Loading = () => {
 
 const Para = ({
   level,
+  partnership,
   name,
   imgURL,
   loadCallback,
 }: {
   level: string;
+  partnership: string;
   name: string;
   imgURL: string | undefined;
   loadCallback?: (count: number) => void;
@@ -186,14 +188,12 @@ const Para = ({
     <div className="w-full h-full max-w-xl mx-auto px-4 md:px-6 lg:px-8 flex flex-col items-center justify-between">
       <h6
         className={
-          "text-3xl md:text-4xl lg:text-5xl text-center font-bold p-2 py-3" +
+          "text-2xl md:text-3xl lg:text-4xl text-center font-bold p-2 py-3" +
           " text-" +
           color
         }
       >
-        {level}
-        <br />
-        Sponsor
+        {partnership}
       </h6>
 
       {/* Image Section */}
@@ -348,7 +348,7 @@ export default function Home() {
             loop={true}
             animationData={LoadingAnimation}
             play
-            style={{ width: 300, height: 300 }}
+            style={{ width: 150, height: 150 }}
             onLoopComplete={loadingTimeout}
           />
         </div>
@@ -379,7 +379,7 @@ export default function Home() {
       </div>
 
       <div className="scroll-mt-20 py-8 px-6 text-center bg-gray-100 dark:bg-gray-800">
-        <h2 className="text-2xl md:text-3xl font-bold text-center dark:text-custom-color-800 bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent mb-4">
+        <h2 className="text-3xl md:text-4xl font-bold text-center dark:text-custom-color-800 bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent mb-4">
           Thank You for Your Support!
         </h2>
         <p className="mt-4 text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
@@ -405,12 +405,7 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {sponsors
               .sort((a, b) => {
-                // Custom sorting: Gold first, then Silver, others later
-                if (a.level === "Gold") return -1;
-                if (b.level === "Gold") return 1;
-                if (a.level === "Silver") return -1;
-                if (b.level === "Silver") return 1;
-                return 0; // No change for other levels
+                return a.order - b.order;
               })
               .map((sponsor, index) => (
                 <CardDesign
@@ -422,6 +417,7 @@ export default function Home() {
                     name={sponsor.name}
                     imgURL={sponsor.imgURL}
                     level={sponsor.level}
+                    partnership={sponsor.partnership}
                   />
                 </CardDesign>
               ))}

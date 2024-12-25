@@ -124,7 +124,7 @@ const StatusCard: React.FC<StatusCardProps> = ({title,signIn,signUp,signInUrl,si
                   sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , activity: title+' signUp'  , link:signUpUrl ? signUpUrl : '' })
                   router.push(signUpUrl ? signUpUrl : '')
             }
-          } isDisabled={false} className="opacity-50 cursor-not-allowed text-gray-500 hover:bg-transparent" containerClassName="border-gray-300 bg-gray-100 dark:bg-gray-700" >Register Now</HoverBorderGradient>
+          } isDisabled={false} >Register Now</HoverBorderGradient>
           </div>
         ) : (
           <div className="mt-4">
@@ -133,7 +133,7 @@ const StatusCard: React.FC<StatusCardProps> = ({title,signIn,signUp,signInUrl,si
             >
               Registration is close
             </motion.span>
-            <HoverBorderGradient isDisabled={true} onClick={() => {
+            <HoverBorderGradient isDisabled={true}  className="opacity-50 cursor-not-allowed text-gray-500" onClick={() => {
               sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , activity: title+' signUp' , link:signUpUrl ? signUpUrl : '' });
               router.push(signUpUrl ? signUpUrl : '');
             }
@@ -161,7 +161,7 @@ const StatusCard: React.FC<StatusCardProps> = ({title,signIn,signUp,signInUrl,si
             >
               SignIn is close
             </motion.span>
-            <HoverBorderGradient isDisabled={true} onClick={() => {
+            <HoverBorderGradient isDisabled={true}  className="opacity-50 cursor-not-allowed text-gray-500" onClick={() => {
               sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , activity: title+' signIn' , link:signInUrl ? signInUrl : '' });
               router.push(signInUrl ? signInUrl : '')
             }
@@ -381,7 +381,7 @@ const RegistrationStatus = () => {
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-4xl md:text-7xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-b from-neutral-100 to-neutral-300"
+            className="text-4xl md:text-7xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-b from-neutral-100 to-neutral-300 pb-6"
           >
             Registration Status
           </motion.h2>

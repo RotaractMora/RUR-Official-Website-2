@@ -4,22 +4,34 @@ import React from "react";
 import { useId } from "react";
 
 export default function ReachUsSection({ grid }: { grid: IContact[] }) {
+  const lines = [
+    grid.filter((con) => con.line === 1),
+    grid.filter((con) => con.line === 2),
+    grid.filter((con) => con.line === 3),
+    grid.filter((con) => con.line === 4)
+  ];
+
   return (
     <div className="py-10 lg:py-20 mx-8">
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-15 md:gap-10 sm:gap-5 max-w-7xl mx-auto">
-        {grid.map((person, index) => (
+      {lines.map((line, index) => (
+
+      <div key={"contactLine-"+index} className="flex justify-center align-center max-w-7xl mx-auto">
+        {line.map((person, index) => (
           <div
             key={person + "-" + index}
-            className="relative bg-gradient-to-b dark:from-neutral-900 from-neutral-100 dark:to-neutral-950 to-white p-6 rounded-3xl overflow-hidden shadow-xl dark:border-custom-dark-color-900 border-custom-color-900 border-2 border-solid my-3"
+            className="relative bg-gradient-to-b dark:from-neutral-900 from-neutral-100 dark:to-neutral-950 to-white p-6 rounded-3xl overflow-hidden shadow-xl dark:border-custom-dark-color-900 border-custom-color-900 border-2 border-solid my-3 mx-2"
+            style={{minWidth: "20rem"}}
           >
             <Grid size={20} />
-            <div className="flex items-center justify-between">
+            <div className="flex items-center">
               <div>
                 <img
                   src={`${person.photo}`}
                   alt={person.name}
                   className="w-20 h-20 rounded-full"
                 />
+                </div>
+                <div className="pl-5">
                 <h2 className="text-2xl font-bold dark:text-custom-color-600 text-custom-dark-color-900">
                   {person.name}
                 </h2>
@@ -54,6 +66,8 @@ export default function ReachUsSection({ grid }: { grid: IContact[] }) {
           </div>
         ))}
       </div>
+      ))}
+
     </div>
   );
 }

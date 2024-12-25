@@ -24,6 +24,7 @@ function ReachUsContactAddUpdateModal({
   const [isVisibleToPublic, setisVisibleToPublic] = useState(contact?.isVisibleToPublic || false);
   const [contactPhotoURL, setContactPhotoURl] = useState(contact?.photo || '');
   const [uploadNewImage, setUploadNewImage] = useState( contact?.photo ? false : true);
+  const [line, setLine] = useState(contact?.line || 0);
 
   // Handle file selection or drag-and-drop
   const handleFileChange = (e: any) => {
@@ -124,6 +125,7 @@ function ReachUsContactAddUpdateModal({
           contact: contactTelContact,
           post : contactPost,
           photo: imgURL,
+          line: line,
           isVisibleToPublic: isVisibleToPublic,
       };
 
@@ -200,6 +202,22 @@ function ReachUsContactAddUpdateModal({
                       value={contactEmail}
                       onChange={(e) => setcontactEmail(e.target.value)}
                     />
+                  </div>
+
+                  <div>
+                  <label htmlFor="contactLine" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Line</label>
+                    <select
+                      name="contactLine" 
+                      id="contactLine" 
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" 
+                      required 
+                      onChange={(e) => setLine(parseInt(e.target.value))}
+                    >
+                      <option value="4" selected={line===4}>Line 4</option>
+                      <option value="1" selected={line===1}>Line 1</option>
+                      <option value="2" selected={line===2}>Line 2</option>
+                      <option value="3" selected={line===3}>Line 3</option>
+                      </select>
                   </div>
 
                     <div>

@@ -23,6 +23,8 @@ function SponsorAddUpdateModal({
   const [sponsorIsVisibleToPublic, setSponsorIsVisibleToPublic] = useState(sponsor?.isVisibleToPublic || false);
   const [sponsorImgURL, setSponsorImgURL] = useState(sponsor?.imgURL || '');
   const [uploadNewImage, setUploadNewImage] = useState( sponsor?.imgURL ? false : true);
+  const [sponsorPartnership, setSponsorPartnership] = useState(sponsor?.partnership || '');
+  const [sponsorOrder, setSponsorOrder] = useState(sponsor?.order || 0);
 
   console.log("Sponsor: ", sponsor);
 
@@ -109,6 +111,8 @@ function SponsorAddUpdateModal({
         // Sponsor data object
         const sponsorData = {
             name: sponsorName,
+            partnership: sponsorPartnership,
+            order: sponsorOrder,
             level: sponsorLevel as SponsorLevel,
             imgURL,
             isVisibleToPublic: sponsorIsVisibleToPublic,
@@ -161,6 +165,7 @@ function SponsorAddUpdateModal({
 
               <form className="p-4 md:p-5" onSubmit={handleSubmit}>
                 <div className="grid gap-4 mb-4 grid-cols-2">
+
                   <div className="col-span-2">
                     <label htmlFor="sponsorName" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sponsor Name</label>
                     <input 
@@ -172,6 +177,34 @@ function SponsorAddUpdateModal({
                       required 
                       value={sponsorName}
                       onChange={(e) => setSponsorName(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="col-span-2">
+                    <label htmlFor="sponsorPartnership" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Partnership</label>
+                    <input 
+                      type="text" 
+                      name="sponsorPartnership" 
+                      id="sponsorPartnership" 
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" 
+                      placeholder="Parnership ex: Knowledge Partner" 
+                      required 
+                      value={sponsorPartnership}
+                      onChange={(e) => setSponsorPartnership(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="col-span-2">
+                    <label htmlFor="sponsorOrder" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Order</label>
+                    <input 
+                      type="number" 
+                      name="sponsorOrder" 
+                      id="sponsorOrder" 
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" 
+                      placeholder="Order" 
+                      required 
+                      value={sponsorOrder}
+                      onChange={(e) => setSponsorOrder(parseInt(e.target.value))}
                     />
                   </div>
 
