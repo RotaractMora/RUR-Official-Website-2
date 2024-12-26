@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "rur-24"
-  }
+  },
+  "targets": {
+    "rur-24": {
+      "hosting": {
+        "rur25-official-web": [
+          "rur-24"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
