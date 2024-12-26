@@ -47,6 +47,9 @@ const Footer = () => {
                         <li>
                             <a href="#reach_us" className="hover:underline me-4 md:me-6">Reach Us</a>
                         </li>
+                        <li>
+                            <a href="#registrationStatus" className="hover:underline me-4 md:me-6">Registration status</a>
+                        </li>
 
                     </ul>
                 </div>
