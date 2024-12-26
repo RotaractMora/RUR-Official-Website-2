@@ -11,7 +11,7 @@ import LOGO_SMALL from "../../../public/Images/logo/RUR20_small.png";
 import { useAuth } from "@/context/auth-provider";
 import { useRouter } from "next/navigation";
 import { IThemeContextType } from "@/interfaces/IThemeContext";
-import Head from "next/head";
+import { Helmet } from "react-helmet-async";
 
 interface AdminDashboardLayoutProps {
     children: ReactNode;
@@ -26,11 +26,12 @@ export function AdminDashboardLayout({ children }: AdminDashboardLayoutProps) {
     return (
 
         <RootLayout>
-            <Head>
-                <meta name="robots" content="noindex, nofollow" />
-                <meta name="googlebot" content="noindex, nofollow" />
-                <meta name="distribution" content="global" />
-            </Head>
+            <Helmet>
+                <meta name="robots" content="noindex, nofollow" key="bot" />
+                <meta name="googlebot" content="noindex, nofollow" key="googlebot"/>
+                <meta name="distribution" content="global" key="dist"/>
+                <title key="title">RUR Admin Panel</title>
+            </Helmet>
 
             <div className="min-h-screen flex flex-col">
                 <div className="relative w-full flex items-center justify-center mb-24">

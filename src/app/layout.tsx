@@ -7,6 +7,9 @@ import React, { useCallback, useEffect, useState } from "react";
 import { AuthProvider } from "@/context/auth-provider";
 import {ITheme, IThemeContextType} from "@/interfaces/IThemeContext";
 import { GoogleTagManager } from '@next/third-parties/google'
+import Head from "next/head";
+import { Helmet, HelmetProvider } from "react-helmet-async";
+
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -60,29 +63,35 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <AuthProvider>
       <ThemeContext.Provider value={{ setTheme, toggleTheme, theme }}>
+        <HelmetProvider>
         <html lang="en">
-          <head>
-              <meta charSet="UTF-8" />
-              <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-              <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-              <title>Are You Ready? 2025</title>
-              <meta name="author" content="Rotaract Club of University of Moratuwa" />
+          <Helmet>
+
               <meta name="description" content="Official website of 'Are You Ready? 2025', organized by the Rotaract Club of University of Moratuwa" />
               <meta name="keywords" content="RUR25,Are You Ready,Rota,Mora,UoM,RUR,RUR?" />
+              
+              <meta property="og:type" content="website" />
+              <meta property="og:site_name" content="Are You Ready? 2025" />
               <meta property="og:title" content="Are You Ready? 2025" />
               <meta property="og:description" content="'Are You Ready? 2025', organized by Rotaract Club of the University of Moratuwa in collaboration with the university's Career Guidance Unit is a much-awaited event in the university calendar which marks the official careers week of the university." />
-              <meta property="og:image" content="https://rur.rotaract.social/Images/logo/RUR.png" />
-              <meta property="og:url" content="https://rur.rotaract.social/" />
-              <meta name="referrer" content="no-referrer" />
+              <meta property="og:url" content="https://areyouready.uom.lk/" />
+              <meta property="og:image" content="https://areyouready.uom.lk/Images/logo/RUR.png" />
 
-          </head>
-          <body
-            className={`${geistSans.variable} ${geistMono.variable} dark:bg-dark-gradient bg-light-gradient antialiased`}
-          >
-          <GoogleTagManager gtmId="GTM-MWJNXDZR" />
-            {children}
+              <meta name="author" content="Rotaract Club of University of Moratuwa" />
+              <link rel="author" href="https://rotaractmora.org" />
+
+              <link rel="icon" href="https://areyouready.uom.lk/Images/logo/icon.ico" />
+
+              <meta name="google-site-verification" content="He_a54SdmlaQfr3y9EaVQ5cQVBxr_tJEBPPwveeY6RQ" />
+
+          
+          </Helmet>
+          <body className={`${geistSans.variable} ${geistMono.variable} dark:bg-dark-gradient bg-light-gradient antialiased`} >
+              <GoogleTagManager gtmId="GTM-MWJNXDZR" />
+                {children}
           </body>
         </html>
+        </HelmetProvider>
       </ThemeContext.Provider>
     </AuthProvider>
   );
