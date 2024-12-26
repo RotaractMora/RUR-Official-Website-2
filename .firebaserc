@@ -1,7 +1,5 @@
 {
   "projects": {
-    "default": "firetest-c524f",
-    "development": "firetest-c524f",
-    "production": "rur-24"
+    "default": "rur-24"
   }
 }
