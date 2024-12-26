@@ -1,12 +1,13 @@
 name: Deploy Firebase Functions
 
 on:
-  workflow_run:
-    workflows:
-      - Deploy to Firebase Hosting on PR
-      - Deploy to Firebase Hosting on merge
+  push:
+    branches:
+      - main
+  pull_request:
     types:
-      - completed
+      - opened
+      - synchronize
 
 jobs:
   build_and_deploy:
