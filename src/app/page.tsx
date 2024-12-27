@@ -20,7 +20,7 @@ import RUR_IMG13 from "../../public/Images/RUR (13).jpg";
 import RUR_IMG14 from "../../public/Images/RUR (14).jpg";
 import RUR_IMG15 from "../../public/Images/RUR (15).jpg";
 
-import SPONSOR from "../../public/Images/partners/the-ai-team.png";
+import SPONSOR from "../../public/Images/sponsor.png";
 // import LoadingAnimation from "../../public/animations/RUR.json"
 import LoadingAnimation from "../../public/animations/RUR_Loading.json";
 
@@ -52,6 +52,11 @@ import { HeroVideo } from "@/components/ui/hero-video";
 import ExpandableCard from "@/components/blocks/expandable-card-standard";
 import Head from "next/head";
 import { sendGTMEvent } from "@next/third-parties/google";
+import ReactDOM from 'react-dom';
+import { Helmet } from 'react-helmet-async';
+ 
+
+
 
 export const products = [
   {
@@ -166,11 +171,13 @@ const Loading = () => {
 
 const Para = ({
   level,
+  partnership,
   name,
   imgURL,
   loadCallback,
 }: {
   level: string;
+  partnership: string;
   name: string;
   imgURL: string | undefined;
   loadCallback?: (count: number) => void;
@@ -186,14 +193,12 @@ const Para = ({
     <div className="w-full h-full max-w-xl mx-auto px-4 md:px-6 lg:px-8 flex flex-col items-center justify-between">
       <h6
         className={
-          "text-3xl md:text-4xl lg:text-5xl text-center font-bold p-2 py-3" +
+          "text-2xl md:text-3xl lg:text-4xl text-center font-bold p-2 py-3" +
           " text-" +
           color
         }
       >
-        {level}
-        <br />
-        Sponsor
+        {partnership}
       </h6>
 
       {/* Image Section */}
@@ -332,12 +337,22 @@ export default function Home() {
     '"Are You Ready?" stands as a monumental initiative led by the Rotaract Club of the University of Moratuwa in partnership with the Career Guidance Unit. Our primary focus is 4th year undergraduates from our university, aiming to guide them towards a secure entry into the professional world. The scope of this endeavor knows no bounds, with over 100 companies aligning to provide opportunities for budding professionals. This project promises to be a valuable asset for those aspiring to forge strong connections with companies and their managers, even if the finish line of their degree is still on the horizon. In the initial stages, participants will gain the essential knowledge and training to confidently engage with industry experts.';
 
   return (
+    <>
     <RootLayout>
-      <Head>
-        <meta name="robots" content="index, follow" />
-        <meta name="googlebot" content="index, follow" />
-        <meta name="distribution" content="global" />
-      </Head>
+      <Helmet>
+              <meta name="title" content="Are You Ready? 2025" />
+              <meta name="robots" content="index, follow"/>
+              <meta name="googlebot" content="index, follow"/>
+              <meta name="referrer" content="no-referrer" />
+              <title> Are You Ready? 2025 </title>
+
+              <link rel="bookmark" href="https://areyouready.uom.lk/#timeline" />
+              <link rel="bookmark" href="https://areyouready.uom.lk/#sponsors" />
+              <link rel="bookmark" href="https://areyouready.uom.lk/#reach_us" />
+              <link rel="bookmark" href="https://areyouready.uom.lk/#registrationStatus" />
+              <link rel="bookmark" href="https://areyouready.uom.lk/#registeredCompanies" />
+      </Helmet>
+
 
       <BackToTopButton />
 
@@ -348,7 +363,7 @@ export default function Home() {
             loop={true}
             animationData={LoadingAnimation}
             play
-            style={{ width: 300, height: 300 }}
+            style={{ width: 150, height: 150 }}
             onLoopComplete={loadingTimeout}
           />
         </div>
@@ -378,8 +393,17 @@ export default function Home() {
         )}
       </div>
 
-      <div id="sponsors" className="scroll-mt-20">
-        {/* <LampLighting firstLine="Sponsors" secondLine="" /> */}
+      <div id="sponsors" className="scroll-mt-20 py-8 px-6 text-center bg-gray-100 dark:bg-gray-800">
+        <h2 className="text-3xl md:text-4xl font-bold text-center dark:text-custom-color-800 bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent mb-4">
+          Thank You for Your Support!
+        </h2>
+        <p className="mt-4 text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+          We deeply appreciate your unwavering support in making this event a
+          success. Your contributions inspire us to innovate, collaborate, and
+          grow. Together, we’re achieving remarkable milestones. Stay tuned for
+          exciting updates as we continue this incredible journey. Thank you for
+          being a vital part of our mission!
+        </p>
       </div>
 
       {error ? (
@@ -392,12 +416,7 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {sponsors
               .sort((a, b) => {
-                // Custom sorting: Gold first, then Silver, others later
-                if (a.level === "Gold") return -1;
-                if (b.level === "Gold") return 1;
-                if (a.level === "Silver") return -1;
-                if (b.level === "Silver") return 1;
-                return 0; // No change for other levels
+                return a.order - b.order;
               })
               .map((sponsor, index) => (
                 <CardDesign
@@ -409,6 +428,7 @@ export default function Home() {
                     name={sponsor.name}
                     imgURL={sponsor.imgURL}
                     level={sponsor.level}
+                    partnership={sponsor.partnership}
                   />
                 </CardDesign>
               ))}
@@ -418,9 +438,7 @@ export default function Home() {
         <EmptyStateMessage message="Sponsors will be available soon." />
       )}
 
-      <ExpandableCard />
-      {/* <ExpandableCardGrid cards={cards} /> */}
-
+      
       <section
         id="registrationStatus"
         className="scroll-mt-20 relative py-16 w-full"
@@ -432,6 +450,11 @@ export default function Home() {
         </div>
       </section>
 
+      <div id="registeredCompanies" className="m-0 p-0">
+      <ExpandableCard />
+      </div>
+
+
       <div id="reach_us" className="scroll-mt-20">
         {!isReachUsGridLoading && (
           <GridBackground title="Reach Us">
@@ -442,5 +465,6 @@ export default function Home() {
 
       <Footer />
     </RootLayout>
+    </>
   );
 }

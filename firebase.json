@@ -1,23 +1,17 @@
 {
   "hosting": {
-    "public": "out",
+    "public": "./out",
+    "target": "rur25-official-web",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
     ]
   },
   "functions": [
     {
       "source": "functions",
       "codebase": "default",
-      "region": "asia-southeast1",
       "ignore": [
         "node_modules",
         ".git",

@@ -76,6 +76,12 @@ export default function ManageSponsors() {
                   Sponsor name
                 </th>
                 <th scope="col" className="px-6 py-3">
+                  Partnership
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Order
+                </th>
+                <th scope="col" className="px-6 py-3">
                   Image
                 </th>
                 <th scope="col" className="px-6 py-3">
@@ -104,6 +110,22 @@ export default function ManageSponsors() {
                   >
                     {sponsor.name}
                   </th>
+                  
+                  <td
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    {sponsor.partnership}
+                  </td>
+
+                  <td
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    {sponsor.order}
+                  </td>
+
+
                   <td className="px-6 py-4">
                   <div className="relative overflow-visible">
                   <Image

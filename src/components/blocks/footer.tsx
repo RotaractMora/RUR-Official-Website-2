@@ -19,16 +19,6 @@ const Footer = () => {
             title: "Facebook",
         },
         {
-            icon: <FaInstagram className="h-6 w-6 dark:text-custom-color-700 text-custom-color-600 hover:text-custom-dark-color-900 dark:hover:text-custom-color-900" />,
-            href: "https://www.instagram.com/rotaractmora/",
-            title: "Instagram",
-        },
-        {
-            icon: <FaYoutube className="h-6 w-6 dark:text-custom-color-700 text-custom-color-600 hover:text-custom-dark-color-900 dark:hover:text-custom-color-900" />,
-            href: "https://www.youtube.com/user/rotaractmora",
-            title: "Youtube",
-        },
-        {
             icon: <FaLinkedin className="h-6 w-6 dark:text-custom-color-700 text-custom-color-600 hover:text-custom-dark-color-900 dark:hover:text-custom-color-900" />,
             href: "https://www.linkedin.com/company/rotaract-club-of-university-of-moratuwa",
             title: "Linkedin",
@@ -58,8 +48,9 @@ const Footer = () => {
                             <a href="#reach_us" className="hover:underline me-4 md:me-6">Reach Us</a>
                         </li>
                         <li>
-                            <a href="/admin" className="hover:underline">Admin</a>
+                            <a href="#registrationStatus" className="hover:underline me-4 md:me-6">Registration status</a>
                         </li>
+
                     </ul>
                 </div>
                 <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />

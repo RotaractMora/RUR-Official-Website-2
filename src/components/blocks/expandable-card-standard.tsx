@@ -108,7 +108,7 @@ export default function ExpandableCard() {
       Registered Companies
     </motion.h2>
     </AnimatePresence>
-    <div id="company-data-list" className="p-12 max-h-screen dark:bg-custom-dark-color-600/20 bg-custom-color-600/20 overflow-y-auto [&::-webkit-scrollbar]:[width:3px] [&::-webkit-scrollbar-thumb]:bg-custom-color-600/20">
+    <div id="company-data-list" className="p-12 md:w-max mx-auto max-h-screen overflow-y-auto [&::-webkit-scrollbar]:[width:3px] [&::-webkit-scrollbar-thumb]:bg-custom-color-600/20">
       <AnimatePresence>
         {active && typeof active === "object" && (
           <motion.div
