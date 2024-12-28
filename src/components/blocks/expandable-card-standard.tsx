@@ -91,7 +91,7 @@ export default function ExpandableCard() {
     return <div>Loading...</div>;
   }
   else if (cards.length==0 ) {
-    return <EmptyStateMessage message="No Companies Registered yet." />;
+    return <></>;
   }
   else{
   return (

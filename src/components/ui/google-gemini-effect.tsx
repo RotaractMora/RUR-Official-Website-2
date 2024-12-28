@@ -118,7 +118,7 @@ const StatusCard: React.FC<StatusCardProps> = ({title,signIn,signUp,signInUrl,si
             <motion.span
               className="text-green-500 text-xl content-center block mb-3"
             >
-              Registration Open
+              You can now register, Click the button below to register
             </motion.span>
             <HoverBorderGradient onClick={() =>{
                   sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , activity: title+' signUp'  , link:signUpUrl ? signUpUrl : '' })
@@ -131,7 +131,7 @@ const StatusCard: React.FC<StatusCardProps> = ({title,signIn,signUp,signInUrl,si
             <motion.span
               className="text-red-500 text-xl block mb-3"
             >
-              Registration is close
+              You can use bellow link to register once registration open
             </motion.span>
             <HoverBorderGradient isDisabled={true}  className="opacity-50 cursor-not-allowed text-gray-500" onClick={() => {
               sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , activity: title+' signUp' , link:signUpUrl ? signUpUrl : '' });
@@ -146,26 +146,26 @@ const StatusCard: React.FC<StatusCardProps> = ({title,signIn,signUp,signInUrl,si
             <motion.span
               className="text-green-500 text-xl content-center block mb-3"
             >
-              You can now signIn
+              Sign in is open, Click the button below to sign in
             </motion.span>
             <HoverBorderGradient onClick={() => {
               sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , activity: title+' signIn' , link:signInUrl ? signInUrl : '' });
               router.push(signInUrl ? signInUrl : '')
             }
-              } isDisabled={false}>SingIn Now</HoverBorderGradient>
+              } isDisabled={false}>Sign In Now</HoverBorderGradient>
           </div>
         ) : (
           <div className="mt-4">
             <motion.span
               className="text-red-500 text-xl block mb-3"
             >
-              SignIn is close
+              Sign In is close
             </motion.span>
             <HoverBorderGradient isDisabled={true}  className="opacity-50 cursor-not-allowed text-gray-500" onClick={() => {
               sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , activity: title+' signIn' , link:signInUrl ? signInUrl : '' });
               router.push(signInUrl ? signInUrl : '')
             }
-              }>SignIn</HoverBorderGradient>
+              }>Sign In</HoverBorderGradient>
           </div>
         )}
 
@@ -358,9 +358,11 @@ const RegistrationStatus = () => {
 
   if (error || !status) {
     return (
-      <div className="text-red-500 text-center p-4">
-        {error || "Error loading registration status"}
-      </div>
+      // <div className="text-red-500 text-center p-4">
+      //   {error || "Error loading registration status"}
+      // </div>
+      <>
+      </>
     );
   }
 
