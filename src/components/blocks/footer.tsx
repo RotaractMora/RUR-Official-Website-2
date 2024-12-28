@@ -25,7 +25,7 @@ const Footer = () => {
         },
         {
             icon: <FaAt className="h-6 w-6 dark:text-custom-color-700 text-custom-color-600 hover:text-custom-dark-color-900 dark:hover:text-custom-color-900" />,
-            href: "mailto:areyouready@rotaractmora.org",
+            href: "mailto:areyouready25@rotaractmora.org",
             title: "Email",
         }
     ];
