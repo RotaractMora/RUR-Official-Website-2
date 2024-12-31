@@ -88,6 +88,8 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
               <div className="mt-3 inline-block">
                 <CountDown date={item.eventDate} />
               </div>
+              {
+                item.btnText.length > 0 &&
               <div className="inline-block md:mt-3 mt-5 ml-3">
                 <HoverBorderGradient onClick={()=>{
                   sendGTMEvent({ event: 'buttonClicked', section: 'timeline' , BtnLabel: item.title , link: item.btnLink });
@@ -95,6 +97,7 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
                 }
               } isDisabled={item.isBtnDisabled} >{item.btnText}</HoverBorderGradient>
               </div>
+              }
             </div>
               
 
