@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { HoverBorderGradient } from './hover-border-gradient';
 import { useRouter } from 'next/navigation';
 import { sendGTMEvent } from '@next/third-parties/google';
+// import { LockOpen, Lock, UserPlus, UserX } from 'lucide-react';
 
 const transition = {
   duration: 0.8,
@@ -97,83 +98,217 @@ const AnimatedButton2 = ({ children }: { children: React.ReactNode }) => {
 
 
 
-const StatusCard: React.FC<StatusCardProps> = ({title,signIn,signUp,signInUrl,signUpUrl,className}) => {
-  const router = useRouter();
+// const StatusCard: React.FC<StatusCardProps> = ({title,signIn,signUp,signInUrl,signUpUrl,className}) => {
+//   const router = useRouter();
+
+//   return (
+//     <motion.div
+//       initial={{ opacity: 0, y: 20 }}
+//       animate={{ opacity: 1, y: 0 }}
+//       transition={{ duration: 0.6, delay: 0.2 }}
+//       className={cn(
+//         "bg-white/10 backdrop-blur-md rounded-lg mt-12 p-6 m-4 border border-white/20",
+//         className
+//       )}
+//     >
+//       <h3 className="text-xl font-bold mb-4 underline text-white">{title}</h3>
+//       <div className="space-y-2">
+
+//         {signUp ? (
+//           <div className="mt-4">
+//             <motion.span
+//               className="text-green-500 text-xl content-center block mb-3"
+//             >
+//               You can now register, Click the button below to register
+//             </motion.span>
+//             <HoverBorderGradient onClick={() =>{
+//                   sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , activity: title+' signUp'  , link:signUpUrl ? signUpUrl : '' })
+//                   router.push(signUpUrl ? signUpUrl : '')
+//             }
+//           } isDisabled={false} >Register Now</HoverBorderGradient>
+//           </div>
+//         ) : (
+//           <div className="mt-4">
+//             <motion.span
+//               className="text-red-500 text-xl block mb-3"
+//             >
+//               You can use bellow link to register once registration open
+//             </motion.span>
+//             <HoverBorderGradient isDisabled={true}  className="opacity-50 cursor-not-allowed text-gray-500" onClick={() => {
+//               sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , activity: title+' signUp' , link:signUpUrl ? signUpUrl : '' });
+//               router.push(signUpUrl ? signUpUrl : '');
+//             }
+//           }>Register</HoverBorderGradient>
+//           </div>
+//         )}
+
+//         {signIn ? (
+//           <div className="mt-4">
+//             <motion.span
+//               className="text-green-500 text-xl content-center block mb-3"
+//             >
+//               Sign in is open, Click the button below to sign in
+//             </motion.span>
+//             <HoverBorderGradient onClick={() => {
+//               sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , activity: title+' signIn' , link:signInUrl ? signInUrl : '' });
+//               router.push(signInUrl ? signInUrl : '')
+//             }
+//               } isDisabled={false}>Sign In Now</HoverBorderGradient>
+//           </div>
+//         ) : (
+//           <div className="mt-4">
+//             <motion.span
+//               className="text-red-500 text-xl block mb-3"
+//             >
+//               Sign In is close
+//             </motion.span>
+//             <HoverBorderGradient isDisabled={true}  className="opacity-50 cursor-not-allowed text-gray-500" onClick={() => {
+//               sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , activity: title+' signIn' , link:signInUrl ? signInUrl : '' });
+//               router.push(signInUrl ? signInUrl : '')
+//             }
+//               }>Sign In</HoverBorderGradient>
+//           </div>
+//         )}
+
+
+//       </div>
+//     </motion.div>
+//   );
+// }
+
+const StatusCard: React.FC<StatusCardProps> = ({
+  title,
+  signIn,
+  signUp,
+  signInUrl,
+  signUpUrl,
+  className = ''
+}) => {
+
+  const handleNavigation = (url: string | undefined, action: string) => {
+    if (url) {
+      sendGTMEvent({
+        event: 'buttonClicked',
+        section: 'Registration_Status',
+        activity: `${title} ${action}`,
+        link: url
+      });
+      window.location.href = url;
+    }
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.6,
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: { 
+      opacity: 1, 
+      x: 0,
+      transition: { duration: 0.5 }
+    }
+  };
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: 0.2 }}
-      className={cn(
-        "bg-white/10 backdrop-blur-md rounded-lg mt-12 p-6 m-4 border border-white/20",
-        className
-      )}
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className={`max-w-md mx-auto bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 
+        rounded-2xl p-8 shadow-2xl border border-slate-700/50 
+        hover:border-slate-600/50 transition-all duration-500 
+        backdrop-blur-xl ${className}`}
     >
-      <h3 className="text-xl font-bold mb-4 underline text-white">{title}</h3>
-      <div className="space-y-2">
-
-        {signUp ? (
-          <div className="mt-4">
-            <motion.span
-              className="text-green-500 text-xl content-center block mb-3"
+      <div className="text-center mb-8">
+        <motion.h2 
+          variants={itemVariants}
+          className="text-3xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-violet-400 
+            text-transparent bg-clip-text tracking-tight"
+        >
+          {title}
+        </motion.h2>
+      </div>
+      
+      <div className="space-y-6">
+        {/* Registration Section */}
+        <motion.div 
+          variants={itemVariants}
+          className="rounded-xl bg-gradient-to-br from-slate-800/80 to-slate-900/80 p-6 
+            border border-slate-700/50 hover:border-slate-600/50 
+            transition-all duration-300 shadow-lg"
+        >
+          <div className="flex flex-col items-center gap-5 text-center">
+            <div className="flex items-center gap-2">
+              <span className={`text-lg font-medium ${signUp ? 'text-blue-400' : 'text-amber-400'}`}>
+                {signUp 
+                  ? "Registration is now open"
+                  : "Registration coming soon"}
+              </span>
+            </div>
+            <button
+              onClick={() => handleNavigation(signUpUrl, 'signUp')}
+              disabled={!signUp}
+              className={`group w-full px-6 py-3 rounded-lg font-semibold 
+                transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]
+                ${signUp 
+                  ? "bg-gradient-to-r from-blue-500 via-blue-600 to-violet-600 hover:from-blue-600 hover:via-blue-700 hover:to-violet-700 text-white shadow-lg"
+                  : "bg-slate-800 text-slate-600 cursor-not-allowed border border-slate-700"
+                }`}
             >
-              You can now register, Click the button below to register
-            </motion.span>
-            <HoverBorderGradient onClick={() =>{
-                  sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , activity: title+' signUp'  , link:signUpUrl ? signUpUrl : '' })
-                  router.push(signUpUrl ? signUpUrl : '')
-            }
-          } isDisabled={false} >Register Now</HoverBorderGradient>
+              <span className="flex items-center justify-center gap-2">
+                {/* {signUp ? "Register Now" : "Registration Unavailable"} */}
+                Register
+              </span>
+            </button>
           </div>
-        ) : (
-          <div className="mt-4">
-            <motion.span
-              className="text-red-500 text-xl block mb-3"
-            >
-              You can use bellow link to register once registration open
-            </motion.span>
-            <HoverBorderGradient isDisabled={true}  className="opacity-50 cursor-not-allowed text-gray-500" onClick={() => {
-              sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , activity: title+' signUp' , link:signUpUrl ? signUpUrl : '' });
-              router.push(signUpUrl ? signUpUrl : '');
-            }
-          }>Register</HoverBorderGradient>
-          </div>
-        )}
+        </motion.div>
 
-        {signIn ? (
-          <div className="mt-4">
-            <motion.span
-              className="text-green-500 text-xl content-center block mb-3"
-            >
-              Sign in is open, Click the button below to sign in
-            </motion.span>
-            <HoverBorderGradient onClick={() => {
-              sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , activity: title+' signIn' , link:signInUrl ? signInUrl : '' });
-              router.push(signInUrl ? signInUrl : '')
-            }
-              } isDisabled={false}>Sign In Now</HoverBorderGradient>
-          </div>
-        ) : (
-          <div className="mt-4">
-            <motion.span
-              className="text-red-500 text-xl block mb-3"
-            >
-              Sign In is close
-            </motion.span>
-            <HoverBorderGradient isDisabled={true}  className="opacity-50 cursor-not-allowed text-gray-500" onClick={() => {
-              sendGTMEvent({ event: 'buttonClicked', section: 'Registration_Status' , activity: title+' signIn' , link:signInUrl ? signInUrl : '' });
-              router.push(signInUrl ? signInUrl : '')
-            }
-              }>Sign In</HoverBorderGradient>
-          </div>
-        )}
+        {/* Sign In Section */}
+        <motion.div 
+          variants={itemVariants}
+          className="rounded-xl bg-gradient-to-br from-slate-800/80 to-slate-900/80 p-6 
+            border border-slate-700/50 hover:border-slate-600/50 
+            transition-all duration-300 shadow-lg"
+        >
+          <div className="flex flex-col items-center gap-5 text-center">
+            <div className="flex items-center gap-2">
 
-
+              <span className={`text-lg font-medium ${signIn ? 'text-blue-400' : 'text-amber-500'}`}>
+                {signIn 
+                  ? "Sign in is available"
+                  : "Sign In coming soon"}
+              </span>
+            </div>
+            <button
+              onClick={() => handleNavigation(signInUrl, 'signIn')}
+              disabled={!signIn}
+              className={`group w-full px-6 py-3 rounded-lg font-semibold 
+                transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]
+                ${signIn 
+                  ? "bg-gradient-to-r from-blue-500 via-blue-600 to-violet-600 hover:from-blue-600 hover:via-blue-700 hover:to-violet-700 text-white shadow-lg"
+                  : "bg-slate-800 text-slate-600 cursor-not-allowed border border-slate-700"
+                }`}
+            >
+              <span className="flex items-center justify-center gap-2">
+                {/* {signIn ? "Sign In Now" : "Sign In Unavailable"} */}
+                Sign In
+              </span>
+            </button>
+          </div>
+        </motion.div>
       </div>
     </motion.div>
   );
-}
+};
 
 
 const WaveBackground = () => {
