@@ -13,7 +13,7 @@ export default function ReachUsSection({ grid }: { grid: IContact[] }) {
   ];
 
   return (
-    <div className="py-10 lg:py-20 md:mx-8 mx-auto w-fit">
+    <div className="py-10 lg:py-20 md:mx-8 mx-auto w-fit md:w-full">
       {lines.map((line, index) => (
 
       <div key={"contactLine-"+index} className="flex flex-wrap md:flex-row flex-col justify-center align-center max-w-12xl mx-auto">
