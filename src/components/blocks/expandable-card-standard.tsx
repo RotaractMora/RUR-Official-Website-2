@@ -90,7 +90,7 @@ export default function ExpandableCard() {
   else if (isLoading) {
     return <div>Loading...</div>;
   }
-  else if (cards.length==0 ) {
+  else if (cards.length<3 ) {
     return <></>;
   }
   else{

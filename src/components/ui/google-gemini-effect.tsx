@@ -544,15 +544,15 @@ const RegistrationStatus = () => {
               title="Company Registration"
               signUp={status.company.signUp}
               signIn={status.company.signIn}
-              signInUrl="https://rur.uom.lk/company/signIn"
-              signUpUrl="https://rur.uom.lk/signUp"
+              signInUrl="https://rur.rotaractmora.org/sign-in"
+              signUpUrl="https://rur.rotaractmora.org/company/sign-up"
             />
             <StatusCard
               title="Student Registration"
               signUp={status.student.signUp}
               signIn={status.student.signIn}
-              signInUrl="https://rur.uom.lk/student/signIn"
-              signUpUrl="https://rur.uom.lk/signUp"
+              signInUrl="https://rur.rotaractmora.org/sign-in"
+              signUpUrl="https://rur.rotaractmora.org/student/sign-up"
             />
           </div>
         </div>

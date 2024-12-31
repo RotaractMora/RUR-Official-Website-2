@@ -1,5 +1,6 @@
 "use client";
 import { IContact } from "@/interfaces/IContacts";
+import Image from "next/image";
 import React from "react";
 import { useId } from "react";
 
@@ -12,23 +13,25 @@ export default function ReachUsSection({ grid }: { grid: IContact[] }) {
   ];
 
   return (
-    <div className="py-10 lg:py-20 mx-8">
+    <div className="py-10 lg:py-20 md:mx-8 mx-auto w-fit">
       {lines.map((line, index) => (
 
-      <div key={"contactLine-"+index} className="flex justify-center align-center max-w-7xl mx-auto">
+      <div key={"contactLine-"+index} className="flex flex-wrap md:flex-row flex-col justify-center align-center max-w-12xl mx-auto">
         {line.map((person, index) => (
           <div
             key={person + "-" + index}
             className="relative bg-gradient-to-b dark:from-neutral-900 from-neutral-100 dark:to-neutral-950 to-white p-6 rounded-3xl overflow-hidden shadow-xl dark:border-custom-dark-color-900 border-custom-color-900 border-2 border-solid my-3 mx-2"
-            style={{minWidth: "20rem"}}
+            style={{width: "28rem"}}
           >
             <Grid size={20} />
             <div className="flex items-center">
               <div>
-                <img
+                <Image
                   src={`${person.photo}`}
                   alt={person.name}
                   className="w-20 h-20 rounded-full"
+                  width={20}
+                  height={20}
                 />
                 </div>
                 <div className="pl-5">

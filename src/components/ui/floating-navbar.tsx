@@ -75,7 +75,10 @@ export const FloatingNav = ({
                             sendGTMEvent({ event: 'buttonClicked', section: 'Navbar' , activity: 'portal visit'  , link: portalLink ? portalLink : '' })
                             router.push(portalLink ? portalLink : '')
                       }
-            } isDisabled={false} className="text-sm" >RUR Portal</HoverBorderGradient>
+            }
+             isDisabled={false}
+             className="bg-gradient-to-r from-blue-500 to-blue-400 text-white px-4 py-2 rounded-lg text-sm"
+              >Registrations</HoverBorderGradient>
           </div>
         </div>
 
@@ -87,7 +90,10 @@ export const FloatingNav = ({
                             sendGTMEvent({ event: 'buttonClicked', section: 'Navbar' , activity: 'portal visit'  , link: portalLink ? portalLink : '' })
                             router.push(portalLink ? portalLink : '')
                       }
-            } isDisabled={false} >RUR Portal</HoverBorderGradient>
+            }
+             isDisabled={false} 
+             className="bg-gradient-to-r from-blue-500 to-blue-400 text-white px-4 py-2 rounded-lg text-sm"
+            >Registrations</HoverBorderGradient>
 
           {/* Mobile Menu Toggle */}
           <button
