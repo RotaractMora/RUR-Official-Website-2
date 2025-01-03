@@ -269,6 +269,7 @@ const StatusCard: React.FC<StatusCardProps> = ({
                 Register
               </span>
             </button>
+
           </div>
         </motion.div>
 
