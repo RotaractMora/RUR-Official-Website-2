@@ -27,7 +27,7 @@ export const FloatingNav = ({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
   const themeContext = useContext<IThemeContextType | null>(ThemeContext);
-  const portalLink = "https://rur.rotaractmora.org";
+  const portalLink = "#registrationStatus";
 
   if (!themeContext) {
     throw new Error(
@@ -72,7 +72,7 @@ export const FloatingNav = ({
             ))}
 
             <HoverBorderGradient onClick={() =>{
-                            sendGTMEvent({ event: 'buttonClicked', section: 'Navbar' , activity: 'portal visit'  , link: portalLink ? portalLink : '' })
+                            sendGTMEvent({ event: 'buttonClicked', section: 'Navbar' , activity: 'navbar register btn'  , link: portalLink ? portalLink : '' })
                             router.push(portalLink ? portalLink : '')
                       }
             }
@@ -87,7 +87,7 @@ export const FloatingNav = ({
           {/* Mobile Registration Button */}
 
            <HoverBorderGradient onClick={() =>{
-                            sendGTMEvent({ event: 'buttonClicked', section: 'Navbar' , activity: 'portal visit'  , link: portalLink ? portalLink : '' })
+                            sendGTMEvent({ event: 'buttonClicked', section: 'Navbar' , activity: 'navbar register btn'  , link: portalLink ? portalLink : '' })
                             router.push(portalLink ? portalLink : '')
                       }
             }

@@ -326,7 +326,7 @@ export default function Home() {
   );
 
   const EmptyStateMessage = ({ message }: { message: string }) => (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center" id="sponsors">
       <HeroHighlight>
         <Highlighter firstString="" secondString={message} />
       </HeroHighlight>
@@ -394,7 +394,7 @@ export default function Home() {
       </div>
 
 { sponsors.length > 0 &&
-      <div id="sponsors" className="scroll-mt-20 py-8 px-6 text-center bg-gray-100 dark:bg-gray-800">
+      <div className="scroll-mt-20 py-8 px-6 text-center bg-gray-100 dark:bg-gray-800">
         <h2 className="text-3xl md:text-4xl font-bold text-center dark:text-custom-color-800 bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent mb-4">
           Thank You for Your Support!
         </h2>
@@ -407,6 +407,7 @@ export default function Home() {
         </p>
       </div>
 }
+<div id="sponsors"></div>
 
       {error ? (
         <ErrorMessage message={error} />
