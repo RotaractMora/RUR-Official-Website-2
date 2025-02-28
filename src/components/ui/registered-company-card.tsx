@@ -15,7 +15,7 @@ const CompanyCardHeader = ({ company, isExpanded, toggleExpand } : { company: IC
         <div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{company.name}</h3>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-            {company.preferredFields.length} departments • {company.qualitiesToLook.length} qualitiesToLook
+            {company.preferredFields.length} departments • {company.qualitiesToLook.length} qualities mentioned { company.availableJobTypes && `• ${company.availableJobTypes.length} job types`}
             </p>
         </div>
         </div>
@@ -34,13 +34,13 @@ const CompanyCardHeader = ({ company, isExpanded, toggleExpand } : { company: IC
 );
   
 // Company Card Details Component
-const CompanyCardDetails = ({ description, departments, qualities } : { description: string, departments: string[], qualities: string[] }) => (
+const CompanyCardDetails = ({ description, departments, qualities, availableJobTypes } : { description: string, departments: string[], qualities: string[], availableJobTypes: string[] | undefined }) => (
 <div className="p-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
     <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">{description}</p>
     
-    <div className="grid md:grid-cols-2 gap-4">
+    <div className="grid md:grid-cols-2 gap-4 mx-2">
     <div>
-        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Departments</h4>
+        <h4 className="font-medium text-left text-gray-900 dark:text-gray-100 mb-2">Departments</h4>
         <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
         {departments.map((dept, index) => (
             <li key={index} className="flex items-center">
@@ -51,31 +51,22 @@ const CompanyCardDetails = ({ description, departments, qualities } : { descript
         </ul>
     </div>
 
-
-    {/* <div>
-        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Job Types</h4>
-        <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-        {jobTypes.map((jobType, index) => (
-            <li key={index} className="flex items-center">
-            <span className="h-1.5 w-1.5 rounded-full bg-blue-500 mr-2"></span>
-            {jobType}
-            </li>
-        ))}
-        </ul>
-    </div> */}
+    {availableJobTypes && (
     <div>
-        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Job Types</h4>
+        <h4 className="font-medium text-left text-gray-900 dark:text-gray-100 mb-2">Job Types</h4>
         <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-        {qualities.map((quality, index) => (
+         {availableJobTypes.map((job, index) => (
             <li key={index} className="flex items-center">
             <span className="h-1.5 w-1.5 rounded-full bg-blue-500 mr-2"></span>
-            {quality}
+            {job}
             </li>
         ))}
         </ul>
     </div>
+    )}
+
     <div>
-        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Job Types</h4>
+        <h4 className="font-medium text-left text-gray-900 dark:text-gray-100 mb-2">Qualities</h4>
         <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
         {qualities.map((quality, index) => (
             <li key={index} className="flex items-center">
@@ -105,9 +96,13 @@ export const CompanyCard = (company  : ICompany) => {
           <CompanyCardDetails 
             description={company.description}
             departments={company.preferredFields}
-            // jobTypes={company.jobTypes}
+            availableJobTypes={company.availableJobTypes}
             qualities={company.qualitiesToLook}
           />
+        )}
+
+        {company.availableJobTypes && (
+          <div style={{ display: 'none' }}>{company.availableJobTypes}</div>
         )}
       </div>
     );

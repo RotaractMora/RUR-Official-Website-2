@@ -7,4 +7,5 @@ export interface ICompany {
     name: string;
     preferredFields: string[];
     qualitiesToLook: string[];
+    availableJobTypes?: string[];
   }

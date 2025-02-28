@@ -40,7 +40,6 @@ const navItms = [
 ];
 
 
-// Search Bar Component
 const SearchBar = ({ searchQuery, setSearchQuery } : { searchQuery: string, setSearchQuery: (query: string) => void }) => (
   <div className="mt-8 mb-6 max-w-md mx-auto">
     <div className="relative">
@@ -68,14 +67,12 @@ const SearchBar = ({ searchQuery, setSearchQuery } : { searchQuery: string, setS
   </div>
 );
 
-// Search Results Info Component
 const SearchResultsInfo = ({ count, query  } : { count: number, query: string }) => (
   <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
     Found {count} {count === 1 ? 'company' : 'companies'} matching &quot;{query}&quot;
   </p>
 );
 
-// No Results Component
 const NoResults = () => (
   <div className="mt-8 p-6 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700">
     <p className="text-gray-600 dark:text-gray-400">No companies found matching your search criteria.</p>
@@ -179,12 +176,25 @@ export default function Companies() {
             Found {companies.length} companies
           </p>
         )}
+
+
+        {isLoading && (
+          <div className="mt-8 p-6 dark:bg-gray-900 rounded-lg borde dark:border-gray-700">
+            <p className="text-gray-600 dark:text-gray-400">Loading companies...</p>
+          </div>
+        )}
+
+        {error && (
+          <div className="mt-8 p-6 dark:bg-gray-900 rounded-lg borde dark:border-gray-700">
+            <p className="text-gray-600 dark:text-gray-400">{error}</p>
+          </div>
+        )}
         
-        {filteredCompanies.length === 0 ? (
+        {filteredCompanies.length === 0 && !isLoading ? (
           <NoResults />
         ) : (
           <div className="max-w-4xl mx-auto">
-          {companies.map(company => (
+          {filteredCompanies.map(company => (
             <CompanyCard key={company.companyId} {...company} />
           ))}
         </div>
