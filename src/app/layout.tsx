@@ -65,6 +65,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <ThemeContext.Provider value={{ setTheme, toggleTheme, theme }}>
         <HelmetProvider>
         <html lang="en">
+          <head>
+          <meta name="google-site-verification" content="He_a54SdmlaQfr3y9EaVQ5cQVBxr_tJEBPPwveeY6RQ" />
+          </head>
           <Helmet>
 
               <meta name="description" content="Official website of 'Are You Ready? 2025', organized by the Rotaract Club of University of Moratuwa" />
@@ -81,9 +84,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               <link rel="author" href="https://rotaractmora.org" />
 
               <link rel="icon" href="https://areyouready.uom.lk/Images/logo/icon.ico" />
-
-              <meta name="google-site-verification" content="He_a54SdmlaQfr3y9EaVQ5cQVBxr_tJEBPPwveeY6RQ" />
-
           
           </Helmet>
           <body className={`${geistSans.variable} ${geistMono.variable} dark:bg-dark-gradient bg-light-gradient antialiased`} >
