@@ -447,7 +447,7 @@ export default function Home() {
       
       <section
         id="registrationStatus"
-        className="scroll-mt-20 relative py-16 w-full"
+        className="scroll-mt-20 relative w-full"
       >
         <div className="w-full mx-auto">
           <div className="relative w-full z-10">

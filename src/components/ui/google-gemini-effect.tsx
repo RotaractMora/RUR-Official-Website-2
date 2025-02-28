@@ -513,7 +513,7 @@ const RegistrationStatus = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
-          className="max-w-4xl mt-32 mx-auto p-4"
+          className="max-w-4xl mx-auto p-4"
         >
           <motion.h2
             initial={{ y: -20, opacity: 0 }}

@@ -24,7 +24,7 @@ export default function ReachUsSection({ grid }: { grid: IContact[] }) {
             >
             <Grid size={20} />
             <div className="flex items-center">
-              <div>
+              <div className="sm1:w-auto w-[120px]">
               <Image
                 src={`${person.photo}`}
                 alt={person.name}
@@ -33,7 +33,7 @@ export default function ReachUsSection({ grid }: { grid: IContact[] }) {
                 height={20}
               />
               </div>
-              <div className="pl-5">
+              <div className="pl-5 w-auto">
               <h2 className="text-2xl font-bold dark:text-custom-color-600 text-custom-dark-color-900">
                 {person.name}
               </h2>
