@@ -190,10 +190,10 @@ const Para = ({
       : "custom-color-bronze dark:custom-dark-color-bronze";
 
   return (
-    <div className="w-full h-full max-w-xl mx-auto px-4 md:px-6 lg:px-8 flex flex-col items-center justify-between">
+    <div className="w-full h-full max-w-xl mx-auto px-4 md:px-6 lg:px-6 flex flex-col items-center justify-stretch min-h-[400px] lg:min-h-[300px]">
       <h6
         className={
-          "text-2xl md:text-3xl lg:text-4xl text-center font-bold p-2 py-3" +
+          "text-xl md:text-2xl lg:text-3xl text-center font-bold p-2 py-3" +
           " text-" +
           color
         }
@@ -211,11 +211,6 @@ const Para = ({
           className="object-contain p-2 my-2 rounded-lg"
         />
       </div>
-
-      {/* Sponsor Name */}
-      <h5 className="text-xl md:text-2xl lg:text-4xl text-center font-bold dark:text-custom-color-900 text-custom-dark-color-700 p-3">
-        {name}
-      </h5>
     </div>
   );
 };
@@ -396,15 +391,8 @@ export default function Home() {
 { sponsors.length > 0 &&
       <div className="scroll-mt-20 py-8 px-6 text-center bg-gray-100 dark:bg-gray-800">
         <h2 className="text-3xl md:text-4xl font-bold text-center dark:text-custom-color-800 bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent mb-4">
-          Thank You for Your Support!
+        Sponsors
         </h2>
-        <p className="mt-4 max-w-7xl text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
-          We deeply appreciate your unwavering support in making this event a
-          success. Your contributions inspire us to innovate, collaborate, and
-          grow. Together, we’re achieving remarkable milestones. Stay tuned for
-          exciting updates as we continue this incredible journey. Thank you for
-          being a vital part of our mission!
-        </p>
       </div>
 }
 <div id="sponsors"></div>
@@ -441,6 +429,20 @@ export default function Home() {
         <EmptyStateMessage message="Sponsors will be available soon." />
       )}
 
+      { sponsors.length > 0 &&
+            <div className="scroll-mt-20 py-8 px-6 text-center bg-gray-100 dark:bg-gray-800">
+              <h2 className="text-3xl md:text-4xl font-bold text-center dark:text-custom-color-800 bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent mb-4">
+                Thank You for Your Support!
+              </h2>
+              <p className="mt-4 max-w-7xl mx-auto text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+                We deeply appreciate your unwavering support in making this event a
+                success. Your contributions inspire us to innovate, collaborate, and
+                grow. Together, we’re achieving remarkable milestones. Stay tuned for
+                exciting updates as we continue this incredible journey. Thank you for
+                being a vital part of our mission!
+              </p>
+            </div>
+      }
       
       <section
         id="registrationStatus"

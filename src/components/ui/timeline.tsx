@@ -30,12 +30,17 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
     if (ref.current) {
       const rect = ref.current.getBoundingClientRect();
       setHeight(rect.height);
+      console.log("beam h:",rect.height);
+      setTimeout(() => {
+        console.log("beam h2:",rect.height);
+      }, 5000);
+      // setHeight(3500);
     }
-  }, [ref]);
+  }, [ref, ref.current?.offsetHeight]);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start 10%", "end 70%"],
+    offset: ["start 10%", "end 100%"],
   });
 
   const heightTransform = useTransform(scrollYProgress, [0, 1], [0, height]);
@@ -45,10 +50,10 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
 
   return (
     <div
-      className="w-full bg-custom-color-900 dark:bg-custom-dark-color-900 font-sans md:px-10"
+      className="w-full bg-custom-color-900 dark:bg-custom-dark-color-900 font-sans md:px-10 pb-20"
       ref={containerRef}
     >
-      <div className="max-w-7xl mx-auto py-20 px-4 md:px-8 lg:px-10">
+      <div className="max-w-7xl mx-auto py-10 px-4 md:px-8 lg:px-10">
         <h2 className="text-lg md:text-4xl mb-4 text-custom-dark-color-950 dark:text-custom-color-950 max-w-4xl">
         SESSIONS
         </h2>
@@ -57,11 +62,11 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
         </p>
       </div>
 
-      <div ref={ref} className="relative max-w-7xl mx-auto pb-20">
+      <div ref={ref} className="relative max-w-7xl mx-auto">
         {data.map((item, index) => (
           <div
             key={index}
-            className="flex justify-start pt-10 md:pt-40 md:gap-10"
+            className="flex justify-start md:pt-40 md:gap-10"
           >
             <div className="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
               <div className="h-10 absolute left-3 md:left-3 w-10 rounded-full bg-white dark:bg-black flex items-center justify-center">
@@ -76,10 +81,10 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
               <h3 className="md:hidden block text-2xl mb-4 text-left font-bold text-neutral-500 dark:text-dark-nautral-500">
                 {item.title}
               </h3>
-              <div>
+                <div className="h-[300px] w-full flex justify-center items-center">
                 <Image
-                  src={item.image} width={400} height={200} alt={item.title+" image"} className="rounded-lg mb-5"></Image>
-              </div>
+                  src={item.image} height={200} width={400} alt={item.title+" image"} className="rounded-lg mb-5"></Image>
+                </div>
               <div>
                 {item.content}{" "}
               </div>
