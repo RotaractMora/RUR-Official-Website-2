@@ -43,7 +43,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { CardDesign } from "@/components/ui/card-design";
-import Lottie from "react-lottie-player";
+// import Lottie from "react-lottie-player";
 import { IContact } from "@/interfaces/IContacts";
 import RegistrationStatus from "@/components/ui/google-gemini-effect";
 import BackToTopButton from "@/components/ui/back-to-top";
@@ -55,7 +55,8 @@ import { sendGTMEvent } from "@next/third-parties/google";
 import ReactDOM from 'react-dom';
 import { Helmet } from 'react-helmet-async';
  
-
+import dynamic from "next/dynamic";
+const Lottie = dynamic(() => import("react-lottie-player"), { ssr: false });
 
 
 export const products = [
