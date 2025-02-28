@@ -78,6 +78,7 @@ export const FloatingNav = ({
             }
              isDisabled={false}
              className="bg-gradient-to-r from-blue-500 to-blue-400 text-white px-4 py-2 rounded-lg text-sm"
+             containerClassName="bg-white/0 border-0"
               >Registrations</HoverBorderGradient>
           </div>
         </div>
@@ -93,6 +94,7 @@ export const FloatingNav = ({
             }
              isDisabled={false} 
              className="bg-gradient-to-r from-blue-500 to-blue-400 text-white px-4 py-2 rounded-lg text-sm"
+             containerClassName="bg-white/0 border-0"
             >Registrations</HoverBorderGradient>
 
           {/* Mobile Menu Toggle */}

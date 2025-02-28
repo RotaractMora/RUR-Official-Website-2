@@ -5,11 +5,11 @@ import { HeroParallax } from "./hero-parallax";
 
 const MobileHero = () => {
   return (
-    <div className="relative min-h-screen dark:bg-custom-dark-color-900 bg-custom-color-900 ">
+    <div className="relative min-h-screen dark:bg-custom-dark-color-900 my-5">
       {/* Background Images Container */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Large circle image 1 */}
-        <div className="absolute sm2:w-[370px] sm2:h-[370px] sm1:w-[350px] sm1:h-[350px] w-[300px] h-[300px] top-0 left-0">
+        <div className="absolute sm2:w-[370px] sm2:h-[370px] sm1:w-[350px] sm1:h-[350px] w-[300px] h-[300px] top-[15px] left-[5px]">
           <div className="w-full h-full rounded-full overflow-hidden">
             <img 
               src="/Images/RUR (1).jpg"
@@ -20,7 +20,7 @@ const MobileHero = () => {
         </div>
 
         {/* Large circle image 2 */}
-        <div className="absolute sm2:w-[385px] sm2:h-[385px] sm1:w-[350px] sm1:h-[350px] w-[300px] h-[300px] top-[50%] right-0">
+        <div className="absolute sm2:w-[385px] sm2:h-[385px] sm1:w-[350px] sm1:h-[350px] w-[300px] h-[300px] top-[50%] right-[5px]">
           <div className="w-full h-full rounded-full overflow-hidden transform translate-y-[-50%]">
             <img 
               src="/Images/RUR (2).jpg"
@@ -31,7 +31,7 @@ const MobileHero = () => {
         </div>
 
         {/* Small circle image */}
-        <div className="absolute sm2:w-[400px] sm2:h-[400px] sm1:w-[350px] sm1:h-[350px] w-[300px] h-[300px] bottom-0 left-0">
+        <div className="absolute sm2:w-[400px] sm2:h-[400px] sm1:w-[350px] sm1:h-[350px] w-[300px] h-[300px] bottom-[15px] left-[5px]">
           <div className="w-full h-full rounded-full overflow-hidden">
             <img 
               src="/Images/RUR (3).jpg"
@@ -42,28 +42,23 @@ const MobileHero = () => {
         </div>
 
         {/* Gradient overlay */}
-        <div className="absolute inset-0
+        {/* <div className="absolute inset-0
           bg-gradient-to-r
-          from-custom-color-900 
+          from-white/50
           dark:from-custom-dark-color-900
           sm1:via-custom-color-900/40 
           sm1:dark:via-custom-dark-color-900/40 
           via-custom-color-900/80
           dark:via-custom-dark-color-900/80
           to-transparent
-          "></div>
+          py-10
+          "></div> */}
       </div>
 
       {/* Content */}
       <div className="relative px-6 py-2 mx-auto max-w-7xl">
         <div className="flex flex-col items-start justify-center min-h-screen max-w-2xl">
 
-          {/* Main Title */}
-          <h1 className="text-black dark:text-white mb-8 sm1:mx-1 mx-auto">
-            <span className="block text-6xl font-normal mb-2 sm1:text-left text-center">Are</span>
-            <span className="block text-6xl italic font-serif sm1:text-left text-center">You</span>
-            <span className="block text-6xl italic font-serif sm1:text-left text-center">Ready?</span>
-          </h1>
 
           {/* Description */}
           <div className='sm1:mx-1 mx-auto'>
