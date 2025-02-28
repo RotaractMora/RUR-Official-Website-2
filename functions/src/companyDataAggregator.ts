@@ -23,6 +23,7 @@ const SELECTED_FIELDS = [
   "qualitiesToLook",
   "dataConfirmed",
   "website",
+  "availableJobTypes",
 ];
 
 
