@@ -1,5 +1,5 @@
 [<img alt="Deployed with FTP Deploy Action" src="https://img.shields.io/badge/Deployed With-FTP DEPLOY ACTION-%3CCOLOR%3E?style=for-the-badge&color=0077b6">](https://github.com/SamKirkland/FTP-Deploy-Action)
-
+[![Deployed on merge](https://github.com/RotaractMora/RUR-Official-Website-2/actions/workflows/firebase-hosting-merge.yml/badge.svg)](https://github.com/RotaractMora/RUR-Official-Website-2/actions/workflows/firebase-hosting-merge.yml)
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
