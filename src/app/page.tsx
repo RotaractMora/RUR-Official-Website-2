@@ -54,6 +54,7 @@ import Head from "next/head";
 import { sendGTMEvent } from "@next/third-parties/google";
 import ReactDOM from 'react-dom';
 import { Helmet } from 'react-helmet-async';
+import { BuildingOfficeIcon } from "@heroicons/react/24/outline";
  
 
 
@@ -157,6 +158,11 @@ const navItms = [
     link: "#reach_us",
     icon: <PhoneArrowUpRightIcon />,
   },
+  {
+    name: "Registered Companies",
+    link: "/companies",
+    icon: <BuildingOfficeIcon />, 
+  }
 ];
 
 console.log("Home Page");
