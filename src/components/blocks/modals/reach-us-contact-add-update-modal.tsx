@@ -78,7 +78,7 @@ function ReachUsContactAddUpdateModal({
     }
 
     // validate contact tel
-    const contactTelRegex = /^\d{10}$/;
+    const contactTelRegex = /^\+?[1-9]\d{0,2}(?:[ -]?\d+)*$/;
     if (!contactTelRegex.test(contactTelContact)) {
       alert('Invalid contact number');
       return;
@@ -198,7 +198,7 @@ function ReachUsContactAddUpdateModal({
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" 
                       placeholder="eg: john@example.com" 
                       required 
-                      pattern='^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$'
+                      pattern='^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,}$'
                       value={contactEmail}
                       onChange={(e) => setcontactEmail(e.target.value)}
                     />
@@ -211,7 +211,7 @@ function ReachUsContactAddUpdateModal({
                       id="contactLine" 
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" 
                       required 
-                      onChange={(e) => setLine(parseInt(e.target.value))}
+                      onChange={(e) => setLine(parseInt(e.target.selectedOptions[0].value))}
                     >
                       <option value="4" selected={line===4}>Line 4</option>
                       <option value="1" selected={line===1}>Line 1</option>
@@ -231,9 +231,9 @@ function ReachUsContactAddUpdateModal({
                       required 
                       value={contactTelContact}
                       minLength={10}
-                      maxLength={10}
-                      onChange={(e) => setcontactTelContact(e.target.value)}
-                    />
+                      maxLength={16}
+                      onChange={(e) => setcontactTelContact(e.target.value)} 
+                      />
                     </div>
 
                   <div>

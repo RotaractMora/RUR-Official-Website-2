@@ -101,22 +101,4 @@ export const CardDesign: React.FC<CardDesignProps> = ({
   );
 };
 
-export const Para: React.FC<ParaProps> = ({ name, imgURL, level, description }) => {
-  return (
-    <div className="flex flex-col items-center justify-center p-8 text-center">
-      <h2 className="text-xl font-bold text-white mb-6">{level} Sponsor</h2>
-      <div className="w-full max-w-[300px] h-[120px] bg-white rounded-lg p-4 mb-4">
-        <img 
-          src={imgURL} 
-          alt={`${name} logo`} 
-          className="w-full h-10 object-contain"
-        />
-      </div>
-      <div className="text-2xl text-white font-medium">
-        {description || name}
-      </div>
-    </div>
-  );
-};
-
 export default CardDesign;
