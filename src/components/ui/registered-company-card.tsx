@@ -1,6 +1,7 @@
 import { ICompany } from "@/interfaces/ICompanies";
 import Image from "next/image";
 import { useState } from "react";
+import { LinkIcon} from "@heroicons/react/24/outline";
 
 
 const CompanyCardHeader = ({ company, isExpanded, toggleExpand } : { company: ICompany, isExpanded: boolean, toggleExpand: () => void }) => (
@@ -15,7 +16,9 @@ const CompanyCardHeader = ({ company, isExpanded, toggleExpand } : { company: IC
         <div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{company.name}</h3>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-            {company.preferredFields.length} departments • {company.qualitiesToLook.length} qualities mentioned { company.availableJobTypes && `• ${company.availableJobTypes.length} job types`}
+            {company.preferredFields.length} departments 
+            {company.qualitiesToLook && company.qualitiesToLook.length > 0 && ` • ${company.qualitiesToLook.length} qualities`} 
+            {company.availableJobTypes && company.availableJobTypes.length > 0 && ` • ${company.availableJobTypes.length} job types`}
             </p>
         </div>
         </div>
@@ -34,8 +37,13 @@ const CompanyCardHeader = ({ company, isExpanded, toggleExpand } : { company: IC
 );
   
 // Company Card Details Component
-const CompanyCardDetails = ({ description, departments, qualities, availableJobTypes } : { description: string, departments: string[], qualities: string[], availableJobTypes: string[] | undefined }) => (
+const CompanyCardDetails = ({ website, description, departments, qualities, availableJobTypes } : { website:string, description: string, departments: string[], qualities: string[], availableJobTypes: string[] | undefined }) => (
 <div className="p-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
+    <a href={website} target="_blank" className="text-blue-500 dark:text-blue-400 hover:underline">
+        {website} 
+        <LinkIcon className="h-4 w-4 inline-block ml-1" />
+    </a>
+
     <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">{description}</p>
     
     <div className="grid md:grid-cols-2 gap-4 mx-2">
@@ -57,7 +65,7 @@ const CompanyCardDetails = ({ description, departments, qualities, availableJobT
         <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
          {availableJobTypes.map((job, index) => (
             <li key={index} className="flex items-center">
-            <span className="h-1.5 w-1.5 rounded-full bg-blue-500 mr-2"></span>
+            <span className="h-1.5 w-1.5 text-left rounded-full bg-blue-500 mr-2"></span>
             {job}
             </li>
         ))}
@@ -69,10 +77,10 @@ const CompanyCardDetails = ({ description, departments, qualities, availableJobT
         <h4 className="font-medium text-left text-gray-900 dark:text-gray-100 mb-2">Qualities</h4>
         <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
         {qualities.map((quality, index) => (
-            <li key={index} className="flex items-center">
-            <span className="h-1.5 w-1.5 rounded-full bg-blue-500 mr-2"></span>
-            {quality}
-            </li>
+            <li key={index} className="flex items-start">
+            <span className="h-1.5 w-1.5 rounded-full bg-blue-500 mr-2 mt-1"></span>
+            <span className="text-left">{quality}</span>
+        </li>
         ))}
         </ul>
     </div>
@@ -81,7 +89,7 @@ const CompanyCardDetails = ({ description, departments, qualities, availableJobT
 </div>
 );
 
-export const CompanyCard = (company  : ICompany) => {
+export const CompanyCard = (company  : ICompany) => {   
     const [isExpanded, setIsExpanded] = useState(false);
     
     return (
@@ -94,6 +102,7 @@ export const CompanyCard = (company  : ICompany) => {
         
         {isExpanded && (
           <CompanyCardDetails 
+            website={company.website}
             description={company.description}
             departments={company.preferredFields}
             availableJobTypes={company.availableJobTypes}
