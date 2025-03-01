@@ -59,7 +59,7 @@ const CompanyCardDetails = ({ website, description, departments, qualities, avai
         </ul>
     </div>
 
-    {availableJobTypes && (
+    { availableJobTypes && availableJobTypes.length > 0 && (
     <div>
         <h4 className="font-medium text-left text-gray-900 dark:text-gray-100 mb-2">Job Types</h4>
         <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
@@ -73,6 +73,7 @@ const CompanyCardDetails = ({ website, description, departments, qualities, avai
     </div>
     )}
 
+    { qualities && qualities.length > 0 && (
     <div>
         <h4 className="font-medium text-left text-gray-900 dark:text-gray-100 mb-2">Qualities</h4>
         <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
@@ -83,7 +84,7 @@ const CompanyCardDetails = ({ website, description, departments, qualities, avai
         </li>
         ))}
         </ul>
-    </div>
+    </div>)}
     
     </div>
 </div>
