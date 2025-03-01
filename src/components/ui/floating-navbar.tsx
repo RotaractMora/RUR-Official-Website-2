@@ -27,7 +27,7 @@ export const FloatingNav = ({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
   const themeContext = useContext<IThemeContextType | null>(ThemeContext);
-  const portalLink = "#registrationStatus";
+  const portalLink = "https://rur.rotaractmora.org/student/sign-up";
 
   if (!themeContext) {
     throw new Error(
@@ -62,13 +62,15 @@ export const FloatingNav = ({
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-6">
             {navItems.map((navItem, idx) => (
-              <Link
+              <a
                 key={`link-${idx}`}
                 href={navItem.link}
+                target="_blank"
+                rel="noreferrer"
                 className="text-sm font-medium text-gray-700 hover:text-blue-500 transition-all duration-200 content-center"
               >
                 {navItem.name}
-              </Link>
+              </a>
             ))}
 
             <HoverBorderGradient onClick={() =>{
