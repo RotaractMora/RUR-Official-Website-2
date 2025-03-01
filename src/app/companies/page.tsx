@@ -130,7 +130,7 @@ export default function Companies() {
       company.name.toLowerCase().includes(query) ||
       company.preferredFields.some(field => field.toLowerCase().includes(query)) ||
       company.qualitiesToLook.some(quality => quality.toLowerCase().includes(query)) ||
-      // company.jobTypes.some(type => type.toLowerCase().includes(query)) ||
+      company.availableJobTypes?.some(type => type.toLowerCase().includes(query)) ||
       company.description.toLowerCase().includes(query)
     );
   }, [searchQuery, companies]);
