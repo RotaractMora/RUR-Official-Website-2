@@ -67,12 +67,6 @@ const SearchBar = ({ searchQuery, setSearchQuery } : { searchQuery: string, setS
   </div>
 );
 
-const SearchResultsInfo = ({ count, query  } : { count: number, query: string }) => (
-  <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-    Found {count} {count === 1 ? 'company' : 'companies'} matching &quot;{query}&quot;
-  </p>
-);
-
 const NoResults = () => (
   <div className="mt-8 p-6 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700">
     <p className="text-gray-600 dark:text-gray-400">No companies found matching your search criteria.</p>
@@ -104,7 +98,11 @@ export default function Companies() {
         }
 
         // order by company name
-        data.companies.sort((a, b) => a.name.localeCompare(b.name));
+        data.companies.sort((a, b) => 
+          a.name.trim().toLowerCase().localeCompare(b.name.trim().toLowerCase(), "en", { sensitivity: "base" })
+        );
+        
+        console.log(` ${data.companies[0]} > ${data.companies[1]} :  ${data.companies[0].name.toLowerCase().localeCompare(data.companies[1].name.toLowerCase())}`);
 
         setCompanies(data.companies);
       } catch (err) {
@@ -132,7 +130,7 @@ export default function Companies() {
       company.name.toLowerCase().includes(query) ||
       company.preferredFields.some(field => field.toLowerCase().includes(query)) ||
       company.qualitiesToLook.some(quality => quality.toLowerCase().includes(query)) ||
-      // company.jobTypes.some(type => type.toLowerCase().includes(query)) ||
+      company.availableJobTypes?.some(type => type.toLowerCase().includes(query)) ||
       company.description.toLowerCase().includes(query)
     );
   }, [searchQuery, companies]);
@@ -168,15 +166,6 @@ export default function Companies() {
         </div>
 
         <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-        
-        {searchQuery ? (
-          <SearchResultsInfo count={filteredCompanies.length} query={searchQuery} />
-        ) : (
-          <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-            Found {companies.length} companies
-          </p>
-        )}
-
 
         {isLoading && (
           <div className="mt-8 p-6 dark:bg-gray-900 rounded-lg borde dark:border-gray-700">
