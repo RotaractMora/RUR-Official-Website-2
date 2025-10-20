@@ -1,7 +1,7 @@
 {
   "hosting": {
     "public": "./out",
-    "target": "rur25-official-web",
+    "site": "rur-26-web-prod-88caf",
     "ignore": [
       "firebase.json",
       "**/.*",
