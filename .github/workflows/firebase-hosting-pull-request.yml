@@ -26,5 +26,5 @@ jobs:
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_RUR_24 }}
-          projectId: rur-24
-          target: rur25-official-web
+          projectId: rur-26-web-prod
+          target: rur-26-web-prod-88caf
