@@ -1,33 +1,30 @@
-"use client";
-import Image from "next/image";
-import React, { useEffect, useId, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { useOutsideClick } from "@/hooks/use-outside-click";
-import { IExpandableCard } from "@/interfaces/IExpandableCard";
+'use client';
+import Image from 'next/image';
+import React, { useEffect, useId, useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useOutsideClick } from '@/hooks/use-outside-click';
+import { IExpandableCard } from '@/interfaces/IExpandableCard';
 
-
-export default function ExpandableCardGrid({cards}: {cards: IExpandableCard[]}) {
-  const [active, setActive] = useState<(typeof cards) [number] | boolean | null>(
-    null
-  );
+export default function ExpandableCardGrid({ cards }: { cards: IExpandableCard[] }) {
+  const [active, setActive] = useState<(typeof cards)[number] | boolean | null>(null);
   const id = useId();
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
+      if (event.key === 'Escape') {
         setActive(false);
       }
     }
 
-    if (active && typeof active === "object") {
-      document.body.style.overflow = "hidden";
+    if (active && typeof active === 'object') {
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = 'auto';
     }
 
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
   }, [active]);
 
   useOutsideClick(ref, () => setActive(null));
@@ -35,7 +32,7 @@ export default function ExpandableCardGrid({cards}: {cards: IExpandableCard[]}) 
   return (
     <>
       <AnimatePresence>
-        {active && typeof active === "object" && (
+        {active && typeof active === 'object' && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -45,7 +42,7 @@ export default function ExpandableCardGrid({cards}: {cards: IExpandableCard[]}) 
         )}
       </AnimatePresence>
       <AnimatePresence>
-        {active && typeof active === "object" ? (
+        {active && typeof active === 'object' ? (
           <div className="fixed inset-0  grid place-items-center z-[100]">
             <motion.button
               key={`button-${active.title}-${id}`}
@@ -120,9 +117,7 @@ export default function ExpandableCardGrid({cards}: {cards: IExpandableCard[]}) 
                     exit={{ opacity: 0 }}
                     className="text-neutral-600 text-xs md:text-sm lg:text-base h-40 md:h-fit pb-10 flex flex-col items-start gap-4 overflow-auto dark:text-neutral-400 [mask:linear-gradient(to_bottom,white,white,transparent)] [scrollbar-width:none] [-ms-overflow-style:none] [-webkit-overflow-scrolling:touch]"
                   >
-                    {typeof active.content === "function"
-                      ? active.content()
-                      : active.content}
+                    {typeof active.content === 'function' ? active.content() : active.content}
                   </motion.div>
                 </div>
               </div>

@@ -1,172 +1,171 @@
-"use client";
+'use client';
 
-import ResponsiveHero from "@/components/ui/responsiveHero";
-import RootLayout from "./layout";
-import { FloatingNav } from "@/components/ui/floating-navbar";
-import React, { useEffect, useState } from "react";
-import RUR_IMG1 from "../../public/Images/RUR (1).jpg";
-import RUR_IMG2 from "../../public/Images/RUR (2).jpg";
-import RUR_IMG3 from "../../public/Images/RUR (3).jpg";
-import RUR_IMG4 from "../../public/Images/RUR (4).jpg";
-import RUR_IMG5 from "../../public/Images/RUR (5).jpg";
-import RUR_IMG6 from "../../public/Images/RUR (6).jpg";
-import RUR_IMG7 from "../../public/Images/RUR (7).jpg";
-import RUR_IMG8 from "../../public/Images/RUR (8).jpg";
-import RUR_IMG9 from "../../public/Images/RUR (9).jpg";
-import RUR_IMG10 from "../../public/Images/RUR (10).jpg";
-import RUR_IMG11 from "../../public/Images/RUR (11).jpg";
-import RUR_IMG12 from "../../public/Images/RUR (12).jpg";
-import RUR_IMG13 from "../../public/Images/RUR (13).jpg";
-import RUR_IMG14 from "../../public/Images/RUR (14).jpg";
-import RUR_IMG15 from "../../public/Images/RUR (15).jpg";
+import ResponsiveHero from '@/components/ui/responsiveHero';
+import RootLayout from './layout';
+import { FloatingNav } from '@/components/ui/floating-navbar';
+import React, { useEffect, useState } from 'react';
+import RUR_IMG1 from '../../public/Images/RUR (1).jpg';
+import RUR_IMG2 from '../../public/Images/RUR (2).jpg';
+import RUR_IMG3 from '../../public/Images/RUR (3).jpg';
+import RUR_IMG4 from '../../public/Images/RUR (4).jpg';
+import RUR_IMG5 from '../../public/Images/RUR (5).jpg';
+import RUR_IMG6 from '../../public/Images/RUR (6).jpg';
+import RUR_IMG7 from '../../public/Images/RUR (7).jpg';
+import RUR_IMG8 from '../../public/Images/RUR (8).jpg';
+import RUR_IMG9 from '../../public/Images/RUR (9).jpg';
+import RUR_IMG10 from '../../public/Images/RUR (10).jpg';
+import RUR_IMG11 from '../../public/Images/RUR (11).jpg';
+import RUR_IMG12 from '../../public/Images/RUR (12).jpg';
+import RUR_IMG13 from '../../public/Images/RUR (13).jpg';
+import RUR_IMG14 from '../../public/Images/RUR (14).jpg';
+import RUR_IMG15 from '../../public/Images/RUR (15).jpg';
 
-import SPONSOR from "../../public/Images/sponsor.png";
+import SPONSOR from '../../public/Images/sponsor.png';
 // import LoadingAnimation from "../../public/animations/RUR.json"
-import LoadingAnimation from "../../public/animations/RUR_Loading.json";
+import LoadingAnimation from '../../public/animations/RUR_Loading.json';
 
-import { Timeline } from "@/components/ui/timeline";
-import Image from "next/image";
-import { TracingBeam } from "@/components/ui/tracing-beam";
-import ReachUsSection from "@/components/blocks/reach-us-section";
-import Footer from "@/components/blocks/footer";
-import { GridBackground } from "@/components/ui/backgrounds";
-import { ISponsor } from "@/interfaces/ISponsors";
-import { getDataFromAggregatedDoc } from "@/services/aggregatedData.service";
-import { ITimelineData } from "@/interfaces/ITimeline";
-import { HeroHighlight } from "@/components/ui/hero-highlight";
-import { Highlighter } from "@/components/blocks/hilight";
+import { Timeline } from '@/components/ui/timeline';
+import Image from 'next/image';
+import { TracingBeam } from '@/components/ui/tracing-beam';
+import ReachUsSection from '@/components/blocks/reach-us-section';
+import Footer from '@/components/blocks/footer';
+import { GridBackground } from '@/components/ui/backgrounds';
+import { ISponsor } from '@/interfaces/ISponsors';
+import { getDataFromAggregatedDoc } from '@/services/aggregatedData.service';
+import { ITimelineData } from '@/interfaces/ITimeline';
+import { HeroHighlight } from '@/components/ui/hero-highlight';
+import { Highlighter } from '@/components/blocks/hilight';
 import {
   HomeIcon,
   ClockIcon,
   MegaphoneIcon,
   PhoneArrowUpRightIcon,
-} from "@heroicons/react/24/solid";
-import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
-import { CardDesign } from "@/components/ui/card-design";
+} from '@heroicons/react/24/solid';
+import { TextGenerateEffect } from '@/components/ui/text-generate-effect';
+import { CardDesign } from '@/components/ui/card-design';
 // import Lottie from "react-lottie-player";
-import { IContact } from "@/interfaces/IContacts";
-import RegistrationStatus from "@/components/ui/google-gemini-effect";
-import BackToTopButton from "@/components/ui/back-to-top";
-import CodeEvelPara from "@/components/ui/code-evel-para";
-import { HeroVideo } from "@/components/ui/hero-video";
-import ExpandableCard from "@/components/blocks/expandable-card-standard";
-import Head from "next/head";
-import { sendGTMEvent } from "@next/third-parties/google";
+import { IContact } from '@/interfaces/IContacts';
+import RegistrationStatus from '@/components/ui/google-gemini-effect';
+import BackToTopButton from '@/components/ui/back-to-top';
+import CodeEvelPara from '@/components/ui/code-evel-para';
+import { HeroVideo } from '@/components/ui/hero-video';
+import ExpandableCard from '@/components/blocks/expandable-card-standard';
+import Head from 'next/head';
+import { sendGTMEvent } from '@next/third-parties/google';
 import ReactDOM from 'react-dom';
 import { Helmet } from 'react-helmet-async';
-import { BuildingOfficeIcon } from "@heroicons/react/24/outline";
- 
-import dynamic from "next/dynamic";
-const Lottie = dynamic(() => import("react-lottie-player"), { ssr: false });
+import { BuildingOfficeIcon } from '@heroicons/react/24/outline';
 
+import dynamic from 'next/dynamic';
+const Lottie = dynamic(() => import('react-lottie-player'), { ssr: false });
 
 export const products = [
   {
-    title: "Are You Ready?",
-    link: "#",
+    title: 'Are You Ready?',
+    link: '#',
     thumbnail: RUR_IMG1,
   },
   {
-    title: "Are You Ready?",
-    link: "#",
+    title: 'Are You Ready?',
+    link: '#',
     thumbnail: RUR_IMG2,
   },
   {
-    title: "Are You Ready?",
-    link: "#",
+    title: 'Are You Ready?',
+    link: '#',
     thumbnail: RUR_IMG3,
   },
   {
-    title: "Are You Ready?",
-    link: "#",
+    title: 'Are You Ready?',
+    link: '#',
     thumbnail: RUR_IMG4,
   },
   {
-    title: "Are You Ready?",
-    link: "#",
+    title: 'Are You Ready?',
+    link: '#',
     thumbnail: RUR_IMG5,
   },
   {
-    title: "Are You Ready?",
-    link: "#",
+    title: 'Are You Ready?',
+    link: '#',
     thumbnail: RUR_IMG6,
   },
   {
-    title: "Are You Ready?",
-    link: "#",
+    title: 'Are You Ready?',
+    link: '#',
     thumbnail: RUR_IMG7,
   },
   {
-    title: "Are You Ready?",
-    link: "#",
+    title: 'Are You Ready?',
+    link: '#',
     thumbnail: RUR_IMG8,
   },
   {
-    title: "Are You Ready?",
-    link: "#",
+    title: 'Are You Ready?',
+    link: '#',
     thumbnail: RUR_IMG9,
   },
   {
-    title: "Are You Ready?",
-    link: "#",
+    title: 'Are You Ready?',
+    link: '#',
     thumbnail: RUR_IMG10,
   },
   {
-    title: "Are You Ready?",
-    link: "#",
+    title: 'Are You Ready?',
+    link: '#',
     thumbnail: RUR_IMG11,
   },
   {
-    title: "Are You Ready?",
-    link: "#",
+    title: 'Are You Ready?',
+    link: '#',
     thumbnail: RUR_IMG12,
   },
   {
-    title: "Are You Ready?",
-    link: "#",
+    title: 'Are You Ready?',
+    link: '#',
     thumbnail: RUR_IMG13,
   },
   {
-    title: "Are You Ready?",
-    link: "#",
+    title: 'Are You Ready?',
+    link: '#',
     thumbnail: RUR_IMG14,
   },
   {
-    title: "Are You Ready?",
-    link: "#",
+    title: 'Are You Ready?',
+    link: '#',
     thumbnail: RUR_IMG15,
   },
 ];
 
 const navItms = [
   {
-    name: "Home",
-    link: "/",
+    name: 'Home',
+    link: '/',
     icon: <HomeIcon />,
   },
   {
-    name: "Timeline",
-    link: "#timeline",
+    name: 'Timeline',
+    link: '#timeline',
     icon: <ClockIcon />,
   },
   {
-    name: "Sponsors",
-    link: "#sponsors",
+    name: 'Sponsors',
+    link: '#sponsors',
     icon: <MegaphoneIcon />,
   },
   {
-    name: "Reach Us",
-    link: "#reach_us",
+    name: 'Reach Us',
+    link: '#reach_us',
     icon: <PhoneArrowUpRightIcon />,
   },
   {
-    name: "Registered Companies",
-    link: "/companies",
-    icon: <BuildingOfficeIcon />, 
-  }
+    name: 'Registered Companies',
+    link: '/companies',
+    icon: <BuildingOfficeIcon />,
+  },
 ];
 
-console.log("Home Page");
+console.log('Home Page');
 
 const Loading = () => {
   return (
@@ -190,19 +189,17 @@ const Para = ({
   loadCallback?: (count: number) => void;
 }): React.ReactNode => {
   const color =
-    level === "Gold"
-      ? "custom-color-gold dark:custom-dark-color-gold"
-      : level === "Silver"
-      ? "custom-color-silver dark:custom-dark-color-silver"
-      : "custom-color-bronze dark:custom-dark-color-bronze";
+    level === 'Gold'
+      ? 'custom-color-gold dark:custom-dark-color-gold'
+      : level === 'Silver'
+        ? 'custom-color-silver dark:custom-dark-color-silver'
+        : 'custom-color-bronze dark:custom-dark-color-bronze';
 
   return (
     <div className="w-full h-full max-w-xl mx-auto px-4 md:px-6 lg:px-6 flex flex-col items-center justify-stretch min-h-[400px] lg:min-h-[300px]">
       <h6
         className={
-          "text-xl md:text-2xl lg:text-3xl text-center font-bold p-2 py-3" +
-          " text-" +
-          color
+          'text-xl md:text-2xl lg:text-3xl text-center font-bold p-2 py-3' + ' text-' + color
         }
       >
         {partnership}
@@ -249,7 +246,7 @@ export default function Home() {
   const [isReachUsGridLoading, setIsReachUsGridLoading] = useState(true);
 
   const loadingTimeout = () => {
-    console.log("Loading animation timeout");
+    console.log('Loading animation timeout');
     setTimeout(() => {
       setIsLoadingAnimComplete(true);
     }, 2000);
@@ -257,8 +254,8 @@ export default function Home() {
 
   useEffect(() => {
     sendGTMEvent({
-      event: "page view",
-      page: "home",
+      event: 'page view',
+      page: 'home',
       path: window.location.pathname,
     });
 
@@ -277,7 +274,7 @@ export default function Home() {
         const data = await getDataFromAggregatedDoc();
 
         if (!data) {
-          throw new Error("Failed to fetch data");
+          throw new Error('Failed to fetch data');
         }
 
         setTimeline(data.timelineList || []);
@@ -285,11 +282,11 @@ export default function Home() {
         setReachUsContacts(data.reachUsContactList || []);
         setError(null);
       } catch (err) {
-        console.error("Error fetching data:", err);
-        setError("Failed to load data. Please try again later.");
+        console.error('Error fetching data:', err);
+        setError('Failed to load data. Please try again later.');
         sendGTMEvent({
-          event: "JS_Error",
-          error_name: "AggregatedDocLoadError",
+          event: 'JS_Error',
+          error_name: 'AggregatedDocLoadError',
           error: err,
         });
       } finally {
@@ -298,7 +295,7 @@ export default function Home() {
         setIsLoading(false);
         setIsReachUsGridLoading(false);
 
-        console.log("Data fetched end");
+        console.log('Data fetched end');
       }
     };
 
@@ -340,143 +337,137 @@ export default function Home() {
 
   return (
     <>
-    <RootLayout>
-      <Helmet>
-              <meta name="title" content="Are You Ready? 2025" />
-              <meta name="robots" content="index, follow"/>
-              <meta name="googlebot" content="index, follow"/>
-              <meta name="referrer" content="no-referrer" />
-              <title> Are You Ready? 2025 </title>
+      <RootLayout>
+        <Helmet>
+          <meta name="title" content="Are You Ready? 2025" />
+          <meta name="robots" content="index, follow" />
+          <meta name="googlebot" content="index, follow" />
+          <meta name="referrer" content="no-referrer" />
+          <title> Are You Ready? 2025 </title>
 
-              <link rel="bookmark" href="https://areyouready.uom.lk/#timeline" />
-              <link rel="bookmark" href="https://areyouready.uom.lk/#sponsors" />
-              <link rel="bookmark" href="https://areyouready.uom.lk/#reach_us" />
-              <link rel="bookmark" href="https://areyouready.uom.lk/#registrationStatus" />
-              <link rel="bookmark" href="https://areyouready.uom.lk/#registeredCompanies" />
-      </Helmet>
+          <link rel="bookmark" href="https://areyouready.uom.lk/#timeline" />
+          <link rel="bookmark" href="https://areyouready.uom.lk/#sponsors" />
+          <link rel="bookmark" href="https://areyouready.uom.lk/#reach_us" />
+          <link rel="bookmark" href="https://areyouready.uom.lk/#registrationStatus" />
+          <link rel="bookmark" href="https://areyouready.uom.lk/#registeredCompanies" />
+        </Helmet>
 
+        <BackToTopButton />
 
-      <BackToTopButton />
+        <FloatingNav navItems={navItms} />
+        {!isLoadingAnimComplete && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-[#545576]">
+            <Lottie
+              loop={true}
+              animationData={LoadingAnimation}
+              play
+              style={{ width: 150, height: 150 }}
+              onLoopComplete={loadingTimeout}
+            />
+          </div>
+        )}
 
-      <FloatingNav navItems={navItms} />
-      {!isLoadingAnimComplete && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-[#545576]">
-          <Lottie
-            loop={true}
-            animationData={LoadingAnimation}
-            play
-            style={{ width: 150, height: 150 }}
-            onLoopComplete={loadingTimeout}
+        <div className="space-y-0">
+          <HeroVideo
+            videoSrc="videos/RUR_Logo.mp4"
+            play={isLoadingAnimComplete}
+            onLoadedVideo={() => {
+              setIsLoadingAnimComplete(true);
+            }}
           />
+          <ResponsiveHero products={products} />
+          <AboutSection content={content} />
         </div>
-      )}
 
-      <div className="space-y-0">
-        <HeroVideo
-          videoSrc="videos/RUR_Logo.mp4"
-          play={isLoadingAnimComplete}
-          onLoadedVideo={() => {
-            setIsLoadingAnimComplete(true);
-          }}
-        />
-        <ResponsiveHero products={products} />
-        <AboutSection content={content} />
-      </div>
+        <div id="timeline" className="scroll-mt-20">
+          {error ? (
+            <ErrorMessage message={error} />
+          ) : isTimelineLoading ? (
+            <Loading />
+          ) : getEvents().length > 0 ? (
+            <Timeline data={getEvents()} />
+          ) : (
+            <EmptyStateMessage message="Timeline will be updated soon." />
+          )}
+        </div>
 
-      <div id="timeline" className="scroll-mt-20">
+        {sponsors.length > 0 && (
+          <div className="scroll-mt-20 py-8 px-6 text-center bg-gray-100 dark:bg-gray-800">
+            <h2 className="text-3xl md:text-4xl font-bold text-center dark:text-custom-color-800 bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent mb-4">
+              Sponsors
+            </h2>
+          </div>
+        )}
+        <div id="sponsors"></div>
+
         {error ? (
           <ErrorMessage message={error} />
-        ) : isTimelineLoading ? (
+        ) : isSponsorsLoading ? (
           <Loading />
-        ) : getEvents().length > 0 ? (
-          <Timeline data={getEvents()} />
-        ) : (
-          <EmptyStateMessage message="Timeline will be updated soon." />
-        )}
-      </div>
-
-{ sponsors.length > 0 &&
-      <div className="scroll-mt-20 py-8 px-6 text-center bg-gray-100 dark:bg-gray-800">
-        <h2 className="text-3xl md:text-4xl font-bold text-center dark:text-custom-color-800 bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent mb-4">
-        Sponsors
-        </h2>
-      </div>
-}
-<div id="sponsors"></div>
-
-      {error ? (
-        <ErrorMessage message={error} />
-      ) : isSponsorsLoading ? (
-        <Loading />
-      ) : sponsors.length > 0 ? (
-        <TracingBeam className="px-4 md:px-6 py-24">
-          {/* Sponsors Section */}
-          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {sponsors
-              .sort((a, b) => {
-                return a.order - b.order;
-              })
-              .map((sponsor, index) => (
-                <CardDesign
-                  key={`${sponsor.level}-${index}`}
-                  className="w-full max-w-sm"
-                  CardColor={sponsor.level}
-                >
-                  <Para
-                    name={sponsor.name}
-                    imgURL={sponsor.imgURL}
-                    level={sponsor.level}
-                    partnership={sponsor.partnership}
-                  />
-                </CardDesign>
-              ))}
-          </div>
-        </TracingBeam>
-      ) : (
-        <EmptyStateMessage message="Sponsors will be available soon." />
-      )}
-
-      { sponsors.length > 0 &&
-            <div className="scroll-mt-20 py-8 px-6 text-center bg-gray-100 dark:bg-gray-800">
-              <h2 className="text-3xl md:text-4xl font-bold text-center dark:text-custom-color-800 bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent mb-4">
-                Thank You for Your Support!
-              </h2>
-              <p className="mt-4 max-w-7xl mx-auto text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
-                We deeply appreciate your unwavering support in making this event a
-                success. Your contributions inspire us to innovate, collaborate, and
-                grow. Together, we’re achieving remarkable milestones. Stay tuned for
-                exciting updates as we continue this incredible journey. Thank you for
-                being a vital part of our mission!
-              </p>
+        ) : sponsors.length > 0 ? (
+          <TracingBeam className="px-4 md:px-6 py-24">
+            {/* Sponsors Section */}
+            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {sponsors
+                .sort((a, b) => {
+                  return a.order - b.order;
+                })
+                .map((sponsor, index) => (
+                  <CardDesign
+                    key={`${sponsor.level}-${index}`}
+                    className="w-full max-w-sm"
+                    CardColor={sponsor.level}
+                  >
+                    <Para
+                      name={sponsor.name}
+                      imgURL={sponsor.imgURL}
+                      level={sponsor.level}
+                      partnership={sponsor.partnership}
+                    />
+                  </CardDesign>
+                ))}
             </div>
-      }
-      
-      <section
-        id="registrationStatus"
-        className="scroll-mt-20 relative w-full"
-      >
-        <div className="w-full mx-auto">
-          <div className="relative w-full z-10">
-            <RegistrationStatus />
-          </div>
-        </div>
-      </section>
-
-      <div id="registeredCompanies" className="m-0 p-0">
-      <ExpandableCard />
-      </div>
-
-
-      <div id="reach_us" className="scroll-mt-20">
-        {!isReachUsGridLoading && (
-          <GridBackground title="Reach Us">
-            <ReachUsSection grid={reachUsContacts} />
-          </GridBackground>
+          </TracingBeam>
+        ) : (
+          <EmptyStateMessage message="Sponsors will be available soon." />
         )}
-      </div>
 
-      <Footer />
-    </RootLayout>
+        {sponsors.length > 0 && (
+          <div className="scroll-mt-20 py-8 px-6 text-center bg-gray-100 dark:bg-gray-800">
+            <h2 className="text-3xl md:text-4xl font-bold text-center dark:text-custom-color-800 bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent mb-4">
+              Thank You for Your Support!
+            </h2>
+            <p className="mt-4 max-w-7xl mx-auto text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+              We deeply appreciate your unwavering support in making this event a success. Your
+              contributions inspire us to innovate, collaborate, and grow. Together, we’re achieving
+              remarkable milestones. Stay tuned for exciting updates as we continue this incredible
+              journey. Thank you for being a vital part of our mission!
+            </p>
+          </div>
+        )}
+
+        <section id="registrationStatus" className="scroll-mt-20 relative w-full">
+          <div className="w-full mx-auto">
+            <div className="relative w-full z-10">
+              <RegistrationStatus />
+            </div>
+          </div>
+        </section>
+
+        <div id="registeredCompanies" className="m-0 p-0">
+          <ExpandableCard />
+        </div>
+
+        <div id="reach_us" className="scroll-mt-20">
+          {!isReachUsGridLoading && (
+            <GridBackground title="Reach Us">
+              <ReachUsSection grid={reachUsContacts} />
+            </GridBackground>
+          )}
+        </div>
+
+        <Footer />
+      </RootLayout>
     </>
   );
 }

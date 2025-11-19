@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
 import React, { useState, useEffect } from 'react';
-import { HeroParallax } from "./hero-parallax";
+import { HeroParallax } from './hero-parallax';
 
 const MobileHero = () => {
   return (
@@ -11,9 +11,9 @@ const MobileHero = () => {
         {/* Large circle image 1 */}
         <div className="absolute sm2:w-[370px] sm2:h-[370px] sm1:w-[350px] sm1:h-[350px] w-[300px] h-[300px] top-[15px] left-[5px]">
           <div className="w-full h-full rounded-full overflow-hidden">
-            <img 
+            <img
               src="/Images/RUR (1).jpg"
-              alt="from Rur previous event" 
+              alt="from Rur previous event"
               className="w-full h-full object-cover opacity-100"
             />
           </div>
@@ -22,9 +22,9 @@ const MobileHero = () => {
         {/* Large circle image 2 */}
         <div className="absolute sm2:w-[385px] sm2:h-[385px] sm1:w-[350px] sm1:h-[350px] w-[300px] h-[300px] top-[50%] right-[5px]">
           <div className="w-full h-full rounded-full overflow-hidden transform translate-y-[-50%]">
-            <img 
+            <img
               src="/Images/RUR (2).jpg"
-              alt="from Rur previous event" 
+              alt="from Rur previous event"
               className="w-full h-full object-cover opacity-100"
             />
           </div>
@@ -33,9 +33,9 @@ const MobileHero = () => {
         {/* Small circle image */}
         <div className="absolute sm2:w-[400px] sm2:h-[400px] sm1:w-[350px] sm1:h-[350px] w-[300px] h-[300px] bottom-[15px] left-[5px]">
           <div className="w-full h-full rounded-full overflow-hidden">
-            <img 
+            <img
               src="/Images/RUR (3).jpg"
-              alt="from Rur previous event" 
+              alt="from Rur previous event"
               className="w-full h-full object-cover opacity-95"
             />
           </div>
@@ -58,10 +58,8 @@ const MobileHero = () => {
       {/* Content */}
       <div className="relative px-6 py-2 mx-auto max-w-7xl">
         <div className="flex flex-col items-start justify-center min-h-screen max-w-2xl">
-
-
           {/* Description */}
-          <div className='sm1:mx-1 mx-auto'>
+          <div className="sm1:mx-1 mx-auto">
             {/* <p className="dark:text-gray-300 text-custom-color-300 text-lg mb-12 max-w-md sm1:text-left text-center">
               The Virtual Odyssey in Corporate Arena
             </p> */}
@@ -84,7 +82,6 @@ const MobileHero = () => {
     </div>
   );
 };
-
 
 interface ResponsiveHeroProps {
   products: any; // Replace 'any' with the appropriate type if known
@@ -109,13 +106,7 @@ const ResponsiveHero: React.FC<ResponsiveHeroProps> = ({ products }) => {
   }, []);
 
   return (
-    <div className="w-full">
-      {isMobile ? (
-        <MobileHero />
-      ) : (
-        <HeroParallax products={products} />
-      )}
-    </div>
+    <div className="w-full">{isMobile ? <MobileHero /> : <HeroParallax products={products} />}</div>
   );
 };
 

@@ -1,13 +1,13 @@
-"use client"
-import React, { useEffect, useState } from "react";
-import { AdminDashboardLayout } from "../../admin-dashboard-layout";
-import { getTimeLineEvents } from "@/services/timeline.service";
-import { ITimelineData } from "@/interfaces/ITimeline";
-import TimelineAddUpdateModal from "@/components/blocks/modals/timeline-add-update-modal";
-import TimelineDeleteModal from "@/components/blocks/modals/timeline-delete-modal";
-import Image from "next/image";
+'use client';
+import React, { useEffect, useState } from 'react';
+import { AdminDashboardLayout } from '../../admin-dashboard-layout';
+import { getTimeLineEvents } from '@/services/timeline.service';
+import { ITimelineData } from '@/interfaces/ITimeline';
+import TimelineAddUpdateModal from '@/components/blocks/modals/timeline-add-update-modal';
+import TimelineDeleteModal from '@/components/blocks/modals/timeline-delete-modal';
+import Image from 'next/image';
 import Swal from 'sweetalert2';
-import { sendGTMEvent } from "@next/third-parties/google";
+import { sendGTMEvent } from '@next/third-parties/google';
 
 export default function ManageTimeline() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -21,7 +21,11 @@ export default function ManageTimeline() {
   const [error, setError] = useState<string | null>(null);
 
   // Enhanced alert function with custom styling for dark mode
-  const showAlert = async (title: string, message: string, icon: 'error' | 'success' | 'warning' | 'info') => {
+  const showAlert = async (
+    title: string,
+    message: string,
+    icon: 'error' | 'success' | 'warning' | 'info',
+  ) => {
     return Swal.fire({
       title,
       text: message,
@@ -39,11 +43,11 @@ export default function ManageTimeline() {
       },
       backdrop: 'rgba(0,0,0,0.4)',
       showClass: {
-        popup: 'animate__animated animate__fadeIn'
+        popup: 'animate__animated animate__fadeIn',
       },
       hideClass: {
-        popup: 'animate__animated animate__fadeOut'
-      }
+        popup: 'animate__animated animate__fadeOut',
+      },
     });
   };
 
@@ -60,7 +64,7 @@ export default function ManageTimeline() {
       await fetch('https://www.google.com/favicon.ico', {
         mode: 'no-cors',
         signal: controller.signal,
-        cache: 'no-store'
+        cache: 'no-store',
       });
 
       clearTimeout(timeoutId);
@@ -71,37 +75,38 @@ export default function ManageTimeline() {
 
   // Enhanced error handler
   const handleError = async (error: any) => {
-    let errorMessage = "An unexpected error occurred";
-    let errorTitle = "Error";
+    let errorMessage = 'An unexpected error occurred';
+    let errorTitle = 'Error';
 
     switch (true) {
       case error.message === 'NO_INTERNET':
-        errorMessage = "No internet connection. Please check your network settings and try again.";
-        errorTitle = "Connection Error";
+        errorMessage = 'No internet connection. Please check your network settings and try again.';
+        errorTitle = 'Connection Error';
         break;
       case error.message === 'NETWORK_ERROR':
-        errorMessage = "Unable to connect to the server. Please check your connection and try again.";
-        errorTitle = "Network Error";
+        errorMessage =
+          'Unable to connect to the server. Please check your connection and try again.';
+        errorTitle = 'Network Error';
         break;
       case error.message === 'Request timed out':
-        errorMessage = "The request took too long to complete. Please try again.";
-        errorTitle = "Timeout Error";
+        errorMessage = 'The request took too long to complete. Please try again.';
+        errorTitle = 'Timeout Error';
         break;
       case error.code === 'PERMISSION_DENIED':
         errorMessage = "You don't have permission to access this data.";
-        errorTitle = "Access Denied";
+        errorTitle = 'Access Denied';
         break;
       case error.code === 'FAILED_PRECONDITION':
-        errorMessage = "The operation failed due to a server configuration issue.";
-        errorTitle = "Server Error";
+        errorMessage = 'The operation failed due to a server configuration issue.';
+        errorTitle = 'Server Error';
         break;
       case error.code === 'UNAVAILABLE':
-        errorMessage = "The service is temporarily unavailable. Please try again later.";
-        errorTitle = "Service Unavailable";
+        errorMessage = 'The service is temporarily unavailable. Please try again later.';
+        errorTitle = 'Service Unavailable';
         break;
       case error instanceof TypeError:
-        errorMessage = "There was a problem with the data format.";
-        errorTitle = "Data Error";
+        errorMessage = 'There was a problem with the data format.';
+        errorTitle = 'Data Error';
         break;
       default:
         if (error.message) {
@@ -114,9 +119,8 @@ export default function ManageTimeline() {
   };
 
   useEffect(() => {
-    sendGTMEvent({ event: 'page view', page: 'admin' , path: window.location.pathname });
-}
-, []);
+    sendGTMEvent({ event: 'page view', page: 'admin', path: window.location.pathname });
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -124,7 +128,7 @@ export default function ManageTimeline() {
 
     const fetchTimelineEvents = async () => {
       if (!isMounted) return;
-      
+
       setIsLoading(true);
       setError(null);
 
@@ -141,10 +145,9 @@ export default function ManageTimeline() {
         const data = await Promise.race([fetchPromise, timeoutPromise]);
 
         if (!isMounted) return;
-        
+
         setTimelineEvents(data as ITimelineData[]);
         setError(null);
-
       } catch (error: any) {
         if (!isMounted) return;
         await handleError(error);
@@ -164,7 +167,11 @@ export default function ManageTimeline() {
 
     const handleOffline = async () => {
       if (isMounted) {
-        await showAlert('Disconnected', 'No internet connection. Some features may be unavailable.', 'warning');
+        await showAlert(
+          'Disconnected',
+          'No internet connection. Some features may be unavailable.',
+          'warning',
+        );
         setError('No internet connection');
       }
     };
@@ -232,13 +239,27 @@ export default function ManageTimeline() {
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                  <th scope="col" className="px-6 py-3">Title</th>
-                  <th scope="col" className="px-6 py-3">Image</th>
-                  <th scope="col" className="px-6 py-3">Event Date</th>
-                  <th scope="col" className="px-6 py-3">Order</th>
-                  <th scope="col" className="px-6 py-3">Button</th>
-                  <th scope="col" className="px-6 py-3">Visiblity</th>
-                  <th scope="col" className="px-6 py-3">Action</th>
+                  <th scope="col" className="px-6 py-3">
+                    Title
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Image
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Event Date
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Order
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Button
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Visiblity
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Action
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -247,26 +268,25 @@ export default function ManageTimeline() {
                     key={event.id}
                     className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
                   >
-                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    >
                       {event.title}
                     </th>
-                    <td className="px-6 py-4"> 
-                    <div className="relative overflow-visible">
-                      <Image
-                        src={event.imgURL}
-                        alt={event.title} 
-                        width={50}
-                        height={50}
-                        className="transition-transform duration-300 ease-in-out transform hover:scale-[5] hover:border-slate-800 p-0 dark:bg-black bg-white"
-                      />
-                    </div>
-                    </td>
                     <td className="px-6 py-4">
-                      {event.eventDate.toDate().toLocaleString()}
+                      <div className="relative overflow-visible">
+                        <Image
+                          src={event.imgURL}
+                          alt={event.title}
+                          width={50}
+                          height={50}
+                          className="transition-transform duration-300 ease-in-out transform hover:scale-[5] hover:border-slate-800 p-0 dark:bg-black bg-white"
+                        />
+                      </div>
                     </td>
-                    <td className="px-6 py-4">
-                      {event.order}
-                    </td>
+                    <td className="px-6 py-4">{event.eventDate.toDate().toLocaleString()}</td>
+                    <td className="px-6 py-4">{event.order}</td>
                     <td className="px-6 py-4">
                       <div className="flex flex-col text-xs">
                         <span>{event.btnText}</span>
@@ -277,13 +297,17 @@ export default function ManageTimeline() {
                     </td>
                     <td className="px-6 py-4">
                       {event.isVisibleToPublic ? (
-                        <span className="bg-green-500 text-white p-1 px-2 font-medium rounded-lg ">Public</span>
+                        <span className="bg-green-500 text-white p-1 px-2 font-medium rounded-lg ">
+                          Public
+                        </span>
                       ) : (
-                        <span className="bg-red-500 text-white p-1 px-2 font-medium rounded-lg ">Hidden</span>
+                        <span className="bg-red-500 text-white p-1 px-2 font-medium rounded-lg ">
+                          Hidden
+                        </span>
                       )}
                     </td>
                     <td className="px-6 py-4">
-                      <button 
+                      <button
                         onClick={() => {
                           setEventToUpdate(event);
                           setIsAddUpdateModalOpen(true);
@@ -307,18 +331,27 @@ export default function ManageTimeline() {
         )}
 
         <div className="mt-3">
-          <button 
-            onClick={
-              () => {
-                setEventToUpdate(null);
-                setIsAddUpdateModalOpen(true);
-              }
-            } 
-            className="inline-flex items-center px-6 py-3 text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 rounded-lg text-sm font-medium shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5" 
+          <button
+            onClick={() => {
+              setEventToUpdate(null);
+              setIsAddUpdateModalOpen(true);
+            }}
+            className="inline-flex items-center px-6 py-3 text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 rounded-lg text-sm font-medium shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5"
             type="button"
           >
-            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            <svg
+              className="w-5 h-5 mr-2"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+              />
             </svg>
             Add Timeline Event
           </button>

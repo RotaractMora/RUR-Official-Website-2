@@ -1,13 +1,18 @@
-"use client"
+'use client';
 import React, { useState } from 'react';
 import { deleteReachUsContact } from '@/services/reachus.service';
 import { IContact } from '@/interfaces/IContacts';
 import { deleteFile, getFileReferenceByUrl } from '@/services/firebaseStorage.service';
 
-function ReachUsContactDeleteModal(
-    {contact, onClose, onDelete }: {contact: IContact, onClose: () => void, onDelete: () => void}
-) {
-
+function ReachUsContactDeleteModal({
+  contact,
+  onClose,
+  onDelete,
+}: {
+  contact: IContact;
+  onClose: () => void;
+  onDelete: () => void;
+}) {
   const [contactToDelete, setContactToDelete] = useState<IContact | null>(contact);
 
   const toggleModal = () => {
@@ -15,55 +20,54 @@ function ReachUsContactDeleteModal(
     onClose();
   };
 
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     if (contactToDelete?.id) {
-        // if img url is not null, delete the image from storage and starts with firebasestorage.googleapis.com
-        if (contactToDelete.photo && contactToDelete.photo !== "" && contactToDelete.photo.startsWith("https://firebasestorage.googleapis.com")) {
-          getFileReferenceByUrl(contactToDelete.photo)
-          .then((fileRef) => {
-            if (fileRef) {
-              deleteFile(fileRef)
+      // if img url is not null, delete the image from storage and starts with firebasestorage.googleapis.com
+      if (
+        contactToDelete.photo &&
+        contactToDelete.photo !== '' &&
+        contactToDelete.photo.startsWith('https://firebasestorage.googleapis.com')
+      ) {
+        getFileReferenceByUrl(contactToDelete.photo).then((fileRef) => {
+          if (fileRef) {
+            deleteFile(fileRef)
               .then((res) => {
-                console.log("Res", res);
+                console.log('Res', res);
                 if (res == true) {
-                  console.log("Image deleted successfully", contactToDelete.photo);
-  
+                  console.log('Image deleted successfully', contactToDelete.photo);
+
                   // delete the contact from the database
                   if (contactToDelete?.id) {
                     deleteReachUsContact(contactToDelete.id)
                       .then(() => {
-                          console.log("contact deleted successfully");
-                          onDelete();
-                          toggleModal();
-                          })
+                        console.log('contact deleted successfully');
+                        onDelete();
+                        toggleModal();
+                      })
                       .catch((error) => {
-                          console.error("Error deleting contact: ", error);
-                          alert("Error deleting contact");
-                          toggleModal();
+                        console.error('Error deleting contact: ', error);
+                        alert('Error deleting contact');
+                        toggleModal();
                       });
-                    }
-                    
-                  } else {
-                    console.error("Error deleting image");
                   }
-                }).catch((error) => {
-                  console.error("Error deleting image: ", error);
-                });
-            } else {
-              console.error("File reference is null");
-            }
-          });
-
-          
-        } else {
-          console.error("Contact ID is undefined");
-        }
-              
+                } else {
+                  console.error('Error deleting image');
+                }
+              })
+              .catch((error) => {
+                console.error('Error deleting image: ', error);
+              });
+          } else {
+            console.error('File reference is null');
+          }
+        });
+      } else {
+        console.error('Contact ID is undefined');
       }
-  } 
+    }
+  };
 
   return (
     <>
@@ -100,7 +104,7 @@ function ReachUsContactDeleteModal(
                 <span className="sr-only">Close modal</span>
               </button>
             </div>
-  
+
             <form className="px-6 py-5" onSubmit={handleSubmit}>
               <p className="text-lg font-medium text-gray-900 dark:text-white">
                 Are you sure you want to delete this Contact?
@@ -108,7 +112,7 @@ function ReachUsContactDeleteModal(
               <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
                 This action cannot be undone.
               </p>
-  
+
               {contactToDelete && (
                 <div className="mt-4 bg-gray-100 dark:bg-gray-700 rounded-lg p-4">
                   <p className="text-gray-800 dark:text-gray-200 text-base font-semibold">
@@ -118,12 +122,9 @@ function ReachUsContactDeleteModal(
                       {contactToDelete.email} - {contactToDelete.contact}
                     </span>
                   </p>
-                  
-                  
                 </div>
-
               )}
-  
+
               <div className="flex justify-end gap-4 mt-6">
                 <button
                   type="button"

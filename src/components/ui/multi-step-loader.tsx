@@ -1,7 +1,7 @@
-"use client";
-import { cn } from "@/lib/utils";
-import { AnimatePresence, motion } from "framer-motion";
-import { useState, useEffect } from "react";
+'use client';
+import { cn } from '@/lib/utils';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
 
 const CheckIcon = ({ className }: { className?: string }) => {
   return (
@@ -11,7 +11,7 @@ const CheckIcon = ({ className }: { className?: string }) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={cn("w-6 h-6 ", className)}
+      className={cn('w-6 h-6 ', className)}
     >
       <path d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
     </svg>
@@ -24,7 +24,7 @@ const CheckFilled = ({ className }: { className?: string }) => {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"
-      className={cn("w-6 h-6 ", className)}
+      className={cn('w-6 h-6 ', className)}
     >
       <path
         fillRule="evenodd"
@@ -49,7 +49,7 @@ const LoaderCore = ({
   exitCallback?: () => void;
 }) => {
   if (loadingStates.length === value) {
-    if(exitCallback) {
+    if (exitCallback) {
       exitCallback();
     }
   }
@@ -62,29 +62,26 @@ const LoaderCore = ({
         return (
           <motion.div
             key={index}
-            className={cn("text-left flex gap-2 mb-4")}
+            className={cn('text-left flex gap-2 mb-4')}
             initial={{ opacity: 0, y: -(value * 40) }}
             animate={{ opacity: opacity, y: -(value * 40) }}
             transition={{ duration: 0.5 }}
           >
             <div>
-              {index > value && (
-                <CheckIcon className="text-black dark:text-white" />
-              )}
+              {index > value && <CheckIcon className="text-black dark:text-white" />}
               {index <= value && (
                 <CheckFilled
                   className={cn(
-                    "text-black dark:text-white",
-                    value === index &&
-                      "text-black dark:text-lime-500 opacity-100"
+                    'text-black dark:text-white',
+                    value === index && 'text-black dark:text-lime-500 opacity-100',
                   )}
                 />
               )}
             </div>
             <span
               className={cn(
-                "text-black dark:text-white",
-                value === index && "text-black dark:text-lime-500 opacity-100"
+                'text-black dark:text-white',
+                value === index && 'text-black dark:text-lime-500 opacity-100',
               )}
             >
               {loadingState.text}
@@ -99,7 +96,7 @@ const LoaderCore = ({
 export const MultiStepLoader = ({
   loadingStates,
   loading,
-  exitCallback ,
+  exitCallback,
   duration = 2000,
   loop = true,
 }: {
@@ -118,11 +115,7 @@ export const MultiStepLoader = ({
     }
     const timeout = setTimeout(() => {
       setCurrentState((prevState) =>
-        loop
-          ? prevState === loadingStates.length - 1
-            ? 0
-            : prevState + 1
-          : prevState + 1
+        loop ? (prevState === loadingStates.length - 1 ? 0 : prevState + 1) : prevState + 1,
       );
     }, duration);
 
@@ -132,11 +125,10 @@ export const MultiStepLoader = ({
   }, [currentState, loading, loop, loadingStates.length, duration]);
 
   const exitLoader = () => {
-    if(exitCallback) {
+    if (exitCallback) {
       exitCallback();
     }
   };
-
 
   return (
     <AnimatePresence mode="wait">
@@ -154,7 +146,11 @@ export const MultiStepLoader = ({
           className="w-full h-full fixed inset-0 z-[100] flex items-center justify-center backdrop-blur-2xl"
         >
           <div className="h-96  relative">
-            <LoaderCore value={currentState} exitCallback={exitLoader}  loadingStates={loadingStates} />
+            <LoaderCore
+              value={currentState}
+              exitCallback={exitLoader}
+              loadingStates={loadingStates}
+            />
           </div>
 
           <div className="bg-gradient-to-t inset-x-0 z-20 bottom-0 bg-white dark:bg-black h-full absolute [mask-image:radial-gradient(900px_at_center,transparent_10%,white)]" />
@@ -162,4 +158,4 @@ export const MultiStepLoader = ({
       )}
     </AnimatePresence>
   );
-}
+};

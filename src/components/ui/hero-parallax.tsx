@@ -1,20 +1,14 @@
-"use client";
-import React from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useSpring,
-  MotionValue,
-} from "framer-motion";
-import Image, { StaticImageData } from "next/image";
+'use client';
+import React from 'react';
+import { motion, useScroll, useTransform, useSpring, MotionValue } from 'framer-motion';
+import Image, { StaticImageData } from 'next/image';
 
 export const HeroParallax = ({
   products,
 }: {
   products: {
     title: string;
-    thumbnail: string|StaticImageData;
+    thumbnail: string | StaticImageData;
   }[];
 }) => {
   const firstRow = products.slice(0, 5);
@@ -24,18 +18,15 @@ export const HeroParallax = ({
 
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start start", "end start"],
+    offset: ['start start', 'end start'],
   });
 
   const springConfig = { stiffness: 110, damping: 15 };
 
-  const translateX = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, 1000]),
-    springConfig
-  );
+  const translateX = useSpring(useTransform(scrollYProgress, [0, 1], [0, 1000]), springConfig);
   const translateXReverse = useSpring(
     useTransform(scrollYProgress, [0, 1], [0, -1000]),
-    springConfig
+    springConfig,
   );
 
   return (
@@ -46,29 +37,25 @@ export const HeroParallax = ({
       <Header />
       <div>
         <motion.div className="flex flex-row-reverse space-x-reverse space-x-20 mb-20">
-          {firstRow.map((product,index) => (
-            <ProductCard
-              product={product}
-              translate={translateX}
-              key={product.title + index}
-            />
+          {firstRow.map((product, index) => (
+            <ProductCard product={product} translate={translateX} key={product.title + index} />
           ))}
         </motion.div>
         <motion.div className="flex flex-row mb-20 space-x-20">
-          {secondRow.map((product,index) => (
+          {secondRow.map((product, index) => (
             <ProductCard
               product={product}
               translate={translateXReverse}
-              key={product.title+" "+index }
+              key={product.title + ' ' + index}
             />
           ))}
         </motion.div>
         <motion.div className="flex flex-row-reverse space-x-reverse space-x-20">
-          {thirdRow.map((product,index) => (
+          {thirdRow.map((product, index) => (
             <ProductCard
               product={product}
               translate={translateX}
-              key={product.title+" "+index}
+              key={product.title + ' ' + index}
             />
           ))}
         </motion.div>
@@ -83,7 +70,7 @@ export const Header = () => {
       <h1 className="text-2xl md:text-7xl text-center font-bold dark:text-white bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent">
         Are You Ready? <br /> 2025
       </h1>
-     
+
       <p className="max-w-2xl text-base md:text-xl pb-4 text-center mx-auto mt-8 text-neutral-800 dark:text-neutral-200">
         The Virtual Odyssey in Corporate Arena
       </p>
@@ -97,7 +84,7 @@ export const ProductCard = ({
 }: {
   product: {
     title: string;
-    thumbnail: string|StaticImageData;
+    thumbnail: string | StaticImageData;
   };
   translate: MotionValue<number>;
 }) => {
@@ -109,7 +96,7 @@ export const ProductCard = ({
       whileHover={{
         y: -20,
       }}
-      key={product.title+" "+Date.now()}
+      key={product.title + ' ' + Date.now()}
       className="group/product h-96 w-[30rem] relative flex-shrink-0"
     >
       <Image

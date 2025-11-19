@@ -38,15 +38,18 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 ## Service functions usage
+
 ### Managing timeline events
 
 ```ts
 // adding timeline event
-addTimeLineEvent(event).then(docRef => {
-          // success
-       }).catch(error => {
-          // error
-       });
+addTimeLineEvent(event)
+  .then((docRef) => {
+    // success
+  })
+  .catch((error) => {
+    // error
+  });
 ```
 
 ```ts
@@ -54,51 +57,61 @@ addTimeLineEvent(event).then(docRef => {
 // default limit is 10
 // if docAfter is set, return Time line events starting from docAfter document.
 // order by events order property
-getTimeLineEvents(limit,docAfter).then(data => {
-          // success
-       }).catch(error => {
-          // error
-       });
+getTimeLineEvents(limit, docAfter)
+  .then((data) => {
+    // success
+  })
+  .catch((error) => {
+    // error
+  });
 ```
 
 ```ts
 // deleting an event
-deleteTimeLineEvent("TimelineEventDocumentId").then(res => {
-          // success
-       }).catch(error => {
-          // error
-       });
+deleteTimeLineEvent('TimelineEventDocumentId')
+  .then((res) => {
+    // success
+  })
+  .catch((error) => {
+    // error
+  });
 ```
 
 ### Managing sponsors
 
 ```ts
 // sponsorshipCategory valied values => "Gold","Silver","Bronze","All"
-getSponsers(sponsorshipCategory).then(data => {
-          // success
-       }).catch(error => {
-          // error
-       });
+getSponsers(sponsorshipCategory)
+  .then((data) => {
+    // success
+  })
+  .catch((error) => {
+    // error
+  });
 ```
 
 ```ts
-     const sponsor = {
-       level: "sponsorshipCategory",
-       sponsor: "Company Name"
-     } as ISponser;
-     addSponser(sponsor).then(res => {
-          // success
-       }).catch(error => {
-          // error
-       });
+const sponsor = {
+  level: 'sponsorshipCategory',
+  sponsor: 'Company Name',
+} as ISponser;
+addSponser(sponsor)
+  .then((res) => {
+    // success
+  })
+  .catch((error) => {
+    // error
+  });
 ```
 
 ```ts
-deleteSponser("x2xFMFgzeOQgqKese7fG").then(res => {
-          // success
-       }).catch(error => {
-          // error
-       });
+deleteSponser('x2xFMFgzeOQgqKese7fG')
+  .then((res) => {
+    // success
+  })
+  .catch((error) => {
+    // error
+  });
 ```
 
 ### Managing files
@@ -129,11 +142,13 @@ deleteSponser("x2xFMFgzeOQgqKese7fG").then(res => {
 ```
 
 ```ts
-    // delete firebase storage file from StorageReference 
-    const ref1 = ref(getStorage(),'images/test.png');
-    deleteFile(ref1).then((res)=>{
-      // file deleted
-    }).catch((error)=>{
-      // error
-    });
+// delete firebase storage file from StorageReference
+const ref1 = ref(getStorage(), 'images/test.png');
+deleteFile(ref1)
+  .then((res) => {
+    // file deleted
+  })
+  .catch((error) => {
+    // error
+  });
 ```

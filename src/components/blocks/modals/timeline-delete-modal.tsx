@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import React from 'react';
 import { deleteTimeLineEvent } from '@/services/timeline.service';
 import { ITimelineData } from '@/interfaces/ITimeline';
@@ -7,40 +7,40 @@ import { deleteFile, getFileReferenceByUrl } from '@/services/firebaseStorage.se
 function TimelineDeleteModal({
   event,
   onClose,
-  onDelete
+  onDelete,
 }: {
-  event: ITimelineData,
-  onClose: () => void,
-  onDelete: () => void
+  event: ITimelineData;
+  onClose: () => void;
+  onDelete: () => void;
 }) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (event.id) {
       // Delete image from storage if it exists
-      if (event.imgURL && event.imgURL.startsWith("https://firebasestorage.googleapis.com")) {
+      if (event.imgURL && event.imgURL.startsWith('https://firebasestorage.googleapis.com')) {
         try {
           const fileRef = await getFileReferenceByUrl(event.imgURL);
           if (fileRef) {
             const deleteResult = await deleteFile(fileRef);
             if (deleteResult) {
-              console.log("Image deleted successfully");
+              console.log('Image deleted successfully');
             }
           }
         } catch (error) {
-          console.error("Error deleting image: ", error);
+          console.error('Error deleting image: ', error);
         }
       }
 
       // Delete the timeline event from Firestore
       try {
         await deleteTimeLineEvent(event.id);
-        console.log("Timeline event deleted successfully");
+        console.log('Timeline event deleted successfully');
         onDelete();
         onClose();
       } catch (error) {
-        console.error("Error deleting timeline event: ", error);
-        alert("Error deleting timeline event");
+        console.error('Error deleting timeline event: ', error);
+        alert('Error deleting timeline event');
         onClose();
       }
     }
@@ -58,12 +58,7 @@ function TimelineDeleteModal({
               onClick={onClose}
               className="text-gray-500 hover:bg-gray-100 p-2 rounded-full transition dark:hover:bg-gray-700"
             >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -89,9 +84,7 @@ function TimelineDeleteModal({
               <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">
                 Event Date: {event.eventDate.toDate().toLocaleString()}
               </p>
-              <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">
-                Order: {event.order}
-              </p>
+              <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">Order: {event.order}</p>
             </div>
 
             <div className="flex justify-end gap-4 mt-6">

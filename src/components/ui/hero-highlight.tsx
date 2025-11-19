@@ -1,7 +1,7 @@
-"use client";
-import { cn } from "@/lib/utils";
-import { useMotionValue, motion, useMotionTemplate } from "framer-motion";
-import React from "react";
+'use client';
+import { cn } from '@/lib/utils';
+import { useMotionValue, motion, useMotionTemplate } from 'framer-motion';
+import React from 'react';
 
 export const HeroHighlight = ({
   children,
@@ -15,11 +15,7 @@ export const HeroHighlight = ({
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  function handleMouseMove({
-    currentTarget,
-    clientX,
-    clientY,
-  }: React.MouseEvent<HTMLDivElement>) {
+  function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent<HTMLDivElement>) {
     if (!currentTarget) return;
     const { left, top } = currentTarget.getBoundingClientRect();
 
@@ -29,8 +25,8 @@ export const HeroHighlight = ({
   return (
     <div
       className={cn(
-        "relative h-[20rem] flex items-center bg-white dark:bg-black justify-center w-full group",
-        containerClassName
+        'relative h-[20rem] flex items-center bg-white dark:bg-black justify-center w-full group',
+        containerClassName,
       )}
       onMouseMove={handleMouseMove}
     >
@@ -55,7 +51,7 @@ export const HeroHighlight = ({
         }}
       />
 
-      <div className={cn("relative z-20", className)}>{children}</div>
+      <div className={cn('relative z-20', className)}>{children}</div>
     </div>
   );
 };
@@ -70,22 +66,22 @@ export const Highlight = ({
   return (
     <motion.span
       initial={{
-        backgroundSize: "0% 100%",
+        backgroundSize: '0% 100%',
       }}
-      whileInView={{ backgroundSize: "100% 100%" }}
+      whileInView={{ backgroundSize: '100% 100%' }}
       transition={{
         duration: 2,
-        ease: "linear",
+        ease: 'linear',
         delay: 0.3,
       }}
       style={{
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "left center",
-        display: "inline",
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'left center',
+        display: 'inline',
       }}
       className={cn(
         `relative inline-block pb-1   px-1 rounded-lg bg-gradient-to-r from-[#C3F2FA] to-[#6B76FF]  dark:from-indigo-500 dark:to-purple-500`,
-        className
+        className,
       )}
     >
       {children}

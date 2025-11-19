@@ -1,9 +1,9 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
-export const dynamic = "force-dynamic"; 
+export const dynamic = 'force-dynamic';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -17,12 +17,11 @@ const firebaseConfig = {
 };
 
 console.log(
-    firebaseConfig.apiKey === undefined
-        ? "Firebase configurations missing"
-        : "Firebase configuration found 🔥🔥"
+  firebaseConfig.apiKey === undefined
+    ? 'Firebase configurations missing'
+    : 'Firebase configuration found 🔥🔥',
 );
-console.log("API keys status: ", firebaseConfig.status);
-
+console.log('API keys status: ', firebaseConfig.status);
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);

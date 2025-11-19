@@ -2,12 +2,23 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { auth } from '@/services/firebaseConfig';
-import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut, User } from 'firebase/auth';
+import {
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signInWithPopup,
+  signOut,
+  User,
+} from 'firebase/auth';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 import { app } from '@/services/firebaseConfig';
 
-const AuthContext = createContext<{ user: User | null, googleSignIn: () => void, logOut: () => void, redirectToLogin: () => void }>({ user: null, googleSignIn: () => { }, logOut: () => { }, redirectToLogin: () => { } });
+const AuthContext = createContext<{
+  user: User | null;
+  googleSignIn: () => void;
+  logOut: () => void;
+  redirectToLogin: () => void;
+}>({ user: null, googleSignIn: () => {}, logOut: () => {}, redirectToLogin: () => {} });
 
 export const AuthProvider = ({ children }: { children: any }) => {
   const protectedRoutes = ['/admin'];
@@ -31,7 +42,9 @@ export const AuthProvider = ({ children }: { children: any }) => {
   };
 
   const redirectToLogin = () => {
-    const foundProtectedRoutes = protectedRoutes.filter((route) => window.location.pathname.includes(route));
+    const foundProtectedRoutes = protectedRoutes.filter((route) =>
+      window.location.pathname.includes(route),
+    );
     if (foundProtectedRoutes.length > 0) {
       router.push('/admin/login');
     }
@@ -40,13 +53,13 @@ export const AuthProvider = ({ children }: { children: any }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
       if (authUser) {
-        const userRef = doc(db, "users", authUser.uid);
+        const userRef = doc(db, 'users', authUser.uid);
         const userDoc = await getDoc(userRef);
 
         if (userDoc.exists()) {
           const userData = userDoc.data();
-          if (userData.role !== "admin") {
-            alert("Access denied. You do not have admin privileges.");
+          if (userData.role !== 'admin') {
+            alert('Access denied. You do not have admin privileges.');
             router.push('/admin/login');
             return;
           }

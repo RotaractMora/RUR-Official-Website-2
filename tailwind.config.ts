@@ -1,45 +1,39 @@
-const {
-  default: flattenColorPalette,
-} = require("tailwindcss/lib/util/flattenColorPalette");
+const { default: flattenColorPalette } = require('tailwindcss/lib/util/flattenColorPalette');
 
-const svgToDataUri = require("mini-svg-data-uri");
- 
-const colors = require("tailwindcss/colors");
+const svgToDataUri = require('mini-svg-data-uri');
 
+const colors = require('tailwindcss/colors');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
 
     // Or if using `src` directory:
-    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    './src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  darkMode: "class",
-  safelist: [
-    'text-custom-color-gold',
-    'text-custom-color-silver',
-    'text-custom-color-bronze',
-  ],
+  darkMode: 'class',
+  safelist: ['text-custom-color-gold', 'text-custom-color-silver', 'text-custom-color-bronze'],
   theme: {
     screens: {
-        'sm1': '570px',
-        'sm2': '700px',
-        'md': '768px',
-        'lg': '1024px',
+      sm1: '570px',
+      sm2: '700px',
+      md: '768px',
+      lg: '1024px',
     },
     extend: {
-      backgroundImage:{
-        'dark-gradient': 'linear-gradient(75deg, rgba(0,8,21,1) 0%, rgba(0,19,30,1) 30%, rgba(3,49,62,1) 45%, rgba(0,16,41,1) 60%, rgba(0,5,40,1) 100%)',
-        'light-gradient': 'linear-gradient(55deg, rgba(247,254,255,1) 0%, rgba(230,238,238,1) 20%, rgba(255,255,255,1) 45%, rgba(230,238,238,1) 70%, rgba(247,254,255,1) 100%);',
-        
+      backgroundImage: {
+        'dark-gradient':
+          'linear-gradient(75deg, rgba(0,8,21,1) 0%, rgba(0,19,30,1) 30%, rgba(3,49,62,1) 45%, rgba(0,16,41,1) 60%, rgba(0,5,40,1) 100%)',
+        'light-gradient':
+          'linear-gradient(55deg, rgba(247,254,255,1) 0%, rgba(230,238,238,1) 20%, rgba(255,255,255,1) 45%, rgba(230,238,238,1) 70%, rgba(247,254,255,1) 100%);',
       },
       boxShadow: {
-        input: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+        input: '0px 4px 6px rgba(0, 0, 0, 0.1)',
       },
-      colors:{
+      colors: {
         'custom-dark-color-950': '#0C0C0C',
         'custom-dark-color-900': '#1A1A1A',
         'custom-dark-color-800': '#282828',
@@ -61,29 +55,29 @@ module.exports = {
         'custom-color-200': '#111827',
         'custom-color-100': '#0C0C0C',
         'dark-glow-dots-color': '#9B70D2',
-        'dark-dots-color': '#696969', 
-        'glow-dots-color': '#0000AB', 
-        'dots-color': '#ADD8E6', 
+        'dark-dots-color': '#696969',
+        'glow-dots-color': '#0000AB',
+        'dots-color': '#ADD8E6',
         'custom-color-gold': '#AF9500',
         // 'custom-color-silver':'#D7D7D7',
         'custom-color-silver': '#90949e',
-        'custom-color-bronze':'#BE7936',
+        'custom-color-bronze': '#BE7936',
         'custom-dark-color-gold': '#FFD700',
         'custom-dark-color-silver': '#C0C0C0',
         'custom-dark-color-bronze': '#CD7F32',
-      }
+      },
     },
     animation: {
       flip: 'flip 1s ease-in-out',
-      shimmer: "shimmer 2s linear infinite",
+      shimmer: 'shimmer 2s linear infinite',
     },
     keyframes: {
       shimmer: {
         '0%': {
-          backgroundPosition: "0 0",
+          backgroundPosition: '0 0',
         },
         '100%': {
-          backgroundPosition: "-200% 0",
+          backgroundPosition: '-200% 0',
         },
       },
       flip: {
@@ -92,44 +86,42 @@ module.exports = {
       },
     },
   },
-  plugins: [addVariablesForColors,
+  plugins: [
+    addVariablesForColors,
 
     function ({ matchUtilities, theme }: any) {
       matchUtilities(
         {
-          "bg-grid": (value: any) => ({
+          'bg-grid': (value: any) => ({
             backgroundImage: `url("${svgToDataUri(
-              `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="${value}"><path d="M0 .5H31.5V32"/></svg>`
+              `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="${value}"><path d="M0 .5H31.5V32"/></svg>`,
             )}")`,
           }),
-          "bg-grid-small": (value: any) => ({
+          'bg-grid-small': (value: any) => ({
             backgroundImage: `url("${svgToDataUri(
-              `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="8" height="8" fill="none" stroke="${value}"><path d="M0 .5H31.5V32"/></svg>`
+              `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="8" height="8" fill="none" stroke="${value}"><path d="M0 .5H31.5V32"/></svg>`,
             )}")`,
           }),
-          "bg-dot": (value: any) => ({
+          'bg-dot': (value: any) => ({
             backgroundImage: `url("${svgToDataUri(
-              `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none"><circle fill="${value}" id="pattern-circle" cx="10" cy="10" r="1.6257413380501518"></circle></svg>`
+              `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none"><circle fill="${value}" id="pattern-circle" cx="10" cy="10" r="1.6257413380501518"></circle></svg>`,
             )}")`,
           }),
         },
-        { values: flattenColorPalette(theme("backgroundColor")), type: "color" }
+        { values: flattenColorPalette(theme('backgroundColor')), type: 'color' },
       );
     },
-
   ],
 };
 
 // This plugin adds each Tailwind color as a global CSS variable, e.g. var(--gray-200).
 function addVariablesForColors({ addBase, theme }: any) {
-  let allColors = flattenColorPalette(theme("colors"));
+  let allColors = flattenColorPalette(theme('colors'));
   let newVars = Object.fromEntries(
-    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val]),
   );
 
   addBase({
-    ":root": newVars,
+    ':root': newVars,
   });
 }
-
-
