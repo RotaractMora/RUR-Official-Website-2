@@ -9,6 +9,7 @@ import {
   signInWithPopup,
   signOut,
   User,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
@@ -94,7 +95,13 @@ export const AuthProvider = ({ children }: { children: any }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, googleSignIn, logOut, redirectToLogin, emailPwSignIn }}
+      value={{
+        user,
+        googleSignIn,
+        logOut,
+        redirectToLogin,
+        emailPwSignIn,
+      }}
     >
       {children}
     </AuthContext.Provider>

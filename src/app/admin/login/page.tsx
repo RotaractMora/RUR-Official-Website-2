@@ -3,7 +3,6 @@
 import React, { useEffect } from "react";
 import { useAuth } from "@/context/auth-provider";
 import { useRouter } from "next/navigation";
-import { AdminDashboardLayout } from "../admin-dashboard-layout";
 import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
 import { app } from "../../../services/firebaseConfig";
 import { LoginForm } from "@/components/login-form";
@@ -57,19 +56,17 @@ const AdminLoginPage: React.FC = () => {
   }, [user, db, router]);
 
   return (
-    <AdminDashboardLayout>
-      <div className="flex flex-col items-center justify-center h-screen bg-white dark:bg-gray-900">
-        <h1 className="text-3xl font-bold mb-4 text-black dark:text-white">
-          Admin Login
-        </h1>
-        <LoginForm
-          onClickLoginWithGoogle={googleSignIn}
-          onClickLogin={async (email, pw) => {
-            await emailPwSignIn(email, pw);
-          }}
-        />
-      </div>
-    </AdminDashboardLayout>
+    <div className="flex flex-col items-center justify-center h-screen bg-white dark:bg-gray-900">
+      <LoginForm
+        onClickLoginWithGoogle={googleSignIn}
+        onClickLogin={async (email, pw) => {
+          await emailPwSignIn(email, pw);
+        }}
+        onClickForgotPassword={() => {
+          router.push("/admin/forgot-password");
+        }}
+      />
+    </div>
   );
 };
 
