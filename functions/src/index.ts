@@ -1,13 +1,10 @@
-import {createInfoTriggers} from "./infoAggregator";
-import {
-  incrementalAggregateCompanies,
-  manualAggregateCompanies,
-} from "./companyDataAggregator";
+import { createInfoTriggers } from './infoAggregator';
+import { incrementalAggregateCompanies, manualAggregateCompanies } from './companyDataAggregator';
 
 // Exporting triggers for /info-sponsors and /info-timeline collections
-const sponsorsTriggers = createInfoTriggers("info-sponsors");
-const timelineTriggers = createInfoTriggers("info-timeline");
-const reachUsTriggers = createInfoTriggers("info-reach");
+const sponsorsTriggers = createInfoTriggers('info-sponsors');
+const timelineTriggers = createInfoTriggers('info-timeline');
+const reachUsTriggers = createInfoTriggers('info-reach');
 
 export const infoSponsorsOnCreate = sponsorsTriggers.onCreate;
 export const infoSponsorsOnUpdate = sponsorsTriggers.onUpdate;

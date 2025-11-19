@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, { useState, useEffect } from 'react';
 import { ArrowUpIcon } from '@heroicons/react/24/solid';
 
@@ -18,7 +18,7 @@ const BackToTopButton: React.FC = () => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   };
 
@@ -35,7 +35,7 @@ const BackToTopButton: React.FC = () => {
   return (
     <>
       {isVisible && (
-        <button 
+        <button
           onClick={scrollToTop}
           className="fixed bottom-6 right-6 z-50 bg-gray-700 text-white p-3 rounded-full shadow-lg hover:bg-gray-900 transition-all duration-300 ease-in-out"
           aria-label="Scroll to top"

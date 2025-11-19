@@ -1,4 +1,4 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   output: process.env.NODE_ENV === 'production' ? 'export' : undefined,
@@ -30,7 +30,7 @@ const nextConfig: NextConfig = {
         hostname: 'images.unsplash.com',
         port: '',
         pathname: '/**',
-      }
+      },
     ],
   },
 };

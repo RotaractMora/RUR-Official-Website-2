@@ -1,8 +1,14 @@
-"use client";
-import { motion } from "framer-motion";
-import { HeroHighlight, Highlight } from "../ui/hero-highlight";
+'use client';
+import { motion } from 'framer-motion';
+import { HeroHighlight, Highlight } from '../ui/hero-highlight';
 
-export function Highlighter({ firstString, secondString }:{firstString: string, secondString: string}) {
+export function Highlighter({
+  firstString,
+  secondString,
+}: {
+  firstString: string;
+  secondString: string;
+}) {
   return (
     <HeroHighlight>
       <motion.h1
@@ -20,10 +26,8 @@ export function Highlighter({ firstString, secondString }:{firstString: string, 
         }}
         className="text-2xl px-4 md:text-4xl lg:text-5xl font-bold text-neutral-700 dark:text-white max-w-4xl leading-relaxed lg:leading-snug text-center mx-auto "
       >
-        {`${firstString} ` }
-        <Highlight className="text-black dark:text-white">
-        {`${secondString} ` }
-        </Highlight>
+        {`${firstString} `}
+        <Highlight className="text-black dark:text-white">{`${secondString} `}</Highlight>
       </motion.h1>
     </HeroHighlight>
   );

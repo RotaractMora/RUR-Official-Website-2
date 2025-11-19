@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
 interface TimeLeft {
   days: number;
@@ -45,7 +45,7 @@ export default function CountDown({ date }: { date: Date }) {
     <div className="grid grid-flow-col gap-5 text-center auto-cols-max">
       <div className="flex flex-col">
         <span className="countdown font-mono text-4xl animate-flip">
-          <span style={{ "--value": timeLeft.days } as React.CSSProperties}>
+          <span style={{ '--value': timeLeft.days } as React.CSSProperties}>
             {timeLeft.days.toString().padStart(2, '0')}
           </span>
         </span>
@@ -53,7 +53,7 @@ export default function CountDown({ date }: { date: Date }) {
       </div>
       <div className="flex flex-col">
         <span className="countdown font-mono text-4xl animate-flip">
-          <span style={{ "--value": timeLeft.hours } as React.CSSProperties}>
+          <span style={{ '--value': timeLeft.hours } as React.CSSProperties}>
             {timeLeft.hours.toString().padStart(2, '0')}
           </span>
         </span>
@@ -61,7 +61,7 @@ export default function CountDown({ date }: { date: Date }) {
       </div>
       <div className="flex flex-col">
         <span className="countdown font-mono text-4xl animate-flip">
-          <span style={{ "--value": timeLeft.minutes } as React.CSSProperties}>
+          <span style={{ '--value': timeLeft.minutes } as React.CSSProperties}>
             {timeLeft.minutes.toString().padStart(2, '0')}
           </span>
         </span>
@@ -69,7 +69,7 @@ export default function CountDown({ date }: { date: Date }) {
       </div>
       <div className="flex flex-col">
         <span className="countdown font-mono text-4xl animate-flip">
-          <span style={{ "--value": timeLeft.seconds } as React.CSSProperties}>
+          <span style={{ '--value': timeLeft.seconds } as React.CSSProperties}>
             {timeLeft.seconds.toString().padStart(2, '0')}
           </span>
         </span>

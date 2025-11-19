@@ -1,13 +1,18 @@
-"use client"
+'use client';
 import React, { useState } from 'react';
 import { deleteSponsor } from '@/services/sponsors.service';
 import { ISponsor } from '@/interfaces/ISponsors';
-import { deleteFile , getFileReferenceByUrl } from '@/services/firebaseStorage.service';
+import { deleteFile, getFileReferenceByUrl } from '@/services/firebaseStorage.service';
 
-function SponsorDeleteModal(
-    {sponsor, onClose, onDelete }: {sponsor: ISponsor, onClose: () => void, onDelete: () => void}
-) {
-
+function SponsorDeleteModal({
+  sponsor,
+  onClose,
+  onDelete,
+}: {
+  sponsor: ISponsor;
+  onClose: () => void;
+  onDelete: () => void;
+}) {
   const [sponsorToDelete, setSponsorToDelete] = useState<ISponsor | null>(sponsor);
 
   const toggleModal = () => {
@@ -15,72 +20,71 @@ function SponsorDeleteModal(
     onClose();
   };
 
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     if (sponsorToDelete?.id) {
       // if img url is not null, delete the image from storage and starts with firebasestorage.googleapis.com
-      if (sponsorToDelete.imgURL && sponsorToDelete.imgURL !== "" && sponsorToDelete.imgURL.startsWith("https://firebasestorage.googleapis.com")) {
-        getFileReferenceByUrl(sponsorToDelete.imgURL)
-        .then((fileRef) => {
+      if (
+        sponsorToDelete.imgURL &&
+        sponsorToDelete.imgURL !== '' &&
+        sponsorToDelete.imgURL.startsWith('https://firebasestorage.googleapis.com')
+      ) {
+        getFileReferenceByUrl(sponsorToDelete.imgURL).then((fileRef) => {
           if (fileRef) {
             deleteFile(fileRef)
-            .then((res) => {
-              console.log("Res", res);
-              if (res == true) {
-                console.log("Image deleted successfully", sponsorToDelete.imgURL);
+              .then((res) => {
+                console.log('Res', res);
+                if (res == true) {
+                  console.log('Image deleted successfully', sponsorToDelete.imgURL);
 
-                // delete the sponsor from the database
-                if (sponsorToDelete?.id) {
-                deleteSponsor(sponsorToDelete.id)
-                  .then(() => {
-                      console.log("Sponsor deleted successfully");
-                      onDelete();
-                      toggleModal();
+                  // delete the sponsor from the database
+                  if (sponsorToDelete?.id) {
+                    deleteSponsor(sponsorToDelete.id)
+                      .then(() => {
+                        console.log('Sponsor deleted successfully');
+                        onDelete();
+                        toggleModal();
                       })
-                  .catch((error) => {
-                      console.error("Error deleting sponsor: ", error);
-                      alert("Error deleting sponsor");
-                      toggleModal();
-                  });
+                      .catch((error) => {
+                        console.error('Error deleting sponsor: ', error);
+                        alert('Error deleting sponsor');
+                        toggleModal();
+                      });
+                  }
+                } else {
+                  console.error('Error deleting image');
                 }
-              } else {
-                console.error("Error deleting image");
-              }
-            }).catch((error) => {
-              console.error("Error deleting image: ", error);
-            }
-            );
+              })
+              .catch((error) => {
+                console.error('Error deleting image: ', error);
+              });
           } else {
-            console.error("File reference is null");
+            console.error('File reference is null');
           }
-        });      
-        
-        
+        });
       } else {
-        console.error("Sponsor ID is undefined");
+        console.error('Sponsor ID is undefined');
       }
-  
-    // if (sponsorToDelete?.id) {
-    //   deleteSponsor(sponsorToDelete.id)
-    //     .then(() => {
-    //         console.log("Sponsor deleted successfully");
-    //         onDelete();
-    //         toggleModal();
-    //         })
-    //     .catch((error) => {
-    //         console.error("Error deleting sponsor: ", error);
-    //         alert("Error deleting sponsor");
-    //         toggleModal();
-    //     });
-       
-    // } else {
-    //   console.error("Sponsor ID is undefined");
-    // }
-    
+
+      // if (sponsorToDelete?.id) {
+      //   deleteSponsor(sponsorToDelete.id)
+      //     .then(() => {
+      //         console.log("Sponsor deleted successfully");
+      //         onDelete();
+      //         toggleModal();
+      //         })
+      //     .catch((error) => {
+      //         console.error("Error deleting sponsor: ", error);
+      //         alert("Error deleting sponsor");
+      //         toggleModal();
+      //     });
+
+      // } else {
+      //   console.error("Sponsor ID is undefined");
+      // }
     }
-  }
+  };
 
   return (
     <>
@@ -117,7 +121,7 @@ function SponsorDeleteModal(
                 <span className="sr-only">Close modal</span>
               </button>
             </div>
-  
+
             <form className="px-6 py-5" onSubmit={handleSubmit}>
               <p className="text-lg font-medium text-gray-900 dark:text-white">
                 Are you sure you want to delete this sponsor?
@@ -125,20 +129,20 @@ function SponsorDeleteModal(
               <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
                 This action cannot be undone.
               </p>
-  
+
               {sponsorToDelete && (
                 <div className="mt-4 bg-gray-100 dark:bg-gray-700 rounded-lg p-4">
                   <p className="text-gray-800 dark:text-gray-200 text-base font-semibold">
                     {sponsorToDelete.name} - {sponsorToDelete.level} Sponsor
                   </p>
                   <p className="text-gray-600 dark:text-gray-400 text-xs">
-                    <span className='font-normal'>
-                    Created: {sponsorToDelete.timestamp?.toDate().toLocaleString()}
+                    <span className="font-normal">
+                      Created: {sponsorToDelete.timestamp?.toDate().toLocaleString()}
                     </span>
                   </p>
                 </div>
               )}
-  
+
               <div className="flex justify-end gap-4 mt-6">
                 <button
                   type="button"
@@ -160,6 +164,6 @@ function SponsorDeleteModal(
       </div>
     </>
   );
-}  
+}
 
 export default SponsorDeleteModal;

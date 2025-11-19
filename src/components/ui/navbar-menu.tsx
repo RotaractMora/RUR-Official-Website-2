@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import React from "react";
-import { motion } from "framer-motion";
-import Link from "next/link";
-import Image from "next/image";
+import React from 'react';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import Image from 'next/image';
 
 const transition = {
-  type: "spring",
+  type: 'spring',
   mass: 0.5,
   damping: 11.5,
   stiffness: 100,
@@ -29,17 +29,14 @@ export const MenuItem = ({
 }) => {
   return (
     <Link href={link} className="relative group">
-      <div 
-        onMouseEnter={() => setActive(item)} 
-        className="relative"
-      >
+      <div onMouseEnter={() => setActive(item)} className="relative">
         <motion.p
           transition={{ duration: 0.3 }}
           className="cursor-pointer text-black hover:opacity-[0.9] dark:text-white text-sm sm:text-base"
         >
           {item}
         </motion.p>
-        
+
         {active !== null && (
           <motion.div
             initial={{ opacity: 0, scale: 0.85, y: 10 }}
@@ -54,10 +51,7 @@ export const MenuItem = ({
                   layoutId="active"
                   className="bg-white dark:bg-black backdrop-blur-sm rounded-2xl overflow-hidden border border-black/[0.2] dark:border-white/[0.2] shadow-xl"
                 >
-                  <motion.div
-                    layout
-                    className="w-full h-full p-4"
-                  >
+                  <motion.div layout className="w-full h-full p-4">
                     {children}
                   </motion.div>
                 </motion.div>
@@ -99,8 +93,8 @@ export const ProductItem = ({
   src: string;
 }) => {
   return (
-    <Link 
-      href={href} 
+    <Link
+      href={href}
       className="flex space-x-2 sm:space-x-4 items-center hover:bg-neutral-100 dark:hover:bg-neutral-900 p-2 rounded-lg transition-colors"
     >
       <Image
@@ -111,9 +105,7 @@ export const ProductItem = ({
         className="flex-shrink-0 rounded-md shadow-2xl w-20 h-12 sm:w-[140px] sm:h-[70px] object-cover"
       />
       <div className="flex-grow">
-        <h4 className="text-base sm:text-xl font-bold mb-1 text-black dark:text-white">
-          {title}
-        </h4>
+        <h4 className="text-base sm:text-xl font-bold mb-1 text-black dark:text-white">{title}</h4>
         <p className="text-neutral-700 text-xs sm:text-sm max-w-[10rem] dark:text-neutral-300 truncate">
           {description}
         </p>
