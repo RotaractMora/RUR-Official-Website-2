@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
 import { app } from "../../../services/firebaseConfig";
 import { LoginForm } from "@/components/login-form";
+import { toast } from "sonner";
 
 const AdminLoginPage: React.FC = () => {
   const { googleSignIn, user, emailPwSignIn } = useAuth();
@@ -56,9 +57,8 @@ const AdminLoginPage: React.FC = () => {
   }, [user, db, router]);
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-white dark:bg-gray-900">
+    <div className="flex flex-col items-center justify-center h-screen dark:bg-gray-900">
       <LoginForm
-        onClickLoginWithGoogle={googleSignIn}
         onClickLogin={async (email, pw) => {
           await emailPwSignIn(email, pw);
         }}

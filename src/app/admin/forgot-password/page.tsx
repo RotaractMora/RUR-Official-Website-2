@@ -12,6 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { toast } from "sonner";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -27,7 +28,7 @@ export default function ForgotPasswordPage() {
     setError(null);
     try {
       await sendPasswordResetEmail(auth, email);
-      setMessage(
+      toast(
         "If an account with that email exists, a password reset link has been sent."
       );
     } catch (err: any) {
@@ -39,7 +40,7 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-white dark:bg-gray-900">
+    <div className="flex flex-col items-center justify-center h-screen dark:bg-gray-900">
       <Card>
         <CardHeader>
           <CardTitle>Forgot Password</CardTitle>
@@ -61,7 +62,7 @@ export default function ForgotPasswordPage() {
           </div>
 
           <div className="flex items-center justify-between mt-4">
-            <Button disabled={loading}>
+            <Button disabled={loading} onClick={handleSubmit}>
               {loading ? "Sending..." : "Send reset link"}
             </Button>
 
@@ -74,9 +75,6 @@ export default function ForgotPasswordPage() {
             </Button>
           </div>
         </CardContent>
-
-        {message && <p className="mt-4 text-sm text-green-600">{message}</p>}
-        {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
       </Card>
     </div>
   );

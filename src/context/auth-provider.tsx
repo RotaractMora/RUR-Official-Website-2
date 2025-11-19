@@ -14,6 +14,7 @@ import {
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { app } from "@/services/firebaseConfig";
+import { toast } from "sonner";
 
 const AuthContext = createContext<{
   user: User | null;
@@ -49,8 +50,14 @@ export const AuthProvider = ({ children }: { children: any }) => {
       const result = await signInWithEmailAndPassword(auth, email, password);
       setUser(result.user);
       console.log("Signed in with email and password:", result.user);
-    } catch (error) {
+      toast("Successfully logged in!");
+    } catch (error: any) {
       console.error("Error signing in:", error);
+      if (error.code === "auth/invalid-credential") {
+        toast.error("Incorrect password. Please try again.");
+      } else {
+        toast.error("Failed to log in.");
+      }
     }
   };
 
@@ -64,7 +71,7 @@ export const AuthProvider = ({ children }: { children: any }) => {
       window.location.pathname.includes(route)
     );
     if (foundProtectedRoutes.length > 0) {
-      //router.push("/admin/login");
+      router.push("/admin/login");
     }
   };
 

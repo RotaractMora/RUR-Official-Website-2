@@ -14,13 +14,11 @@ import Link from "next/link";
 
 type LoginFormProps = React.ComponentPropsWithoutRef<"div"> & {
   onSuccess?: () => void;
-  onClickLoginWithGoogle?: () => void;
   onClickLogin?: (email: string, pw: string) => void;
   onClickForgotPassword?: () => void;
 };
 export function LoginForm({
   className,
-  onClickLoginWithGoogle,
   onClickLogin,
   onClickForgotPassword,
   ...props
@@ -76,13 +74,6 @@ export function LoginForm({
               onClick={() => (onClickLogin ? onClickLogin(email, pw) : null)}
             >
               Login
-            </Button>
-            <Button
-              variant="outline"
-              className="w-full"
-              onClick={onClickLoginWithGoogle}
-            >
-              Login with Google
             </Button>
           </div>
         </CardContent>

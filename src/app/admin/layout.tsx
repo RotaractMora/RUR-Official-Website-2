@@ -35,8 +35,6 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         </div>
 
         <main className="flex-grow p-4">{children}</main>
-
-        <Footer />
       </div>
     </>
   );
