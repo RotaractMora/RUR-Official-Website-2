@@ -3,9 +3,9 @@ const {
 } = require("tailwindcss/lib/util/flattenColorPalette");
 
 const svgToDataUri = require("mini-svg-data-uri");
- 
-const colors = require("tailwindcss/colors");
 
+const colors = require("tailwindcss/colors");
+const tailwindcssAnimate = require("tailwindcss-animate")
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -25,21 +25,56 @@ module.exports = {
   ],
   theme: {
     screens: {
-        'sm1': '570px',
-        'sm2': '700px',
-        'md': '768px',
-        'lg': '1024px',
+      'sm1': '570px',
+      'sm2': '700px',
+      'md': '768px',
+      'lg': '1024px',
     },
     extend: {
-      backgroundImage:{
+      backgroundImage: {
         'dark-gradient': 'linear-gradient(75deg, rgba(0,8,21,1) 0%, rgba(0,19,30,1) 30%, rgba(3,49,62,1) 45%, rgba(0,16,41,1) 60%, rgba(0,5,40,1) 100%)',
         'light-gradient': 'linear-gradient(55deg, rgba(247,254,255,1) 0%, rgba(230,238,238,1) 20%, rgba(255,255,255,1) 45%, rgba(230,238,238,1) 70%, rgba(247,254,255,1) 100%);',
-        
+
       },
       boxShadow: {
         input: "0px 4px 6px rgba(0, 0, 0, 0.1)",
       },
-      colors:{
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+
+
         'custom-dark-color-950': '#0C0C0C',
         'custom-dark-color-900': '#1A1A1A',
         'custom-dark-color-800': '#282828',
@@ -61,40 +96,41 @@ module.exports = {
         'custom-color-200': '#111827',
         'custom-color-100': '#0C0C0C',
         'dark-glow-dots-color': '#9B70D2',
-        'dark-dots-color': '#696969', 
-        'glow-dots-color': '#0000AB', 
-        'dots-color': '#ADD8E6', 
+        'dark-dots-color': '#696969',
+        'glow-dots-color': '#0000AB',
+        'dots-color': '#ADD8E6',
         'custom-color-gold': '#AF9500',
         // 'custom-color-silver':'#D7D7D7',
         'custom-color-silver': '#90949e',
-        'custom-color-bronze':'#BE7936',
+        'custom-color-bronze': '#BE7936',
         'custom-dark-color-gold': '#FFD700',
         'custom-dark-color-silver': '#C0C0C0',
         'custom-dark-color-bronze': '#CD7F32',
-      }
-    },
-    animation: {
-      flip: 'flip 1s ease-in-out',
-      shimmer: "shimmer 2s linear infinite",
-    },
-    keyframes: {
-      shimmer: {
-        '0%': {
-          backgroundPosition: "0 0",
-        },
-        '100%': {
-          backgroundPosition: "-200% 0",
-        },
       },
-      flip: {
-        '0%': { transform: 'rotateX(0deg)' },
-        '100%': { transform: 'rotateX(360deg)' },
+      // the animation and keyframes objects were previously overriding instead of extending. 
+      animation: {
+        flip: 'flip 1s ease-in-out',
+        shimmer: "shimmer 2s linear infinite",
+      },
+      keyframes: {
+        shimmer: {
+          '0%': {
+            backgroundPosition: "0 0",
+          },
+          '100%': {
+            backgroundPosition: "-200% 0",
+          },
+        },
+        flip: {
+          '0%': { transform: 'rotateX(0deg)' },
+          '100%': { transform: 'rotateX(360deg)' },
+        },
       },
     },
   },
   plugins: [addVariablesForColors,
 
-    function ({ matchUtilities, theme }: any) {
+    function({ matchUtilities, theme }: any) {
       matchUtilities(
         {
           "bg-grid": (value: any) => ({
@@ -117,6 +153,7 @@ module.exports = {
       );
     },
 
+    tailwindcssAnimate,
   ],
 };
 

@@ -1,16 +1,35 @@
-'use client';
+"use client";
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { auth } from '@/services/firebaseConfig';
-import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut, User } from 'firebase/auth';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
-import { useRouter } from 'next/navigation';
-import { app } from '@/services/firebaseConfig';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { auth } from "@/services/firebaseConfig";
+import {
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithPopup,
+  signOut,
+  User,
+} from "firebase/auth";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { useRouter } from "next/navigation";
+import { app } from "@/services/firebaseConfig";
 
-const AuthContext = createContext<{ user: User | null, googleSignIn: () => void, logOut: () => void, redirectToLogin: () => void }>({ user: null, googleSignIn: () => { }, logOut: () => { }, redirectToLogin: () => { } });
+const AuthContext = createContext<{
+  user: User | null;
+  googleSignIn: () => void;
+  logOut: () => Promise<any>;
+  redirectToLogin: () => void;
+  emailPwSignIn: (email: string, password: string) => void;
+}>({
+  user: null,
+  googleSignIn: () => {},
+  logOut: async () => {},
+  redirectToLogin: () => {},
+  emailPwSignIn: () => {},
+});
 
 export const AuthProvider = ({ children }: { children: any }) => {
-  const protectedRoutes = ['/admin'];
+  const protectedRoutes = ["/admin"];
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const db = getFirestore(app);
@@ -21,7 +40,16 @@ export const AuthProvider = ({ children }: { children: any }) => {
       const result = await signInWithPopup(auth, provider);
       setUser(result.user);
     } catch (error) {
-      console.error('Error signing in:', error);
+      console.error("Error signing in:", error);
+    }
+  };
+  const emailPwSignIn = async (email: string, password: string) => {
+    try {
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      setUser(result.user);
+      console.log("Signed in with email and password:", result.user);
+    } catch (error) {
+      console.error("Error signing in:", error);
     }
   };
 
@@ -31,9 +59,11 @@ export const AuthProvider = ({ children }: { children: any }) => {
   };
 
   const redirectToLogin = () => {
-    const foundProtectedRoutes = protectedRoutes.filter((route) => window.location.pathname.includes(route));
+    const foundProtectedRoutes = protectedRoutes.filter((route) =>
+      window.location.pathname.includes(route)
+    );
     if (foundProtectedRoutes.length > 0) {
-      router.push('/admin/login');
+      //router.push("/admin/login");
     }
   };
 
@@ -47,7 +77,8 @@ export const AuthProvider = ({ children }: { children: any }) => {
           const userData = userDoc.data();
           if (userData.role !== "admin") {
             alert("Access denied. You do not have admin privileges.");
-            router.push('/admin/login');
+            router.push("/admin/login");
+            await logOut();
             return;
           }
         }
@@ -62,7 +93,9 @@ export const AuthProvider = ({ children }: { children: any }) => {
   }, [db, router]);
 
   return (
-    <AuthContext.Provider value={{ user, googleSignIn, logOut, redirectToLogin }}>
+    <AuthContext.Provider
+      value={{ user, googleSignIn, logOut, redirectToLogin, emailPwSignIn }}
+    >
       {children}
     </AuthContext.Provider>
   );
