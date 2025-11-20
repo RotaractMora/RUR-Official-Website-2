@@ -66,7 +66,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <HelmetProvider>
         <html lang="en">
           <head>
-          <meta name="google-site-verification" content="ctC6c_Itp6D3M77kEOvPaN9D9i_O6Sq5vXpCX8EyMsY" />          </head>
+          <meta name="google-site-verification" content="ctC6c_Itp6D3M77kEOvPaN9D9i_O6Sq5vXpCX8EyMsY" />
+          </head>
           <Helmet>
 
               <meta name="description" content="Official website of 'Are You Ready? 2025', organized by the Rotaract Club of University of Moratuwa" />
