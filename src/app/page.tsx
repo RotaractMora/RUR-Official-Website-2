@@ -1,6 +1,7 @@
 "use client";
 
 import ResponsiveHero from "@/components/ui/responsiveHero";
+import GallerySection from "@/components/ui/gallery-section";
 import RootLayout from "./layout";
 import { FloatingNav } from "@/components/ui/floating-navbar";
 import React, { useEffect, useState } from "react";
@@ -379,7 +380,8 @@ export default function Home() {
             setIsLoadingAnimComplete(true);
           }}
         />
-        <ResponsiveHero products={products} />
+        {/* <ResponsiveHero products={products} /> */}
+        <GallerySection products={products} />
         <AboutSection content={content} />
       </div>
 
