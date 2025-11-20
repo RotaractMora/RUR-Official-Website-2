@@ -9,22 +9,23 @@ const Footer = () => {
 
     const floatDockItms = [
         {
-            icon: <SiRotaryinternational className="h-6 w-6 dark:text-custom-color-700 text-custom-color-600 hover:text-custom-dark-color-900 dark:hover:text-custom-color-900" />,
+            // Rotaract badge: default to gold tone for brand emphasis
+            icon: <SiRotaryinternational className="h-6 w-6 text-red-400 dark:text-red-300 hover:text-red-500" />,
             href: "https://rotaractmora.org",
             title: "Rotaract Mora",
         },
         {
-            icon: <FaFacebook className="h-6 w-6 dark:text-custom-color-700 text-custom-color-600 hover:text-custom-dark-color-900 dark:hover:text-custom-color-900" />,
+            icon: <FaFacebook className="h-6 w-6 text-blue-600 dark:text-blue-400 hover:text-blue-700" />,
             href: "https://www.facebook.com/uom.rur/",
             title: "Facebook",
         },
         {
-            icon: <FaLinkedin className="h-6 w-6 dark:text-custom-color-700 text-custom-color-600 hover:text-custom-dark-color-900 dark:hover:text-custom-color-900" />,
+            icon: <FaLinkedin className="h-6 w-6 text-sky-700 dark:text-sky-400 hover:text-sky-800" />,
             href: "https://www.linkedin.com/company/rotaract-club-of-university-of-moratuwa",
             title: "Linkedin",
         },
         {
-            icon: <FaAt className="h-6 w-6 dark:text-custom-color-700 text-custom-color-600 hover:text-custom-dark-color-900 dark:hover:text-custom-color-900" />,
+            icon: <FaAt className="h-6 w-6 text-gray-600 dark:text-gray-300 hover:text-gray-800" />,
             href: "mailto:areyouready25@rotaractmora.org",
             title: "Email",
         }
