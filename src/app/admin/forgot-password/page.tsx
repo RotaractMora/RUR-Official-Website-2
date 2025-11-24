@@ -13,6 +13,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { toast } from "sonner";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -63,7 +64,8 @@ export default function ForgotPasswordPage() {
 
           <div className="flex items-center justify-between mt-4">
             <Button disabled={loading} onClick={handleSubmit}>
-              {loading ? "Sending..." : "Send reset link"}
+              {loading && <Spinner />}
+              Send reset link
             </Button>
 
             <Button

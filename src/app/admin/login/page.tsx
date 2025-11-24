@@ -59,9 +59,7 @@ const AdminLoginPage: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen dark:bg-gray-900">
       <LoginForm
-        onClickLogin={async (email, pw) => {
-          await emailPwSignIn(email, pw);
-        }}
+        onClickLogin={emailPwSignIn}
         onClickForgotPassword={() => {
           router.push("/admin/forgot-password");
         }}

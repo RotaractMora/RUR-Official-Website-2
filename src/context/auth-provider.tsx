@@ -21,13 +21,13 @@ const AuthContext = createContext<{
   googleSignIn: () => void;
   logOut: () => Promise<any>;
   redirectToLogin: () => void;
-  emailPwSignIn: (email: string, password: string) => void;
+  emailPwSignIn: (email: string, password: string) => Promise<void>;
 }>({
   user: null,
   googleSignIn: () => {},
   logOut: async () => {},
   redirectToLogin: () => {},
-  emailPwSignIn: () => {},
+  emailPwSignIn: () => Promise.resolve(),
 });
 
 export const AuthProvider = ({ children }: { children: any }) => {

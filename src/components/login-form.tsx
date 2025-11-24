@@ -11,10 +11,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import Link from "next/link";
+import { Spinner } from "./ui/spinner";
 
 type LoginFormProps = React.ComponentPropsWithoutRef<"div"> & {
   onSuccess?: () => void;
-  onClickLogin?: (email: string, pw: string) => void;
+  onClickLogin: (email: string, pw: string) => Promise<void>;
   onClickForgotPassword?: () => void;
 };
 export function LoginForm({
@@ -25,6 +26,19 @@ export function LoginForm({
 }: LoginFormProps) {
   const [pw, setPw] = useState("");
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleLogin = async () => {
+    if (onClickLogin) {
+      setIsLoading(true);
+      try {
+        await onClickLogin(email, pw);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -71,8 +85,10 @@ export function LoginForm({
             <Button
               type="submit"
               className="w-full"
-              onClick={() => (onClickLogin ? onClickLogin(email, pw) : null)}
+              onClick={handleLogin}
+              disabled={isLoading}
             >
+              {isLoading && <Spinner />}
               Login
             </Button>
           </div>
