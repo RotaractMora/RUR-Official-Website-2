@@ -1,6 +1,6 @@
 "use client";
 
-import ResponsiveHero from "@/components/ui/responsiveHero";
+import ModernHero from "@/components/ui/modern-hero";
 import RootLayout from "./layout";
 import { FloatingNav } from "@/components/ui/floating-navbar";
 import React, { useEffect, useState } from "react";
@@ -50,9 +50,7 @@ import BackToTopButton from "@/components/ui/back-to-top";
 import CodeEvelPara from "@/components/ui/code-evel-para";
 import { HeroVideo } from "@/components/ui/hero-video";
 import ExpandableCard from "@/components/blocks/expandable-card-standard";
-import Head from "next/head";
 import { sendGTMEvent } from "@next/third-parties/google";
-import ReactDOM from 'react-dom';
 import { Helmet } from 'react-helmet-async';
 import { BuildingOfficeIcon } from "@heroicons/react/24/outline";
  
@@ -379,7 +377,7 @@ export default function Home() {
             setIsLoadingAnimComplete(true);
           }}
         />
-        <ResponsiveHero products={products} />
+  <ModernHero products={products} />
         <AboutSection content={content} />
       </div>
 

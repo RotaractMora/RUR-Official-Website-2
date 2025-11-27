@@ -17,7 +17,7 @@ import {
   useTransform,
 } from "framer-motion";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
 export const FloatingDock = ({
   items,
@@ -114,7 +114,12 @@ function IconContainer({
         style={{ width, height }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        className="aspect-square rounded-full bg-gray-200 dark:bg-neutral-800 flex items-center justify-center relative"
+        className={cn(
+          "aspect-square rounded-full flex items-center justify-center relative transition-all duration-300 ease-out",
+          hovered
+            ? "bg-gradient-to-br from-[#0f172a] via-[#0f4c81] to-[#0fb4ff] shadow-2xl scale-105"
+            : "bg-gray-200 dark:bg-neutral-800"
+        )}
       >
         <AnimatePresence>
           {hovered && (
@@ -133,11 +138,15 @@ function IconContainer({
             </motion.div>
           )}
         </AnimatePresence>
-        <motion.div
-          style={{ width: widthIcon, height: heightIcon }}
-          className="flex items-center justify-center"
-        >
-          {icon}
+        <motion.div style={{ width: widthIcon, height: heightIcon }} className="flex items-center justify-center ">
+          {React.isValidElement(icon)
+            ? React.cloneElement(icon as React.ReactElement, {
+                style: {
+                  ...(icon.props?.style ?? {}),
+                  color: hovered ? "#ffffff" : icon.props?.style?.color,
+                },
+              })
+            : icon}
         </motion.div>
       </motion.div>
     </Link>
