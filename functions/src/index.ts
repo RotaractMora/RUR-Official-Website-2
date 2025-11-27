@@ -3,6 +3,10 @@ import {
   incrementalAggregateCompanies,
   manualAggregateCompanies,
 } from "./companyDataAggregator";
+import {matchInterviews} from "./interviewMatching";
+import {generateLiveInterviewPanels} from "./panelGeneration";
+import {matchPanels} from "./panelMatching";
+import {api} from "./api";
 
 // Exporting triggers for /info-sponsors and /info-timeline collections
 const sponsorsTriggers = createInfoTriggers("info-sponsors");
@@ -28,3 +32,6 @@ export const companyOnDelete = incrementalAggregateCompanies.onDelete;
 
 // Exporting HTTP function for manual aggregation
 export const aggregateCompaniesManually = manualAggregateCompanies;
+
+// Exporting interview platform functions
+export {matchInterviews, generateLiveInterviewPanels, matchPanels, api};
