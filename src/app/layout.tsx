@@ -65,22 +65,11 @@ export default function RootLayout({
     <AuthProvider>
       <ThemeContext.Provider value={{ setTheme, toggleTheme, theme }}>
         <HelmetProvider>
-          <html lang="en">
-            <head>
-              <meta
-                name="google-site-verification"
-                content="He_a54SdmlaQfr3y9EaVQ5cQVBxr_tJEBPPwveeY6RQ"
-              />
-            </head>
-            <Helmet>
-              <meta
-                name="description"
-                content="Official website of 'Are You Ready? 2025', organized by the Rotaract Club of University of Moratuwa"
-              />
-              <meta
-                name="keywords"
-                content="RUR25,Are You Ready,Rota,Mora,UoM,RUR,RUR?"
-              />
+        <html lang="en">
+          <head>
+          <meta name="google-site-verification" content="ctC6c_Itp6D3M77kEOvPaN9D9i_O6Sq5vXpCX8EyMsY" />
+          </head>
+          <Helmet>
 
               <meta property="og:type" content="website" />
               <meta property="og:site_name" content="Are You Ready? 2025" />
