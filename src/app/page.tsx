@@ -53,6 +53,7 @@ import ExpandableCard from "@/components/blocks/expandable-card-standard";
 import { sendGTMEvent } from "@next/third-parties/google";
 import { Helmet } from 'react-helmet-async';
 import { BuildingOfficeIcon } from "@heroicons/react/24/outline";
+import GallerySection from "@/components/ui/gallery-section";
  
 import dynamic from "next/dynamic";
 const Lottie = dynamic(() => import("react-lottie-player"), { ssr: false });
@@ -377,7 +378,8 @@ export default function Home() {
             setIsLoadingAnimComplete(true);
           }}
         />
-  <ModernHero products={products} />
+
+        <GallerySection products={products} />
         <AboutSection content={content} />
       </div>
 
