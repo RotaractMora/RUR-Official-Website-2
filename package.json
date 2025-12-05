@@ -4,7 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:prod-old": "dotenv -e .env.prod-old -- next dev",
+    "dev:prod-new": "dotenv -e .env.prod-new -- next dev",
+    "dev:dev": "dotenv -e .env.dev -- next dev",
     "build": "next build",
+    "build:prod-old": "dotenv -e .env.prod-old -- next build",
+    "build:prod-new": "dotenv -e .env.prod-new -- next build",
+    "build:dev": "dotenv -e .env.dev -- next build",
     "start": "next start",
     "lint": "next lint",
     "build-prod": "dotenv -f .env.prod run next build"
@@ -48,6 +54,7 @@
     "@types/react-dom": "^18",
     "@types/three": "^0.169.0",
     "autoprefixer": "^10.4.20",
+    "dotenv-cli": "^7.4.4",
     "eslint": "^8",
     "eslint-config-google": "^0.14.0",
     "eslint-config-next": "15.0.3",

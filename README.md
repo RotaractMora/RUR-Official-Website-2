@@ -22,6 +22,118 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Multi-Environment Setup
+
+This project supports 3 Firebase environments:
+
+| Environment | Description | Firebase Project |
+|-------------|-------------|------------------|
+| `prod-old` | Production (previous year - RUR 26) | `rur-26-web-prod` |
+| `prod-new` | Production (current year - RUR 27) | `rur-27-web-prod` |
+| `dev` | Development/Staging | `rur-web-dev` |
+
+### Local Development
+
+To run the project locally with different environments, first copy `.env.example` to create your environment files:
+
+```bash
+# For prod-old environment
+cp .env.example .env.prod-old
+# Edit .env.prod-old with prod-old Firebase credentials
+
+# For prod-new environment  
+cp .env.example .env.prod-new
+# Edit .env.prod-new with prod-new Firebase credentials
+
+# For dev environment
+cp .env.example .env.dev
+# Edit .env.dev with dev Firebase credentials
+
+# For default local development
+cp .env.example .env.local
+# Edit .env.local with your preferred Firebase credentials
+```
+
+Then run the development server with your chosen environment:
+
+```bash
+# Default local development (uses .env.local)
+npm run dev
+
+# Run with prod-old environment
+npm run dev:prod-old
+
+# Run with prod-new environment (recommended for dev branch)
+npm run dev:prod-new
+
+# Run with dev environment
+npm run dev:dev
+```
+
+### Build Commands
+
+```bash
+# Standard build (uses .env.local or environment variables)
+npm run build
+
+# Build for specific environments
+npm run build:prod-old
+npm run build:prod-new
+npm run build:dev
+```
+
+### CI/CD Deployment
+
+#### Main Branch
+- Deploys via FTP (primary)
+- Deploys to Firebase Hosting `prod-old` environment (backup)
+
+#### Dev Branch
+- Deploys to all 3 Firebase Hosting environments (prod-old, prod-new, dev)
+- Can be manually triggered with environment selection via GitHub Actions
+
+#### Pull Requests
+- Creates preview deployments on all 3 environments
+
+### Required GitHub Secrets
+
+For each environment, the following secrets need to be configured:
+
+**Prod-Old (rur-26-web-prod):**
+- `NEXT_PUBLIC_API_KEY_PROD_OLD`
+- `NEXT_PUBLIC_AUTH_DOMAIN_PROD_OLD`
+- `NEXT_PUBLIC_PROJECT_ID_PROD_OLD`
+- `NEXT_PUBLIC_STORAGE_BUCKET_PROD_OLD`
+- `NEXT_PUBLIC_MESSAGING_SENDER_ID_PROD_OLD`
+- `NEXT_PUBLIC_APP_ID_PROD_OLD`
+- `FIREBASE_SERVICE_ACCOUNT_PROD_OLD`
+
+**Prod-New (rur-27-web-prod):**
+- `NEXT_PUBLIC_API_KEY_PROD_NEW`
+- `NEXT_PUBLIC_AUTH_DOMAIN_PROD_NEW`
+- `NEXT_PUBLIC_PROJECT_ID_PROD_NEW`
+- `NEXT_PUBLIC_STORAGE_BUCKET_PROD_NEW`
+- `NEXT_PUBLIC_MESSAGING_SENDER_ID_PROD_NEW`
+- `NEXT_PUBLIC_APP_ID_PROD_NEW`
+- `FIREBASE_SERVICE_ACCOUNT_PROD_NEW`
+
+**Dev (rur-web-dev):**
+- `NEXT_PUBLIC_API_KEY_DEV`
+- `NEXT_PUBLIC_AUTH_DOMAIN_DEV`
+- `NEXT_PUBLIC_PROJECT_ID_DEV`
+- `NEXT_PUBLIC_STORAGE_BUCKET_DEV`
+- `NEXT_PUBLIC_MESSAGING_SENDER_ID_DEV`
+- `NEXT_PUBLIC_APP_ID_DEV`
+- `FIREBASE_SERVICE_ACCOUNT_DEV`
+
+**FTP Deployment (main branch only):**
+- `FTP_SERVER`
+- `FTP_USERNAME`
+- `FTP_PASSWORD`
+
+**Firebase Functions:**
+- `FIREBASE_TOKEN`
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
