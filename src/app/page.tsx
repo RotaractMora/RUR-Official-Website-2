@@ -54,6 +54,7 @@ import { sendGTMEvent } from "@next/third-parties/google";
 import { Helmet } from 'react-helmet-async';
 import { BuildingOfficeIcon } from "@heroicons/react/24/outline";
 import GallerySection from "@/components/ui/gallery-section";
+import { SponsorCard } from "@/components/ui/sponsor-card"; 
  
 import dynamic from "next/dynamic";
 const Lottie = dynamic(() => import("react-lottie-player"), { ssr: false });
@@ -175,51 +176,51 @@ const Loading = () => {
   );
 };
 
-const Para = ({
-  level,
-  partnership,
-  name,
-  imgURL,
-  loadCallback,
-}: {
-  level: string;
-  partnership: string;
-  name: string;
-  imgURL: string | undefined;
-  loadCallback?: (count: number) => void;
-}): React.ReactNode => {
-  const color =
-    level === "Gold"
-      ? "custom-color-gold dark:custom-dark-color-gold"
-      : level === "Silver"
-      ? "custom-color-silver dark:custom-dark-color-silver"
-      : "custom-color-bronze dark:custom-dark-color-bronze";
+// const Para = ({
+//   level,
+//   partnership,
+//   name,
+//   imgURL,
+//   loadCallback,
+// }: {
+//   level: string;
+//   partnership: string;
+//   name: string;
+//   imgURL: string | undefined;
+//   loadCallback?: (count: number) => void;
+// }): React.ReactNode => {
+//   const color =
+//     level === "Gold"
+//       ? "custom-color-gold dark:custom-dark-color-gold"
+//       : level === "Silver"
+//       ? "custom-color-silver dark:custom-dark-color-silver"
+//       : "custom-color-bronze dark:custom-dark-color-bronze";
 
-  return (
-    <div className="w-full h-full max-w-xl mx-auto px-4 md:px-6 lg:px-6 flex flex-col items-center justify-stretch min-h-[400px] lg:min-h-[300px]">
-      <h6
-        className={
-          "text-xl md:text-2xl lg:text-3xl text-center font-bold p-2 py-3" +
-          " text-" +
-          color
-        }
-      >
-        {partnership}
-      </h6>
+//   return (
+//     <div className="w-full h-full max-w-xl mx-auto px-4 md:px-6 lg:px-6 flex flex-col items-center justify-stretch min-h-[400px] lg:min-h-[300px]">
+//       <h6
+//         className={
+//           "text-xl md:text-2xl lg:text-3xl text-center font-bold p-2 py-3" +
+//           " text-" +
+//           color
+//         }
+//       >
+//         {partnership}
+//       </h6>
 
-      {/* Image Section */}
-      <div className="w-full h-auto flex justify-center mb-4">
-        <Image
-          src={imgURL ? imgURL : SPONSOR}
-          width={250}
-          height={100}
-          alt="Sponsor"
-          className="object-contain p-2 my-2 rounded-lg"
-        />
-      </div>
-    </div>
-  );
-};
+//       {/* Image Section */}
+//       <div className="w-full h-auto flex justify-center mb-4">
+//         <Image
+//           src={imgURL ? imgURL : SPONSOR}
+//           width={250}
+//           height={100}
+//           alt="Sponsor"
+//           className="object-contain p-2 my-2 rounded-lg"
+//         />
+//       </div>
+//     </div>
+//   );
+// };
 
 const AboutSection = ({ content }: { content: string }) => {
   return (
@@ -395,61 +396,61 @@ export default function Home() {
         )}
       </div>
 
-{ sponsors.length > 0 &&
-      <div className="scroll-mt-20 py-8 px-6 text-center bg-gray-100 dark:bg-gray-800">
-        <h2 className="text-3xl md:text-4xl font-bold text-center dark:text-custom-color-800 bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent mb-4">
-        Sponsors
-        </h2>
-      </div>
-}
-<div id="sponsors"></div>
+      <section id="sponsors" className="scroll-mt-20 bg-gray-100 dark:bg-gray-800">
+        {sponsors.length > 0 && (
+          <div className="py-8 px-6 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-center dark:text-custom-color-800 bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent mb-4">
+              Sponsors
+            </h2>
+          </div>
+        )}
 
-      {error ? (
-        <ErrorMessage message={error} />
-      ) : isSponsorsLoading ? (
-        <Loading />
-      ) : sponsors.length > 0 ? (
-        <TracingBeam className="px-4 md:px-6 py-24">
-          {/* Sponsors Section */}
-          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {error ? (
+          <div className="py-8">
+            <ErrorMessage message={error} />
+          </div>
+        ) : isSponsorsLoading ? (
+          <div className="py-8">
+            <Loading />
+          </div>
+        ) : sponsors.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-8 max-w-7xl mx-auto min-h-[500px] py-16 px-4">
             {sponsors
               .sort((a, b) => {
-                return a.order - b.order;
+              return a.order - b.order;
               })
               .map((sponsor, index) => (
-                <CardDesign
-                  key={`${sponsor.level}-${index}`}
-                  className="w-full max-w-sm"
-                  CardColor={sponsor.level}
-                >
-                  <Para
-                    name={sponsor.name}
-                    imgURL={sponsor.imgURL}
-                    level={sponsor.level}
-                    partnership={sponsor.partnership}
-                  />
-                </CardDesign>
+              <div key={`${sponsor.level}-${index}`} className="w-full">
+                <SponsorCard
+                name={sponsor.name}
+                imgURL={sponsor.imgURL}
+                level={sponsor.level}
+                partnership={sponsor.partnership}
+                />
+              </div>
               ))}
-          </div>
-        </TracingBeam>
-      ) : (
-        <EmptyStateMessage message="Sponsors will be available soon." />
-      )}
-
-      { sponsors.length > 0 &&
-            <div className="scroll-mt-20 py-8 px-6 text-center bg-gray-100 dark:bg-gray-800">
-              <h2 className="text-3xl md:text-4xl font-bold text-center dark:text-custom-color-800 bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent mb-4">
-                Thank You for Your Support!
-              </h2>
-              <p className="mt-4 max-w-7xl mx-auto text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
-                We deeply appreciate your unwavering support in making this event a
-                success. Your contributions inspire us to innovate, collaborate, and
-                grow. Together, we’re achieving remarkable milestones. Stay tuned for
-                exciting updates as we continue this incredible journey. Thank you for
-                being a vital part of our mission!
-              </p>
             </div>
-      }
+        ) : (
+          <div className="py-8">
+            <EmptyStateMessage message="Sponsors will be available soon." />
+          </div>
+        )}
+
+        {sponsors.length > 0 && (
+          <div className="py-8 px-6 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-center dark:text-custom-color-800 bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent mb-4">
+              Thank You for Your Support!
+            </h2>
+            <p className="mt-4 max-w-7xl mx-auto text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+              We deeply appreciate your unwavering support in making this event a
+              success. Your contributions inspire us to innovate, collaborate, and
+              grow. Together, we're achieving remarkable milestones. Stay tuned for
+              exciting updates as we continue this incredible journey. Thank you for
+              being a vital part of our mission!
+            </p>
+          </div>
+        )}
+      </section>
       
       <section
         id="registrationStatus"
