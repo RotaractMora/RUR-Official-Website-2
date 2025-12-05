@@ -17,6 +17,9 @@ on:
           - prod-new
           - dev
 
+permissions:
+  contents: read
+
 jobs:
   # Deploy functions from main branch to prod-old
   deploy_main:

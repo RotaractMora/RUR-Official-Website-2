@@ -12,8 +12,7 @@
     "build:prod-new": "dotenv -e .env.prod-new -- next build",
     "build:dev": "dotenv -e .env.dev -- next build",
     "start": "next start",
-    "lint": "next lint",
-    "build-prod": "dotenv -f .env.prod run next build"
+    "lint": "next lint"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",

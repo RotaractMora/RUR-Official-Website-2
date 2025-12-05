@@ -20,6 +20,11 @@ on:
           - prod-new
           - dev
 
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write
+
 jobs:
   # Main branch deployment - FTP + Firebase (prod-old)
   deploy_main:
