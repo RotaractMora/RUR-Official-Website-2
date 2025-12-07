@@ -1,11 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { getSponsors, updateSponsorVisibility } from "@/services/sponsors.service";
+import { getSponsors } from "@/services/sponsors.service";
 import { ISponsor } from "@/interfaces/ISponsors";
 import SponsorAddUpdateModal from "@/components/blocks/modals/sponsor-add-update-modal";
 import { useEffect, useState } from "react";
 import SponsorDeleteModal from "@/components/blocks/modals/sponsor-delete-modal";
+import SponsorVisibilityToggleModal from "@/components/blocks/modals/sponsor-visibility-toggle-modal";
 import { sendGTMEvent } from "@next/third-parties/google";
 
 type SortField = "order" | "timestamp" | "name";
@@ -31,8 +32,6 @@ export default function ManageSponsors() {
   const [visibilityFilter, setVisibilityFilter] = useState<VisibilityFilter>("All");
 
   const [refresh, setRefresh] = useState(false);
-  const [isTogglingVisibility, setIsTogglingVisibility] = useState(false);
-  const [visibilityError, setVisibilityError] = useState<string | null>(null);
 
   useEffect(() => {
     sendGTMEvent({
@@ -70,30 +69,6 @@ export default function ManageSponsors() {
     setSponsorToToggle(sponsor);
     setIsVisibilityModalOpen(true);
   };
-
-  const confirmVisibilityToggle = async () => {
-    if (!sponsorToToggle || !sponsorToToggle.id) return;
-
-    setIsTogglingVisibility(true);
-    setVisibilityError(null);
-
-    try {
-      await updateSponsorVisibility(
-        sponsorToToggle.id,
-        !sponsorToToggle.isVisibleToPublic
-      );
-      
-      setIsVisibilityModalOpen(false);
-      setSponsorToToggle(null);
-      refreshData();
-    } catch (error) {
-      console.error("Error toggling visibility:", error);
-      setVisibilityError("Failed to update visibility. Please try again.");
-    } finally {
-      setIsTogglingVisibility(false);
-    }
-  };
-
 
   // Filter and Sort Sponsors
   const getFilteredAndSortedSponsors = () => {
@@ -504,77 +479,14 @@ export default function ManageSponsors() {
 
       {/* Visibility Toggle Confirmation Modal */}
       {isVisibilityModalOpen && sponsorToToggle && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-md w-full shadow-xl">
-            <div className="flex items-center gap-3 mb-4">
-              <div className={`p-2 rounded-full ${
-                sponsorToToggle.isVisibleToPublic 
-                  ? "bg-red-100 dark:bg-red-900/30" 
-                  : "bg-green-100 dark:bg-green-900/30"
-              }`}>
-                <svg
-                  className={`w-6 h-6 ${
-                    sponsorToToggle.isVisibleToPublic 
-                      ? "text-red-600 dark:text-red-400" 
-                      : "text-green-600 dark:text-green-400"
-                  }`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  {sponsorToToggle.isVisibleToPublic ? (
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m1.621-5.411c.376.913.621 1.904.709 2.943M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  ) : (
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  )}
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                {sponsorToToggle.isVisibleToPublic ? "Hide" : "Show"} Sponsor
-              </h3>
-            </div>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
-              Are you sure you want to make this sponsor{" "}
-              <span className="font-semibold">
-                {sponsorToToggle.isVisibleToPublic ? "hidden" : "public"}
-              </span>
-              ?
-            </p>
-            {visibilityError && (
-              <p className="text-red-500 text-sm mb-4">
-                {visibilityError}
-              </p>
-            )}
-            <div className="flex gap-3 justify-end">
-              <button
-                onClick={() => {
-                  setIsVisibilityModalOpen(false);
-                  setSponsorToToggle(null);
-                }}
-                className="px-4 py-2 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={confirmVisibilityToggle}
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
-                disabled={isTogglingVisibility}
-              >
-                {isTogglingVisibility ? "Processing..." : "Confirm"}
-              </button>
-            </div>
-          </div>
-        </div>
+        <SponsorVisibilityToggleModal
+          sponsor={sponsorToToggle}
+          onClose={() => {
+            setIsVisibilityModalOpen(false);
+            setSponsorToToggle(null);
+          }}
+          onToggle={refreshData}
+        />
       )}
 
       {/* Modals */}
