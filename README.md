@@ -22,6 +22,118 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Multi-Environment Setup
+
+This project supports 3 Firebase environments:
+
+| Environment | Description | Firebase Project |
+|-------------|-------------|------------------|
+| `rur-24` | Production (RUR 24, previous year) | `rur-26-web-prod` |
+| `prod-26` | Production (RUR 26, current year) | `rur-27-web-prod` |
+| `dev` | Development/Staging | `rur-web-dev` |
+
+### Local Development
+
+To run the project locally with different environments, first copy `.env.example` to create your environment files:
+
+```bash
+# For rur-24 environment (previous year)
+cp .env.example .env.rur-24
+# Edit .env.rur-24 with rur-24 Firebase credentials
+
+# For prod-26 environment (current year)
+cp .env.example .env.prod-26
+# Edit .env.prod-26 with prod-26 Firebase credentials
+
+# For dev environment
+cp .env.example .env.dev
+# Edit .env.dev with dev Firebase credentials
+
+# For default local development
+cp .env.example .env.local
+# Edit .env.local with your preferred Firebase credentials
+```
+
+Then run the development server with your chosen environment:
+
+```bash
+# Default local development (uses .env.local)
+npm run dev
+
+# Run with rur-24 environment (previous year)
+npm run dev:rur-24
+
+# Run with prod-26 environment (recommended for dev branch)
+npm run dev:prod-26
+
+# Run with dev environment
+npm run dev:dev
+```
+
+### Build Commands
+
+```bash
+# Standard build (uses .env.local or environment variables)
+npm run build
+
+# Build for specific environments
+npm run build:rur-24
+npm run build:prod-26
+npm run build:dev
+```
+
+### CI/CD Deployment
+
+#### Main Branch
+- Deploys via FTP (primary)
+- Deploys to Firebase Hosting `rur-24` environment (backup)
+
+#### Dev Branch
+- Deploys to all 3 Firebase Hosting environments (rur-24, prod-26, dev)
+- Can be manually triggered with environment selection via GitHub Actions
+
+#### Pull Requests
+- Creates preview deployments on all 3 environments
+
+### Required GitHub Secrets
+
+For each environment, the following secrets need to be configured:
+
+**RUR-24 (rur-26-web-prod) - Previous Year:**
+- `NEXT_PUBLIC_API_KEY` (no suffix, uses existing secrets)
+- `NEXT_PUBLIC_AUTH_DOMAIN`
+- `NEXT_PUBLIC_PROJECT_ID`
+- `NEXT_PUBLIC_STORAGE_BUCKET`
+- `NEXT_PUBLIC_MESSAGING_SENDER_ID`
+- `NEXT_PUBLIC_APP_ID`
+- `FIREBASE_SERVICE_ACCOUNT_RUR_24`
+
+**Prod-26 (rur-27-web-prod) - Current Year:**
+- `NEXT_PUBLIC_API_KEY_PROD_26`
+- `NEXT_PUBLIC_AUTH_DOMAIN_PROD_26`
+- `NEXT_PUBLIC_PROJECT_ID_PROD_26`
+- `NEXT_PUBLIC_STORAGE_BUCKET_PROD_26`
+- `NEXT_PUBLIC_MESSAGING_SENDER_ID_PROD_26`
+- `NEXT_PUBLIC_APP_ID_PROD_26`
+- `FIREBASE_SERVICE_ACCOUNT_PROD_26`
+
+**Dev (rur-web-dev):**
+- `NEXT_PUBLIC_API_KEY_DEV`
+- `NEXT_PUBLIC_AUTH_DOMAIN_DEV`
+- `NEXT_PUBLIC_PROJECT_ID_DEV`
+- `NEXT_PUBLIC_STORAGE_BUCKET_DEV`
+- `NEXT_PUBLIC_MESSAGING_SENDER_ID_DEV`
+- `NEXT_PUBLIC_APP_ID_DEV`
+- `FIREBASE_SERVICE_ACCOUNT_DEV`
+
+**FTP Deployment (main branch only):**
+- `FTP_SERVER`
+- `FTP_USERNAME`
+- `FTP_PASSWORD`
+
+**Firebase Functions:**
+- `FIREBASE_TOKEN`
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

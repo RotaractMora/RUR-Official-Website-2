@@ -4,10 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:rur-24": "dotenv -e .env.rur-24 -- next dev",
+    "dev:prod-26": "dotenv -e .env.prod-26 -- next dev",
+    "dev:dev": "dotenv -e .env.dev -- next dev",
     "build": "next build",
+    "build:rur-24": "dotenv -e .env.rur-24 -- next build",
+    "build:prod-26": "dotenv -e .env.prod-26 -- next build",
+    "build:dev": "dotenv -e .env.dev -- next build",
     "start": "next start",
-    "lint": "next lint",
-    "build-prod": "dotenv -f .env.prod run next build"
+    "lint": "next lint"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",
@@ -48,6 +53,7 @@
     "@types/react-dom": "^18",
     "@types/three": "^0.169.0",
     "autoprefixer": "^10.4.20",
+    "dotenv-cli": "^7.4.4",
     "eslint": "^8",
     "eslint-config-google": "^0.14.0",
     "eslint-config-next": "15.0.3",
