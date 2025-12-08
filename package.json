@@ -4,12 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:rur-24": "dotenv -e .env.rur-24 -- next dev",
     "dev:prod-26": "dotenv -e .env.prod-26 -- next dev",
-    "dev:prod-27": "dotenv -e .env.prod-27 -- next dev",
     "dev:dev": "dotenv -e .env.dev -- next dev",
     "build": "next build",
+    "build:rur-24": "dotenv -e .env.rur-24 -- next build",
     "build:prod-26": "dotenv -e .env.prod-26 -- next build",
-    "build:prod-27": "dotenv -e .env.prod-27 -- next build",
     "build:dev": "dotenv -e .env.dev -- next build",
     "start": "next start",
     "lint": "next lint"

@@ -28,8 +28,8 @@ This project supports 3 Firebase environments:
 
 | Environment | Description | Firebase Project |
 |-------------|-------------|------------------|
-| `prod-26` | Production (RUR 26) | `rur-26-web-prod` |
-| `prod-27` | Production (RUR 27) | `rur-27-web-prod` |
+| `rur-24` | Production (RUR 24, previous year) | `rur-26-web-prod` |
+| `prod-26` | Production (RUR 26, current year) | `rur-27-web-prod` |
 | `dev` | Development/Staging | `rur-web-dev` |
 
 ### Local Development
@@ -37,13 +37,13 @@ This project supports 3 Firebase environments:
 To run the project locally with different environments, first copy `.env.example` to create your environment files:
 
 ```bash
-# For prod-26 environment
+# For rur-24 environment (previous year)
+cp .env.example .env.rur-24
+# Edit .env.rur-24 with rur-24 Firebase credentials
+
+# For prod-26 environment (current year)
 cp .env.example .env.prod-26
 # Edit .env.prod-26 with prod-26 Firebase credentials
-
-# For prod-27 environment  
-cp .env.example .env.prod-27
-# Edit .env.prod-27 with prod-27 Firebase credentials
 
 # For dev environment
 cp .env.example .env.dev
@@ -60,11 +60,11 @@ Then run the development server with your chosen environment:
 # Default local development (uses .env.local)
 npm run dev
 
-# Run with prod-26 environment
-npm run dev:prod-26
+# Run with rur-24 environment (previous year)
+npm run dev:rur-24
 
-# Run with prod-27 environment (recommended for dev branch)
-npm run dev:prod-27
+# Run with prod-26 environment (recommended for dev branch)
+npm run dev:prod-26
 
 # Run with dev environment
 npm run dev:dev
@@ -77,8 +77,8 @@ npm run dev:dev
 npm run build
 
 # Build for specific environments
+npm run build:rur-24
 npm run build:prod-26
-npm run build:prod-27
 npm run build:dev
 ```
 
@@ -86,10 +86,10 @@ npm run build:dev
 
 #### Main Branch
 - Deploys via FTP (primary)
-- Deploys to Firebase Hosting `prod-26` environment (backup)
+- Deploys to Firebase Hosting `rur-24` environment (backup)
 
 #### Dev Branch
-- Deploys to all 3 Firebase Hosting environments (prod-26, prod-27, dev)
+- Deploys to all 3 Firebase Hosting environments (rur-24, prod-26, dev)
 - Can be manually triggered with environment selection via GitHub Actions
 
 #### Pull Requests
@@ -99,7 +99,16 @@ npm run build:dev
 
 For each environment, the following secrets need to be configured:
 
-**Prod-26 (rur-26-web-prod):**
+**RUR-24 (rur-26-web-prod) - Previous Year:**
+- `NEXT_PUBLIC_API_KEY` (no suffix, uses existing secrets)
+- `NEXT_PUBLIC_AUTH_DOMAIN`
+- `NEXT_PUBLIC_PROJECT_ID`
+- `NEXT_PUBLIC_STORAGE_BUCKET`
+- `NEXT_PUBLIC_MESSAGING_SENDER_ID`
+- `NEXT_PUBLIC_APP_ID`
+- `FIREBASE_SERVICE_ACCOUNT_RUR_24`
+
+**Prod-26 (rur-27-web-prod) - Current Year:**
 - `NEXT_PUBLIC_API_KEY_PROD_26`
 - `NEXT_PUBLIC_AUTH_DOMAIN_PROD_26`
 - `NEXT_PUBLIC_PROJECT_ID_PROD_26`
@@ -107,15 +116,6 @@ For each environment, the following secrets need to be configured:
 - `NEXT_PUBLIC_MESSAGING_SENDER_ID_PROD_26`
 - `NEXT_PUBLIC_APP_ID_PROD_26`
 - `FIREBASE_SERVICE_ACCOUNT_PROD_26`
-
-**Prod-27 (rur-27-web-prod):**
-- `NEXT_PUBLIC_API_KEY_PROD_27`
-- `NEXT_PUBLIC_AUTH_DOMAIN_PROD_27`
-- `NEXT_PUBLIC_PROJECT_ID_PROD_27`
-- `NEXT_PUBLIC_STORAGE_BUCKET_PROD_27`
-- `NEXT_PUBLIC_MESSAGING_SENDER_ID_PROD_27`
-- `NEXT_PUBLIC_APP_ID_PROD_27`
-- `FIREBASE_SERVICE_ACCOUNT_PROD_27`
 
 **Dev (rur-web-dev):**
 - `NEXT_PUBLIC_API_KEY_DEV`
