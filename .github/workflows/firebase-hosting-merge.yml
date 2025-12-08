@@ -16,8 +16,8 @@ on:
         type: choice
         options:
           - all
-          - prod-old
-          - prod-new
+          - prod-26
+          - prod-27
           - dev
 
 permissions:
@@ -26,18 +26,18 @@ permissions:
   pull-requests: write
 
 jobs:
-  # Main branch deployment - FTP + Firebase (prod-old)
+  # Main branch deployment - FTP + Firebase (prod-26)
   deploy_main:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     env:
-      NEXT_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_API_KEY_PROD_OLD }}
-      NEXT_PUBLIC_AUTH_DOMAIN: ${{ secrets.NEXT_PUBLIC_AUTH_DOMAIN_PROD_OLD }}
-      NEXT_PUBLIC_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_PROJECT_ID_PROD_OLD }}
-      NEXT_PUBLIC_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_STORAGE_BUCKET_PROD_OLD }}
-      NEXT_PUBLIC_MESSAGING_SENDER_ID: ${{ secrets.NEXT_PUBLIC_MESSAGING_SENDER_ID_PROD_OLD }}
-      NEXT_PUBLIC_APP_ID: ${{ secrets.NEXT_PUBLIC_APP_ID_PROD_OLD }}
-      NEXT_PUBLIC_STATUS: prod-old
+      NEXT_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_API_KEY_PROD_26 }}
+      NEXT_PUBLIC_AUTH_DOMAIN: ${{ secrets.NEXT_PUBLIC_AUTH_DOMAIN_PROD_26 }}
+      NEXT_PUBLIC_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_PROJECT_ID_PROD_26 }}
+      NEXT_PUBLIC_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_STORAGE_BUCKET_PROD_26 }}
+      NEXT_PUBLIC_MESSAGING_SENDER_ID: ${{ secrets.NEXT_PUBLIC_MESSAGING_SENDER_ID_PROD_26 }}
+      NEXT_PUBLIC_APP_ID: ${{ secrets.NEXT_PUBLIC_APP_ID_PROD_26 }}
+      NEXT_PUBLIC_STATUS: prod-26
 
     steps:
       - uses: actions/checkout@v4
@@ -57,23 +57,23 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PROD_OLD }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PROD_26 }}
           projectId: rur-26-web-prod
           channelId: live
-          target: prod-old
+          target: prod-26
 
   # Dev branch deployment - Firebase hosting with environment selection
-  deploy_dev_prod_old:
-    if: github.ref == 'refs/heads/dev' && (github.event.inputs.environment == 'all' || github.event.inputs.environment == 'prod-old' || github.event.inputs.environment == '')
+  deploy_dev_prod_26:
+    if: github.ref == 'refs/heads/dev' && (github.event.inputs.environment == 'all' || github.event.inputs.environment == 'prod-26' || github.event.inputs.environment == '')
     runs-on: ubuntu-latest
     env:
-      NEXT_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_API_KEY_PROD_OLD }}
-      NEXT_PUBLIC_AUTH_DOMAIN: ${{ secrets.NEXT_PUBLIC_AUTH_DOMAIN_PROD_OLD }}
-      NEXT_PUBLIC_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_PROJECT_ID_PROD_OLD }}
-      NEXT_PUBLIC_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_STORAGE_BUCKET_PROD_OLD }}
-      NEXT_PUBLIC_MESSAGING_SENDER_ID: ${{ secrets.NEXT_PUBLIC_MESSAGING_SENDER_ID_PROD_OLD }}
-      NEXT_PUBLIC_APP_ID: ${{ secrets.NEXT_PUBLIC_APP_ID_PROD_OLD }}
-      NEXT_PUBLIC_STATUS: prod-old
+      NEXT_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_API_KEY_PROD_26 }}
+      NEXT_PUBLIC_AUTH_DOMAIN: ${{ secrets.NEXT_PUBLIC_AUTH_DOMAIN_PROD_26 }}
+      NEXT_PUBLIC_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_PROJECT_ID_PROD_26 }}
+      NEXT_PUBLIC_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_STORAGE_BUCKET_PROD_26 }}
+      NEXT_PUBLIC_MESSAGING_SENDER_ID: ${{ secrets.NEXT_PUBLIC_MESSAGING_SENDER_ID_PROD_26 }}
+      NEXT_PUBLIC_APP_ID: ${{ secrets.NEXT_PUBLIC_APP_ID_PROD_26 }}
+      NEXT_PUBLIC_STATUS: prod-26
 
     steps:
       - uses: actions/checkout@v4
@@ -82,22 +82,22 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PROD_OLD }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PROD_26 }}
           projectId: rur-26-web-prod
           channelId: dev-branch
-          target: prod-old
+          target: prod-26
 
-  deploy_dev_prod_new:
-    if: github.ref == 'refs/heads/dev' && (github.event.inputs.environment == 'all' || github.event.inputs.environment == 'prod-new' || github.event.inputs.environment == '')
+  deploy_dev_prod_27:
+    if: github.ref == 'refs/heads/dev' && (github.event.inputs.environment == 'all' || github.event.inputs.environment == 'prod-27' || github.event.inputs.environment == '')
     runs-on: ubuntu-latest
     env:
-      NEXT_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_API_KEY_PROD_NEW }}
-      NEXT_PUBLIC_AUTH_DOMAIN: ${{ secrets.NEXT_PUBLIC_AUTH_DOMAIN_PROD_NEW }}
-      NEXT_PUBLIC_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_PROJECT_ID_PROD_NEW }}
-      NEXT_PUBLIC_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_STORAGE_BUCKET_PROD_NEW }}
-      NEXT_PUBLIC_MESSAGING_SENDER_ID: ${{ secrets.NEXT_PUBLIC_MESSAGING_SENDER_ID_PROD_NEW }}
-      NEXT_PUBLIC_APP_ID: ${{ secrets.NEXT_PUBLIC_APP_ID_PROD_NEW }}
-      NEXT_PUBLIC_STATUS: prod-new
+      NEXT_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_API_KEY_PROD_27 }}
+      NEXT_PUBLIC_AUTH_DOMAIN: ${{ secrets.NEXT_PUBLIC_AUTH_DOMAIN_PROD_27 }}
+      NEXT_PUBLIC_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_PROJECT_ID_PROD_27 }}
+      NEXT_PUBLIC_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_STORAGE_BUCKET_PROD_27 }}
+      NEXT_PUBLIC_MESSAGING_SENDER_ID: ${{ secrets.NEXT_PUBLIC_MESSAGING_SENDER_ID_PROD_27 }}
+      NEXT_PUBLIC_APP_ID: ${{ secrets.NEXT_PUBLIC_APP_ID_PROD_27 }}
+      NEXT_PUBLIC_STATUS: prod-27
 
     steps:
       - uses: actions/checkout@v4
@@ -106,10 +106,10 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PROD_NEW }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PROD_27 }}
           projectId: rur-27-web-prod
           channelId: dev-branch
-          target: prod-new
+          target: prod-27
 
   deploy_dev_dev:
     if: github.ref == 'refs/heads/dev' && (github.event.inputs.environment == 'all' || github.event.inputs.environment == 'dev' || github.event.inputs.environment == '')
