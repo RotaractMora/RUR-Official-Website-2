@@ -11,13 +11,12 @@ import { useRouter } from "next/navigation";
 import { HoverBorderGradient } from "./hover-border-gradient";
 import Image, { StaticImageData } from "next/image";
 import { sendGTMEvent } from "@next/third-parties/google";
-
 export interface ITimelineEntry {
   title: string;
   content: React.ReactNode;
   eventDate: Date;
   btnLink: string;
-  image: string|StaticImageData;
+  image: string | StaticImageData;
   btnText: string;
   isBtnDisabled: boolean;
   category?: string;
@@ -32,9 +31,9 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
     if (ref.current) {
       const rect = ref.current.getBoundingClientRect();
       setHeight(rect.height);
-      console.log("beam h:",rect.height);
+      console.log("beam h:", rect.height);
       setTimeout(() => {
-        console.log("beam h2:",rect.height);
+        console.log("beam h2:", rect.height);
       }, 5000);
       // setHeight(3500);
     }
@@ -57,10 +56,21 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
       case "workshop":
         return {
           label: "Workshop",
-          color: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300",
+          color:
+            "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300",
           icon: (
-            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
-              <path d="M12 6v6l4 2" strokeLinecap="round" strokeLinejoin="round" />
+            <svg
+              className="h-4 w-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={1.5}
+            >
+              <path
+                d="M12 6v6l4 2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
               <circle cx="12" cy="12" r="9" />
             </svg>
           ),
@@ -68,51 +78,106 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
       case "talk":
         return {
           label: "Talk",
-          color: "bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300",
+          color:
+            "bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300",
           icon: (
-            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" strokeLinecap="round" strokeLinejoin="round" />
+            <svg
+              className="h-4 w-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={1.5}
+            >
+              <path
+                d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           ),
         };
       case "panel":
         return {
           label: "Panel",
-          color: "bg-purple-100 text-purple-800 dark:bg-purple-900/20 dark:text-purple-300",
+          color:
+            "bg-purple-100 text-purple-800 dark:bg-purple-900/20 dark:text-purple-300",
           icon: (
-            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
-              <path d="M8 9l3 3-3 3" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M13 6h3v12h-3z" strokeLinecap="round" strokeLinejoin="round" />
+            <svg
+              className="h-4 w-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={1.5}
+            >
+              <path
+                d="M8 9l3 3-3 3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M13 6h3v12h-3z"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           ),
         };
       case "networking":
         return {
           label: "Networking",
-          color: "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300",
+          color:
+            "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300",
           icon: (
-            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+            <svg
+              className="h-4 w-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={1.5}
+            >
               <circle cx="12" cy="7" r="3" />
-              <path d="M5.5 21c.75-4 2.75-6 6.5-6s5.75 2 6.5 6" strokeLinecap="round" strokeLinejoin="round" />
+              <path
+                d="M5.5 21c.75-4 2.75-6 6.5-6s5.75 2 6.5 6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           ),
         };
       case "registration":
         return {
           label: "Registration",
-          color: "bg-rose-100 text-rose-800 dark:bg-rose-900/20 dark:text-rose-300",
+          color:
+            "bg-rose-100 text-rose-800 dark:bg-rose-900/20 dark:text-rose-300",
           icon: (
-            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
-              <path d="M3 7h18M12 3v18" strokeLinecap="round" strokeLinejoin="round" />
+            <svg
+              className="h-4 w-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={1.5}
+            >
+              <path
+                d="M3 7h18M12 3v18"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           ),
         };
       default:
         return {
           label: cat || "General",
-          color: "bg-slate-100 text-slate-800 dark:bg-slate-900/20 dark:text-slate-300",
+          color:
+            "bg-slate-100 text-slate-800 dark:bg-slate-900/20 dark:text-slate-300",
           icon: (
-            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+            <svg
+              className="h-4 w-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={1.5}
+            >
               <circle cx="12" cy="12" r="3" />
             </svg>
           ),
@@ -127,10 +192,10 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
     >
       <div className="max-w-7xl mx-auto py-10 px-4 md:px-8 lg:px-10">
         <h2 className="text-lg md:text-4xl mb-4 text-custom-dark-color-950 dark:text-custom-color-950 max-w-4xl">
-        SESSIONS
+          SESSIONS
         </h2>
         <p className="text-custom-dark-color-neutral-700 dark:text-custom-color-700 text-sm md:text-base max-w-sm">
-        Career Fair will be supported by subprojects
+          Career Fair will be supported by subprojects
         </p>
       </div>
 
@@ -138,7 +203,9 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
         {/* Next session highlight (md+) */}
         {(() => {
           const now = new Date().getTime();
-          const upcoming = data.filter((d) => d.eventDate && d.eventDate.getTime() > now).sort((a, b) => a.eventDate.getTime() - b.eventDate.getTime());
+          const upcoming = data
+            .filter((d) => d.eventDate && d.eventDate.getTime() > now)
+            .sort((a, b) => a.eventDate.getTime() - b.eventDate.getTime());
           const next = upcoming.length > 0 ? upcoming[0] : null;
           if (!next) return null;
           const meta = categoryMeta((next as ITimelineEntry).category);
@@ -152,18 +219,30 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
               <div className="bg-white/6 dark:bg-black/60 backdrop-blur-md rounded-xl p-4 shadow-lg border border-white/10">
                 <div className="flex items-start justify-between">
                   <div>
-                    <div className="text-sm text-neutral-300 mb-1">Next Session</div>
+                    <div className="text-sm text-neutral-300 mb-1">
+                      Next Session
+                    </div>
                     <div className="flex items-center gap-2">
-                      <span className={`inline-flex items-center gap-2 px-2 py-1 rounded-full text-xs font-semibold ${meta.color}`}>
+                      <span
+                        className={`inline-flex items-center gap-2 px-2 py-1 rounded-full text-xs font-semibold ${meta.color}`}
+                      >
                         {meta.icon}
                         <span>{meta.label}</span>
                       </span>
-                      <h3 className="text-lg font-bold text-neutral-100">{next.title}</h3>
+                      <h3 className="text-lg font-bold text-neutral-100">
+                        {next.title}
+                      </h3>
                     </div>
                   </div>
                 </div>
                 <div className="mt-3">
-                  <Image src={next.image} alt={next.title + " image"} width={320} height={140} className="rounded-md object-cover w-full h-32" />
+                  <Image
+                    src={next.image}
+                    alt={next.title + " image"}
+                    width={320}
+                    height={140}
+                    className="rounded-md object-cover w-full h-32"
+                  />
                 </div>
                 <div className="mt-3 flex items-center justify-between">
                   <div>
@@ -173,7 +252,15 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
                     </div>
                   </div>
                   <div>
-                    <HoverBorderGradient onClick={() => { router.push(next.btnLink); }} isDisabled={next.isBtnDisabled} className="px-3 py-2">Join</HoverBorderGradient>
+                    <HoverBorderGradient
+                      onClick={() => {
+                        router.push(next.btnLink);
+                      }}
+                      isDisabled={next.isBtnDisabled}
+                      className="px-3 py-2"
+                    >
+                      Join
+                    </HoverBorderGradient>
                   </div>
                 </div>
               </div>
@@ -190,25 +277,38 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
                   <div className="h-4 w-4 rounded-full bg-neutral-200 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 p-2" />
                 </div>
                 <div className="hidden md:flex items-center gap-4 md:pl-20">
-                  <span className={`inline-flex items-center gap-2 px-2 py-1 rounded-full text-xs font-semibold ${meta.color}`}>
+                  <span
+                    className={`inline-flex items-center gap-2 px-2 py-1 rounded-full text-xs font-semibold ${meta.color}`}
+                  >
                     {meta.icon}
                     <span>{meta.label}</span>
                   </span>
-                  <h3 className="text-xl md:text-5xl font-bold text-neutral-500 dark:text-dark-nautral-500 ">{item.title}</h3>
+                  <h3 className="text-xl md:text-5xl font-bold text-neutral-500 dark:text-dark-nautral-500 ">
+                    {item.title}
+                  </h3>
                 </div>
               </div>
 
               <div className="relative pl-20 pr-4 md:pl-4 w-full text-neutral-500 dark:text-dark-nautral-100">
                 <h3 className="md:hidden block text-2xl mb-4 text-left font-bold text-neutral-500 dark:text-dark-nautral-500">
-                  <span className={`inline-flex items-center gap-2 px-2 py-1 rounded-full text-xs font-semibold ${meta.color} mr-3`}>{meta.icon}<span>{meta.label}</span></span>
+                  <span
+                    className={`inline-flex items-center gap-2 px-2 py-1 rounded-full text-xs font-semibold ${meta.color} mr-3`}
+                  >
+                    {meta.icon}
+                    <span>{meta.label}</span>
+                  </span>
                   {item.title}
                 </h3>
                 <div className="h-[300px] w-full flex justify-center items-center">
-                  <Image src={item.image} height={200} width={400} alt={item.title + " image"} className="rounded-lg mb-5" />
+                  <Image
+                    src={item.image}
+                    height={200}
+                    width={400}
+                    alt={item.title + " image"}
+                    className="rounded-lg mb-5"
+                  />
                 </div>
-                <div>
-                  {item.content}{" "}
-                </div>
+                <div>{item.content} </div>
 
                 <div className="flex md:flex-row justify-around items-center mt-5 flex-col">
                   <div className="mt-3 inline-block">
@@ -216,10 +316,20 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
                   </div>
                   {item.btnText.length > 0 && (
                     <div className="inline-block md:mt-3 mt-5 ml-3">
-                      <HoverBorderGradient onClick={() => {
-                        sendGTMEvent({ event: 'buttonClicked', section: 'timeline', BtnLabel: item.title, link: item.btnLink });
-                        router.push(item.btnLink);
-                      }} isDisabled={item.isBtnDisabled} >{item.btnText}</HoverBorderGradient>
+                      <HoverBorderGradient
+                        onClick={() => {
+                          sendGTMEvent({
+                            event: "buttonClicked",
+                            section: "timeline",
+                            BtnLabel: item.title,
+                            link: item.btnLink,
+                          });
+                          router.push(item.btnLink);
+                        }}
+                        isDisabled={item.isBtnDisabled}
+                      >
+                        {item.btnText}
+                      </HoverBorderGradient>
                     </div>
                   )}
                 </div>
@@ -237,7 +347,6 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
             style={{
               height: heightTransform,
               opacity: opacityTransform,
-              
             }}
             className="absolute inset-x-0 top-0  w-[2px] bg-gradient-to-t from-purple-500 via-blue-500 to-transparent from-[0%] via-[10%] rounded-full"
           />
