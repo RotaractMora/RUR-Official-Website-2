@@ -61,17 +61,17 @@ export const FloatingNav = ({
           </div>
           {/* Center: Navigation links (desktop only) */}
           <div className="hidden md:flex flex-1 justify-center space-x-12">
-              {navItems.map((navItem, idx) => (
-                <a
-                  key={`link-${idx}`}
-                  href={navItem.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-sm font-semibold md:text-lg text-gray-700 hover:text-[#0f4c81] transition-all duration-200 content-center"
-                >
-                  {navItem.name}
-                </a>
-              ))}  
+            {navItems.map((navItem, idx) => (
+              <a
+                key={`link-${idx}`}
+                href={navItem.link}
+                target="_blank"
+                rel="noreferrer"
+                className="text-sm font-semibold md:text-lg text-gray-700 dark:text-white hover:text-[#0f4c81] transition-all duration-200 content-center"
+              >
+                {navItem.name}
+              </a>
+            ))}
           </div>
 
           {/* Right: Actions / CTA (desktop) and Mobile controls */}
@@ -127,8 +127,6 @@ export const FloatingNav = ({
               </button>
             </div>
           </div>
-
-          
         </div>
       </div>
 

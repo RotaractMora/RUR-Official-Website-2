@@ -30,7 +30,7 @@ export default function ReachUsSection({ grid }: { grid: IContact[] }) {
                   <Image
                     src={`${person.photo}`}
                     alt={person.name}
-                    className="w-20 h-20 rounded-full"
+                    className="w-20 h-20 rounded-full object-cover border"
                     width={20}
                     height={20}
                   />

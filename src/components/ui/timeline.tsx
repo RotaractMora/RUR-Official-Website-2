@@ -191,7 +191,7 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
       ref={containerRef}
     >
       <div className="max-w-7xl mx-auto py-10 px-4 md:px-8 lg:px-10">
-        <h2 className="text-lg md:text-4xl mb-4 text-custom-dark-color-950 dark:text-custom-color-950 max-w-4xl">
+        <h2 className="font-black tracking-wider scale-y-[0.95] text-lg md:text-4xl mb-4 text-custom-dark-color-500 dark:text-custom-color-800 max-w-4xl">
           SESSIONS
         </h2>
         <p className="text-custom-dark-color-neutral-700 dark:text-custom-color-700 text-sm md:text-base max-w-sm">
