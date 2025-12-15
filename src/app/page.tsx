@@ -436,7 +436,7 @@ export default function Home() {
               (group) =>
                 group.sponsors.length > 0 && (
                   <div key={group.level} className="mb-12">
-                    <h4 className="text-2xl md:text-2xl font-bold text-center dark:text-custom-color-800 bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent mb-4">
+                    <h4 className="text-2xl md:text-2xl font-bold text-center dark:text-custom-color-800 bg-gradient-to-r from-zinc-300 to-zinc-900 bg-clip-text text-transparent mb-4">
                       {group.level} Partner
                     </h4>
                     <div
