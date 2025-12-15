@@ -89,7 +89,7 @@ export const FloatingNav = ({
                   router.push(portalLink ? portalLink : "");
                 }}
                 isDisabled={false}
-                className="bg-gradient-to-br from-[#233662] via-[#0f4c81] to-[#0fb4ff] text-white px-4 py-2 rounded-lg text-sm"
+                className="bg-gradient-to-br from-[#233662] via-[#0f4c81] to-[#0fb4ff] text-white px-4 py-2 rounded-lg text-sm "
                 containerClassName="bg-white/0 border-0"
               >
                 Registrations
