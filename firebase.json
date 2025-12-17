@@ -1,13 +1,33 @@
 {
-  "hosting": {
-    "public": "./out",
-    "site": "rur-26-web-prod-88caf",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ]
-  },
+  "hosting": [
+    {
+      "target": "rur-24",
+      "public": "./out",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ]
+    },
+    {
+      "target": "prod-26",
+      "public": "./out",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ]
+    },
+    {
+      "target": "dev",
+      "public": "./out",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ]
+    }
+  ],
   "functions": [
     {
       "source": "functions",

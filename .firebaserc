@@ -1,12 +1,29 @@
 {
   "projects": {
-    "default": "rur-26-web-prod"
+    "default": "rur-26-web-prod",
+    "rur-24": "rur-26-web-prod",
+    "prod-26": "rur-27-web-prod",
+    "dev": "rur-web-dev"
   },
   "targets": {
-    "rur-26-web-prod-88caf": {
+    "rur-26-web-prod": {
       "hosting": {
-        "rur-26-web-prod-88caf": [
+        "rur-24": [
           "rur-26-web-prod-88caf"
+        ]
+      }
+    },
+    "rur-27-web-prod": {
+      "hosting": {
+        "prod-26": [
+          "rur-27-web-prod"
+        ]
+      }
+    },
+    "rur-web-dev": {
+      "hosting": {
+        "dev": [
+          "rur-web-dev"
         ]
       }
     }
