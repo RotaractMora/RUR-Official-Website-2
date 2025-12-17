@@ -1,110 +1,93 @@
-"use client";
-import React, { useState, useEffect } from "react";
-
-import { motion } from "framer-motion";
+import * as React from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-type Direction = "TOP" | "LEFT" | "BOTTOM" | "RIGHT" | "NULL" ;
+type Props = React.PropsWithChildren<{
+  as?: React.ElementType;
+  containerClassName?: string;
+  className?: string;
+  duration?: number; // seconds per rotation
+  clockwise?: boolean;
+  isDisabled?: boolean;
+  borderSize?: number; // px
+}> &
+  React.HTMLAttributes<HTMLElement>;
 
 export function HoverBorderGradient({
   children,
   containerClassName,
   className,
   as: Tag = "button",
-  duration = 1,
+  duration = 2.2,
   clockwise = true,
   isDisabled = false,
+  borderSize = 2,
   ...props
-}: React.PropsWithChildren<
-  {
-    as?: React.ElementType;
-    containerClassName?: string;
-    className?: string;
-    duration?: number;
-    clockwise?: boolean;
-    isDisabled?: boolean;
-  } & React.HTMLAttributes<HTMLElement>
->) {
-  const [hovered, setHovered] = useState<boolean>(false);
-  const [direction, setDirection] = useState<Direction>(isDisabled?"NULL":"TOP");
+}: Props) {
+  const [hovered, setHovered] = React.useState(false);
+  const reduceMotion = useReducedMotion();
 
-  const rotateDirection = (currentDirection: Direction): Direction => {
-    const directions: Direction[] = ["TOP", "LEFT", "BOTTOM", "RIGHT"];
-    const currentIndex = directions.indexOf(currentDirection);
-    if(currentIndex <0){
-      return "NULL"
-    }
-    else{
-    const nextIndex = clockwise
-      ? (currentIndex - 1 + directions.length) % directions.length
-      : (currentIndex + 1) % directions.length;
-    return directions[nextIndex];
-    }
-  };
+  const TagAny = Tag as any;
+  const canDisable = Tag === "button";
 
-  const movingMap: Record<Direction, string> = {
-    TOP: 
-      "radial-gradient(20.7% 50% at 50% 0%, hsl(0, 0%, 100%) 0%, rgba(255, 255, 255, 0) 100%)",
-    LEFT: 
-      "radial-gradient(16.6% 43.1% at 0% 50%, hsl(0, 0%, 100%) 0%, rgba(255, 255, 255, 0) 100%)",
-    BOTTOM:
-      "radial-gradient(20.7% 50% at 50% 100%, hsl(0, 0%, 100%) 0%, rgba(255, 255, 255, 0) 100%)",
-    RIGHT:
-      "radial-gradient(16.2% 41.199999999999996% at 100% 50%, hsl(0, 0%, 100%) 0%, rgba(255, 255, 255, 0) 100%)",
-    NULL:
-      "",
-  };
+  const spin = reduceMotion || isDisabled ? 0 : clockwise ? 360 : -360;
 
-  const highlight = "radial-gradient(75% 181.15942028985506% at 50% 50%,rgb(136, 213, 255) 0%, rgba(255, 255, 255, 0) 100%)";
+  const ringGradient = `conic-gradient(
+    from 0deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,1) 10%,
+    rgba(255,255,255,0) 20%,
+    rgba(136,213,255,1) 35%,
+    rgba(255,255,255,0) 50%,
+    rgba(255,255,255,1) 65%,
+    rgba(255,255,255,0) 80%,
+    rgba(136,213,255,1) 92%,
+    rgba(255,255,255,0) 100%
+  )`;
 
-  useEffect(() => {
-    if (!hovered) {
-      const interval = setInterval(() => {
-        setDirection((prevState) => rotateDirection(prevState));
-      }, duration * 1000);
-      return () => clearInterval(interval);
-    }
-  }, [hovered]);
   return (
-    <Tag
-      onMouseEnter={(event: React.MouseEvent<HTMLDivElement>) => {
-        setHovered(true);
-      }}
+    <TagAny
+      onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      disabled={canDisable ? isDisabled : undefined}
+      aria-disabled={!canDisable && isDisabled ? true : undefined}
       className={cn(
-        "relative flex rounded-full border content-center bg-black/20 hover:bg-black/10 transition duration-500 dark:bg-white/20 items-center flex-col flex-nowrap gap-10 h-min justify-center overflow-visible p-px decoration-clone w-fit disabled:cursor-not-allowed",
+        "group relative inline-flex items-center justify-center rounded-full",
+        isDisabled && "cursor-not-allowed opacity-60",
         containerClassName
       )}
-      disabled={isDisabled}
       {...props}
     >
-      <div
+      {/* STATIC glow (does NOT rotate) */}
+      <span
+        aria-hidden="true"
         className={cn(
-          "w-auto dark:text-custom-color-900 text-custom-dark-color-900 z-10 dark:bg-custom-dark-color-900 bg-custom-color-900 px-4 py-2 rounded-[inherit]",
+          "pointer-events-none absolute -inset-2 rounded-[inherit] opacity-0 transition-opacity duration-300",
+          hovered && "opacity-100"
+        )}
+        style={{
+          background:
+            "radial-gradient(75% 181.15942028985506% at 50% 50%, rgb(136, 213, 255) 0%, rgba(255,255,255,0) 60%)",
+          filter: "blur(14px)",
+        }}
+      />
+
+      <div className="blur absolute inset-0 rounded-lg -translate-x-1 translate-y-1 bg-gradient-to-br from-cyan-500 to-sky-500"></div>
+
+      {/* Inner surface (your same colors) */}
+      <span
+        className={cn(
+          "relative z-10 rounded-[inherit] px-4 py-2",
+          "dark:text-custom-color-900 text-custom-dark-color-900",
+          "dark:bg-custom-dark-color-900 bg-custom-color-900",
+          "shadow-[0_0_0_1px_rgba(255,255,255,0.06)_inset]",
+          "transition duration-300",
+          hovered && "shadow-[0_0_0_1px_rgba(136,213,255,0.20)_inset]",
           className
         )}
       >
         {children}
-      </div>
-      <motion.div
-        className={cn(
-          "flex-none inset-0 overflow-hidden absolute z-0 rounded-[inherit]"
-        )}
-        style={{
-          filter: "blur(2px)",
-          position: "absolute",
-          width: "100%",
-          height: "100%",
-        }}
-        initial={{ background: movingMap[direction] }}
-        animate={{
-          background: hovered
-            ? [ highlight]
-            : [movingMap[direction] ],
-        }}
-        transition={{ ease: "linear", duration: duration ?? 1 }}
-      />
-      <div className="bg-black absolute z-1 flex-none inset-[2px] rounded-[100px]" />
-    </Tag>
+      </span>
+    </TagAny>
   );
 }
