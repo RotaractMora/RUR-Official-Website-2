@@ -31,14 +31,14 @@ const Footer = () => {
         }
     ];
   return (
-        <footer className="bg-light-gradient rounded-lg shadow dark:bg-dark-gradient m-1">
-            <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
-                <div className="sm:flex sm:items-center sm:justify-between">
-                    <div className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
+        <footer className="bg-light-gradient rounded-lg shadow dark:bg-dark-gradient mx-2 sm:mx-4 lg:mx-6">
+            <div className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-10 py-6 md:py-8">
+                <div className="flex flex-col items-center">
+                    <div className="flex items-center mb-4 space-x-3 rtl:space-x-reverse mx-auto">
                         <Image src={LOGO_SMALL} className="h-8" alt="Flowbite Logo" />
                         <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Are You Ready 2025</span>
                     </div>
-                    <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
+                    <ul className="flex flex-wrap items-center justify-center mb-6 text-sm font-medium text-gray-500 dark:text-gray-400">
                         <li>
                             <a href="#timeline" className="hover:underline me-4 md:me-6">Timeline</a>
                         </li>
@@ -54,11 +54,11 @@ const Footer = () => {
 
                     </ul>
                 </div>
-                <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-                <div className="flex items-center justify-between">
+                {/* <hr className="my-3 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" /> */}
+                <div className="my-1 flex items-center justify-center">
                     <FloatingDock items={floatDockItms} />
                 </div>
-                <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+                <hr className="my-3 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
                 <span className="block text-sm w-full text-gray-500 text-center dark:text-gray-400">© 2025 <a href="https://rotaractmora.org" className="hover:underline">Rotaract Mora</a>. All Rights Reserved.</span>
             </div>
         </footer>
