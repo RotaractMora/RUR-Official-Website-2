@@ -30,7 +30,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}	
           local-dir: ./out/
           server-dir: ./	
-          protocol: ftp
+          protocol: ftps
           port: 21
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
