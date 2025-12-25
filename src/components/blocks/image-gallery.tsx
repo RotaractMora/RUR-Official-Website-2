@@ -1,5 +1,12 @@
-import { StaticImageData } from 'next/image';
-import React from 'react';
+import { StaticImageData } from "next/image";
+import React from "react";
+import { Roboto_Flex } from "next/font/google";
+
+const roboto_flex = Roboto_Flex({
+  subsets: ["latin"],
+  weight: ["400", "700", "900"],
+  display: "swap",
+});
 
 interface Product {
   title: string;
@@ -16,14 +23,18 @@ export function Gallery({ data, onImageClick }: GalleryProps) {
   return (
     <section id="gallery" className="py-20">
       <div className="container mx-auto px-4 max-w-[1400px]">
-            <div className="max-w-7xl relative mx-auto pb-10  px-4 w-full left-0 top-0">
-            <h1 className="text-2xl md:text-7xl text-center font-bold dark:text-white bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent">
-                Are You Ready? <br /> 2025
-            </h1>
-            
-            <p className="max-w-2xl text-base md:text-xl pb-4 text-center mx-auto mt-8 text-neutral-800 dark:text-neutral-200">
-                The Virtual Odyssey in Corporate Arena
-            </p>
+        <div className="max-w-7xl relative mx-auto pb-10  px-4 w-full left-0 top-0">
+          <h1
+            className={` text-4xl md:text-5xl text-center dark:text-white bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent font-black`}
+          >
+            Are you ready?
+            <br />
+            <span className="text-[2.5rem] md:text-[2.7rem]">2025</span>
+          </h1>
+
+          <p className="max-w-2xl text-base md:text-xl pb-4 text-center mx-auto mt-8 text-neutral-800 dark:text-neutral-200">
+            The Virtual Odyssey in Corporate Arena
+          </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-10">
           {data.map((img) => (
@@ -33,9 +44,9 @@ export function Gallery({ data, onImageClick }: GalleryProps) {
               onClick={() => onImageClick(img.thumbnail.src)}
             >
               <img
-              src={img.thumbnail.src}
-              alt={img.title}
-              className="gallery-img w-full sm:h-72 md:h-72 lg:h-72 object-cover transition-transform duration-300 group-hover:scale-105"
+                src={img.thumbnail.src}
+                alt={img.title}
+                className="gallery-img w-full sm:h-72 md:h-72 lg:h-72 object-cover transition-transform duration-300 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
