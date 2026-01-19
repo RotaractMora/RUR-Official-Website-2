@@ -56,3 +56,20 @@ export const deleteSponsor = async (docId:string):Promise<void> => {
     return await deleteDoc(docRef);
 }
 
+export const updateSponsorVisibility = async (
+  sponsorId: string,
+  isVisibleToPublic: boolean
+): Promise<void> => {
+  try {
+    const db = getFirestore(app);
+    const sponsorRef = doc(db, "info-sponsors", sponsorId);
+    
+    await updateDoc(sponsorRef, {
+      isVisibleToPublic: isVisibleToPublic,
+      updatedAt: new Date(),
+    });
+  } catch (error) {
+    console.error("Error updating sponsor visibility:", error);
+    throw error;
+  }
+};
