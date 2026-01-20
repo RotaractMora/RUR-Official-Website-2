@@ -21,7 +21,7 @@ permissions:
   contents: read
 
 jobs:
-  # Deploy functions from main branch to prod-old
+  # Deploy functions from main branch to prod-old (rur-24)
   deploy_main:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
@@ -40,15 +40,40 @@ jobs:
       run: npm install
 
     - name: Deploy to Firebase Functions (prod-old)
-      env:
-        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       run: |
         npm install -g firebase-tools
-        firebase deploy --only functions --project rur-26-web-prod
+        echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_RUR_24 }}' > sa.json
+        export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/sa.json
+        firebase deploy --only functions --project rur-24
 
-  # Deploy functions from dev branch - defaults to prod-new
-  deploy_dev:
-    if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
+  # Deploy functions from dev branch - rur-24
+  deploy_dev_rur_24:
+    if: github.ref == 'refs/heads/dev' && (github.event.inputs.environment == 'all' || github.event.inputs.environment == 'prod-old')
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+
+    - name: Install dependencies
+      working-directory: functions
+      run: npm install
+
+    - name: Deploy to Firebase Functions (prod-old)
+      run: |
+        npm install -g firebase-tools
+        echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_RUR_24 }}' > sa.json
+        export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/sa.json
+        firebase deploy --only functions --project rur-24
+
+  # Deploy functions from dev branch - prod-26
+  deploy_dev_prod_26:
+    if: github.ref == 'refs/heads/dev' && (github.event.inputs.environment == 'all' || github.event.inputs.environment == 'prod-new')
     runs-on: ubuntu-latest
 
     steps:
@@ -65,11 +90,36 @@ jobs:
       run: npm install
 
     - name: Deploy to Firebase Functions (prod-new)
-      env:
-        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       run: |
         npm install -g firebase-tools
-        firebase deploy --only functions --project rur-27-web-prod
+        echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PROD_26 }}' > sa.json
+        export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/sa.json
+        firebase deploy --only functions --project rur-26-web-prod
+
+  # Deploy functions from dev branch - dev
+  deploy_dev_dev:
+    if: github.ref == 'refs/heads/dev' && (github.event.inputs.environment == 'all' || github.event.inputs.environment == 'dev' || github.event.inputs.environment == '')
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+
+    - name: Install dependencies
+      working-directory: functions
+      run: npm install
+
+    - name: Deploy to Firebase Functions (dev)
+      run: |
+        npm install -g firebase-tools
+        echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_DEV }}' > sa.json
+        export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/sa.json
+        firebase deploy --only functions --project rur-26-dev
 
   # Manual deployment workflow
   deploy_manual:
@@ -90,14 +140,17 @@ jobs:
       run: npm install
 
     - name: Deploy to Firebase Functions
-      env:
-        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       run: |
         npm install -g firebase-tools
         if [ "${{ github.event.inputs.environment }}" == "prod-old" ]; then
-          firebase deploy --only functions --project rur-26-web-prod
+          echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_RUR_24 }}' > sa.json
+          PROJECT="rur-24"
         elif [ "${{ github.event.inputs.environment }}" == "prod-new" ]; then
-          firebase deploy --only functions --project rur-27-web-prod
+          echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PROD_26 }}' > sa.json
+          PROJECT="rur-26-web-prod"
         else
-          firebase deploy --only functions --project rur-web-dev
+          echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_DEV }}' > sa.json
+          PROJECT="rur-26-dev"
         fi
+        export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/sa.json
+        firebase deploy --only functions --project $PROJECT

@@ -28,9 +28,9 @@ This project supports 3 Firebase environments:
 
 | Environment | Description | Firebase Project |
 |-------------|-------------|------------------|
-| `rur-24` | Production (RUR 24, previous year) | `rur-26-web-prod` |
-| `prod-26` | Production (RUR 26, current year) | `rur-27-web-prod` |
-| `dev` | Development/Staging | `rur-web-dev` |
+| `rur-24` | Production (RUR 24, previous year) | `rur-24` |
+| `prod-26` | Production (RUR 26, current year) | `rur-26-web-prod` |
+| `dev` | Development/Staging | `rur-26-dev` |
 
 ### Local Development
 
@@ -99,16 +99,16 @@ npm run build:dev
 
 For each environment, the following secrets need to be configured:
 
-**RUR-24 (rur-26-web-prod) - Previous Year:**
-- `NEXT_PUBLIC_API_KEY` (no suffix, uses existing secrets)
-- `NEXT_PUBLIC_AUTH_DOMAIN`
-- `NEXT_PUBLIC_PROJECT_ID`
-- `NEXT_PUBLIC_STORAGE_BUCKET`
-- `NEXT_PUBLIC_MESSAGING_SENDER_ID`
-- `NEXT_PUBLIC_APP_ID`
+**RUR-24 (rur-24) - Previous Year:**
+- `NEXT_PUBLIC_API_KEY_RUR_24`
+- `NEXT_PUBLIC_AUTH_DOMAIN_RUR_24`
+- `NEXT_PUBLIC_PROJECT_ID_RUR_24`
+- `NEXT_PUBLIC_STORAGE_BUCKET_RUR_24`
+- `NEXT_PUBLIC_MESSAGING_SENDER_ID_RUR_24`
+- `NEXT_PUBLIC_APP_ID_RUR_24`
 - `FIREBASE_SERVICE_ACCOUNT_RUR_24`
 
-**Prod-26 (rur-27-web-prod) - Current Year:**
+**Prod-26 (rur-26-web-prod) - Current Year:**
 - `NEXT_PUBLIC_API_KEY_PROD_26`
 - `NEXT_PUBLIC_AUTH_DOMAIN_PROD_26`
 - `NEXT_PUBLIC_PROJECT_ID_PROD_26`
@@ -117,7 +117,7 @@ For each environment, the following secrets need to be configured:
 - `NEXT_PUBLIC_APP_ID_PROD_26`
 - `FIREBASE_SERVICE_ACCOUNT_PROD_26`
 
-**Dev (rur-web-dev):**
+**Dev (rur-26-dev):**
 - `NEXT_PUBLIC_API_KEY_DEV`
 - `NEXT_PUBLIC_AUTH_DOMAIN_DEV`
 - `NEXT_PUBLIC_PROJECT_ID_DEV`

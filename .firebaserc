@@ -1,32 +1,31 @@
 {
   "projects": {
-    "default": "rur-26-web-prod",
-    "rur-24": "rur-26-web-prod",
-    "prod-26": "rur-27-web-prod",
-    "dev": "rur-web-dev"
+    "default": "rur-26-dev",
+    "rur-24": "rur-24",
+    "prod-26": "rur-26-web-prod",
+    "dev": "rur-26-dev"
   },
   "targets": {
-    "rur-26-web-prod": {
+    "rur-24": {
       "hosting": {
         "rur-24": [
-          "rur-26-web-prod-88caf"
+          "rur25-official-web"
         ]
       }
     },
-    "rur-27-web-prod": {
+    "rur-26-web-prod": {
       "hosting": {
         "prod-26": [
-          "rur-27-web-prod"
+          "rur-26-web-prod"
         ]
       }
     },
-    "rur-web-dev": {
+    "rur-26-dev": {
       "hosting": {
         "dev": [
-          "rur-web-dev"
+          "rur-26-web-dev"
         ]
       }
     }
-  },
-  "etags": {}
+  }
 }
