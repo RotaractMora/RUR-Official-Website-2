@@ -23,18 +23,7 @@ export function Gallery({ data, onImageClick }: GalleryProps) {
   return (
     <section id="gallery" className="py-20">
       <div className="container mx-auto px-4 max-w-[1400px]">
-        <div className="max-w-7xl relative mx-auto pb-10  px-4 w-full left-0 top-0">
-          <h1
-            className={` text-4xl md:text-5xl text-center dark:text-white bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent font-black`}
-          >
-            Are you ready?
-            <br />
-            <span className="text-[2.5rem] md:text-[2.7rem]">2025</span>
-          </h1>
-
-          <p className="max-w-2xl text-base md:text-xl pb-4 text-center mx-auto mt-8 text-neutral-800 dark:text-neutral-200">
-            The Virtual Odyssey in Corporate Arena
-          </p>
+        <div className="max-w-7xl relative mx-auto pb-4 px-4 w-full left-0 top-0">
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-10">
           {data.map((img) => (

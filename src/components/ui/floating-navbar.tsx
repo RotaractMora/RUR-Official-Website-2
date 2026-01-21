@@ -65,8 +65,6 @@ export const FloatingNav = ({
               <a
                 key={`link-${idx}`}
                 href={navItem.link}
-                target="_blank"
-                rel="noreferrer"
                 className="text-sm font-semibold md:text-lg text-gray-700 dark:text-white hover:text-[#0f4c81] transition-all duration-200 content-center"
               >
                 {navItem.name}

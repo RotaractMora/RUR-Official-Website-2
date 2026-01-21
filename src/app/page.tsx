@@ -160,7 +160,7 @@ const navItms = [
   },
   {
     name: "Registered Companies",
-    link: "/companies",
+    link: "/registered-companies",
     icon: <BuildingOfficeIcon />,
   },
 ];
@@ -230,7 +230,7 @@ const AboutSection = ({ content }: { content: string }) => {
         >
           What we do
         </h2>
-        <div className="prose prose-sm md:prose-base lg:prose-lg dark:prose-invert max-w-none leading-10 text-justify">
+        <div className="prose prose-sm md:prose-base lg:prose-lg dark:prose-invert max-w-6xl mx-auto leading-relaxed text-center">
           <TextGenerateEffect words={content} />
         </div>
       </div>
@@ -440,13 +440,12 @@ export default function Home() {
                       {group.level} Partner
                     </h4>
                     <div
-                      className={`grid gap-8 md:gap-8 max-w-7xl mx-auto min-h-[300px] py-4 px-2 ${
-                        group.sponsors.length === 1
-                          ? "grid-cols-1 place-items-center"
-                          : group.sponsors.length === 2
+                      className={`grid gap-8 md:gap-8 max-w-7xl mx-auto min-h-[300px] py-4 px-2 ${group.sponsors.length === 1
+                        ? "grid-cols-1 place-items-center"
+                        : group.sponsors.length === 2
                           ? "grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 place-items-center"
                           : "grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center"
-                      }`}
+                        }`}
                     >
                       {group.sponsors
                         .sort((a, b) => a.order - b.order)
@@ -478,7 +477,7 @@ export default function Home() {
               <h2 className="text-2xl md:text-3xl font-bold text-center dark:text-custom-color-800 bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent mb-4">
                 Thank You for Your Support!
               </h2>
-              <p className="mt-4 max-w-7xl mx-auto text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+              <p className="mt-4 max-w-6xl mx-auto text-lg md:text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
                 We deeply appreciate your unwavering support in making this
                 event a success. Your contributions inspire us to innovate,
                 collaborate, and grow. Together, we're achieving remarkable

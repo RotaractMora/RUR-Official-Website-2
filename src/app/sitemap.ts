@@ -5,7 +5,7 @@ const baseUrl = "https://areyouready.uom.lk";
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [
     "/",
-    "/companies",
+    "/registered-companies",
   ];
 
   return staticRoutes.map((path) => ({
