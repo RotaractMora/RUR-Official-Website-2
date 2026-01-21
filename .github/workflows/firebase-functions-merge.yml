@@ -10,7 +10,7 @@ on:
       environment:
         description: 'Environment to deploy functions to'
         required: false
-        default: 'rur-24'
+        default: 'rur-24-prod'
         type: choice
         options:
           - all
