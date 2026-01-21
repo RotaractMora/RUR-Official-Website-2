@@ -28,26 +28,26 @@ This project supports 3 Firebase environments:
 
 | Environment | Description | Firebase Project |
 |-------------|-------------|------------------|
-| `rur-24` | Production (RUR 24, previous year) | `rur-24` |
-| `prod-26` | Production (RUR 26, current year) | `rur-26-web-prod` |
-| `dev` | Development/Staging | `rur-26-dev` |
+| `rur-24-prod` | Production (RUR 24, previous year) | `rur-24` |
+| `rur-26-prod` | Production (RUR 26, current year) | `rur-26-web-prod` |
+| `rur-26-dev` | Development/Staging | `rur-26-dev` |
 
 ### Local Development
 
 To run the project locally with different environments, first copy `.env.example` to create your environment files:
 
 ```bash
-# For rur-24 environment (previous year)
-cp .env.example .env.rur-24
-# Edit .env.rur-24 with rur-24 Firebase credentials
+# For rur-24-prod environment (previous year)
+cp .env.example .env.rur-24-prod
+# Edit .env.rur-24-prod with rur-24 Firebase credentials
 
-# For prod-26 environment (current year)
-cp .env.example .env.prod-26
-# Edit .env.prod-26 with prod-26 Firebase credentials
+# For rur-26-prod environment (current year)
+cp .env.example .env.rur-26-prod
+# Edit .env.rur-26-prod with prod-26 Firebase credentials
 
-# For dev environment
-cp .env.example .env.dev
-# Edit .env.dev with dev Firebase credentials
+# For rur-26-dev environment
+cp .env.example .env.rur-26-dev
+# Edit .env.rur-26-dev with dev Firebase credentials
 
 # For default local development
 cp .env.example .env.local
@@ -60,14 +60,14 @@ Then run the development server with your chosen environment:
 # Default local development (uses .env.local)
 npm run dev
 
-# Run with rur-24 environment (previous year)
-npm run dev:rur-24
+# Run with rur-24-prod environment (previous year)
+npm run dev:rur-24-prod
 
-# Run with prod-26 environment (recommended for dev branch)
-npm run dev:prod-26
+# Run with rur-26-prod environment (current year)
+npm run dev:rur-26-prod
 
-# Run with dev environment
-npm run dev:dev
+# Run with rur-26-dev environment
+npm run dev:rur-26-dev
 ```
 
 ### Build Commands
@@ -77,19 +77,19 @@ npm run dev:dev
 npm run build
 
 # Build for specific environments
-npm run build:rur-24
-npm run build:prod-26
-npm run build:dev
+npm run build:rur-24-prod
+npm run build:rur-26-prod
+npm run build:rur-26-dev
 ```
 
 ### CI/CD Deployment
 
 #### Main Branch
 - Deploys via FTP (primary)
-- Deploys to Firebase Hosting `rur-24` environment (backup)
+- Deploys to Firebase Hosting `rur-24-prod` environment (backup)
 
 #### Dev Branch
-- Deploys to all 3 Firebase Hosting environments (rur-24, prod-26, dev)
+- Deploys to all 3 Firebase Hosting environments (rur-24-prod, rur-26-prod, rur-26-dev)
 - Can be manually triggered with environment selection via GitHub Actions
 
 #### Pull Requests
@@ -130,9 +130,6 @@ For each environment, the following secrets need to be configured:
 - `FTP_SERVER`
 - `FTP_USERNAME`
 - `FTP_PASSWORD`
-
-**Firebase Functions:**
-- `FIREBASE_TOKEN`
 
 ## Learn More
 
