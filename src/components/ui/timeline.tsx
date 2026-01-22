@@ -191,10 +191,10 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
       ref={containerRef}
     >
       <div className="max-w-7xl mx-auto py-10 px-4 md:px-8 lg:px-10">
-        <h2 className="font-black tracking-wider scale-y-[0.95] text-lg md:text-4xl mb-4 text-custom-dark-color-500 dark:text-custom-color-800 max-w-4xl">
+        <h2 className="text-4xl md:text-5xl font-bold dark:text-white gradient-text mt-8 md:mt-12 mb-0">
           SESSIONS
         </h2>
-        <p className="text-custom-dark-color-neutral-700 dark:text-custom-color-700 text-sm md:text-base max-w-sm">
+        <p className="text-gray-600 dark:text-gray-400 text-base md:text-lg max-w-2xl leading-relaxed">
           Career Fair will be supported by subprojects
         </p>
       </div>

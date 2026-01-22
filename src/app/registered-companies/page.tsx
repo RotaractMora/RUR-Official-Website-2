@@ -157,7 +157,7 @@ export default function Companies() {
 
       <div id="registeredCompanies" className="scroll-mt-20 py-8 px-6 text-center dark:bg-gray-800">
         <div className="mb-8 mt-24 md:mt-20">
-          <h2 className="text-3xl md:text-4xl font-bold text-center dark:text-white bg-brand-gradient bg-clip-text text-transparent mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-center dark:text-white gradient-text mt-8 md:mt-12 mb-0">
             Registered Companies
           </h2>
           <p className="mt-4 mx-auto max-w-6xl text-lg md:text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
