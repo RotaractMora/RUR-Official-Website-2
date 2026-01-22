@@ -4,7 +4,7 @@ import DOMPurify from 'dompurify';
 
 const CodeEvelPara = ({ htmlContent }: { htmlContent: string }) => {
   const sanitizedHTML = DOMPurify.sanitize(htmlContent, { ALLOWED_TAGS: ['br', 'strong', 'b', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'i', 'u'] });
-  return <div className="text-base md:text-lg leading-relaxed text-gray-600 dark:text-gray-300" dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />;
+  return <div className="text-base md:text-lg leading-relaxed text-gray-700 dark:text-gray-300" dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />;
 };
 
 export default CodeEvelPara;

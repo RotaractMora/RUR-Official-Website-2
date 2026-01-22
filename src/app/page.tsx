@@ -226,7 +226,7 @@ const AboutSection = ({ content }: { content: string }) => {
     <div className="w-full max-w-7xl mx-auto px-4 py-24 md:py-12">
       <div className="bg-white/5 backdrop-blur-lg rounded-xl p-4 md:p-12 mt-0">
         <h2
-          className={`text-4xl md:text-5xl text-center font-bold dark:text-custom-color-800 bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent mb-4  font-black`}
+          className={`text-4xl md:text-5xl text-center font-bold dark:text-white bg-brand-gradient bg-clip-text text-transparent mb-4 font-black`}
         >
           What we do
         </h2>
@@ -417,7 +417,7 @@ export default function Home() {
         >
           {sponsors.length > 0 && (
             <div className="py-8 px-6 text-center">
-              <h2 className="text-4xl md:text-5xl font-bold text-center dark:text-custom-color-800 bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent mb-4 font-black">
+              <h2 className="text-4xl md:text-5xl font-bold text-center dark:text-white bg-brand-gradient bg-clip-text text-transparent mb-4 font-black">
                 Sponsors
               </h2>
             </div>
@@ -474,7 +474,7 @@ export default function Home() {
 
           {sponsors.length > 0 && (
             <div className="py-8 px-6 text-center">
-              <h2 className="text-2xl md:text-3xl font-bold text-center dark:text-custom-color-800 bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent mb-4">
+              <h2 className="text-2xl md:text-3xl font-bold text-center dark:text-white bg-brand-gradient bg-clip-text text-transparent mb-4">
                 Thank You for Your Support!
               </h2>
               <p className="mt-4 max-w-6xl mx-auto text-lg md:text-xl text-gray-600 dark:text-gray-400 leading-relaxed">

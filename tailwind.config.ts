@@ -31,10 +31,13 @@ module.exports = {
       'lg': '1024px',
     },
     extend: {
+      fontFamily: {
+        sans: ["var(--font-lato)", "sans-serif"],
+      },
       backgroundImage: {
         'dark-gradient': 'linear-gradient(75deg, rgba(0,8,21,1) 0%, rgba(0,19,30,1) 30%, rgba(3,49,62,1) 45%, rgba(0,16,41,1) 60%, rgba(0,5,40,1) 100%)',
         'light-gradient': 'linear-gradient(55deg, rgba(247,254,255,1) 0%, rgba(230,238,238,1) 20%, rgba(255,255,255,1) 45%, rgba(230,238,238,1) 70%, rgba(247,254,255,1) 100%);',
-
+        'brand-gradient': 'linear-gradient(135deg, #0E0474 0%, #0147AF 30%, #14B2FA 100%)',
       },
       boxShadow: {
         input: "0px 4px 6px rgba(0, 0, 0, 0.1)",
@@ -74,38 +77,9 @@ module.exports = {
           foreground: "hsl(var(--card-foreground))",
         },
 
-
-        'custom-dark-color-950': '#0C0C0C',
-        'custom-dark-color-900': '#1A1A1A',
-        'custom-dark-color-800': '#282828',
-        'custom-dark-color-700': '#464646',
-        'custom-dark-color-600': '#646464',
-        'custom-dark-color-500': '#828282',
-        'custom-dark-color-400': '#A0A0A0',
-        'custom-dark-color-300': '#BEBEBE',
-        'custom-dark-color-200': '#DCDCDC',
-        'custom-dark-color-100': '#FCFCFC',
-        'custom-color-950': '#FFFFFF',
-        'custom-color-900': '#E5E7EB',
-        'custom-color-800': '#D1D5DB',
-        'custom-color-700': '#9CA3AF',
-        'custom-color-600': '#6B7280',
-        'custom-color-500': '#4B5563',
-        'custom-color-400': '#374151',
-        'custom-color-300': '#1F2937',
-        'custom-color-200': '#111827',
-        'custom-color-100': '#0C0C0C',
-        'dark-glow-dots-color': '#9B70D2',
-        'dark-dots-color': '#696969',
-        'glow-dots-color': '#0000AB',
-        'dots-color': '#ADD8E6',
-        'custom-color-gold': '#AF9500',
-        // 'custom-color-silver':'#D7D7D7',
-        'custom-color-silver': '#90949e',
-        'custom-color-bronze': '#BE7936',
-        'custom-dark-color-gold': '#FFD700',
-        'custom-dark-color-silver': '#C0C0C0',
-        'custom-dark-color-bronze': '#CD7F32',
+        'brand-blue': '#1E22A4',
+        'brand-navy': '#0E0474',
+        'brand-cyan': '#14B2FA',
       },
       // the animation and keyframes objects were previously overriding instead of extending. 
       animation: {
@@ -130,7 +104,7 @@ module.exports = {
   },
   plugins: [addVariablesForColors,
 
-    function({ matchUtilities, theme }: any) {
+    function ({ matchUtilities, theme }: any) {
       matchUtilities(
         {
           "bg-grid": (value: any) => ({

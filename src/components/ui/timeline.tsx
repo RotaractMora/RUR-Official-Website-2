@@ -187,7 +187,7 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
 
   return (
     <div
-      className="w-full  bg-[#e9f3f8] dark:bg-custom-dark-color-900 font-sans md:px-10 pb-20"
+      className="w-full bg-slate-50/50 dark:bg-custom-dark-color-900 font-sans md:px-10 pb-20"
       ref={containerRef}
     >
       <div className="max-w-7xl mx-auto py-10 px-4 md:px-8 lg:px-10">
@@ -277,12 +277,14 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
                   <div className="h-4 w-4 rounded-full bg-neutral-200 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 p-2" />
                 </div>
                 <div className="hidden md:flex items-center gap-4 md:pl-20">
+                  {/* Category tag commented out
                   <span
                     className={`inline-flex items-center gap-2 px-2 py-1 rounded-full text-xs font-semibold ${meta.color}`}
                   >
                     {meta.icon}
                     <span>{meta.label}</span>
                   </span>
+                  */}
                   <h3 className="text-xl md:text-5xl font-bold text-neutral-500 dark:text-dark-nautral-500 ">
                     {item.title}
                   </h3>
@@ -291,12 +293,14 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
 
               <div className="relative pl-20 pr-4 md:pl-4 w-full text-neutral-500 dark:text-dark-nautral-100">
                 <h3 className="md:hidden block text-2xl mb-4 text-left font-bold text-neutral-500 dark:text-dark-nautral-500">
+                  {/* Category tag commented out
                   <span
                     className={`inline-flex items-center gap-2 px-2 py-1 rounded-full text-xs font-semibold ${meta.color} mr-3`}
                   >
                     {meta.icon}
                     <span>{meta.label}</span>
                   </span>
+                  */}
                   {item.title}
                 </h3>
                 <div className="h-[300px] w-full flex justify-center items-center">

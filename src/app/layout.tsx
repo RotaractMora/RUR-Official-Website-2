@@ -1,6 +1,6 @@
 "use client";
 
-import localFont from "next/font/local";
+import { Lato } from "next/font/google";
 import "./globals.css";
 import React, { useCallback, useEffect, useState } from "react";
 import { AuthProvider } from "@/context/auth-provider";
@@ -10,16 +10,10 @@ import Head from "next/head";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { Toaster } from "@/components/ui/sonner";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+const lato = Lato({
+  subsets: ["latin"],
+  weight: ["100", "300", "400", "700", "900"],
+  variable: "--font-lato",
 });
 
 export const ThemeContext = React.createContext<IThemeContextType | null>(null);
@@ -65,11 +59,11 @@ export default function RootLayout({
     <AuthProvider>
       <ThemeContext.Provider value={{ setTheme, toggleTheme, theme }}>
         <HelmetProvider>
-        <html lang="en">
-          <head>
-          <meta name="google-site-verification" content="ctC6c_Itp6D3M77kEOvPaN9D9i_O6Sq5vXpCX8EyMsY" />
-          </head>
-          <Helmet>
+          <html lang="en">
+            <head>
+              <meta name="google-site-verification" content="ctC6c_Itp6D3M77kEOvPaN9D9i_O6Sq5vXpCX8EyMsY" />
+            </head>
+            <Helmet>
 
               <meta property="og:type" content="website" />
               <meta property="og:site_name" content="Are You Ready? 2025" />
@@ -96,7 +90,7 @@ export default function RootLayout({
               />
             </Helmet>
             <body
-              className={`${geistSans.variable} ${geistMono.variable} dark:bg-dark-gradient bg-light-gradient antialiased`}
+              className={`${lato.variable} font-sans dark:bg-dark-gradient bg-white antialiased`}
             >
               <GoogleTagManager gtmId="GTM-MWJNXDZR" />
               {children}
