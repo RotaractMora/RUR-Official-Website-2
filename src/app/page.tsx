@@ -4,21 +4,18 @@ import ModernHero from "@/components/ui/modern-hero";
 import RootLayout from "./layout";
 import { FloatingNav } from "@/components/ui/floating-navbar";
 import React, { useEffect, useState } from "react";
-import RUR_IMG1 from "../../public/Images/RUR (1).jpg";
-import RUR_IMG2 from "../../public/Images/RUR (2).jpg";
-import RUR_IMG3 from "../../public/Images/RUR (3).jpg";
-import RUR_IMG4 from "../../public/Images/RUR (4).jpg";
-import RUR_IMG5 from "../../public/Images/RUR (5).jpg";
-import RUR_IMG6 from "../../public/Images/RUR (6).jpg";
-import RUR_IMG7 from "../../public/Images/RUR (7).jpg";
-import RUR_IMG8 from "../../public/Images/RUR (8).jpg";
-import RUR_IMG9 from "../../public/Images/RUR (9).jpg";
-import RUR_IMG10 from "../../public/Images/RUR (10).jpg";
-import RUR_IMG11 from "../../public/Images/RUR (11).jpg";
-import RUR_IMG12 from "../../public/Images/RUR (12).jpg";
-import RUR_IMG13 from "../../public/Images/RUR (13).jpg";
-import RUR_IMG14 from "../../public/Images/RUR (14).jpg";
-import RUR_IMG15 from "../../public/Images/RUR (15).jpg";
+import RUR_IMG1 from "../../public/Images/RUR_25_1.jpg";
+import RUR_IMG2 from "../../public/Images/RUR_25_2.jpg";
+import RUR_IMG3 from "../../public/Images/RUR_25_3.jpg";
+import RUR_IMG4 from "../../public/Images/RUR_25_4.jpg";
+import RUR_IMG5 from "../../public/Images/RUR_25_5.jpg";
+import RUR_IMG6 from "../../public/Images/RUR_25_6.jpg";
+import RUR_IMG7 from "../../public/Images/RUR_25_7.jpg";
+import RUR_IMG8 from "../../public/Images/RUR_25_8.jpg";
+import RUR_IMG9 from "../../public/Images/RUR_25_9.jpg";
+import RUR_IMG10 from "../../public/Images/RUR_25_10.jpg";
+import RUR_IMG11 from "../../public/Images/RUR_25_11.jpg";
+import RUR_IMG12 from "../../public/Images/RUR_25_12.jpg";
 
 import SPONSOR from "../../public/Images/sponsor.png";
 // import LoadingAnimation from "../../public/animations/RUR.json"
@@ -119,21 +116,6 @@ export const products = [
     title: "Are You Ready?",
     link: "#",
     thumbnail: RUR_IMG12,
-  },
-  {
-    title: "Are You Ready?",
-    link: "#",
-    thumbnail: RUR_IMG13,
-  },
-  {
-    title: "Are You Ready?",
-    link: "#",
-    thumbnail: RUR_IMG14,
-  },
-  {
-    title: "Are You Ready?",
-    link: "#",
-    thumbnail: RUR_IMG15,
   },
 ];
 
