@@ -28,7 +28,7 @@ const SponsorCard = React.forwardRef<HTMLDivElement, SponsorCardProps>(
                 {...props}
             >
                 <div
-                    className="relative block w-full aspect-[3/4] rounded-2xl overflow-hidden shadow-lg bg-white
+                    className="relative block w-[300px] h-[400px] rounded-2xl overflow-hidden shadow-lg bg-white
                                          border border-[hsl(var(--theme-color)/0.3)]
                                          transition-all duration-500 ease-in-out 
                                          group-hover:scale-105 group-hover:shadow-[0_0_60px_-15px_hsl(var(--theme-color)/0.6)]
