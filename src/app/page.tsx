@@ -419,20 +419,13 @@ export default function Home() {
                     <h4 className="text-2xl md:text-2xl font-bold text-center dark:text-custom-color-800 bg-gradient-to-r from-zinc-300 to-zinc-900 bg-clip-text text-transparent mb-4">
                       {group.level} Partner
                     </h4>
-                    <div
-                      className={`grid gap-8 md:gap-8 max-w-7xl mx-auto min-h-[300px] py-4 px-2 ${group.sponsors.length === 1
-                        ? "grid-cols-1 place-items-center"
-                        : group.sponsors.length === 2
-                          ? "grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 place-items-center"
-                          : "grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center"
-                        }`}
-                    >
+                    <div className="flex flex-wrap justify-center gap-8 max-w-7xl mx-auto min-h-[300px] py-4 px-2">
                       {group.sponsors
                         .sort((a, b) => a.order - b.order)
                         .map((sponsor, index) => (
                           <div
                             key={`${sponsor.level}-${index}`}
-                            className="w-full max-w-md"
+                            className="w-full max-w-[300px]"
                           >
                             <SponsorCard
                               name={sponsor.name}
