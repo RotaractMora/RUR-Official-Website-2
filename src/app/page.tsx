@@ -46,7 +46,7 @@ import RegistrationStatus from "@/components/ui/google-gemini-effect";
 import BackToTopButton from "@/components/ui/back-to-top";
 import CodeEvelPara from "@/components/ui/code-evel-para";
 import { HeroVideo } from "@/components/ui/hero-video";
-import ExpandableCard from "@/components/blocks/expandable-card-standard";
+// import ExpandableCard from "@/components/blocks/expandable-card-standard";
 import { sendGTMEvent } from "@next/third-parties/google";
 import { Helmet } from "react-helmet-async";
 import { BuildingOfficeIcon } from "@heroicons/react/24/outline";
@@ -347,7 +347,7 @@ export default function Home() {
           />
           <link
             rel="bookmark"
-            href="https://areyouready.uom.lk/#registeredCompanies"
+            href="https://areyouready.uom.lk/registered-companies"
           />
         </Helmet>
 
@@ -479,10 +479,10 @@ export default function Home() {
             </div>
           </div>
         </section>
-
-        <div id="registeredCompanies" className="m-0 p-0">
+        {/* Registered Companies commented out in favour of the page*/}
+        {/* <div id="registeredCompanies" className="m-0 p-0">
           <ExpandableCard />
-        </div>
+        </div> */}
 
         <div id="reach_us" className="scroll-mt-20">
           {!isReachUsGridLoading && (
