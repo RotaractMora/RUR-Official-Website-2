@@ -41,7 +41,7 @@ export const FloatingNav = ({
       <div
         className={cn(
           "fixed top-0 left-0 right-0 z-50",
-          "backdrop-blur-md bg-white/10 dark:bg-black/30",
+          "backdrop-blur-md bg-white/70 dark:bg-black/70",
           "border-b border-white/10 dark:border-black/20"
         )}
       >

@@ -63,39 +63,38 @@ export default function RootLayout({
             <head>
               <meta name="google-site-verification" content="ctC6c_Itp6D3M77kEOvPaN9D9i_O6Sq5vXpCX8EyMsY" />
             </head>
-            <Helmet>
-
-              <meta property="og:type" content="website" />
-              <meta property="og:site_name" content="Are You Ready? 2025" />
-              <meta property="og:title" content="Are You Ready? 2025" />
-              <meta
-                property="og:description"
-                content="'Are You Ready? 2025', organized by Rotaract Club of the University of Moratuwa in collaboration with the university's Career Guidance Unit is a much-awaited event in the university calendar which marks the official careers week of the university."
-              />
-              <meta property="og:url" content="https://areyouready.uom.lk/" />
-              <meta
-                property="og:image"
-                content="https://areyouready.uom.lk/Images/logo/RUR.png"
-              />
-
-              <meta
-                name="author"
-                content="Rotaract Club of University of Moratuwa"
-              />
-              <link rel="author" href="https://rotaractmora.org" />
-
-              <link
-                rel="icon"
-                href="https://areyouready.uom.lk/Images/logo/icon.ico"
-              />
-            </Helmet>
             <body
               className={`${lato.variable} font-sans dark:bg-dark-gradient bg-white antialiased`}
             >
               <GoogleTagManager gtmId="GTM-MWJNXDZR" />
+              <Helmet>
+                <meta property="og:type" content="website" />
+                <meta property="og:site_name" content="Are You Ready? 2025" />
+                <meta property="og:title" content="Are You Ready? 2025" />
+                <meta
+                  property="og:description"
+                  content="'Are You Ready? 2025', organized by Rotaract Club of University of Moratuwa in collaboration with the university's Career Guidance Unit is a much-awaited event in the university calendar which marks the official careers week of the university."
+                />
+                <meta property="og:url" content="https://areyouready.uom.lk/" />
+                <meta
+                  property="og:image"
+                  content="https://areyouready.uom.lk/Images/logo/RUR.png"
+                />
+
+                <meta
+                  name="author"
+                  content="Rotaract Club of University of Moratuwa"
+                />
+                <link rel="author" href="https://rotaractmora.org" />
+
+                <link
+                  rel="icon"
+                  href="https://areyouready.uom.lk/Images/logo/icon.ico"
+                />
+              </Helmet>
               {children}
+              <Toaster />
             </body>
-            <Toaster />
           </html>
         </HelmetProvider>
       </ThemeContext.Provider>

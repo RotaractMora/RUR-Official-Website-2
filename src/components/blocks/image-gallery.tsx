@@ -26,9 +26,9 @@ export function Gallery({ data, onImageClick }: GalleryProps) {
         <div className="max-w-7xl relative mx-auto pb-4 px-4 w-full left-0 top-0">
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-10">
-          {data.map((img) => (
+          {data.map((img, index) => (
             <div
-              key={img.title}
+              key={`${img.title}-${index}`}
               className="group cursor-pointer relative overflow-hidden rounded-lg"
               onClick={() => onImageClick(img.thumbnail.src)}
             >

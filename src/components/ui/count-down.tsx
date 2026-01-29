@@ -38,8 +38,6 @@ export default function CountDown({ date }: { date: Date }) {
     setIsMounted(true);
     const calculate = () => {
       const now = new Date().getTime();
-      // tempory set the date as Feb 23 2026
-      date = new Date('2026-02-23T00:00:00');
       const difference = date.getTime() - now;
 
       if (difference <= 0) {
