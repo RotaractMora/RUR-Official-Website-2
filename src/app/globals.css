@@ -59,6 +59,12 @@
     --chart-5: 340 75% 55%;
   }
 }
+
 html {
   scroll-behavior: smooth;
+}
+
+/* Brand gradient text utility */
+.gradient-text {
+  color: #003087;
 }

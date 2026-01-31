@@ -41,7 +41,7 @@ export const FloatingNav = ({
       <div
         className={cn(
           "fixed top-0 left-0 right-0 z-50",
-          "backdrop-blur-md bg-white/10 dark:bg-black/30",
+          "backdrop-blur-md bg-white/70 dark:bg-black/70",
           "border-b border-white/10 dark:border-black/20"
         )}
       >
@@ -65,9 +65,7 @@ export const FloatingNav = ({
               <a
                 key={`link-${idx}`}
                 href={navItem.link}
-                target="_blank"
-                rel="noreferrer"
-                className="text-sm font-semibold md:text-lg text-gray-700 dark:text-white hover:text-[#0f4c81] transition-all duration-200 content-center"
+                className="text-sm font-semibold md:text-lg text-slate-700 dark:text-white hover:text-brand-navy transition-all duration-200 content-center"
               >
                 {navItem.name}
               </a>
@@ -89,7 +87,7 @@ export const FloatingNav = ({
                   router.push(portalLink ? portalLink : "");
                 }}
                 isDisabled={false}
-                className="bg-gradient-to-br from-[#233662] via-[#0f4c81] to-[#0fb4ff] text-white px-4 py-2 rounded-lg text-sm "
+                className="bg-brand-gradient text-white px-4 py-2 rounded-lg text-sm font-bold"
                 containerClassName="bg-white/0 border-0"
               >
                 Registrations
@@ -109,7 +107,7 @@ export const FloatingNav = ({
                   router.push(portalLink ? portalLink : "");
                 }}
                 isDisabled={false}
-                className="bg-gradient-to-br from-[#0f172a] via-[#0f4c81] to-[#0c77a8] text-white px-4 py-2 rounded-lg text-sm"
+                className="bg-brand-gradient text-white px-4 py-2 rounded-lg text-sm font-bold"
                 containerClassName="bg-white/0 border-0"
               >
                 Registrations

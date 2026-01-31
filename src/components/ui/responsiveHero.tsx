@@ -11,9 +11,9 @@ const MobileHero = () => {
         {/* Large circle image 1 */}
         <div className="absolute sm2:w-[370px] sm2:h-[370px] sm1:w-[350px] sm1:h-[350px] w-[300px] h-[300px] top-[15px] left-[5px]">
           <div className="w-full h-full rounded-full overflow-hidden">
-            <img 
-              src="/Images/RUR (1).jpg"
-              alt="from Rur previous event" 
+            <img
+              src="/Images/RUR_25_1.jpg"
+              alt="from Rur previous event"
               className="w-full h-full object-cover opacity-100"
             />
           </div>
@@ -22,9 +22,9 @@ const MobileHero = () => {
         {/* Large circle image 2 */}
         <div className="absolute sm2:w-[385px] sm2:h-[385px] sm1:w-[350px] sm1:h-[350px] w-[300px] h-[300px] top-[50%] right-[5px]">
           <div className="w-full h-full rounded-full overflow-hidden transform translate-y-[-50%]">
-            <img 
-              src="/Images/RUR (2).jpg"
-              alt="from Rur previous event" 
+            <img
+              src="/Images/RUR_25_2.jpg"
+              alt="from Rur previous event"
               className="w-full h-full object-cover opacity-100"
             />
           </div>
@@ -33,9 +33,9 @@ const MobileHero = () => {
         {/* Small circle image */}
         <div className="absolute sm2:w-[400px] sm2:h-[400px] sm1:w-[350px] sm1:h-[350px] w-[300px] h-[300px] bottom-[15px] left-[5px]">
           <div className="w-full h-full rounded-full overflow-hidden">
-            <img 
-              src="/Images/RUR (3).jpg"
-              alt="from Rur previous event" 
+            <img
+              src="/Images/RUR_25_3.jpg"
+              alt="from Rur previous event"
               className="w-full h-full object-cover opacity-95"
             />
           </div>

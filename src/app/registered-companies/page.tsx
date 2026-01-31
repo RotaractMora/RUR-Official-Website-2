@@ -34,13 +34,13 @@ const navItms = [
   },
   {
     name: "Registered Companies",
-    link: "/companies",
-    icon: <BuildingOfficeIcon />, 
+    link: "/registered-companies",
+    icon: <BuildingOfficeIcon />,
   },
 ];
 
 
-const SearchBar = ({ searchQuery, setSearchQuery } : { searchQuery: string, setSearchQuery: (query: string) => void }) => (
+const SearchBar = ({ searchQuery, setSearchQuery }: { searchQuery: string, setSearchQuery: (query: string) => void }) => (
   <div className="mt-8 mb-6 max-w-md mx-auto">
     <div className="relative">
       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -92,16 +92,16 @@ export default function Companies() {
       setIsLoading(true);
       try {
         const data = await getDataFromAggregatedCompanyDoc();
-        
+
         if (!data || !data.companies) {
           throw new Error("Failed to fetch company data");
         }
 
         // order by company name
-        data.companies.sort((a, b) => 
+        data.companies.sort((a, b) =>
           a.name.trim().toLowerCase().localeCompare(b.name.trim().toLowerCase(), "en", { sensitivity: "base" })
         );
-        
+
         console.log(` ${data.companies[0]} > ${data.companies[1]} :  ${data.companies[0].name.toLowerCase().localeCompare(data.companies[1].name.toLowerCase())}`);
 
         setCompanies(data.companies);
@@ -120,13 +120,13 @@ export default function Companies() {
 
     fetchData();
   }, []);
-  
+
   // Filter companies based on search query
   const filteredCompanies = useMemo(() => {
     if (!searchQuery.trim()) return companies;
-    
+
     const query = searchQuery.toLowerCase();
-    return companies.filter(company => 
+    return companies.filter(company =>
       company.name.toLowerCase().includes(query) ||
       company.preferredFields.some(field => field.toLowerCase().includes(query)) ||
       company.qualitiesToLook.some(quality => quality.toLowerCase().includes(query)) ||
@@ -138,29 +138,29 @@ export default function Companies() {
 
   return (
 
-  
+
     <RootLayout>
       <Helmet>
         <meta name="title" content="Are You Ready? 2025 | Registered Companies" />
-        <meta name="robots" content="index, follow"/>
-        <meta name="googlebot" content="index, follow"/>
+        <meta name="robots" content="index, follow" />
+        <meta name="googlebot" content="index, follow" />
         <meta name="referrer" content="no-referrer" />
         <title> Are You Ready? 2025  | Registered Companies</title>
         <link rel="bookmark" href="https://areyouready.uom.lk/#timeline" />
         <link rel="bookmark" href="https://areyouready.uom.lk/#sponsors" />
         <link rel="bookmark" href="https://areyouready.uom.lk/#reach_us" />
         <link rel="bookmark" href="https://areyouready.uom.lk/#registrationStatus" />
-        <link rel="bookmark" href="https://areyouready.uom.lk/companies" />
+        <link rel="bookmark" href="https://areyouready.uom.lk/registered-companies" />
       </Helmet>
       <BackToTopButton />
       <FloatingNav navItems={navItms} />
-      
+
       <div id="registeredCompanies" className="scroll-mt-20 py-8 px-6 text-center dark:bg-gray-800">
-        <div className="mb-8 mt-12 md:mt-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-center dark:text-custom-color-800 bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent mb-4">
+        <div className="mb-8 mt-24 md:mt-20">
+          <h2 className="text-4xl md:text-5xl font-bold text-center dark:text-white gradient-text mt-8 md:mt-12 mb-0">
             Registered Companies
           </h2>
-          <p className="mt-4 mx-auto max-w-7xl text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+          <p className="mt-4 mx-auto max-w-6xl text-lg md:text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
             The following companies have registered for the Are You Ready? 2025 Flagship Career Fair.
           </p>
         </div>
@@ -178,15 +178,15 @@ export default function Companies() {
             <p className="text-gray-600 dark:text-gray-400">{error}</p>
           </div>
         )}
-        
+
         {filteredCompanies.length === 0 && !isLoading ? (
           <NoResults />
         ) : (
           <div className="max-w-4xl mx-auto">
-          {filteredCompanies.map(company => (
-            <CompanyCard key={company.companyId} {...company} />
-          ))}
-        </div>
+            {filteredCompanies.map(company => (
+              <CompanyCard key={company.companyId} {...company} />
+            ))}
+          </div>
         )}
       </div>
     </RootLayout>
