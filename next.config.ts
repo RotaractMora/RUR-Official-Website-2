@@ -3,7 +3,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   output: process.env.NODE_ENV === 'production' ? 'export' : undefined,
   trailingSlash: true,
-  // Temporarily disable ESLint during builds for workflows
+  // TODO: Temporarily disable ESLint during builds for workflows
+  // Re-enable after resolving all ESLint warnings and errors
   eslint: {
     ignoreDuringBuilds: true,
   },
