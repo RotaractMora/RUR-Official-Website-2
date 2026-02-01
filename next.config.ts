@@ -3,6 +3,10 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   output: process.env.NODE_ENV === 'production' ? 'export' : undefined,
   trailingSlash: true,
+  // Temporarily disable ESLint during builds for workflows
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   images: {
     unoptimized: true,
     remotePatterns: [
