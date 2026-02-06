@@ -5,48 +5,7 @@ import { useEffect, useState } from "react";
 import { IEditorJsOutputData } from "@/interfaces/IEditorJs";
 import { IBlog } from "@/interfaces/IBlog";
 import { getPublicBlogs } from "@/services/blogs.service";
-import FloatingNav from "@/components/ui/floating-navbar";
-import {
-  BuildingOfficeIcon,
-  ClockIcon,
-  HomeIcon,
-  MegaphoneIcon,
-  NewspaperIcon,
-  PhoneArrowUpRightIcon,
-} from "@heroicons/react/24/outline";
-
-const navItms = [
-  {
-    name: "Home",
-    link: "/",
-    icon: <HomeIcon />,
-  },
-  {
-    name: "Timeline",
-    link: "/#timeline",
-    icon: <ClockIcon />,
-  },
-  {
-    name: "Sponsors",
-    link: "/#sponsors",
-    icon: <MegaphoneIcon />,
-  },
-  {
-    name: "Reach Us",
-    link: "/#reach_us",
-    icon: <PhoneArrowUpRightIcon />,
-  },
-  {
-    name: "Registered Companies",
-    link: "/registered-companies",
-    icon: <BuildingOfficeIcon />,
-  },
-  {
-    name: "Blogs",
-    link: "/blogs",
-    icon: <NewspaperIcon />,
-  },
-];
+import PublicNav from "@/components/blocks/public-nav";
 
 const stripHtml = (value: string): string => value.replace(/<[^>]+>/g, "").trim();
 
@@ -104,7 +63,7 @@ export default function BlogsPage() {
 
   return (
     <main className="min-h-screen bg-gray-50 px-4 pb-12 pt-28 dark:bg-gray-900">
-      <FloatingNav navItems={navItms} />
+      <PublicNav />
       <div className="mx-auto max-w-4xl">
         <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white">Blogs</h1>
         <p className="mt-2 text-gray-600 dark:text-gray-300">

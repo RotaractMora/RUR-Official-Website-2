@@ -2,7 +2,6 @@
 
 import ModernHero from "@/components/ui/modern-hero";
 
-import { FloatingNav } from "@/components/ui/floating-navbar";
 import React, { useEffect, useState } from "react";
 import RUR_IMG1 from "../../public/Images/RUR_25_1.jpg";
 import RUR_IMG2 from "../../public/Images/RUR_25_2.jpg";
@@ -32,12 +31,6 @@ import { getDataFromAggregatedDoc } from "@/services/aggregatedData.service";
 import { ITimelineData } from "@/interfaces/ITimeline";
 import { HeroHighlight } from "@/components/ui/hero-highlight";
 import { Highlighter } from "@/components/blocks/hilight";
-import {
-  HomeIcon,
-  ClockIcon,
-  MegaphoneIcon,
-  PhoneArrowUpRightIcon,
-} from "@heroicons/react/24/solid";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { CardDesign } from "@/components/ui/card-design";
 // import Lottie from "react-lottie-player";
@@ -49,9 +42,9 @@ import { HeroVideo } from "@/components/ui/hero-video";
 // import ExpandableCard from "@/components/blocks/expandable-card-standard";
 import { sendGTMEvent } from "@next/third-parties/google";
 import { Helmet } from "react-helmet-async";
-import { BuildingOfficeIcon } from "@heroicons/react/24/outline";
 import GallerySection from "@/components/ui/gallery-section";
 import { SponsorCard } from "@/components/ui/sponsor-card";
+import PublicNav from "@/components/blocks/public-nav";
 
 import dynamic from "next/dynamic";
 const Lottie = dynamic(() => import("react-lottie-player"), { ssr: false });
@@ -116,34 +109,6 @@ export const products = [
     title: "Are You Ready?",
     link: "#",
     thumbnail: RUR_IMG12,
-  },
-];
-
-const navItms = [
-  {
-    name: "Home",
-    link: "/",
-    icon: <HomeIcon />,
-  },
-  {
-    name: "Timeline",
-    link: "#timeline",
-    icon: <ClockIcon />,
-  },
-  {
-    name: "Sponsors",
-    link: "#sponsors",
-    icon: <MegaphoneIcon />,
-  },
-  {
-    name: "Reach Us",
-    link: "#reach_us",
-    icon: <PhoneArrowUpRightIcon />,
-  },
-  {
-    name: "Registered Companies",
-    link: "/registered-companies",
-    icon: <BuildingOfficeIcon />,
   },
 ];
 
@@ -352,7 +317,7 @@ export default function Home() {
 
       <BackToTopButton />
 
-      <FloatingNav navItems={navItms} />
+      <PublicNav />
       {!isLoadingAnimComplete && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-[#545576]">
           <Lottie

@@ -6,48 +6,7 @@ import { useEffect, useState } from "react";
 import EditorJsRenderer from "@/components/blog/editorjs-renderer";
 import { IBlog } from "@/interfaces/IBlog";
 import { getPublicBlogBySlug } from "@/services/blogs.service";
-import FloatingNav from "@/components/ui/floating-navbar";
-import {
-  BuildingOfficeIcon,
-  ClockIcon,
-  HomeIcon,
-  MegaphoneIcon,
-  NewspaperIcon,
-  PhoneArrowUpRightIcon,
-} from "@heroicons/react/24/outline";
-
-const navItms = [
-  {
-    name: "Home",
-    link: "/",
-    icon: <HomeIcon />,
-  },
-  {
-    name: "Timeline",
-    link: "/#timeline",
-    icon: <ClockIcon />,
-  },
-  {
-    name: "Sponsors",
-    link: "/#sponsors",
-    icon: <MegaphoneIcon />,
-  },
-  {
-    name: "Reach Us",
-    link: "/#reach_us",
-    icon: <PhoneArrowUpRightIcon />,
-  },
-  {
-    name: "Registered Companies",
-    link: "/registered-companies",
-    icon: <BuildingOfficeIcon />,
-  },
-  {
-    name: "Blogs",
-    link: "/blogs",
-    icon: <NewspaperIcon />,
-  },
-];
+import PublicNav from "@/components/blocks/public-nav";
 
 export default function BlogDetailsPage() {
   const params = useParams<{ slug: string }>();
@@ -85,7 +44,7 @@ export default function BlogDetailsPage() {
 
   return (
     <main className="min-h-screen bg-gray-50 px-4 pb-12 pt-28 dark:bg-gray-900">
-      <FloatingNav navItems={navItms} />
+      <PublicNav />
       <div className="mx-auto max-w-4xl space-y-4">
         <Link href="/blogs" className="text-sm font-semibold text-blue-600 hover:text-blue-700">
           Back to blogs
