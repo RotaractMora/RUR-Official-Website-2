@@ -331,11 +331,11 @@ export default function Home() {
   return (
     <>
       <Helmet>
-        <meta name="title" content="Are You Ready? 2025" />
+        <meta name="title" content="Are You Ready? 2026" />
         <meta name="robots" content="index, follow" />
         <meta name="googlebot" content="index, follow" />
         <meta name="referrer" content="no-referrer" />
-        <title> Are You Ready? 2025 </title>
+        <title> Are You Ready? 2026 </title>
 
         <link rel="bookmark" href="https://areyouready.uom.lk/#timeline" />
         <link rel="bookmark" href="https://areyouready.uom.lk/#sponsors" />
