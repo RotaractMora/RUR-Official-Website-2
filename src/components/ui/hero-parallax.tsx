@@ -81,7 +81,7 @@ export const Header = () => {
   return (
     <div className="max-w-7xl relative mx-auto pb-10  px-4 w-full left-0 top-0">
       <h1 className="text-4xl md:text-7xl text-center font-bold dark:text-white gradient-text">
-        Are You Ready? <br /> 2025
+        Are You Ready? <br /> 2026
       </h1>
 
       <p className="max-w-2xl text-base md:text-xl pb-4 text-center mx-auto mt-8 text-neutral-800 dark:text-neutral-200">

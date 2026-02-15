@@ -36,7 +36,7 @@ const Footer = () => {
                 <div className="flex flex-col items-center">
                     <div className="flex items-center mb-4 space-x-3 rtl:space-x-reverse mx-auto">
                         <Image src={LOGO_SMALL} className="h-8" alt="Flowbite Logo" />
-                        <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Are You Ready 2025</span>
+                        <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Are You Ready 2026</span>
                     </div>
                     <ul className="flex flex-wrap items-center justify-center mb-6 text-sm font-medium text-gray-500 dark:text-gray-400">
                         <li>
@@ -59,7 +59,7 @@ const Footer = () => {
                     <FloatingDock items={floatDockItms} />
                 </div>
                 <hr className="my-3 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-                <span className="block text-sm w-full text-gray-500 text-center dark:text-gray-400">© 2025 <a href="https://rotaractmora.org" className="hover:underline">Rotaract Mora</a>. All Rights Reserved.</span>
+                <span className="block text-sm w-full text-gray-500 text-center dark:text-gray-400">© 2026 <a href="https://rotaractmora.org" className="hover:underline">Rotaract Mora</a>. All Rights Reserved.</span>
             </div>
         </footer>
   );

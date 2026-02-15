@@ -69,11 +69,11 @@ export default function RootLayout({
               <GoogleTagManager gtmId="GTM-MWJNXDZR" />
               <Helmet>
                 <meta property="og:type" content="website" />
-                <meta property="og:site_name" content="Are You Ready? 2025" />
-                <meta property="og:title" content="Are You Ready? 2025" />
+                <meta property="og:site_name" content="Are You Ready? 2026" />
+                <meta property="og:title" content="Are You Ready? 2026" />
                 <meta
                   property="og:description"
-                  content="'Are You Ready? 2025', organized by Rotaract Club of University of Moratuwa in collaboration with the university's Career Guidance Unit is a much-awaited event in the university calendar which marks the official careers week of the university."
+                  content="'Are You Ready? 2026', organized by Rotaract Club of University of Moratuwa in collaboration with the university's Career Guidance Unit is a much-awaited event in the university calendar which marks the official careers week of the university."
                 />
                 <meta property="og:url" content="https://areyouready.uom.lk/" />
                 <meta
