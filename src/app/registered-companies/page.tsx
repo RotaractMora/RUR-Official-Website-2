@@ -112,11 +112,11 @@ export default function Companies() {
 
     <RootLayout>
       <Helmet>
-        <meta name="title" content="Are You Ready? 2025 | Registered Companies" />
+        <meta name="title" content="Are You Ready? 2026 | Registered Companies" />
         <meta name="robots" content="index, follow" />
         <meta name="googlebot" content="index, follow" />
         <meta name="referrer" content="no-referrer" />
-        <title> Are You Ready? 2025  | Registered Companies</title>
+        <title> Are You Ready? 2026  | Registered Companies</title>
         <link rel="bookmark" href="https://areyouready.uom.lk/#timeline" />
         <link rel="bookmark" href="https://areyouready.uom.lk/#sponsors" />
         <link rel="bookmark" href="https://areyouready.uom.lk/#reach_us" />
@@ -132,7 +132,7 @@ export default function Companies() {
             Registered Companies
           </h2>
           <p className="mt-4 mx-auto max-w-6xl text-lg md:text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
-            The following companies have registered for the Are You Ready? 2025 Flagship Career Fair.
+            The following companies have registered for the Are You Ready? 2026 Flagship Career Fair.
           </p>
         </div>
 
