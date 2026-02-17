@@ -76,6 +76,7 @@ export const FloatingNav = ({
           <div className="flex items-center space-x-2">
             {/* Desktop CTA */}
             <div className="hidden md:flex items-center">
+              {/*
               <HoverBorderGradient
                 onClick={() => {
                   sendGTMEvent({
@@ -92,10 +93,12 @@ export const FloatingNav = ({
               >
                 Registrations
               </HoverBorderGradient>
+              */}
             </div>
 
             {/* Mobile: registration + menu toggle */}
             <div className="flex items-center space-x-2 md:hidden">
+              {/*
               <HoverBorderGradient
                 onClick={() => {
                   sendGTMEvent({
@@ -112,6 +115,7 @@ export const FloatingNav = ({
               >
                 Registrations
               </HoverBorderGradient>
+              */}
 
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
