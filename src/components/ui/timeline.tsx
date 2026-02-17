@@ -201,7 +201,7 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
 
       <div ref={ref} className="relative max-w-7xl mx-auto">
         {/* Next session highlight (md+) */}
-        {(() => {
+        {/* {(() => {
           const now = new Date().getTime();
           const upcoming = data
             .filter((d) => d.eventDate && d.eventDate.getTime() > now)
@@ -266,7 +266,7 @@ export const Timeline = ({ data }: { data: ITimelineEntry[] }) => {
               </div>
             </motion.aside>
           );
-        })()}
+        })()} */}
 
         {data.map((item, index) => {
           const meta = categoryMeta(item.category);
