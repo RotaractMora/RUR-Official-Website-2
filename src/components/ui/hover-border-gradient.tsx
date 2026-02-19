@@ -67,18 +67,18 @@ export function HoverBorderGradient({
         )}
         style={{
           background:
-            "radial-gradient(75% 181.15942028985506% at 50% 50%, rgb(136, 213, 255) 0%, rgba(255,255,255,0) 60%)",
-          filter: "blur(14px)",
+            "radial-gradient(75% 181.15942028985506% at 50% 50%, rgb(136, 213, 255) 0%, rgba(255,255,255,0) 70%)",
+          filter: "blur(8px)",
         }}
       />
 
-      <div className="blur absolute inset-0 rounded-lg -translate-x-1 translate-y-1 bg-gradient-to-br from-cyan-500 to-sky-500"></div>
+      <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-blue-700 to-blue-900 opacity-90"></div>
 
       {/* Inner surface (your same colors) */}
       <span
         className={cn(
-          "relative z-10 rounded-[inherit] px-4 py-2",
-          "dark:text-custom-color-900 text-custom-dark-color-900",
+          "relative z-10 rounded-[inherit] px-6 py-3 text-white font-bold text-lg",
+          "dark:text-white text-white",
           "dark:bg-custom-dark-color-900 bg-custom-color-900",
           "shadow-[0_0_0_1px_rgba(255,255,255,0.06)_inset]",
           "transition duration-300",
