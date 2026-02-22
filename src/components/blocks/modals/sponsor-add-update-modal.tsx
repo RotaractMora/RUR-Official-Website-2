@@ -20,6 +20,9 @@ function SponsorAddUpdateModal({
   const [sponsorName, setSponsorName] = useState(sponsor?.name || '');
   const [sponsorLevel, setSponsorLevel] = useState(sponsor?.level || '');
   const [sponsorImageFile, setSponsorImageFile] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [showSuccess, setShowSuccess] = useState(false);
   const [sponsorIsVisibleToPublic, setSponsorIsVisibleToPublic] = useState(sponsor?.isVisibleToPublic || false);
   const [sponsorImgURL, setSponsorImgURL] = useState(sponsor?.imgURL || '');
   const [uploadNewImage, setUploadNewImage] = useState( sponsor?.imgURL ? false : true);
@@ -71,21 +74,29 @@ function SponsorAddUpdateModal({
       return;
     }
 
-    if (sponsorLevel !== 'Gold' && sponsorLevel !== 'Silver' && sponsorLevel !== 'Bronze') {
+    if (sponsorLevel !== 'Gold' && sponsorLevel !== 'Silver' && sponsorLevel !== 'Bronze' && sponsorLevel !== 'Partner') {
       alert('Please select a valid sponsor level');
       return;
     }
 
+    setIsLoading(true);
+    setUploadProgress(0);
     let imgURL = sponsor?.imgURL || '';
 
     try {
         // Handle image upload
         if (uploadNewImage && sponsorImageFile) {
-            if (!validateImage(sponsorImageFile)) return;
+            if (!validateImage(sponsorImageFile)) {
+                setIsLoading(false);
+                return;
+            }
 
+            setUploadProgress(30);
             const ref = await addFile(sponsorImageFile);
+            setUploadProgress(60);
             if (ref) {
                 imgURL = await getDownloadURL(ref);
+                setUploadProgress(80);
             } else {
                 throw new Error('Failed to get storage reference');
             }
@@ -128,12 +139,20 @@ function SponsorAddUpdateModal({
             console.log('Sponsor added successfully:', sponsorData);
         }
 
-        //success
-        onAddUpdateSponsor();
-        toggleModal();
+        setUploadProgress(100);
+        setIsLoading(false);
+        
+        // Show success animation
+        setShowSuccess(true);
+        setTimeout(() => {
+            onAddUpdateSponsor();
+            toggleModal();
+        }, 1500);
     } catch (error) {
         console.error('Error processing sponsor:', error);
         alert('An error occurred. Please try again.');
+        setIsLoading(false);
+        setUploadProgress(0);
     }
 };
 
@@ -167,7 +186,7 @@ function SponsorAddUpdateModal({
                 <div className="grid gap-4 mb-4 grid-cols-2">
 
                   <div className="col-span-2">
-                    <label htmlFor="sponsorName" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sponsor Name</label>
+                    <label htmlFor="sponsorName" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sponsor Name <span className="text-red-500">*</span></label>
                     <input 
                       type="text" 
                       name="sponsorName" 
@@ -181,21 +200,31 @@ function SponsorAddUpdateModal({
                   </div>
 
                   <div className="col-span-2">
-                    <label htmlFor="sponsorPartnership" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Partnership</label>
-                    <input 
-                      type="text" 
+                    <label htmlFor="sponsorPartnership" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Partnership <span className="text-red-500">*</span></label>
+                    <select
                       name="sponsorPartnership" 
                       id="sponsorPartnership" 
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" 
-                      placeholder="Parnership ex: Knowledge Partner" 
                       required 
                       value={sponsorPartnership}
                       onChange={(e) => setSponsorPartnership(e.target.value)}
-                    />
+                    >
+                      <option value="" disabled>Select Partnership</option>
+                      <option value="Talent Empowerment Partner">Talent Empowerment Partner</option>
+                      <option value="Session Partner">Session Partner</option>
+                      <option value="Knowledge Partner">Knowledge Partner</option>
+                      <option value="Digital Solution Partner">Digital Solution Partner</option>
+                      <option value="Technology Partner">Technology Partner</option>
+                      <option value="Media Partner">Media Partner</option>
+                      <option value="Gold Partner">Gold Partner</option>
+                      <option value="Silver Partner">Silver Partner</option>
+                      <option value="Bronze Partner">Bronze Partner</option>
+                      <option value="Partner">Partner</option>
+                    </select>
                   </div>
 
                   <div className="col-span-2">
-                    <label htmlFor="sponsorOrder" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Order</label>
+                    <label htmlFor="sponsorOrder" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Order <span className="text-red-500">*</span></label>
                     <input 
                       type="number" 
                       name="sponsorOrder" 
@@ -209,7 +238,7 @@ function SponsorAddUpdateModal({
                   </div>
 
                   <div className="col-span-2">
-                    <label htmlFor="sponsorLevel" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
+                    <label htmlFor="sponsorLevel" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category <span className="text-red-500">*</span></label>
                     <select 
                       id="sponsorLevel" 
                       value={sponsorLevel}
@@ -221,6 +250,7 @@ function SponsorAddUpdateModal({
                       <option value="Gold">Gold</option>
                       <option value="Silver">Silver</option>
                       <option value="Bronze">Bronze</option>
+                      <option value="Partner">Partner</option>
                     </select>
                     </div>
 
@@ -245,8 +275,17 @@ function SponsorAddUpdateModal({
                     <div className="col-span-2">
                      
                       { uploadNewImage ? (
-                      <><label htmlFor="image-upload" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Upload Image</label><div
-                          className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500"
+                      <><label htmlFor="image-upload" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Upload Image <span className="text-red-500">*</span></label>
+                      {uploadProgress > 0 && uploadProgress < 100 && (
+                        <div className="w-full mb-2">
+                          <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+                            <div className="bg-blue-600 h-2 rounded-full transition-all duration-300" style={{width: `${uploadProgress}%`}}></div>
+                          </div>
+                          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 text-center">Uploading... {uploadProgress}%</p>
+                        </div>
+                      )}
+                      <div
+                          className="flex flex-col items-center justify-center w-full h-52 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500"
                           onDrop={handleFileChange}
                           onDragOver={(e) => e.preventDefault()}
                           onClick={() => document.getElementById('image-upload')?.click()} // Trigger file input click on div click
@@ -329,9 +368,27 @@ function SponsorAddUpdateModal({
 
                   <button
                     type="submit"
-                    className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-full"
+                    disabled={isLoading}
+                    className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-full disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
-                    {sponsor ? "Update Sponsor" : "Add Sponsor"}
+                    {isLoading ? (
+                      <>
+                        <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Processing...
+                      </>
+                    ) : showSuccess ? (
+                      <>
+                        <svg className="h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        Success!
+                      </>
+                    ) : (
+                      sponsor ? "Update Sponsor" : "Add Sponsor"
+                    )}
                   </button>
                 </form>
               </div>

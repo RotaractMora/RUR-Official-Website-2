@@ -22,6 +22,115 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Multi-Environment Setup
+
+This project supports 3 Firebase environments:
+
+| Environment | Description | Firebase Project |
+|-------------|-------------|------------------|
+| `rur-24-prod` | Production (RUR 24, previous year) | `rur-24` |
+| `rur-26-prod` | Production (RUR 26, current year) | `rur-26-web-prod` |
+| `rur-26-dev` | Development/Staging | `rur-26-dev` |
+
+### Local Development
+
+To run the project locally with different environments, first copy `.env.example` to create your environment files:
+
+```bash
+# For rur-24-prod environment (previous year)
+cp .env.example .env.rur-24-prod
+# Edit .env.rur-24-prod with rur-24 Firebase credentials
+
+# For rur-26-prod environment (current year)
+cp .env.example .env.rur-26-prod
+# Edit .env.rur-26-prod with prod-26 Firebase credentials
+
+# For rur-26-dev environment
+cp .env.example .env.rur-26-dev
+# Edit .env.rur-26-dev with dev Firebase credentials
+
+# For default local development
+cp .env.example .env.local
+# Edit .env.local with your preferred Firebase credentials
+```
+
+Then run the development server with your chosen environment:
+
+```bash
+# Default local development (uses .env.local)
+npm run dev
+
+# Run with rur-24-prod environment (previous year)
+npm run dev:rur-24-prod
+
+# Run with rur-26-prod environment (current year)
+npm run dev:rur-26-prod
+
+# Run with rur-26-dev environment
+npm run dev:rur-26-dev
+```
+
+### Build Commands
+
+```bash
+# Standard build (uses .env.local or environment variables)
+npm run build
+
+# Build for specific environments
+npm run build:rur-24-prod
+npm run build:rur-26-prod
+npm run build:rur-26-dev
+```
+
+### CI/CD Deployment
+
+#### Main Branch
+- Deploys via FTP (primary)
+- Deploys to Firebase Hosting `rur-24-prod` environment (backup)
+
+#### Dev Branch
+- Deploys to all 3 Firebase Hosting environments (rur-24-prod, rur-26-prod, rur-26-dev)
+- Can be manually triggered with environment selection via GitHub Actions
+
+#### Pull Requests
+- Creates preview deployments on all 3 environments
+
+### Required GitHub Secrets
+
+For each environment, the following secrets need to be configured:
+
+**RUR-24 (rur-24) - Previous Year:**
+- `NEXT_PUBLIC_API_KEY_RUR_24`
+- `NEXT_PUBLIC_AUTH_DOMAIN_RUR_24`
+- `NEXT_PUBLIC_PROJECT_ID_RUR_24`
+- `NEXT_PUBLIC_STORAGE_BUCKET_RUR_24`
+- `NEXT_PUBLIC_MESSAGING_SENDER_ID_RUR_24`
+- `NEXT_PUBLIC_APP_ID_RUR_24`
+- `FIREBASE_SERVICE_ACCOUNT_RUR_24`
+
+**Prod-26 (rur-26-web-prod) - Current Year:**
+- `NEXT_PUBLIC_API_KEY_PROD_26`
+- `NEXT_PUBLIC_AUTH_DOMAIN_PROD_26`
+- `NEXT_PUBLIC_PROJECT_ID_PROD_26`
+- `NEXT_PUBLIC_STORAGE_BUCKET_PROD_26`
+- `NEXT_PUBLIC_MESSAGING_SENDER_ID_PROD_26`
+- `NEXT_PUBLIC_APP_ID_PROD_26`
+- `FIREBASE_SERVICE_ACCOUNT_PROD_26`
+
+**Dev (rur-26-dev):**
+- `NEXT_PUBLIC_API_KEY_DEV`
+- `NEXT_PUBLIC_AUTH_DOMAIN_DEV`
+- `NEXT_PUBLIC_PROJECT_ID_DEV`
+- `NEXT_PUBLIC_STORAGE_BUCKET_DEV`
+- `NEXT_PUBLIC_MESSAGING_SENDER_ID_DEV`
+- `NEXT_PUBLIC_APP_ID_DEV`
+- `FIREBASE_SERVICE_ACCOUNT_DEV`
+
+**FTP Deployment (main branch only):**
+- `FTP_SERVER`
+- `FTP_USERNAME`
+- `FTP_PASSWORD`
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

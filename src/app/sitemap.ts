@@ -1,11 +1,14 @@
 import type { MetadataRoute } from "next";
 
+// Ensure this metadata route is treated as static when using `output: 'export'`
+export const dynamic = "force-static";
+
 const baseUrl = "https://areyouready.uom.lk";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [
     "/",
-    "/companies",
+    "/registered-companies",
   ];
 
   return staticRoutes.map((path) => ({
@@ -13,7 +16,3 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(),
   }));
 }
-
-
-// Ensure this metadata route is static for `next export`
-export const revalidate = false;

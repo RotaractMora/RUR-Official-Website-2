@@ -41,7 +41,7 @@ export const FloatingNav = ({
       <div
         className={cn(
           "fixed top-0 left-0 right-0 z-50",
-          "backdrop-blur-md bg-white/10 dark:bg-black/30",
+          "backdrop-blur-md bg-white/70 dark:bg-black/70",
           "border-b border-white/10 dark:border-black/20"
         )}
       >
@@ -61,23 +61,22 @@ export const FloatingNav = ({
           </div>
           {/* Center: Navigation links (desktop only) */}
           <div className="hidden md:flex flex-1 justify-center space-x-12">
-              {navItems.map((navItem, idx) => (
-                <a
-                  key={`link-${idx}`}
-                  href={navItem.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-sm font-semibold md:text-lg text-gray-700 hover:text-[#0f4c81] transition-all duration-200 content-center"
-                >
-                  {navItem.name}
-                </a>
-              ))}  
+            {navItems.map((navItem, idx) => (
+              <a
+                key={`link-${idx}`}
+                href={navItem.link}
+                className="text-sm font-semibold md:text-lg text-slate-700 dark:text-white hover:text-brand-navy transition-all duration-200 content-center"
+              >
+                {navItem.name}
+              </a>
+            ))}
           </div>
 
           {/* Right: Actions / CTA (desktop) and Mobile controls */}
           <div className="flex items-center space-x-2">
             {/* Desktop CTA */}
             <div className="hidden md:flex items-center">
+              {/*
               <HoverBorderGradient
                 onClick={() => {
                   sendGTMEvent({
@@ -89,15 +88,17 @@ export const FloatingNav = ({
                   router.push(portalLink ? portalLink : "");
                 }}
                 isDisabled={false}
-                className="bg-gradient-to-br from-[#233662] via-[#0f4c81] to-[#0fb4ff] text-white px-4 py-2 rounded-lg text-sm"
+                className="bg-brand-gradient text-white px-4 py-2 rounded-lg text-sm font-bold"
                 containerClassName="bg-white/0 border-0"
               >
                 Registrations
               </HoverBorderGradient>
+              */}
             </div>
 
             {/* Mobile: registration + menu toggle */}
             <div className="flex items-center space-x-2 md:hidden">
+              {/*
               <HoverBorderGradient
                 onClick={() => {
                   sendGTMEvent({
@@ -109,11 +110,12 @@ export const FloatingNav = ({
                   router.push(portalLink ? portalLink : "");
                 }}
                 isDisabled={false}
-                className="bg-gradient-to-br from-[#0f172a] via-[#0f4c81] to-[#0c77a8] text-white px-4 py-2 rounded-lg text-sm"
+                className="bg-brand-gradient text-white px-4 py-2 rounded-lg text-sm font-bold"
                 containerClassName="bg-white/0 border-0"
               >
                 Registrations
               </HoverBorderGradient>
+              */}
 
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -127,8 +129,6 @@ export const FloatingNav = ({
               </button>
             </div>
           </div>
-
-          
         </div>
       </div>
 

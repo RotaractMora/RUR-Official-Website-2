@@ -18,7 +18,14 @@ function TimelineAddUpdateModal({
 }) {
   const [title, setTitle] = useState(timelineEvent?.title || '');
   const [description, setDescription] = useState(timelineEvent?.description || '');
-  const [eventDate, setEventDate] = useState(timelineEvent?.eventDate?.toDate().toISOString().slice(0, 16) || '');
+  const formatDateForInput = (d: Date) => {
+    const pad = (n: number) => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  };
+
+  const [eventDate, setEventDate] = useState(
+    timelineEvent?.eventDate ? formatDateForInput(timelineEvent.eventDate.toDate()) : ''
+  );
   const [btnText, setBtnText] = useState(timelineEvent?.btnText || '');
   const [btnLink, setBtnLink] = useState(timelineEvent?.btnLink || '');
   const [order, setOrder] = useState(timelineEvent?.order || 0);
@@ -104,16 +111,23 @@ function TimelineAddUpdateModal({
             return;
         }            
 
+        // Parse `eventDate` (string from <input type="datetime-local" />) into a
+        // JavaScript Date using local components to avoid timezone shifts.
+        const [datePart, timePart] = eventDate.split('T');
+        const [y, m, d] = datePart.split('-').map((v) => parseInt(v, 10));
+        const [hh, mm] = (timePart || '00:00').split(':').map((v) => parseInt(v, 10));
+        const localDate = new Date(y, m - 1, d, hh, mm);
+
         const timeLineEventData = {
           title,
           description,
-          eventDate: Timestamp.fromDate(new Date(eventDate)),
+          eventDate: Timestamp.fromDate(localDate),
           btnText,
           btnLink,
           isBtnDisabled,
           order,
           imgURL: imgURL,
-          isVisibleToPublic
+          isVisibleToPublic,
         };
 
         if (timelineEvent?.id) {

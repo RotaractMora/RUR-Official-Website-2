@@ -1,24 +1,21 @@
 "use client";
 
 import ModernHero from "@/components/ui/modern-hero";
-import RootLayout from "./layout";
+
 import { FloatingNav } from "@/components/ui/floating-navbar";
 import React, { useEffect, useState } from "react";
-import RUR_IMG1 from "../../public/Images/RUR (1).jpg";
-import RUR_IMG2 from "../../public/Images/RUR (2).jpg";
-import RUR_IMG3 from "../../public/Images/RUR (3).jpg";
-import RUR_IMG4 from "../../public/Images/RUR (4).jpg";
-import RUR_IMG5 from "../../public/Images/RUR (5).jpg";
-import RUR_IMG6 from "../../public/Images/RUR (6).jpg";
-import RUR_IMG7 from "../../public/Images/RUR (7).jpg";
-import RUR_IMG8 from "../../public/Images/RUR (8).jpg";
-import RUR_IMG9 from "../../public/Images/RUR (9).jpg";
-import RUR_IMG10 from "../../public/Images/RUR (10).jpg";
-import RUR_IMG11 from "../../public/Images/RUR (11).jpg";
-import RUR_IMG12 from "../../public/Images/RUR (12).jpg";
-import RUR_IMG13 from "../../public/Images/RUR (13).jpg";
-import RUR_IMG14 from "../../public/Images/RUR (14).jpg";
-import RUR_IMG15 from "../../public/Images/RUR (15).jpg";
+import RUR_IMG1 from "../../public/Images/RUR_25_1.jpg";
+import RUR_IMG2 from "../../public/Images/RUR_25_2.jpg";
+import RUR_IMG3 from "../../public/Images/RUR_25_3.jpg";
+import RUR_IMG4 from "../../public/Images/RUR_25_4.jpg";
+import RUR_IMG5 from "../../public/Images/RUR_25_5.jpg";
+import RUR_IMG6 from "../../public/Images/RUR_25_6.jpg";
+import RUR_IMG7 from "../../public/Images/RUR_25_7.jpg";
+import RUR_IMG8 from "../../public/Images/RUR_25_8.jpg";
+import RUR_IMG9 from "../../public/Images/RUR_25_9.jpg";
+import RUR_IMG10 from "../../public/Images/RUR_25_10.jpg";
+import RUR_IMG11 from "../../public/Images/RUR_25_11.jpg";
+import RUR_IMG12 from "../../public/Images/RUR_25_12.jpg";
 
 import SPONSOR from "../../public/Images/sponsor.png";
 // import LoadingAnimation from "../../public/animations/RUR.json"
@@ -49,14 +46,15 @@ import RegistrationStatus from "@/components/ui/google-gemini-effect";
 import BackToTopButton from "@/components/ui/back-to-top";
 import CodeEvelPara from "@/components/ui/code-evel-para";
 import { HeroVideo } from "@/components/ui/hero-video";
-import ExpandableCard from "@/components/blocks/expandable-card-standard";
+// import ExpandableCard from "@/components/blocks/expandable-card-standard";
 import { sendGTMEvent } from "@next/third-parties/google";
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from "react-helmet-async";
 import { BuildingOfficeIcon } from "@heroicons/react/24/outline";
- 
+import GallerySection from "@/components/ui/gallery-section";
+import { SponsorCard } from "@/components/ui/sponsor-card";
+
 import dynamic from "next/dynamic";
 const Lottie = dynamic(() => import("react-lottie-player"), { ssr: false });
-
 
 export const products = [
   {
@@ -119,21 +117,6 @@ export const products = [
     link: "#",
     thumbnail: RUR_IMG12,
   },
-  {
-    title: "Are You Ready?",
-    link: "#",
-    thumbnail: RUR_IMG13,
-  },
-  {
-    title: "Are You Ready?",
-    link: "#",
-    thumbnail: RUR_IMG14,
-  },
-  {
-    title: "Are You Ready?",
-    link: "#",
-    thumbnail: RUR_IMG15,
-  },
 ];
 
 const navItms = [
@@ -159,9 +142,9 @@ const navItms = [
   },
   {
     name: "Registered Companies",
-    link: "/companies",
-    icon: <BuildingOfficeIcon />, 
-  }
+    link: "/registered-companies",
+    icon: <BuildingOfficeIcon />,
+  },
 ];
 
 console.log("Home Page");
@@ -174,60 +157,60 @@ const Loading = () => {
   );
 };
 
-const Para = ({
-  level,
-  partnership,
-  name,
-  imgURL,
-  loadCallback,
-}: {
-  level: string;
-  partnership: string;
-  name: string;
-  imgURL: string | undefined;
-  loadCallback?: (count: number) => void;
-}): React.ReactNode => {
-  const color =
-    level === "Gold"
-      ? "custom-color-gold dark:custom-dark-color-gold"
-      : level === "Silver"
-      ? "custom-color-silver dark:custom-dark-color-silver"
-      : "custom-color-bronze dark:custom-dark-color-bronze";
+// const Para = ({
+//   level,
+//   partnership,
+//   name,
+//   imgURL,
+//   loadCallback,
+// }: {
+//   level: string;
+//   partnership: string;
+//   name: string;
+//   imgURL: string | undefined;
+//   loadCallback?: (count: number) => void;
+// }): React.ReactNode => {
+//   const color =
+//     level === "Gold"
+//       ? "custom-color-gold dark:custom-dark-color-gold"
+//       : level === "Silver"
+//       ? "custom-color-silver dark:custom-dark-color-silver"
+//       : "custom-color-bronze dark:custom-dark-color-bronze";
 
-  return (
-    <div className="w-full h-full max-w-xl mx-auto px-4 md:px-6 lg:px-6 flex flex-col items-center justify-stretch min-h-[400px] lg:min-h-[300px]">
-      <h6
-        className={
-          "text-xl md:text-2xl lg:text-3xl text-center font-bold p-2 py-3" +
-          " text-" +
-          color
-        }
-      >
-        {partnership}
-      </h6>
+//   return (
+//     <div className="w-full h-full max-w-xl mx-auto px-4 md:px-6 lg:px-6 flex flex-col items-center justify-stretch min-h-[400px] lg:min-h-[300px]">
+//       <h6
+//         className={
+//           "text-xl md:text-2xl lg:text-3xl text-center font-bold p-2 py-3" +
+//           " text-" +
+//           color
+//         }
+//       >
+//         {partnership}
+//       </h6>
 
-      {/* Image Section */}
-      <div className="w-full h-auto flex justify-center mb-4">
-        <Image
-          src={imgURL ? imgURL : SPONSOR}
-          width={250}
-          height={100}
-          alt="Sponsor"
-          className="object-contain p-2 my-2 rounded-lg"
-        />
-      </div>
-    </div>
-  );
-};
+//       {/* Image Section */}
+//       <div className="w-full h-auto flex justify-center mb-4">
+//         <Image
+//           src={imgURL ? imgURL : SPONSOR}
+//           width={250}
+//           height={100}
+//           alt="Sponsor"
+//           className="object-contain p-2 my-2 rounded-lg"
+//         />
+//       </div>
+//     </div>
+//   );
+// };
 
 const AboutSection = ({ content }: { content: string }) => {
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-24 md:py-12">
       <div className="bg-white/5 backdrop-blur-lg rounded-xl p-4 md:p-12 mt-0">
-        <h2 className="text-3xl md:text-4xl text-center font-bold dark:text-custom-color-800 bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent mb-4">
-          About Are You Ready?
+        <h2 className="text-4xl md:text-5xl text-center font-bold dark:text-white gradient-text mt-8 md:mt-12 mb-0">
+          What we do
         </h2>
-        <div className="prose prose-sm md:prose-base lg:prose-lg dark:prose-invert max-w-none leading-10 text-justify">
+        <div className="prose prose-sm md:prose-base lg:prose-lg dark:prose-invert max-w-6xl mx-auto leading-relaxed text-center">
           <TextGenerateEffect words={content} />
         </div>
       </div>
@@ -334,25 +317,38 @@ export default function Home() {
   );
 
   const content: string =
-    '"Are You Ready?" stands as a monumental initiative led by the Rotaract Club of the University of Moratuwa in partnership with the Career Guidance Unit. Our primary focus is 4th year undergraduates from our university, aiming to guide them towards a secure entry into the professional world. The scope of this endeavor knows no bounds, with over 100 companies aligning to provide opportunities for budding professionals. This project promises to be a valuable asset for those aspiring to forge strong connections with companies and their managers, even if the finish line of their degree is still on the horizon. In the initial stages, participants will gain the essential knowledge and training to confidently engage with industry experts.';
+    '"Are You Ready?" stands as a monumental initiative led by the Rotaract Club of University of Moratuwa in partnership with the Career Guidance Unit. Our primary focus is 4th year undergraduates from our university, aiming to guide them towards a secure entry into the professional world. The scope of this endeavor knows no bounds, with over 100 companies aligning to provide opportunities for budding professionals. This project promises to be a valuable asset for those aspiring to forge strong connections with companies and their managers, even if the finish line of their degree is still on the horizon. In the initial stages, participants will gain the essential knowledge and training to confidently engage with industry experts.';
+
+  // Helper to group sponsors by level
+  function groupSponsorsByLevel(sponsors: ISponsor[]) {
+    const levels = ["Gold", "Silver", "Bronze", "Partner"];
+    return levels.map((level) => ({
+      level,
+      sponsors: sponsors.filter((s) => s.level === level),
+    }));
+  }
 
   return (
     <>
-    <RootLayout>
       <Helmet>
-              <meta name="title" content="Are You Ready? 2025" />
-              <meta name="robots" content="index, follow"/>
-              <meta name="googlebot" content="index, follow"/>
-              <meta name="referrer" content="no-referrer" />
-              <title> Are You Ready? 2025 </title>
+        <meta name="title" content="Are You Ready? 2026" />
+        <meta name="robots" content="index, follow" />
+        <meta name="googlebot" content="index, follow" />
+        <meta name="referrer" content="no-referrer" />
+        <title> Are You Ready? 2026 </title>
 
-              <link rel="bookmark" href="https://areyouready.uom.lk/#timeline" />
-              <link rel="bookmark" href="https://areyouready.uom.lk/#sponsors" />
-              <link rel="bookmark" href="https://areyouready.uom.lk/#reach_us" />
-              <link rel="bookmark" href="https://areyouready.uom.lk/#registrationStatus" />
-              <link rel="bookmark" href="https://areyouready.uom.lk/#registeredCompanies" />
+        <link rel="bookmark" href="https://areyouready.uom.lk/#timeline" />
+        <link rel="bookmark" href="https://areyouready.uom.lk/#sponsors" />
+        <link rel="bookmark" href="https://areyouready.uom.lk/#reach_us" />
+        <link
+          rel="bookmark"
+          href="https://areyouready.uom.lk/#registrationStatus"
+        />
+        <link
+          rel="bookmark"
+          href="https://areyouready.uom.lk/registered-companies"
+        />
       </Helmet>
-
 
       <BackToTopButton />
 
@@ -377,7 +373,8 @@ export default function Home() {
             setIsLoadingAnimComplete(true);
           }}
         />
-  <ModernHero products={products} />
+
+        <GallerySection products={products} />
         <AboutSection content={content} />
       </div>
 
@@ -393,65 +390,80 @@ export default function Home() {
         )}
       </div>
 
-{ sponsors.length > 0 &&
-      <div className="scroll-mt-20 py-8 px-6 text-center bg-gray-100 dark:bg-gray-800">
-        <h2 className="text-3xl md:text-4xl font-bold text-center dark:text-custom-color-800 bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent mb-4">
-        Sponsors
-        </h2>
-      </div>
-}
-<div id="sponsors"></div>
-
-      {error ? (
-        <ErrorMessage message={error} />
-      ) : isSponsorsLoading ? (
-        <Loading />
-      ) : sponsors.length > 0 ? (
-        <TracingBeam className="px-4 md:px-6 py-24">
-          {/* Sponsors Section */}
-          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {sponsors
-              .sort((a, b) => {
-                return a.order - b.order;
-              })
-              .map((sponsor, index) => (
-                <CardDesign
-                  key={`${sponsor.level}-${index}`}
-                  className="w-full max-w-sm"
-                  CardColor={sponsor.level}
-                >
-                  <Para
-                    name={sponsor.name}
-                    imgURL={sponsor.imgURL}
-                    level={sponsor.level}
-                    partnership={sponsor.partnership}
-                  />
-                </CardDesign>
-              ))}
+      <section
+        id="sponsors"
+        className="scroll-mt-20 bg-gray-100 dark:bg-gray-800"
+      >
+        {sponsors.length > 0 && (
+          <div className="py-8 px-6 text-center">
+            <h2 className="text-4xl md:text-5xl font-bold text-center dark:text-white gradient-text mt-8 md:mt-12 mb-0">
+              Sponsors
+            </h2>
           </div>
-        </TracingBeam>
-      ) : (
-        <EmptyStateMessage message="Sponsors will be available soon." />
-      )}
+        )}
 
-      { sponsors.length > 0 &&
-            <div className="scroll-mt-20 py-8 px-6 text-center bg-gray-100 dark:bg-gray-800">
-              <h2 className="text-3xl md:text-4xl font-bold text-center dark:text-custom-color-800 bg-gradient-to-r from-[#0f0271] to-[#15c0fe] bg-clip-text text-transparent mb-4">
-                Thank You for Your Support!
-              </h2>
-              <p className="mt-4 max-w-7xl mx-auto text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
-                We deeply appreciate your unwavering support in making this event a
-                success. Your contributions inspire us to innovate, collaborate, and
-                grow. Together, we’re achieving remarkable milestones. Stay tuned for
-                exciting updates as we continue this incredible journey. Thank you for
-                being a vital part of our mission!
-              </p>
-            </div>
-      }
-      
+        {error ? (
+          <div className="py-8">
+            <ErrorMessage message={error} />
+          </div>
+        ) : isSponsorsLoading ? (
+          <div className="py-8">
+            <Loading />
+          </div>
+        ) : sponsors.length > 0 ? (
+          groupSponsorsByLevel(sponsors).map(
+            (group) =>
+              group.sponsors.length > 0 && (
+                <div key={group.level} className="mb-12">
+                  {/* <h4 className="text-2xl md:text-2xl font-bold text-center dark:text-custom-color-800 bg-gradient-to-r from-zinc-300 to-zinc-900 bg-clip-text text-transparent mb-4">
+                    {group.level} Partner
+                  </h4> */}
+                  <div className="flex flex-wrap justify-center gap-8 max-w-7xl mx-auto min-h-[300px] py-4 px-2">
+                    {group.sponsors
+                      .sort((a, b) => a.order - b.order)
+                      .map((sponsor, index) => (
+                        <div
+                          key={`${sponsor.level}-${index}`}
+                          className="w-full max-w-[300px]"
+                        >
+                          <SponsorCard
+                            name={sponsor.name}
+                            imgURL={sponsor.imgURL}
+                            level={sponsor.level}
+                            partnership={sponsor.partnership}
+                          />
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              )
+          )
+        ) : (
+          <div className="py-4">
+            <EmptyStateMessage message="Sponsors will be available soon." />
+          </div>
+        )}
+
+        {sponsors.length > 0 && (
+          <div className="pb-12 px-6 text-center">
+            <h2 className="text-2xl md:text-3xl font-bold text-center dark:text-white gradient-text mt-8 md:mt-12 mb-0">
+              Thank You for Your Support!
+            </h2>
+            <p className="mt-4 max-w-6xl mx-auto text-lg md:text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
+              We deeply appreciate your unwavering support in making this
+              event a success. Your contributions inspire us to innovate,
+              collaborate, and grow. Together, we are achieving remarkable
+              milestones. Stay tuned for exciting updates as we continue this
+              incredible journey. Thank you for being a vital part of our
+              mission!
+            </p>
+          </div>
+        )}
+      </section>
+
       <section
         id="registrationStatus"
-        className="scroll-mt-20 relative w-full"
+        className="scroll-mt-20 py-4 relative w-full"
       >
         <div className="w-full mx-auto">
           <div className="relative w-full z-10">
@@ -459,22 +471,20 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      <div id="registeredCompanies" className="m-0 p-0">
-      <ExpandableCard />
-      </div>
-
+      {/* Registered Companies commented out in favour of the page*/}
+      {/* <div id="registeredCompanies" className="m-0 p-0">
+        <ExpandableCard />
+      </div> */}
 
       <div id="reach_us" className="scroll-mt-20">
         {!isReachUsGridLoading && (
-          <GridBackground title="Reach Us">
+          <GridBackground title="Reach us">
             <ReachUsSection grid={reachUsContacts} />
           </GridBackground>
         )}
       </div>
 
       <Footer />
-    </RootLayout>
     </>
   );
 }
