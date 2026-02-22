@@ -74,7 +74,7 @@ function SponsorAddUpdateModal({
       return;
     }
 
-    if (sponsorLevel !== 'Gold' && sponsorLevel !== 'Silver' && sponsorLevel !== 'Bronze') {
+    if (sponsorLevel !== 'Gold' && sponsorLevel !== 'Silver' && sponsorLevel !== 'Bronze' && sponsorLevel !== 'Partner') {
       alert('Please select a valid sponsor level');
       return;
     }
@@ -201,16 +201,26 @@ function SponsorAddUpdateModal({
 
                   <div className="col-span-2">
                     <label htmlFor="sponsorPartnership" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Partnership <span className="text-red-500">*</span></label>
-                    <input 
-                      type="text" 
+                    <select
                       name="sponsorPartnership" 
                       id="sponsorPartnership" 
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" 
-                      placeholder="Parnership ex: Knowledge Partner" 
                       required 
                       value={sponsorPartnership}
                       onChange={(e) => setSponsorPartnership(e.target.value)}
-                    />
+                    >
+                      <option value="" disabled>Select Partnership</option>
+                      <option value="Talent Empowerment Partner">Talent Empowerment Partner</option>
+                      <option value="Session Partner">Session Partner</option>
+                      <option value="Knowledge Partner">Knowledge Partner</option>
+                      <option value="Digital Solution Partner">Digital Solution Partner</option>
+                      <option value="Technology Partner">Technology Partner</option>
+                      <option value="Media Partner">Media Partner</option>
+                      <option value="Gold Partner">Gold Partner</option>
+                      <option value="Silver Partner">Silver Partner</option>
+                      <option value="Bronze Partner">Bronze Partner</option>
+                      <option value="Partner">Partner</option>
+                    </select>
                   </div>
 
                   <div className="col-span-2">
@@ -240,6 +250,7 @@ function SponsorAddUpdateModal({
                       <option value="Gold">Gold</option>
                       <option value="Silver">Silver</option>
                       <option value="Bronze">Bronze</option>
+                      <option value="Partner">Partner</option>
                     </select>
                     </div>
 

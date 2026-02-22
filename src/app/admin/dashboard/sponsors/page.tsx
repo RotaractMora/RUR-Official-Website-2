@@ -11,7 +11,7 @@ import { sendGTMEvent } from "@next/third-parties/google";
 
 type SortField = "order" | "timestamp" | "name";
 type SortDirection = "asc" | "desc";
-type LevelFilter = "All" | "Gold" | "Silver" | "Bronze";
+type LevelFilter = "All" | "Gold" | "Silver" | "Bronze" | "Partner";
 type VisibilityFilter = "All" | "Public" | "Hidden";
 
 export default function ManageSponsors() {
@@ -162,6 +162,7 @@ export default function ManageSponsors() {
             <option value="Gold">Gold</option>
             <option value="Silver">Silver</option>
             <option value="Bronze">Bronze</option>
+            <option value="Partner">Partner</option>
           </select>
               </div>
 

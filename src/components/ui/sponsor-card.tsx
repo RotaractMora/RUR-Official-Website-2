@@ -2,7 +2,7 @@ import * as React from "react";
 
 // Define the props for the SponsorCard component
 interface SponsorCardProps extends React.HTMLAttributes<HTMLDivElement> {
-    level: String;
+    level: string;
     partnership: string;
     name: string;
     imgURL: string | undefined;
@@ -16,7 +16,9 @@ const SponsorCard = React.forwardRef<HTMLDivElement, SponsorCardProps>(
                 ? "45 100% 35%" // Gold
                 : level === "Silver"
                     ? "0 0% 40%" // Dark Silver/Grey for contrast
-                    : "30 60% 50%"; // Bronze
+                    : level === "Partner"
+                        ? "210 100% 50%" // Blue for Partner
+                        : "30 60% 50%"; // Bronze
 
         return (
             <div
