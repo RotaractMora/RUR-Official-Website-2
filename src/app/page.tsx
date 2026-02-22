@@ -445,7 +445,7 @@ export default function Home() {
         )}
 
         {sponsors.length > 0 && (
-          <div className="py-4 px-6 text-center">
+          <div className="pb-12 px-6 text-center">
             <h2 className="text-2xl md:text-3xl font-bold text-center dark:text-white gradient-text mt-8 md:mt-12 mb-0">
               Thank You for Your Support!
             </h2>
