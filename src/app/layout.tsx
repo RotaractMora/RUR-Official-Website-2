@@ -23,8 +23,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const DEFAULT_THEME = "light";
   const [theme, setThemeMode] = useState<ITheme>(DEFAULT_THEME);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const storedTheme = localStorage.getItem("theme") as ITheme;
     if (storedTheme) {
       setThemeMode(storedTheme);
@@ -93,7 +95,7 @@ export default function RootLayout({
                 />
               </Helmet>
               {children}
-              <Toaster />
+              {mounted && <Toaster />}
             </body>
           </html>
         </HelmetProvider>
