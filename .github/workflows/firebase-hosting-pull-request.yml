@@ -9,27 +9,27 @@ permissions:
   pull-requests: write
 
 jobs:
-  # Preview deployment to rur-24 environment (previous year)
-  build_and_preview_rur_24:
-    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
-    runs-on: ubuntu-latest
-    env:
-      NEXT_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_API_KEY_RUR_24 }}
-      NEXT_PUBLIC_AUTH_DOMAIN: ${{ secrets.NEXT_PUBLIC_AUTH_DOMAIN_RUR_24 }}
-      NEXT_PUBLIC_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_PROJECT_ID_RUR_24 }}
-      NEXT_PUBLIC_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_STORAGE_BUCKET_RUR_24 }}
-      NEXT_PUBLIC_MESSAGING_SENDER_ID: ${{ secrets.NEXT_PUBLIC_MESSAGING_SENDER_ID_RUR_24 }}
-      NEXT_PUBLIC_APP_ID: ${{ secrets.NEXT_PUBLIC_APP_ID_RUR_24 }}
-      NEXT_PUBLIC_STATUS: rur-24-prod
-    steps:
-      - uses: actions/checkout@v4
-      - run: npm ci && npm run build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_RUR_24 }}
-          projectId: rur-24
-          target: rur-24
+  # Preview deployment to rur-24 environment (previous year) - no longer needed
+  # build_and_preview_rur_24:
+  #   if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     NEXT_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_API_KEY_RUR_24 }}
+  #     NEXT_PUBLIC_AUTH_DOMAIN: ${{ secrets.NEXT_PUBLIC_AUTH_DOMAIN_RUR_24 }}
+  #     NEXT_PUBLIC_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_PROJECT_ID_RUR_24 }}
+  #     NEXT_PUBLIC_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_STORAGE_BUCKET_RUR_24 }}
+  #     NEXT_PUBLIC_MESSAGING_SENDER_ID: ${{ secrets.NEXT_PUBLIC_MESSAGING_SENDER_ID_RUR_24 }}
+  #     NEXT_PUBLIC_APP_ID: ${{ secrets.NEXT_PUBLIC_APP_ID_RUR_24 }}
+  #     NEXT_PUBLIC_STATUS: rur-24-prod
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - run: npm ci && npm run build
+  #     - uses: FirebaseExtended/action-hosting-deploy@v0
+  #       with:
+  #         repoToken: ${{ secrets.GITHUB_TOKEN }}
+  #         firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_RUR_24 }}
+  #         projectId: rur-24
+  #         target: rur-24
 
   # Preview deployment to prod-26 environment (current year)
   build_and_preview_prod_26:
