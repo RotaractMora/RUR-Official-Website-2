@@ -321,7 +321,7 @@ export default function Home() {
 
   // Helper to group sponsors by level
   function groupSponsorsByLevel(sponsors: ISponsor[]) {
-    const levels = ["Gold", "Silver", "Bronze", "Partner"];
+    const levels = ["Gold", "Silver", "Bronze", "Partner", "Associate Partner"];
     return levels.map((level) => ({
       level,
       sponsors: sponsors.filter((s) => s.level === level),
