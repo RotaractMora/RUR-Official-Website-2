@@ -19,7 +19,7 @@ const SponsorCard = React.forwardRef<HTMLDivElement, SponsorCardProps>(
                     : level === "Partner"
                         ? "237 72% 38%" // Brand Blue for Partner
                         : level === "Associate Partner"
-                            ? "200 80% 40%" // Ocean Blue for Associate Partner
+                            ? "359 100% 44%" // #E00005 for Associate Partner
                             : "30 60% 50%"; // Bronze
 
         return (

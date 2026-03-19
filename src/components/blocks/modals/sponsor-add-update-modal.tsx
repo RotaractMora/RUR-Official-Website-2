@@ -220,6 +220,7 @@ function SponsorAddUpdateModal({
                       <option value="Silver Partner">Silver Partner</option>
                       <option value="Bronze Partner">Bronze Partner</option>
                       <option value="Partner">Partner</option>
+                      <option value="Associate Partner">Associate Partner</option>
                     </select>
                   </div>
 

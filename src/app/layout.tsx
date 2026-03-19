@@ -63,6 +63,7 @@ export default function RootLayout({
         <HelmetProvider>
           <html lang="en">
             <head>
+              <title>Are You Ready? 2026 | University of Moratuwa</title>
               <meta name="google-site-verification" content="ctC6c_Itp6D3M77kEOvPaN9D9i_O6Sq5vXpCX8EyMsY" />
             </head>
             <body
