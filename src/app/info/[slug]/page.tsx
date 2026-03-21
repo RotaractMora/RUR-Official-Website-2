@@ -17,7 +17,7 @@ export default function BlogDetailsPage() {
   useEffect(() => {
     const loadBlog = async () => {
       if (!params?.slug) {
-        setError("Invalid blog slug.");
+        setError("Invalid info page blog slug.");
         setIsLoading(false);
         return;
       }
@@ -46,8 +46,8 @@ export default function BlogDetailsPage() {
     <main className="min-h-screen bg-gray-50 px-4 pb-12 pt-28 dark:bg-gray-900">
       <PublicNav />
       <div className="mx-auto max-w-4xl space-y-4">
-        <Link href="/blogs" className="text-sm font-semibold text-blue-600 hover:text-blue-700">
-          Back to blogs
+        <Link href="/info" className="text-sm font-semibold text-blue-600 hover:text-blue-700">
+          Back to all informational pages
         </Link>
 
         {isLoading && (

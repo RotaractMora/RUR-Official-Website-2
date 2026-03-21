@@ -6,7 +6,7 @@ import { sendGTMEvent } from "@next/third-parties/google";
 import { IBlog } from "@/interfaces/IBlog";
 import { deleteBlog, getAdminBlogs, setBlogStatus } from "@/services/blogs.service";
 
-export default function ManageBlogs() {
+export default function ManageInfoPages() {
   const [blogs, setBlogs] = useState<IBlog[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -27,8 +27,8 @@ export default function ManageBlogs() {
       const blogList = await getAdminBlogs();
       setBlogs(blogList);
     } catch (fetchError) {
-      console.error("Failed to fetch blogs:", fetchError);
-      setError("Failed to fetch blogs.");
+      console.error("Failed to fetch info pages:", fetchError);
+      setError("Failed to fetch info pages.");
     } finally {
       setIsLoading(false);
     }
@@ -68,8 +68,8 @@ export default function ManageBlogs() {
       await setBlogStatus(blog.id, nextStatus);
       await fetchBlogs();
     } catch (statusError) {
-      console.error("Failed to update blog status:", statusError);
-      setError("Failed to update blog status.");
+      console.error("Failed to update info blog status:", statusError);
+      setError("Failed to update info blog status.");
     }
   };
 
@@ -84,17 +84,17 @@ export default function ManageBlogs() {
         <div className="mb-6 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
           <div>
             <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white">
-              Blogs Management
+              Informational Pages Management
             </h1>
             <p className="mt-2 text-gray-600 dark:text-gray-300">
-              Create, edit, publish, and unpublish blogs.
+              Create, edit, publish, and unpublish informational pages.
             </p>
           </div>
           <Link
-            href="/admin/dashboard/blogs/new"
+            href="/admin/dashboard/info/new"
             className="inline-flex items-center rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700"
           >
-            Add Blog
+            Add Info Page
           </Link>
         </div>
 
@@ -132,7 +132,7 @@ export default function ManageBlogs() {
                     colSpan={5}
                     className="px-6 py-8 text-center text-sm text-gray-600 dark:text-gray-200"
                   >
-                    Loading blogs...
+                    Loading info pages...
                   </td>
                 </tr>
               )}
@@ -144,12 +144,12 @@ export default function ManageBlogs() {
                     className="px-6 py-8 text-center text-sm text-gray-600 dark:text-gray-200"
                   >
                     <div className="space-y-3">
-                      <p>No blogs found.</p>
+                      <p>No informational pages found.</p>
                       <Link
-                        href="/admin/dashboard/blogs/new"
+                        href="/admin/dashboard/info/new"
                         className="inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white transition hover:bg-blue-700"
                       >
-                        Add Blog
+                        Add Informational Page
                       </Link>
                     </div>
                   </td>
@@ -163,7 +163,7 @@ export default function ManageBlogs() {
                       {blog.title}
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-300">
-                      /blogs/{blog.slug}
+                      /info/{blog.slug}
                     </td>
                     <td className="px-6 py-4 text-sm">
                       <span
@@ -182,7 +182,7 @@ export default function ManageBlogs() {
                     <td className="px-6 py-4">
                       <div className="flex flex-wrap gap-3">
                         <Link
-                          href={`/admin/dashboard/blogs/${blog.id}/edit`}
+                          href={`/admin/dashboard/info/${blog.id}/edit`}
                           className="text-sm font-semibold text-blue-600 hover:text-blue-700"
                         >
                           Edit
@@ -211,10 +211,10 @@ export default function ManageBlogs() {
 
         <div className="mt-5">
           <Link
-            href="/admin/dashboard/blogs/new"
+            href="/admin/dashboard/info/new"
             className="inline-flex items-center rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700"
           >
-            Add Blog
+            Add Informational Page
           </Link>
         </div>
       </div>

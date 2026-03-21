@@ -22,12 +22,12 @@ export default function CreateBlogPage() {
     status: "draft" | "published";
   }) => {
     await createBlog({ title, content, status });
-    router.push("/admin/dashboard/blogs");
+    router.push("/admin/dashboard/info");
   };
 
   return (
     <BlogFullPageEditor
-      backHref="/admin/dashboard/blogs"
+      backHref="/admin/dashboard/info"
       storyLabel="New story"
       initialTitle=""
       initialContent={EMPTY_EDITOR_DATA}

@@ -20,6 +20,7 @@ export const loadBundledEditorJs = async (options?: {
     { default: Quote },
     { default: Delimiter },
     { default: ImageTool },
+    { default: Table },
   ] = await Promise.all([
     import("@editorjs/editorjs"),
     import("@editorjs/header"),
@@ -27,6 +28,7 @@ export const loadBundledEditorJs = async (options?: {
     import("@editorjs/quote"),
     import("@editorjs/delimiter"),
     import("@editorjs/image"),
+    import("@editorjs/table"),
   ]);
 
   const tools: Record<string, unknown> = {
@@ -43,6 +45,10 @@ export const loadBundledEditorJs = async (options?: {
       inlineToolbar: true,
     },
     delimiter: Delimiter,
+    table: {
+      class: Table,
+      inlineToolbar: true,
+    },
     image: options?.imageUploader
       ? {
           class: ImageTool,

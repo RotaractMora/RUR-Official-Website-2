@@ -37,8 +37,8 @@ export const publicNavItems = [
     icon: <BuildingOfficeIcon />,
   },
   {
-    name: "Blogs",
-    link: "/blogs",
+    name: "Informational Pages",
+    link: "/info",
     icon: <NewspaperIcon />,
   },
 ];

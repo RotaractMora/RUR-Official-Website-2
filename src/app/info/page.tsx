@@ -37,7 +37,7 @@ const createExcerpt = (content: IEditorJsOutputData): string => {
   return "No preview available yet.";
 };
 
-export default function BlogsPage() {
+export default function InfoPage() {
   const [blogs, setBlogs] = useState<IBlog[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -52,7 +52,7 @@ export default function BlogsPage() {
         setBlogs(publicBlogs);
       } catch (fetchError) {
         console.error("Failed to fetch public blogs:", fetchError);
-        setError("Failed to load blogs.");
+        setError("Failed to load informational pages.");
       } finally {
         setIsLoading(false);
       }
@@ -65,14 +65,16 @@ export default function BlogsPage() {
     <main className="min-h-screen bg-gray-50 px-4 pb-12 pt-28 dark:bg-gray-900">
       <PublicNav />
       <div className="mx-auto max-w-4xl">
-        <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white">Blogs</h1>
+        <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white">
+          Informational Pages
+        </h1>
         <p className="mt-2 text-gray-600 dark:text-gray-300">
-          Latest articles from the Are You Ready? team.
+          Informational updates from the Are You Ready? team.
         </p>
 
         {isLoading && (
           <div className="mt-8 rounded-xl bg-white p-5 shadow-sm dark:bg-gray-800">
-            <p className="text-gray-700 dark:text-gray-200">Loading blogs...</p>
+            <p className="text-gray-700 dark:text-gray-200">Loading informational pages...</p>
           </div>
         )}
 
@@ -85,7 +87,7 @@ export default function BlogsPage() {
         {!isLoading && !error && blogs.length === 0 && (
           <div className="mt-8 rounded-xl bg-white p-5 shadow-sm dark:bg-gray-800">
             <p className="text-gray-700 dark:text-gray-200">
-              No published blogs yet. Check back soon.
+              No published informational pages yet. Check back soon.
             </p>
           </div>
         )}
@@ -103,7 +105,7 @@ export default function BlogsPage() {
                   {createExcerpt(blog.content)}
                 </p>
                 <Link
-                  href={`/blogs/${blog.slug}`}
+                  href={`/info/${blog.slug}`}
                   className="mt-4 inline-block text-sm font-semibold text-blue-600 hover:text-blue-700"
                 >
                   Read more

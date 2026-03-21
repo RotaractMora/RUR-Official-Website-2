@@ -30,9 +30,9 @@ const AdminDashboard: React.FC = () => {
       link: "/admin/dashboard/timeline",
     },
     {
-      name: "Blogs",
-      description: "Create and publish blogs using Editor.js.",
-      link: "/admin/dashboard/blogs",
+      name: "Informational Pages",
+      description: "Create and publish informational pages using Editor.js.",
+      link: "/admin/dashboard/info",
     },
   ];
 

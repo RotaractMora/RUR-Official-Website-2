@@ -9,7 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [
     "/",
     "/registered-companies",
-    "/blogs",
+    "/info",
   ];
 
   return staticRoutes.map((path) => ({

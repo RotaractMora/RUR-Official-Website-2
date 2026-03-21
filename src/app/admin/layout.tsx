@@ -83,8 +83,8 @@ function Navbar({ className }: { className?: string }) {
           <MenuItem
             setActive={setActive}
             active={null}
-            link="/admin/dashboard/blogs"
-            item="Blogs"
+            link="/admin/dashboard/info"
+            item="Informational Pages"
           />
 
           <MenuItem

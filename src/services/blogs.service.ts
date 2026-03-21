@@ -24,12 +24,101 @@ const getBlogsCollectionRef = () => {
   return collection(db, BLOGS_COLLECTION);
 };
 
+const serializeEditorContentForFirestore = (
+  content: IEditorJsOutputData
+): IEditorJsOutputData => {
+  const blocks = (content.blocks ?? []).map((block) => {
+    if (block.type !== "table") {
+      return block;
+    }
+
+    const tableData = block.data as {
+      withHeadings?: boolean;
+      stretched?: boolean;
+      content?: unknown;
+    };
+
+    const contentRows = Array.isArray(tableData?.content) ? tableData.content : [];
+
+    const rows = contentRows.map((row) => {
+      const cells = Array.isArray(row)
+        ? row.map((cell) => (typeof cell === "string" ? cell : String(cell ?? "")))
+        : [];
+
+      return { cells };
+    });
+
+    return {
+      ...block,
+      data: {
+        withHeadings: Boolean(tableData?.withHeadings),
+        stretched: Boolean(tableData?.stretched),
+        rows,
+      },
+    };
+  });
+
+  return {
+    ...content,
+    blocks,
+  };
+};
+
+const deserializeEditorContentFromFirestore = (
+  content: IEditorJsOutputData
+): IEditorJsOutputData => {
+  const blocks = (content.blocks ?? []).map((block) => {
+    if (block.type !== "table") {
+      return block;
+    }
+
+    const tableData = block.data as {
+      withHeadings?: boolean;
+      stretched?: boolean;
+      rows?: unknown;
+      content?: unknown;
+    };
+
+    const restoredContent = Array.isArray(tableData?.rows)
+      ? tableData.rows.map((row) => {
+          const cells =
+            row &&
+            typeof row === "object" &&
+            "cells" in row &&
+            Array.isArray((row as { cells?: unknown }).cells)
+              ? (row as { cells: unknown[] }).cells
+              : [];
+
+          return cells.map((cell) => (typeof cell === "string" ? cell : String(cell ?? "")));
+        })
+      : Array.isArray(tableData?.content)
+      ? tableData.content
+      : [];
+
+    return {
+      ...block,
+      data: {
+        withHeadings: Boolean(tableData?.withHeadings),
+        stretched: Boolean(tableData?.stretched),
+        content: restoredContent,
+      },
+    };
+  });
+
+  return {
+    ...content,
+    blocks,
+  };
+};
+
 const mapDocToBlog = (id: string, data: Record<string, unknown>): IBlog => {
+  const rawContent = (data.content as IEditorJsOutputData) ?? { blocks: [] };
+
   return {
     id,
     title: (data.title as string) ?? "",
     slug: (data.slug as string) ?? "",
-    content: (data.content as IEditorJsOutputData) ?? { blocks: [] },
+    content: deserializeEditorContentFromFirestore(rawContent),
     status: (data.status as BlogStatus) ?? "draft",
     createdAt: (data.createdAt as Timestamp) ?? Timestamp.now(),
     updatedAt: (data.updatedAt as Timestamp) ?? Timestamp.now(),
@@ -130,11 +219,12 @@ export const createBlog = async (input: ICreateBlogInput): Promise<string> => {
   const now = Timestamp.now();
   const status: BlogStatus = input.status ?? "draft";
   const slug = await generateUniqueSlug(input.title);
+  const serializedContent = serializeEditorContentForFirestore(input.content);
 
   const newBlog = {
     title: input.title.trim(),
     slug,
-    content: input.content,
+    content: serializedContent,
     status,
     createdAt: now,
     updatedAt: now,
@@ -162,10 +252,11 @@ export const updateBlog = async (id: string, input: IUpdateBlogInput): Promise<v
 
   const nextPublishedAt =
     input.status === "published" ? existingBlog.publishedAt ?? now : null;
+  const serializedContent = serializeEditorContentForFirestore(input.content);
 
   await updateDoc(blogDocRef, {
     title: input.title.trim(),
-    content: input.content,
+    content: serializedContent,
     status: input.status,
     slug,
     updatedAt: now,

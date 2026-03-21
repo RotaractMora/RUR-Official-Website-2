@@ -21,7 +21,7 @@ export default function EditBlogPage() {
   useEffect(() => {
     const loadBlog = async () => {
       if (!params?.id) {
-        setError("Invalid blog id.");
+        setError("Invalid informational blog id.");
         setIsLoading(false);
         return;
       }
@@ -56,11 +56,11 @@ export default function EditBlogPage() {
     status: "draft" | "published";
   }) => {
     if (!params?.id) {
-      throw new Error("Invalid blog id.");
+      throw new Error("Invalid informational blog id.");
     }
 
     await updateBlog(params.id, { title, content, status });
-    router.push("/admin/dashboard/blogs");
+    router.push("/admin/dashboard/info");
   };
 
   return (
@@ -68,7 +68,7 @@ export default function EditBlogPage() {
       {isLoading && (
         <div className="min-h-screen bg-[#fdfdfb] px-4 py-8 dark:bg-gray-900">
           <div className="mx-auto max-w-4xl">
-            <p className="text-gray-700 dark:text-gray-200">Loading blog...</p>
+            <p className="text-gray-700 dark:text-gray-200">Loading informational page...</p>
           </div>
         </div>
       )}
@@ -85,7 +85,7 @@ export default function EditBlogPage() {
 
       {!isLoading && !error && blog && (
         <BlogFullPageEditor
-          backHref="/admin/dashboard/blogs"
+          backHref="/admin/dashboard/info"
           storyLabel="Edit story"
           initialTitle={blog.title}
           initialContent={blog.content ?? EMPTY_EDITOR_DATA}
