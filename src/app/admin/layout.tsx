@@ -30,7 +30,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       </Helmet>
 
       <div className="min-h-screen flex flex-col">
-        <div className="relative w-full flex items-center justify-center ">
+        <div className="relative w-full flex items-center justify-center mb-24">
           <Navbar className="top-2" />
         </div>
 
@@ -48,13 +48,15 @@ function Navbar({ className }: { className?: string }) {
   const themeContext = useContext<IThemeContextType | null>(ThemeContext);
   if (!themeContext) {
     throw new Error(
-      "ThemeToggleButton must be used within a ThemeContext.Provider",
+      "ThemeToggleButton must be used within a ThemeContext.Provider"
     );
   }
   const { toggleTheme, theme } = themeContext;
 
   return (
-    <div className={cn("top-10 w-full  z-50", className)}>
+    <div
+      className={cn("fixed top-10 inset-x-0 max-w-2xl mx-auto z-50", className)}
+    >
       <Menu setActive={setActive}>
         <Image
           src={LOGO_SMALL}
@@ -63,46 +65,38 @@ function Navbar({ className }: { className?: string }) {
           height={37}
           className="p-0 rounded-lg dark:bg-black bg-white"
         />
-        <div className="flex">
-          <MenuItem setActive={setActive} active={null} link="/" item="Home" />
 
+        <MenuItem setActive={setActive} active={null} link="/" item="Home" />
+
+        <MenuItem
+          setActive={setActive}
+          active={null}
+          link="/admin/dashboard/timeline"
+          item="Timeline"
+        />
+
+        <MenuItem
+          setActive={setActive}
+          active={null}
+          link="/admin/dashboard/sponsors"
+          item="Sponsors"
+        />
+
+        <MenuItem
+          setActive={setActive}
+          active={null}
+          link="/admin/dashboard"
+          item="Dashboard"
+        />
+
+        {user && (
           <MenuItem
             setActive={setActive}
             active={null}
-            link="/admin/dashboard/timeline"
-            item="Timeline"
+            link="/admin/logout"
+            item="Logout"
           />
-
-          <MenuItem
-            setActive={setActive}
-            active={null}
-            link="/admin/dashboard/sponsors"
-            item="Sponsors"
-          />
-
-          <MenuItem
-            setActive={setActive}
-            active={null}
-            link="/admin/dashboard/info"
-            item="Informational Pages"
-          />
-
-          <MenuItem
-            setActive={setActive}
-            active={null}
-            link="/admin/dashboard"
-            item="Dashboard"
-          />
-
-          {user && (
-            <MenuItem
-              setActive={setActive}
-              active={null}
-              link="/admin/logout"
-              item="Logout"
-            />
-          )}
-        </div>
+        )}
 
         <button
           onClick={toggleTheme}

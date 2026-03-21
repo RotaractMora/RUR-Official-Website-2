@@ -10,7 +10,7 @@ import {https, logger} from "firebase-functions";
 const REGION = "asia-southeast1";
 
 const AGGREGATED_COMPANIES_DOC_PATH = "metadata/agregatedCompanies";
-const COMPANIES_COLLECTION_PATH = "campaigns/rur-26/companies";
+const COMPANIES_COLLECTION_PATH = "campaigns/rur-25/companies";
 
 
 // Fields to be aggregated
