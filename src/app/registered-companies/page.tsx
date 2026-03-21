@@ -73,16 +73,16 @@ export default function Companies() {
           a.name.trim().toLowerCase().localeCompare(b.name.trim().toLowerCase(), "en", { sensitivity: "base" })
         );
 
-        console.log(` ${data.companies[0]} > ${data.companies[1]} :  ${data.companies[0].name.toLowerCase().localeCompare(data.companies[1].name.toLowerCase())}`);
+        // console.log(` ${data.companies[0]} > ${data.companies[1]} :  ${data.companies[0].name.toLowerCase().localeCompare(data.companies[1].name.toLowerCase())}`);
 
         setCompanies(data.companies);
       } catch (err) {
-        console.error("Error fetching data:", err);
+        console.error("Error fetching company data:", err);
         setError("Failed to load company data. Please try again later.");
         sendGTMEvent({
           event: "JS_Error",
           error_name: "AggregatedCompanyDocLoadError",
-          error: err,
+          error: err instanceof Error ? err.message : String(err),
         });
       } finally {
         setIsLoading(false);

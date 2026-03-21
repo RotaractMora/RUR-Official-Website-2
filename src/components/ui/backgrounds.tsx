@@ -7,7 +7,7 @@ export function GridBackground({
   children,
 }: {
   title: string;
-  children?: React.Node;
+  children?: React.ReactNode;
 }): JSX.Element {
   return (
     <div className="h-[100%] w-full dark:bg-black bg-white dark:bg-grid-white/[0.2] bg-grid-brand-blue/[0.1] relative flex items-center justify-center flex-wrap">

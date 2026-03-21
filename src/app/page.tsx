@@ -286,7 +286,7 @@ export default function Home() {
 
   // Helper to group sponsors by level
   function groupSponsorsByLevel(sponsors: ISponsor[]) {
-    const levels = ["Gold", "Silver", "Bronze"];
+    const levels = ["Gold", "Silver", "Bronze", "Partner", "Associate Partner"];
     return levels.map((level) => ({
       level,
       sponsors: sponsors.filter((s) => s.level === level),
@@ -380,9 +380,9 @@ export default function Home() {
             (group) =>
               group.sponsors.length > 0 && (
                 <div key={group.level} className="mb-12">
-                  <h4 className="text-2xl md:text-2xl font-bold text-center dark:text-custom-color-800 bg-gradient-to-r from-zinc-300 to-zinc-900 bg-clip-text text-transparent mb-4">
+                  {/* <h4 className="text-2xl md:text-2xl font-bold text-center dark:text-custom-color-800 bg-gradient-to-r from-zinc-300 to-zinc-900 bg-clip-text text-transparent mb-4">
                     {group.level} Partner
-                  </h4>
+                  </h4> */}
                   <div className="flex flex-wrap justify-center gap-8 max-w-7xl mx-auto min-h-[300px] py-4 px-2">
                     {group.sponsors
                       .sort((a, b) => a.order - b.order)
@@ -410,14 +410,14 @@ export default function Home() {
         )}
 
         {sponsors.length > 0 && (
-          <div className="py-4 px-6 text-center">
+          <div className="pb-12 px-6 text-center">
             <h2 className="text-2xl md:text-3xl font-bold text-center dark:text-white gradient-text mt-8 md:mt-12 mb-0">
               Thank You for Your Support!
             </h2>
             <p className="mt-4 max-w-6xl mx-auto text-lg md:text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
               We deeply appreciate your unwavering support in making this
               event a success. Your contributions inspire us to innovate,
-              collaborate, and grow. Together, we're achieving remarkable
+              collaborate, and grow. Together, we are achieving remarkable
               milestones. Stay tuned for exciting updates as we continue this
               incredible journey. Thank you for being a vital part of our
               mission!

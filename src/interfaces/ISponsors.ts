@@ -1,6 +1,6 @@
 import { Timestamp } from "firebase/firestore";
 
-export type SponsorLevel = "Gold" | "Silver" | "Bronze" | string;
+export type SponsorLevel = "Gold" | "Silver" | "Bronze" | "Partner" | "Associate Partner" | string;
 
 export interface ISponsor {
     id?: string;
