@@ -29,6 +29,11 @@ const AdminDashboard: React.FC = () => {
       description: "Edit/update timeline events and set event date.",
       link: "/admin/dashboard/timeline",
     },
+    {
+      name: "Informational Pages",
+      description: "Create and publish informational pages using Editor.js.",
+      link: "/admin/dashboard/info",
+    },
   ];
 
   return (
