@@ -3,12 +3,41 @@ import { useState, useMemo, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import RootLayout from "../layout";
 import BackToTopButton from "@/components/ui/back-to-top";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import FloatingNav from "@/components/ui/floating-navbar";
+import { ClockIcon, HomeIcon, MegaphoneIcon, PhoneArrowUpRightIcon, MagnifyingGlassIcon, BuildingOfficeIcon } from "@heroicons/react/24/outline";
 import { ICompany } from "@/interfaces/ICompanies";
 import { sendGTMEvent } from "@next/third-parties/google";
 import { getDataFromAggregatedCompanyDoc } from "@/services/aggregatedCompanyData.service";
 import { CompanyCard } from "@/components/ui/registered-company-card";
-import PublicNav from "@/components/blocks/public-nav";
+
+// Navigation items component
+const navItms = [
+  {
+    name: "Home",
+    link: "/",
+    icon: <HomeIcon />,
+  },
+  {
+    name: "Timeline",
+    link: "/#timeline",
+    icon: <ClockIcon />,
+  },
+  {
+    name: "Sponsors",
+    link: "/#sponsors",
+    icon: <MegaphoneIcon />,
+  },
+  {
+    name: "Reach Us",
+    link: "/#reach_us",
+    icon: <PhoneArrowUpRightIcon />,
+  },
+  {
+    name: "Registered Companies",
+    link: "/registered-companies",
+    icon: <BuildingOfficeIcon />,
+  },
+];
 
 
 const SearchBar = ({ searchQuery, setSearchQuery }: { searchQuery: string, setSearchQuery: (query: string) => void }) => (
@@ -124,7 +153,7 @@ export default function Companies() {
         <link rel="bookmark" href="https://areyouready.uom.lk/registered-companies" />
       </Helmet>
       <BackToTopButton />
-      <PublicNav />
+      <FloatingNav navItems={navItms} />
 
       <div id="registeredCompanies" className="scroll-mt-20 py-8 px-6 text-center dark:bg-gray-800">
         <div className="mb-8 mt-24 md:mt-20">
