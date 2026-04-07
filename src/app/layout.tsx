@@ -63,6 +63,8 @@ export default function RootLayout({
         <HelmetProvider>
           <html lang="en">
             <head>
+              <title>Are You Ready? 2026 | University of Moratuwa</title>
+              <meta name="description" content="Are You Ready? 2026 - Flagship career fair organized by Rotaract Club of University of Moratuwa in partnership with the Career Guidance Unit. Connect with 100+ companies and advance your career." />
               <meta name="google-site-verification" content="ctC6c_Itp6D3M77kEOvPaN9D9i_O6Sq5vXpCX8EyMsY" />
             </head>
             <body

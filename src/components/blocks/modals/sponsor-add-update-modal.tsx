@@ -74,7 +74,7 @@ function SponsorAddUpdateModal({
       return;
     }
 
-    if (sponsorLevel !== 'Gold' && sponsorLevel !== 'Silver' && sponsorLevel !== 'Bronze' && sponsorLevel !== 'Partner') {
+    if (sponsorLevel !== 'Gold' && sponsorLevel !== 'Silver' && sponsorLevel !== 'Bronze' && sponsorLevel !== 'Partner' && sponsorLevel !== 'Associate Partner') {
       alert('Please select a valid sponsor level');
       return;
     }
@@ -220,6 +220,7 @@ function SponsorAddUpdateModal({
                       <option value="Silver Partner">Silver Partner</option>
                       <option value="Bronze Partner">Bronze Partner</option>
                       <option value="Partner">Partner</option>
+                      <option value="Associate Partner">Associate Partner</option>
                     </select>
                   </div>
 
@@ -251,6 +252,7 @@ function SponsorAddUpdateModal({
                       <option value="Silver">Silver</option>
                       <option value="Bronze">Bronze</option>
                       <option value="Partner">Partner</option>
+                      <option value="Associate Partner">Associate Partner</option>
                     </select>
                     </div>
 
